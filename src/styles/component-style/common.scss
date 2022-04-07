@@ -1,0 +1,128 @@
+.not-found {
+  padding-block: 5rem;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  & img {
+    width: 70%;
+
+    @include responsive(lg-screen) {
+      width: 40%;
+    }
+    margin-bottom: 2rem;
+  }
+
+  & h3 {
+    @include style-text(600, 2.4rem, 3.4rem, $home-heading-color);
+    margin-bottom: 2rem;
+  }
+}
+
+.btn__scroll {
+  position: fixed;
+  z-index: 1000;
+  right: 2rem;
+  bottom: 8rem;
+  width: 4rem;
+  height: 4rem;
+  @include flex-center;
+  box-shadow: $box-shadow-1;
+  background-color: $primary-color;
+  border-radius: 50%;
+  animation: fade-in 0.3s linear;
+  @include responsive(lg-screen) {
+    bottom: 2rem;
+  }
+
+  & svg {
+    color: white;
+    font-size: 1.8rem;
+  }
+}
+
+.message {
+  @include flex-center;
+  flex-direction: column;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200px;
+  height: fit-content;
+  background-color: rgba($color: #000000, $alpha: 0.7);
+  padding: 2rem 1rem;
+  border-radius: 0.4rem;
+  z-index: 2000;
+  animation: fade-in linear 0.3s;
+  // , fade-out linear 0.3s 2s forwards;
+  &-top {
+    top: 10%;
+  }
+
+  &-bottom {
+    top: 90%;
+  }
+
+  @include responsive(lg-screen) {
+    width: 300px;
+    padding: 3rem 2rem;
+  }
+
+  &-title {
+    @include style-text(500, 1.3rem, 2.3rem, $white);
+    text-align: center;
+
+    @include responsive(lg-screen) {
+      font-size: 1.4rem;
+      line-height: 2.4rem;
+      font-weight: 600;
+    }
+  }
+
+  &-icon {
+    margin-bottom: 2rem;
+
+    &-success {
+      fill: $success;
+      font-size: 3rem;
+      @include responsive(lg-screen) {
+        font-size: 5rem;
+      }
+    }
+
+    &-warning {
+      fill: $yellow;
+      font-size: 4rem;
+      @include responsive(lg-screen) {
+        font-size: 6rem;
+      }
+    }
+
+    &-danger {
+      fill: $danger;
+      font-size: 4rem;
+      @include responsive(lg-screen) {
+        font-size: 6rem;
+      }
+    }
+
+    &-info {
+      fill: $info;
+      font-size: 4rem;
+      @include responsive(lg-screen) {
+        font-size: 6rem;
+      }
+    }
+  }
+}
+
+.box__loading {
+  grid-gap: 2rem;
+
+  &-item {
+    height: 200px;
+    animation: skeleton-loading 0.8s linear infinite alternate;
+    border-radius: 0.4rem;
+  }
+}

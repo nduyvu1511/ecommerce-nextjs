@@ -1,0 +1,48 @@
+.payment {
+  &-heading {
+    margin-bottom: 3rem;
+    @include style-text(500, 1.8rem, 2.8rem, $text-color);
+  }
+
+  &__list {
+    grid-gap: 2rem;
+    list-style: none;
+
+    &-item {
+      @include flex(space-between, center);
+      cursor: pointer;
+      padding: 2rem;
+      border-radius: 4px;
+      border: 1px solid $border-color-1;
+
+      &-active {
+        border: 1px solid $primary;
+      }
+
+      &-content {
+        flex: 1;
+        margin-right: 0.5rem;
+        @include flex-center;
+        flex-direction: column;
+
+        & p {
+          @include style-text(600, 1.4rem, 2.4rem, $text-color);
+          margin-bottom: 1.8rem;
+        }
+
+        & img {
+          max-width: 120px;
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  &__footer {
+    margin-top: 3rem;
+
+    & button {
+      margin-left: auto;
+    }
+  }
+}

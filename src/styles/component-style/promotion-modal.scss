@@ -1,0 +1,172 @@
+.cart__body-total-coupons {
+  .modal {
+    height: unset;
+    width: unset;
+    width: 96vw;
+
+    @include responsive(sm-screen) {
+      width: 90vw;
+    }
+
+    @include responsive(md-screen) {
+      width: 80vw;
+    }
+
+    @include responsive(lg-screen) {
+      width: 50vw;
+    }
+
+    @include responsive(xl-screen) {
+      width: 40vw;
+    }
+  }
+
+  .promotion__modal {
+    background-color: $white;
+    max-height: 80vh;
+    overflow-y: auto;
+    @include hide-scrollbar;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    &-header {
+      border-bottom: 1px solid $border-color-1;
+      padding-bottom: 3rem;
+
+      &-heading {
+        @include style-text(500, 1.8rem, 2.8rem, $text-color);
+      }
+
+      &-search {
+        @include input;
+      }
+    }
+
+    &-body {
+      margin-top: 2rem;
+
+      &-loading {
+        height: 100px;
+        @include responsive(md-screen) {
+          height: 200px;
+        }
+        @include flex-center;
+
+        & svg {
+          font-size: 3rem;
+          fill: $text-color;
+        }
+      }
+
+      &-empty {
+        padding-block: 3rem;
+        @include flex-center;
+        flex-direction: column;
+
+        &-text {
+          text-align: center;
+          margin-top: 2rem;
+          @include style-text(600, 1.4rem, 1.4rem, $danger);
+        }
+      }
+
+      & .promotion__modal-list {
+        list-style: none;
+
+        &-item {
+          @include flex(flex-start, center);
+          padding: 1.2rem;
+          border: 1px solid $border-color-1;
+          margin-bottom: 2rem;
+          border-radius: 0.4rem;
+          overflow: hidden;
+          cursor: pointer;
+          @include responsive(sm-screen) {
+            padding: 2rem;
+          }
+
+          &-active {
+            border: 1px solid $primary;
+          }
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+
+          &-image {
+            @include style-text(600, 1.4rem, 2.4rem, $white);
+            text-transform: uppercase;
+            border-right: 2px dashed rgba($color: #000000, $alpha: 0.1);
+
+            & img {
+              margin-right: 1rem;
+              width: 8rem;
+              height: 8rem;
+              @include responsive(sm-screen) {
+                margin-right: 2rem;
+                width: 10rem;
+                height: 10rem;
+              }
+              object-fit: cover;
+            }
+          }
+
+          &-info {
+            padding-inline: 1rem;
+            @include responsive(sm-screen) {
+              padding-inline: 2rem;
+            }
+            flex: 1;
+            flex-direction: column;
+            @include flex(center, flex-start);
+
+            .promotion__modal-code {
+              margin-bottom: 1rem;
+              @include style-text(600, 1.2rem, 1.8rem, $text-color);
+              @include responsive(sm-screen) {
+                font-size: 1.4rem;
+                line-height: 2rem;
+              }
+            }
+
+            .promotion__modal-limit {
+              margin-bottom: 1rem;
+              display: inline-block;
+              @include style-text(500, 1.1rem, 1.8rem, $text-color);
+            }
+
+            .promotion__modal-expire {
+              display: flex;
+              flex-direction: column;
+              @include responsive(sm-screen) {
+                flex-direction: row;
+              }
+
+              @include style-text(600, 1.2rem, 1.8rem, $text-color-opacity);
+              .expire-from {
+                margin-right: 1rem;
+              }
+            }
+          }
+
+          &-icon {
+            font-size: 2rem;
+            margin: auto 0;
+            color: $yellow;
+          }
+        }
+      }
+    }
+
+    &-footer {
+      margin-top: 3rem;
+      @include flex(flex-end, center);
+
+      & .btn-secondary {
+        background-color: $secondary;
+      }
+    }
+  }
+}

@@ -1,0 +1,310 @@
+.home {
+  margin-bottom: 6rem;
+
+  &__banner {
+    margin-top: 3rem;
+    display: flex;
+
+    &-left {
+      display: none;
+      @include responsive(xl-screen) {
+        display: block;
+      }
+      width: 25%;
+      margin-right: 3rem;
+
+      .menu__modal-heading {
+        padding: 2rem 0;
+        & p {
+          font-size: 2rem;
+        }
+      }
+    }
+
+    &-banner {
+      overflow: hidden;
+      width: 100%;
+      @include responsive(xl-screen) {
+        width: 75%;
+      }
+
+      & img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    &-category {
+      margin-top: 3rem;
+      &-list {
+        grid-gap: 2rem;
+        grid-template-rows: 1fr 1fr;
+      }
+    }
+  }
+
+  &__sale-container {
+    margin-top: 3rem;
+  }
+
+  &__content {
+    display: flex;
+    margin-top: 3rem;
+    flex-direction: column-reverse;
+    @include responsive(screen-1024) {
+      flex-direction: row;
+    }
+
+    &-left {
+      display: none;
+      width: 100%;
+      @include responsive(screen-1024) {
+        display: block;
+        width: calc(30% - 3rem);
+        margin-right: 3rem;
+      }
+
+      @include responsive(xl-screen) {
+        width: calc(25% - 3rem);
+      }
+
+      &-heading {
+        font-family: $second-font;
+        @include style-text(600, 1.6rem, 1.6rem, $heading-color);
+        text-transform: uppercase;
+        margin-bottom: 3rem;
+      }
+
+      &-banner {
+        &-img {
+          border-radius: 5px;
+        }
+      }
+
+      &-trending {
+        &-wrapper {
+          padding: 3rem 1.5rem 3rem 1.5rem;
+          border: 1px solid $border-color-1;
+          border-radius: 4px;
+
+          .product__trending-item {
+            margin-bottom: 2rem;
+            &:last-child {
+              margin-bottom: 0;
+            }
+          }
+        }
+      }
+
+      &-new {
+        margin-top: 5rem;
+      }
+
+      &-review {
+        margin-top: 5rem;
+
+        .swiper-button-prev {
+          background-color: transparent;
+          left: 0.5rem;
+        }
+        .swiper-button-next {
+          background-color: transparent;
+          right: 0.5rem;
+        }
+
+        .review {
+          background-color: $yellow-bg;
+          padding: 3rem;
+          border-radius: 4px;
+
+          &__content {
+            margin-bottom: 3rem;
+
+            &-heading {
+              @include style-text(600, 1.5rem, 2rem, $home-heading-color);
+              margin-bottom: 1rem;
+            }
+
+            &-text {
+              @include style-text(400, 1.3rem, 1.8rem, $text-color);
+            }
+          }
+
+          &__user {
+            @include flex(flex-start, center);
+
+            &-img {
+              width: 50px;
+              height: 50px;
+              object-fit: cover;
+              border-radius: 50%;
+              overflow: hidden;
+            }
+
+            & > p {
+              margin-left: 1.6rem;
+              display: flex;
+              flex-direction: column;
+            }
+
+            &-name {
+              @include style-text(600, 1.4rem, 1.4rem, $home-heading-color);
+            }
+
+            &-job {
+              display: inline-block;
+              margin-top: 0.8rem;
+              @include style-text(400, 1.3rem, 1.3rem, $text-color-opacity);
+            }
+          }
+        }
+      }
+    }
+
+    &-right {
+      width: 100%;
+      @include responsive(screen-1024) {
+        width: 70%;
+      }
+      @include responsive(xl-screen) {
+        width: 75%;
+      }
+
+      & .home__content-right-banner-first {
+        background-color: $banner-2-bg;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 1.6rem;
+        padding-bottom: 0;
+
+        @include responsive(lg-screen) {
+          max-height: 130px;
+          flex-direction: row;
+          text-align: left;
+          padding-bottom: 1.6rem;
+        }
+        position: relative;
+        overflow: hidden;
+
+        &-content {
+          @include responsive(lg-screen) {
+            width: 70%;
+            margin-right: 2rem;
+          }
+
+          & h5 {
+            @include style-text(500, 1.4rem, 1.4rem, #9b9bb4);
+            margin-bottom: 1.2rem;
+          }
+
+          & h3 {
+            @include style-text(700, 1.7rem, 2.8rem, #71778e);
+          }
+        }
+
+        &-img {
+          @include responsive(lg-screen) {
+            width: 30%;
+          }
+
+          & img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+        }
+      }
+
+      .home__content-right-promotion {
+        margin: 3rem 0;
+
+        &-link {
+          padding: 3rem 2rem;
+          @include flex-center;
+          flex-direction: column;
+          @include responsive(md-screen) {
+            flex-direction: row;
+            padding: 2rem;
+          }
+          background-color: #ffeef2;
+          color: #ed174a;
+
+          & p {
+            @include style-text(500, 1.4rem, 2rem, #ed174a);
+          }
+
+          & small {
+            @include style-text(400, 1.1rem, 1.1rem, $text-color-opacity);
+          }
+
+          & h5 {
+            padding: 1rem 2rem;
+            border: 1px dashed #ed174a;
+            @include style-text(600, 1.5rem, 1.5rem, #ed174a);
+            font-family: $second-font;
+            border-radius: 25px;
+            text-transform: uppercase;
+            margin: 2rem 0;
+            @include responsive(md-screen) {
+              margin: 0 1.2rem;
+            }
+          }
+        }
+      }
+
+      &-products {
+        margin-bottom: 3rem;
+      }
+
+      &-hot-product {
+        margin-top: 3rem;
+
+        &-wrapper {
+          border: 1px solid #ed174a;
+          border-radius: 5px;
+          padding: 1.4rem;
+        }
+      }
+
+      &-new-products {
+        grid-gap: 2rem;
+
+        & .product__card {
+          &:nth-child(7),
+          &:nth-child(8) {
+            @include responsive(md-screen) {
+              display: none;
+            }
+
+            @include responsive(xl-screen) {
+              display: block;
+            }
+          }
+        }
+
+        .product__card {
+          transition: box-shadow 0.3s ease;
+        }
+      }
+    }
+  }
+
+  &__category {
+    margin-top: 5rem;
+
+    .category__item-link {
+      & img {
+        max-height: 120px;
+      }
+    }
+
+    &-list {
+      list-style: none;
+      grid-gap: 2rem;
+    }
+  }
+}

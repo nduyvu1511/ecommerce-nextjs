@@ -1,0 +1,440 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+  overflow-x: hidden;
+}
+
+input,
+label,
+textarea {
+  font-family: $main-font;
+}
+
+::-webkit-input-placeholder {
+  /* Edge */
+  color: $text-color;
+}
+
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: $text-color;
+}
+
+::placeholder {
+  color: $text-color;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  color: $text-color;
+  font-weight: normal;
+  font-family: $main-font;
+  font-family: "Lato", sans-serif;
+  font-family: "Open Sans", sans-serif;
+  font-size: 1.4rem;
+}
+
+.hide-element {
+  display: none;
+}
+
+.show-on-desktop {
+  display: none !important;
+  @include responsive(lg-screen) {
+    display: block !important;
+  }
+}
+
+.modals-mobile {
+  display: block;
+  @include responsive(1024-screen) {
+    display: none;
+  }
+}
+
+.show-on-mobile {
+  display: block !important;
+  @include responsive(lg-screen) {
+    display: none !important;
+  }
+}
+
+.hide-on-mobile {
+  z-index: 2000;
+  display: none;
+  @include responsive(md-screen) {
+    display: block;
+  }
+}
+
+.hide-on-sm-table {
+  display: none;
+  @include responsive(sm-screen) {
+    display: table-cell;
+  }
+}
+
+.hide-on-md-table {
+  display: none;
+  @include responsive(md-screen) {
+    display: table-cell;
+  }
+}
+
+.hide-on-lg-table {
+  display: none;
+  @include responsive(lg-screen) {
+    display: table-cell;
+  }
+}
+
+.hide-on-xl-table {
+  display: none;
+  @include responsive(xl-screen) {
+    display: table-cell;
+  }
+}
+
+.hide-on-desktop {
+  display: block;
+  @include responsive(md-screen) {
+    display: none;
+  }
+}
+
+.hide-on-screen-larger-1200 {
+  display: block;
+  @include responsive(xl-screen) {
+    display: none;
+  }
+}
+
+.hide-on-screen-smaller-1200 {
+  display: none;
+  @include responsive(xl-screen) {
+    display: block;
+  }
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+@each $val in $numbers {
+  .grid-col-#{$val} {
+    grid-template-columns: repeat($val, 1fr);
+  }
+}
+
+@each $val in $numbers {
+  .grid-col-xxs-#{$val} {
+    @include responsive(xxs-screen) {
+      grid-template-columns: repeat($val, 1fr);
+    }
+  }
+}
+
+@each $val in $numbers {
+  .grid-col-xs-#{$val} {
+    @include responsive(xs-screen) {
+      grid-template-columns: repeat($val, 1fr);
+    }
+  }
+}
+
+@each $val in $numbers {
+  .grid-col-sm-#{$val} {
+    @include responsive(sm-screen) {
+      grid-template-columns: repeat($val, 1fr);
+    }
+  }
+}
+
+@each $val in $numbers {
+  .grid-col-md-#{$val} {
+    @include responsive(md-screen) {
+      grid-template-columns: repeat($val, 1fr);
+    }
+  }
+}
+
+@each $val in $numbers {
+  .grid-col-lg-#{$val} {
+    @include responsive(lg-screen) {
+      grid-template-columns: repeat($val, 1fr);
+    }
+  }
+}
+
+@each $val in $numbers {
+  .grid-col-1024-#{$val} {
+    @include responsive(screen-1024) {
+      grid-template-columns: repeat($val, 1fr);
+    }
+  }
+}
+
+@each $val in $numbers {
+  .grid-col-xl-#{$val} {
+    @include responsive(xl-screen) {
+      grid-template-columns: repeat($val, 1fr);
+    }
+  }
+}
+
+a {
+  text-decoration: none;
+  color: $text-color;
+}
+
+.container {
+  width: 100%;
+  max-width: $container-width;
+  padding: 0 1.5rem;
+  margin: 0 auto;
+
+  @include responsive(sm-screen) {
+    padding: 0 3rem;
+  }
+
+  @media screen and (min-width: 1300px) {
+    padding: 0;
+  }
+}
+
+.header-svg-icon {
+  width: 22px;
+  fill: white;
+}
+
+.hide-on-xl-screen {
+  display: block;
+  @include responsive(xl-screen) {
+    display: none;
+  }
+}
+
+.btn-reset {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.opacity-50 {
+  opacity: 0.5;
+}
+
+@keyframes menu-open {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+}
+
+@keyframes menu-close {
+  0% {
+    opacity: 1;
+    transform: translateX(0%);
+  }
+
+  100% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+}
+
+@keyframes loading {
+  0% {
+    transform: rotate(0);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes show-image-product {
+  0% {
+    opacity: 0;
+    position: absolute;
+  }
+
+  100% {
+    opacity: 1;
+    position: static;
+  }
+}
+
+@keyframes fade-in-test {
+  0% {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  100% {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes toggle-content {
+  0% {
+    opacity: 0;
+    max-height: 0;
+  }
+
+  100% {
+    opacity: 1;
+    max-height: auto;
+  }
+}
+
+.img-fluid {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.img-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.grid {
+  display: grid;
+}
+
+.btn-primary {
+  font-family: $second-font;
+  @include button($indigo, $white, 1.4rem, 500, 2rem, 1.2rem);
+  border-radius: 0.4rem;
+  white-space: nowrap;
+
+  & svg {
+    font-size: 1.8rem;
+    margin-left: 0.3rem;
+  }
+}
+
+.disabled {
+  cursor: not-allowed;
+}
+
+.btn-disabled {
+  opacity: 0.8;
+  cursor: not-allowed;
+  pointer-events: none;
+  user-select: none;
+}
+
+.btn-disabled-clicked {
+  opacity: 0.8;
+  cursor: not-allowed;
+}
+
+.width-105 {
+  width: 105px;
+}
+
+.width-85 {
+  width: 85px;
+}
+
+* {
+  scrollbar-width: 5px;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgba($color: #000000, $alpha: 0.4);
+  border-radius: 4px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.loader {
+  animation: loading 1s linear infinite;
+}
+
+@keyframes scale-up {
+  0% {
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0);
+  }
+
+  100% {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1);
+  }
+}
+
+.image-container {
+  & > span {
+    position: unset !important;
+  }
+
+  .image {
+    display: none;
+    width: 100% !important;
+    height: 100% !important;
+    position: relative !important;
+    object-fit: cover;
+  }
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.main__layout__no-footer {
+  padding-bottom: 6rem;
+  @include responsive(screen-1024) {
+    padding-bottom: 3rem;
+  }
+}

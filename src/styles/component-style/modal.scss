@@ -1,0 +1,151 @@
+.modal {
+  @include fixed(unset, unset, 0, 0);
+  background-color: white;
+  width: 100%;
+  @media screen and (max-width: 420px) {
+    max-width: unset;
+  }
+  max-width: 380px;
+  @include hidden;
+  z-index: 1010;
+  transition: all 0.3s ease;
+
+  &-left {
+    left: 0;
+    transform: translateX(-100%);
+  }
+
+  &-right {
+    right: 0;
+    transform: translateX(100%);
+  }
+
+  &__header {
+    @include flex(space-between, center);
+
+    &-heading {
+      @include style-text(500, 1.6rem, 2.6rem, $text-color);
+      @include responsive(md-screen) {
+        @include style-text(500, 1.8rem, 2.8rem, $text-color);
+      }
+      @include responsive(lg-screen) {
+        font-size: 2rem;
+        line-height: 3rem;
+      }
+    }
+
+    & button {
+      & svg {
+        font-size: 2.4rem;
+        color: $text-color;
+      }
+    }
+  }
+
+  &-center {
+    max-width: 98vw;
+    height: 100%;
+    bottom: unset;
+    left: 50%;
+    top: 50%;
+    padding: 3rem 2rem;
+    animation: modal-show-down 0.3s linear;
+    transform: translate(-50%, -50%) !important;
+    max-height: 96vh;
+    @include responsive(lg-screen) {
+      max-height: 90vh;
+    }
+    height: fit-content;
+    overflow-y: auto;
+    border-radius: 6px;
+    @include hide-scrollbar;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    @include responsive(md-screen) {
+      padding: 4rem;
+      max-width: 94vw;
+    }
+
+    @include responsive(lg-screen) {
+      max-width: 90vw;
+    }
+
+    @include responsive(xl-screen) {
+      max-width: 80vw;
+    }
+
+    @media screen and (min-width: 1300px) {
+      max-width: 65vw;
+    }
+  }
+
+  &-size-auto {
+    max-width: unset;
+    max-height: unset;
+    height: unset;
+    width: unset;
+  }
+
+  &-active {
+    @include show;
+    transform: translateX(0);
+  }
+
+  &-stack {
+    z-index: 1012;
+
+    .overlay {
+      z-index: 1011;
+    }
+  }
+}
+
+.overlay {
+  background-color: rgba(35, 35, 35, 0.8);
+  @include fixed(0, 0, 0, 0);
+  z-index: 1009;
+  cursor: pointer;
+  @include hidden-animated;
+  transition: all 0.3s linear;
+  &-active {
+    @include visible-animated;
+  }
+
+  &-stack {
+    z-index: 1004;
+  }
+}
+
+.modal_container {
+  .modal {
+    max-width: 96vw;
+    @include responsive(md-screen) {
+      max-width: 80vw;
+    }
+
+    @include responsive(lg-screen) {
+      max-width: 70vw;
+    }
+
+    @include responsive(xl-screen) {
+      max-width: 65vw;
+    }
+
+    @media screen and (min-width: 1300px) {
+      max-width: 60vw;
+    }
+  }
+}
+
+@keyframes modal-show-down {
+  0% {
+    margin-top: -8rem;
+    opacity: 0;
+  }
+  100% {
+    margin-top: 0;
+    opacity: 1;
+  }
+}

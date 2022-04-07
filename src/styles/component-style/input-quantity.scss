@@ -1,0 +1,41 @@
+.input__quantity {
+  @include flex-center;
+  height: 38px;
+  // transition: all ease 0.5s;
+
+  &-disabled {
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+  &-btn {
+    width: 40px;
+    height: 40px;
+    border: none;
+    outline: none;
+    @include flex-center;
+    background-color: #edeef5;
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 50%;
+    // transition: all 0.2s;
+  }
+
+  &-input {
+    text-align: center;
+    width: 40px;
+    height: 100%;
+    background-color: #f4f4f4;
+    border: none;
+    outline: none;
+    font-family: $second-font;
+    @include style-text(600, 1.5rem, 1.5rem, $text-color);
+    background-color: transparent;
+    -moz-appearance: textfield;
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
+}

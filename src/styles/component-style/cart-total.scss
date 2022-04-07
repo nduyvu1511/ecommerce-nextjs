@@ -1,0 +1,154 @@
+.cart__body-total {
+  border: 1px solid $border-color-1;
+  border-radius: 0.4rem;
+  padding-top: 0;
+  padding-bottom: 2.4rem;
+  height: fit-content;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+
+  &-sticky {
+    @include responsive(xl-screen) {
+      position: fixed;
+      top: 2rem;
+      width: calc(($container-width / 7) * 2 - 2rem);
+    }
+  }
+
+  &-heading {
+    padding-inline: 2rem;
+    padding-top: 3rem;
+    padding-bottom: 2.5rem;
+    @include style-text(600, 1.6rem, 1.6rem, $text-color);
+    font-family: $second-font;
+    text-transform: uppercase;
+  }
+
+  &-product {
+    flex: 1;
+    overflow-y: auto;
+    padding-inline: 2rem;
+
+    &-title {
+      padding-block: 2rem;
+      @include flex(space-between, center);
+      border-top: 1px solid $border-color-1;
+
+      &-heading {
+        font-family: $second-font;
+        text-transform: uppercase;
+        @include style-text(600, 1.4rem, 2.4rem, $home-heading-color);
+      }
+
+      &-quantity {
+        border-radius: 50%;
+        width: 2rem;
+        height: 2rem;
+        @include flex-center;
+        @include style-text(600, 1.1rem, 1.1rem, $white);
+        background-color: $indigo;
+      }
+    }
+
+    & .cart__total-price-list {
+      @include style-text(600, 1.3rem, 2rem, $text-color);
+      list-style: none;
+      flex-wrap: wrap;
+      list-style: none;
+      display: flex;
+
+      &-item {
+        // flex: 1;
+        width: 50%;
+        padding-right: 1rem;
+
+        &:nth-child(3) {
+          width: 100%;
+          margin-block: 1rem;
+        }
+
+        &:nth-child(4) {
+          width: 100%;
+        }
+
+        & span {
+          text-align: left;
+          width: 40%;
+          padding-right: 1rem;
+        }
+
+        & span:last-child {
+          width: 60%;
+        }
+
+        &-danger {
+          color: $danger;
+        }
+      }
+    }
+
+    & .cart__total-product-list {
+      list-style: none;
+      position: relative;
+
+      &-item {
+        @include style-text(500, 1.4rem, 2.4rem, $text-color);
+        padding-block: 1.4rem;
+        border-bottom: 1px solid $border-color-2;
+
+        &:first-child {
+          border-top: 1px solid $border-color-2;
+        }
+
+        &-title {
+          margin-bottom: 1rem;
+          font-weight: 600;
+          font-size: 1.3rem;
+          // @include limit-line-text(2);
+
+          @include responsive(md-screen) {
+            font-size: 1.4rem;
+          }
+        }
+      }
+    }
+  }
+
+  &-summary {
+    padding-inline: 2rem;
+  }
+
+  &-subtotal {
+    @include flex(space-between, center);
+    padding-block: 2rem;
+    border-bottom: 1px solid $border-color-2;
+    @include style-text(600, 1.4rem, 1.4rem, $home-heading-color);
+    font-family: $second-font;
+
+    &-title {
+      text-transform: uppercase;
+    }
+  }
+
+  &-coupons {
+    display: flex;
+    height: 40px;
+    margin-top: 2rem;
+    padding-inline: 2rem;
+
+    &-btn {
+      margin-left: auto;
+      & svg {
+        margin-right: 0.8rem;
+      }
+    }
+  }
+
+  & .modal {
+    &__header {
+      padding-bottom: 2rem;
+    }
+  }
+}

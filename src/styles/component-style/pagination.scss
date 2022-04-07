@@ -1,0 +1,31 @@
+.pagination {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 3rem;
+
+  &-btn {
+    width: 35px;
+    height: 35px;
+    @include flex-center;
+    border-radius: 50%;
+    @include style-text(600, 1.4rem, 1.4rem, $primary-color);
+    box-shadow: $box-shadow-1;
+    margin-right: 1rem;
+    border: 2px solid $primary-color;
+    transition: all 0.2s linear;
+    user-select: none;
+
+    & svg {
+      font-size: 1.5rem;
+    }
+
+    &-disable {
+      pointer-events: none;
+    }
+
+    &-active {
+      background-color: $primary-color;
+      color: white;
+    }
+  }
+}

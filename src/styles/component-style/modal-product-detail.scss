@@ -1,0 +1,132 @@
+.modal__product {
+  // padding: 2rem 1rem;
+  @include responsive(lg-screen) {
+    padding: 4rem 3rem;
+  }
+  position: relative;
+
+  & .product__img-show-container {
+    aspect-ratio: 1;
+  }
+
+  &-btn-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    & svg {
+      font-size: 3rem;
+      fill: #c2c2d3;
+      @include responsive(md-screen) {
+        font-size: 4rem;
+      }
+    }
+  }
+
+  &-title {
+    @include style-text(500, 1.5rem, 2.5rem, $home-heading-color);
+    margin-bottom: 2rem;
+    margin-right: 4rem;
+
+    @include responsive(sm-screen) {
+      font-size: 1.6rem;
+      line-height: 2.6rem;
+    }
+
+    @include responsive(md-screen) {
+      font-size: 1.8rem;
+      line-height: 2.8rem;
+      margin-right: 5rem;
+    }
+
+    @include responsive(lg-screen) {
+      margin-right: 6rem;
+      font-size: 2rem;
+      line-height: 3rem;
+    }
+  }
+
+  &-sub {
+    display: none;
+    @include responsive(lg-screen) {
+      @include flex(flex-start, start);
+      flex-direction: column;
+      flex-wrap: nowrap;
+      border-bottom: 1px solid $border-color-1;
+      padding-bottom: 2rem;
+      margin-bottom: 1.6rem;
+    }
+
+    @include responsive(sm-screen) {
+      align-items: center;
+      flex-direction: row;
+      margin-bottom: 2rem;
+    }
+
+    &-brand {
+      margin-bottom: 1rem;
+      @include responsive(sm-screen) {
+        padding-right: 1rem;
+        margin-bottom: 0;
+        border-right: 1px solid $border-color-1;
+      }
+      @include style-text(400, 1.3rem, 1.8rem, $text-color-opacity);
+      &-title {
+        @include style-text(500, 1.2rem, 1.2rem, $text-color);
+      }
+      padding-right: 1rem;
+    }
+
+    &-rating {
+      margin-bottom: 1rem;
+      padding-left: 0;
+      @include responsive(sm-screen) {
+        margin-bottom: 0;
+        padding-inline: 1rem;
+        border-right: 1px solid $border-color-1;
+
+        // &-no-padding {
+        //   padding-left: 0;
+        // }
+      }
+      @include flex(flex-start, center);
+
+      &-review {
+        margin-left: 0.8rem;
+        font-family: $second-font;
+        position: relative;
+        @include style-text(600, 1.2rem, 1rem, $heading-color);
+      }
+    }
+
+    &-sku {
+      @include responsive(sm-screen) {
+        padding-left: 1rem;
+      }
+      @include style-text(400, 1.3rem, 1.6rem, $text-color-opacity);
+
+      & small {
+        @include style-text(500, 1.2rem, 1.2rem, $text-color);
+      }
+    }
+  }
+
+  &-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 2rem;
+
+    @include responsive(lg-screen) {
+      grid-template-rows: 1fr;
+      grid-template-columns: 1fr 1fr;
+      grid-gap: 1rem;
+    }
+  }
+
+  & .modal__product-sub {
+    @include responsive(lg-screen) {
+      padding-bottom: 2rem;
+      margin-bottom: 2rem;
+    }
+  }
+}

@@ -1,0 +1,61 @@
+.home__heading {
+  @include flex(space-between, center);
+  margin-bottom: 3rem;
+  flex-direction: column;
+  @include responsive(sm-screen) {
+    flex-direction: row;
+  }
+
+  &-text {
+    &-sale {
+      display: flex;
+      align-items: center;
+
+      & .product__countdown {
+        margin-left: 2rem;
+      }
+    }
+
+    & h3 {
+      @include style-text(600, 1.8rem, 1.8rem, $home-heading-color);
+      text-transform: uppercase;
+      font-family: $second-font;
+      margin-bottom: 2rem;
+      @include responsive(sm-screen) {
+        margin-bottom: 0;
+        font-size: 2rem;
+        line-height: 2.4rem;
+      }
+    }
+
+    & p {
+      @include style-text(500, 1.3rem, 2.3rem, #9b9bb4);
+      margin-right: 1rem;
+      display: none;
+      @include responsive(md-screen) {
+        display: block;
+        margin-top: 0.8rem;
+      }
+    }
+  }
+
+  &-btn {
+    padding: 0.8rem 2.4rem;
+    border-radius: 25px;
+    border: 1px solid $border-color-1;
+    color: #a9aabe;
+    @include flex-center;
+    font-size: 1.2rem;
+    font-weight: 500;
+    transition: all 0.3s;
+    white-space: nowrap;
+
+    & svg {
+      margin-left: 0.8rem;
+    }
+
+    &:hover {
+      color: $text-color;
+    }
+  }
+}

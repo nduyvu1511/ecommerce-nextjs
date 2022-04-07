@@ -1,0 +1,278 @@
+.auth-container {
+  min-height: 100vh;
+  padding-block: 6rem;
+
+  .auth-wrapper {
+    border-radius: 10px;
+    border: 1px solid $border-color-2;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    margin-inline: auto;
+    box-shadow: $box-shadow-2;
+    background-color: #fff;
+    width: 100%;
+
+    @include responsive(sm-screen) {
+      width: 80%;
+    }
+
+    @include responsive(md-screen) {
+      width: 60%;
+    }
+
+    @include responsive(lg-screen) {
+      width: 100%;
+      flex-direction: row;
+    }
+
+    @include responsive(xl-screen) {
+      width: 80%;
+    }
+
+    .form-image {
+      display: none;
+      @include responsive(lg-screen) {
+        width: 50%;
+        @include flex-center;
+        border-right: 1px solid $border-color-2;
+      }
+
+      @include responsive(xl-screen) {
+        width: 55%;
+      }
+
+      &-img {
+        width: 80%;
+        height: 80%;
+        object-fit: cover;
+      }
+    }
+    .form-wrapper {
+      background-color: #fff;
+      width: 100%;
+      padding-bottom: 6rem;
+      width: 300px;
+      @media screen and(min-width: 420px) {
+        width: 360px;
+      }
+      @include responsive(sm-screen) {
+        padding-inline: 0;
+      }
+
+      @include responsive(lg-screen) {
+        width: 50%;
+        padding-inline: 6rem;
+      }
+      @include responsive(xl-screen) {
+        width: 45%;
+        padding-inline: 4rem;
+      }
+      margin: 0 auto;
+    }
+
+    .form-heading {
+      @include style-text(600, 1.9rem, 2.4rem, $text-color);
+      font-family: $second-font;
+      text-align: center;
+      text-transform: uppercase;
+      padding-top: 6rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid $border-color-2;
+    }
+
+    .form-control {
+      padding-top: 3rem;
+
+      & .btn-primary {
+        width: 100%;
+      }
+    }
+
+    & .form-control-auth {
+      padding-top: 0;
+    }
+
+    .form-footer {
+      &-separate {
+        margin-block: 2rem;
+        text-align: center;
+        @include flex-center;
+
+        .text {
+          padding-inline: 1.6rem;
+          font-size: 1.4rem;
+          color: $text-color-opacity;
+        }
+
+        .left {
+          height: 1px;
+          background-color: rgba($color: #000, $alpha: 0.07);
+          flex: 1;
+        }
+        .right {
+          height: 1px;
+          background-color: rgba($color: #000, $alpha: 0.07);
+          flex: 1;
+        }
+      }
+
+      &-others {
+        margin-top: 2rem;
+
+        & .btn-primary {
+          width: 100%;
+
+          & svg {
+            margin-right: 0.8rem;
+            font-size: 2rem;
+          }
+
+          &:first-child {
+            margin-bottom: 1rem;
+          }
+
+          &:nth-child(2) {
+            margin-bottom: 1rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+.form-item-inline {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 3rem;
+  position: relative;
+
+  @include responsive(md-screen) {
+    flex-direction: row;
+    margin-bottom: 4rem;
+  }
+
+  & label {
+    width: 100%;
+    margin-bottom: 0.4rem;
+    @include style-text(500, 1.4rem, 2.8rem, $text-color);
+
+    @include responsive(md-screen) {
+      text-align: right;
+      width: 150px;
+      margin-bottom: 0;
+      margin-right: 2rem;
+    }
+  }
+
+  & input,
+  textarea {
+    width: 100%;
+    border: 1px solid rgba($color: #000000, $alpha: 0.2);
+    border-radius: 4px;
+    height: 40px;
+    outline: none;
+    @include style-text(500, 1.4rem, 1.4rem, $text-color);
+    padding-inline: 1rem;
+
+    @include responsive(md-screen) {
+      flex: 1;
+    }
+  }
+
+  & textarea {
+    height: unset;
+    padding: 2rem 1.5rem;
+  }
+
+  & .form-item-text-error {
+    position: absolute;
+    bottom: -2.6rem;
+    left: 0.1rem;
+    @include style-text(500, 1.2rem, 2.2rem, $danger);
+    @include responsive(sm-screen) {
+      font-size: 1.3rem;
+    }
+  }
+}
+
+.form-item-input-radio {
+  display: flex;
+  align-items: center;
+
+  & label {
+    width: 50px;
+    @include responsive(lg-screen) {
+      width: unset;
+    }
+    display: flex;
+    align-items: center;
+
+    & input {
+      margin-right: 1rem;
+      height: 1.8rem;
+      width: 1.8rem;
+    }
+  }
+}
+
+.form-item-date {
+  display: flex;
+  align-items: center;
+  flex: 1;
+
+  & .dropdown {
+    border: 1px solid $border-color-1;
+    margin-right: 2rem;
+    width: 33.33%;
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    &-title {
+      padding-block: 1.4rem;
+      justify-content: space-between;
+    }
+
+    &-list {
+      top: calc(100% + 0.1rem);
+    }
+  }
+}
+
+.form-item-text-error-sm {
+  font-size: 1.1rem !important;
+  line-height: 1.1rem !important;
+}
+
+.form-item {
+  position: relative;
+  width: 100%;
+  margin-block: 3rem;
+
+  &-input {
+    width: 100%;
+    height: 40px;
+    background-color: transparent;
+    border: 1px solid $black-opacity-02;
+    border-radius: 4px;
+    outline: none;
+    padding: 0 1.6rem;
+    @include style-text(500, 1.4rem, 1.4rem, $text-color);
+
+    &-error {
+      border: 1px solid $danger !important;
+      background-color: $danger-opacity;
+    }
+  }
+
+  &-text-error {
+    @include style-text(500, 1.2rem, 1.6rem, $danger);
+    position: absolute;
+    bottom: -2rem;
+    left: 0;
+  }
+}

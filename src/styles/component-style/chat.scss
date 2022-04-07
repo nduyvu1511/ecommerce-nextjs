@@ -1,0 +1,523 @@
+.chat__container {
+  position: fixed;
+
+  &-active {
+    inset: 0;
+    z-index: 3000;
+    @include responsive(lg-screen) {
+      z-index: 0;
+    }
+  }
+
+  @include responsive(lg-screen) {
+    right: 0;
+    top: 50%;
+    z-index: 800;
+    bottom: unset;
+    left: 0;
+    transform: translateY(-50%);
+  }
+
+  & .chat {
+    width: 100vw;
+    height: 100vh;
+    @include responsive(lg-screen) {
+      width: 230px;
+      height: 400px;
+      margin-right: 1rem;
+    }
+
+    background-color: white;
+    box-shadow: $box-shadow-1;
+    border: 1px solid $border-color-2;
+    border-radius: 0.4rem;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transform-origin: 20% 40%;
+    animation: fade-in 0.3s linear;
+    transition: width 0.2s linear;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 0;
+
+    &-expanded {
+      @include responsive(lg-screen) {
+        width: 530px;
+      }
+    }
+
+    &-open {
+    }
+
+    &__header {
+      padding: 1rem;
+      @include flex(space-between, center);
+      border-bottom: 1px solid $border-color-2;
+      height: 40px;
+
+      &-title {
+        font-family: $second-font;
+        @include style-text(700, 1.8rem, 2.4rem, $primary-color);
+
+        & span {
+          font-family: $main-font;
+          margin-left: 0.8rem;
+          @include style-text(500, 1.2rem, 1.2rem, $primary-color);
+        }
+      }
+
+      &-buttons {
+        display: flex;
+
+        & button:first-child {
+          margin-right: 1rem;
+        }
+
+        & button {
+          width: 2rem;
+          height: 2rem;
+          border: 1px solid $border-color-1;
+          @include flex-center;
+          border-radius: 0.2rem;
+
+          & svg {
+            font-size: 1.6rem;
+          }
+        }
+      }
+    }
+
+    &__body {
+      display: flex;
+      flex: 1;
+      max-height: 100%;
+      @include responsive(lg-screen) {
+        max-height: 90%;
+      }
+
+      &-loading {
+        flex: 1;
+        @include flex-center;
+
+        & svg {
+          font-size: 3rem;
+        }
+      }
+
+      &-left {
+        width: 0;
+        overflow: hidden;
+        transform: translateX(100%);
+        transition: all 0.2s linear;
+
+        &-wrapper {
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+        }
+
+        &-active {
+          width: 100%;
+          @include responsive(lg-screen) {
+            width: 300px;
+          }
+          border-right: 1px solid $border-color-1;
+          transform: translateX(0);
+        }
+
+        &-empty {
+          flex: 1;
+          height: 100%;
+          @include flex-center;
+          flex-direction: column;
+
+          & svg {
+            font-size: 4rem;
+            fill: $primary-color;
+          }
+
+          & p {
+            margin-top: 2rem;
+            @include style-text(500, 1.4rem, 2.4rem, $text-color);
+          }
+        }
+
+        &-name {
+          height: 35px;
+          padding-inline: 1rem;
+          border-bottom: 1px solid $border-color-2;
+          & p {
+            @include style-text(600, 1.5rem, 3.5rem, $home-heading-color);
+            @include limit-line-text(1);
+          }
+        }
+
+        &-content {
+          flex: 1;
+          max-height: 84vh;
+
+          & .chat__list {
+            max-height: 84vh;
+            @include responsive(lg-screen) {
+              max-height: 273px;
+            }
+            overflow-y: auto;
+            list-style: none;
+            padding: 1rem 1rem 0 1rem;
+
+            & img {
+              width: 30px;
+              height: 30px;
+              object-fit: cover;
+            }
+
+            &-item-right {
+              margin-bottom: 1rem;
+              text-align: right;
+            }
+
+            &-item-left {
+              margin-bottom: 1rem;
+              text-align: left;
+            }
+
+            & .chat__list-time {
+              text-align: center;
+              margin-bottom: 1rem;
+              @include style-text(400, 1.3rem, 1.3rem, $text-color-opacity);
+            }
+
+            &-item {
+              @include style-text(500, 1.3rem, 2rem, $text-color);
+              padding: 1rem 0.6rem;
+              margin-bottom: 0.5rem;
+              border-radius: 0.2rem;
+              width: fit-content;
+
+              &-partner {
+                background-color: $chat-secondary;
+                margin-right: auto;
+              }
+
+              &-self {
+                background-color: $chat-primary;
+                margin-left: auto;
+              }
+            }
+          }
+        }
+
+        &-chat-box {
+          padding-inline: 1rem;
+          border-top: 1px solid $border-color-2;
+          position: relative;
+
+          & input {
+            padding-right: 2.4rem;
+          }
+
+          & button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 1rem;
+
+            & svg {
+              font-size: 1.8rem;
+              fill: $primary-color;
+            }
+          }
+        }
+      }
+
+      &-right {
+        position: fixed;
+        @include hidden;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 230px;
+        background-color: #fff;
+        border-right: 1px solid $border-color-1;
+        box-shadow: 2px 2px 10px 0px black;
+        transform: translateX(100%);
+        transition: all 0.2s ease;
+
+        @include responsive(lg-screen) {
+          transform: translateX(0);
+          position: static;
+          @include show;
+          display: block;
+          border-right: unset;
+          box-shadow: unset;
+        }
+        padding-top: 0;
+
+        &-open {
+          @include show;
+          transform: translateX(0%);
+        }
+
+        &-wrapper {
+          &-header {
+            padding: 0.6rem;
+            display: flex;
+            justify-content: flex-end;
+
+            & button {
+              & svg {
+                font-size: 2rem;
+              }
+            }
+          }
+        }
+
+        &-header {
+          height: 35px;
+          position: relative;
+
+          &-search {
+            height: 100%;
+            position: relative;
+
+            & svg,
+            button {
+              position: absolute;
+              top: 50%;
+              transform: translateY(-50%);
+            }
+
+            & svg {
+              left: 0.8rem;
+            }
+
+            & button {
+              right: 3rem;
+
+              & svg {
+                color: $text-color;
+                font-size: 2rem;
+              }
+            }
+
+            & input {
+              height: 100%;
+              padding-left: 2.8rem;
+              background-color: $gray-color-opacity;
+            }
+          }
+
+          // Search channel result
+          & .search__channel-result {
+            position: absolute;
+            width: 100%;
+            @include responsive(lg-screen) {
+              height: 323px;
+            }
+            background-color: white;
+
+            &-list {
+              max-height: 90vh;
+              padding: 0.5rem;
+              overflow-y: auto;
+              @include responsive(lg-screen) {
+                max-height: 323px;
+              }
+
+              &-item {
+                @include flex(flex-start, center);
+                padding-block: 1rem;
+                cursor: pointer;
+
+                &:hover {
+                  background-color: $gray-color-opacity;
+                }
+
+                & img {
+                  width: 30px;
+                  height: 30px;
+                  object-fit: cover;
+                  border-radius: 0.2rem;
+                }
+
+                & p {
+                  @include style-text(600, 1.3rem, 2rem, $home-heading-color);
+                  margin-left: 1rem;
+                  @include limit-line-text(2);
+                }
+              }
+            }
+
+            &-no-result {
+              padding-inline: 2rem;
+              text-align: center;
+
+              & img {
+                margin-top: 2rem;
+                width: 80%;
+                height: auto;
+                object-fit: cover;
+                margin-bottom: 1rem;
+              }
+
+              & p {
+                @include style-text(500, 1.3rem, 2rem, $text-color);
+              }
+            }
+          }
+        }
+
+        &-body {
+          margin-top: 0.4rem;
+
+          & .chat__body-group__list {
+            max-height: 90vh;
+            @include responsive(lg-screen) {
+              max-height: 323px;
+            }
+            overflow-y: auto;
+            padding-bottom: 1rem;
+            overflow-x: hidden;
+
+            &-item {
+              cursor: pointer;
+              @include flex(flex-start, center);
+              padding: 0.8rem;
+              transition: all 0.1s linear;
+              user-select: none;
+
+              &:hover {
+                background-color: $gray-color-opacity;
+              }
+
+              &-active {
+                background-color: $gray-color-opacity-active;
+                pointer-events: none;
+              }
+
+              & img {
+                width: 35px;
+                height: 30px;
+                border-radius: 0.3rem;
+                object-fit: cover;
+              }
+
+              &-info {
+                margin-left: 0.8rem;
+                width: 100%;
+
+                & p:first-child {
+                  @include flex(space-between, center);
+                  margin-bottom: 0.4rem;
+
+                  & .channel__item-name {
+                    @include style-text(600, 1.4rem, 2rem, $home-heading-color);
+                    @include limit-line-text(1);
+                  }
+
+                  & .channel__item-count {
+                    height: fit-content;
+                    padding: 0.2rem 0.4rem;
+                    @include flex-center;
+                    background-color: $primary-color;
+                    border-radius: 25px;
+                    @include style-text(400, 1.1rem, 1.1rem, white);
+                  }
+                }
+
+                & p:last-child {
+                  @include flex(space-between, center);
+                  width: 100%;
+
+                  & span:first-child {
+                    width: 100%;
+                    max-width: 60px;
+                    @include style-text(400, 1.3rem, 2rem, $text-color);
+                    @include limit-line-text(1);
+                    margin-right: 0.4rem;
+                  }
+
+                  & span:last-child {
+                    font-weight: 300;
+                    font-size: 1.2rem;
+                    line-height: 1.2rem;
+                    white-space: nowrap;
+                    flex: 1;
+                    text-align: right;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    & .chat__item-input {
+      width: 100%;
+      height: 35px;
+      outline: none;
+      border: none;
+    }
+  }
+}
+
+.chat__btn {
+  position: fixed;
+  z-index: 200;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: $second-font;
+  height: 40px;
+  padding-inline: 2rem;
+  background-color: $primary-color;
+  display: flex;
+  align-items: center;
+  @include style-text(600, 1.8rem, 1.8rem, white);
+  border-radius: 0.3rem;
+  box-shadow: $box-shadow-1;
+
+  &-lg {
+    display: none;
+    @include responsive(lg-screen) {
+      display: flex;
+    }
+  }
+
+  &-sm {
+    align-items: center;
+    justify-content: center;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    padding: 0;
+    @include responsive(lg-screen) {
+      display: none;
+    }
+  }
+
+  & svg {
+    fill: white;
+    width: 2rem;
+    @include responsive(lg-screen) {
+      margin-right: 1.4rem;
+    }
+  }
+
+  &-count {
+    position: absolute;
+    top: -1rem;
+    right: 1rem;
+    width: 1.8rem;
+    height: 1.8rem;
+    @include flex-center;
+    background-color: $primary-color;
+    box-shadow: $border-color-1;
+    border-radius: 10px;
+    @include style-text(500, 1.1rem, 1.1rem, white);
+    border-bottom: 1px solid $white-opacity;
+  }
+}

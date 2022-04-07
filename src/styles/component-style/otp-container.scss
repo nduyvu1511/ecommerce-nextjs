@@ -1,0 +1,130 @@
+.otp-container {
+  margin-inline: auto;
+  border-radius: 4px;
+
+  .otp__header {
+    @include flex(flex-start, end);
+    padding-top: 4rem;
+
+    &-btn {
+      // margin-right: 2rem;
+      & svg {
+        color: $text-color;
+        font-size: 2.4rem;
+        @include responsive(sm-screen) {
+          font-size: 3rem;
+        }
+      }
+    }
+    &-heading {
+      width: 100%;
+      text-align: center;
+      @include style-text(500, 1.6rem, 3.2rem, $text-color);
+      @include responsive(sm-screen) {
+        font-size: 2rem;
+        font-weight: 4rem;
+      }
+    }
+  }
+
+  .otp-message {
+    margin-bottom: 4rem;
+    @include style-text(500, 1.4rem, 2.4rem, $text-color);
+  }
+
+  .otp__form {
+    .form-control {
+      .form-item {
+        padding: 2rem 0;
+        margin-bottom: 4rem;
+
+        & label[for='otpInput'] {
+          display: inline-block;
+          margin-bottom: 4rem;
+          @include style-text(400, 1.4rem, 2.8rem, $text-color-opacity);
+          text-align: center;
+        }
+
+        &-wrapper {
+          position: relative;
+          height: 45px;
+          display: flex;
+          justify-content: center;
+
+          & input[name='OTPInput'] {
+            overflow: hidden;
+            letter-spacing: 3.4rem;
+            width: 105%;
+            padding-left: 2rem;
+            height: 100%;
+            @include style-text(500, 2rem, 2rem, $text-color);
+
+            @media screen and (min-width: 360px) {
+              padding-left: 3rem;
+            }
+
+            @media screen and (min-width: 415px) {
+              padding-left: 3rem;
+              width: 370px;
+              letter-spacing: 4.1rem;
+              font-size: 2.6rem;
+              line-height: 2.6rem;
+            }
+            outline: none;
+            -moz-appearance: textfield;
+            background-color: transparent;
+            border: 0 !important;
+
+            &::-webkit-outer-spin-button,
+            &::-webkit-inner-spin-button {
+              -webkit-appearance: none;
+              margin: 0;
+            }
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+          }
+
+          .form-item-border {
+            display: flex;
+            position: absolute;
+            inset: 0;
+            margin-left: -1rem;
+
+            &-item {
+              &:first-child {
+                margin-left: 2rem;
+                @media screen and (min-width: 360px) {
+                  margin-left: 3rem;
+                }
+                @media screen and (min-width: 415px) {
+                  margin-left: 2.7rem;
+                }
+              }
+
+              margin-left: 1.5rem;
+              width: 3rem;
+
+              @media screen and (min-width: 415px) {
+                margin-left: 1.7rem;
+                width: 4rem;
+              }
+              border: 1px solid $border-color-1;
+            }
+          }
+        }
+
+        .form-item-text-error {
+          bottom: -1rem;
+          left: 2rem;
+        }
+      }
+    }
+
+    .otp-btn-login {
+      width: 100%;
+      font-family: $second-font;
+      text-transform: uppercase;
+    }
+  }
+}

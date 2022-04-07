@@ -1,0 +1,18 @@
+.input__checkbox {
+  width: 20px;
+  height: 20px;
+  border: 1px solid $black-opacity-02;
+  border-radius: 0.4rem;
+  @include flex-center;
+  transition: all 0.1s;
+  cursor: pointer;
+
+  &-active {
+    background-color: $blue;
+  }
+
+  & svg {
+    color: $white;
+    font-size: 1.6rem;
+  }
+}

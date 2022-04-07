@@ -1,0 +1,96 @@
+.swiper {
+  &-wrapper {
+    .swiper-slide {
+      height: auto;
+
+      .product__card {
+        height: 100%;
+
+        &:hover {
+          border-bottom: 1px solid $border-product-hover;
+        }
+
+        &__img {
+          flex-shrink: 0;
+          flex: 1;
+
+          & img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+          }
+        }
+
+        .product__card__content-title {
+          height: 38px;
+        }
+      }
+    }
+  }
+
+  // Custom button
+  .swiper-button-prev.swiper-button-disabled,
+  .swiper-button-next.swiper-button-disabled {
+    pointer-events: unset;
+  }
+
+  &-button-prev,
+  &-button-next {
+    width: 25px;
+    height: 25px;
+    box-shadow: $box-shadow-1;
+    border: 1px solid $border-color-1;
+    background-color: #fff;
+    border-radius: 50%;
+    @include flex-center;
+
+    @include responsive(md-screen) {
+      width: 35px;
+      height: 35px;
+    }
+
+    &::after {
+      font-size: 1rem;
+      @include responsive(md-screen) {
+        font-size: 1.2rem;
+      }
+      font-weight: bold;
+      color: black;
+    }
+  }
+
+  &-pagination {
+    display: none;
+
+    @include responsive(sm-screen) {
+      display: block;
+    }
+  }
+}
+
+.swiper-hide-navigation {
+  .swiper-button-next,
+  .swiper-button-prev {
+    display: none;
+  }
+}
+
+.Toastify__toast-container--top-right {
+  top: 0;
+  @include responsive(sm-screen) {
+    top: 2em;
+  }
+}
+
+.swiper-pagination-bullet {
+  width: 5px;
+  height: 5px;
+  transition: all 0.2s linear;
+}
+
+.swiper-pagination-bullet-active {
+  width: 20px;
+  border-radius: 25px;
+  transition: all 0.2s linear;
+  background-color: $primary-color;
+}

@@ -1,0 +1,105 @@
+.product__review {
+  .comment__list {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 3rem;
+
+    &-item {
+      display: flex;
+      padding-block: 0.5rem;
+      position: relative;
+
+      &-img {
+        margin-right: 1rem;
+
+        @include responsive(sm-screen) {
+          margin-right: 2rem;
+        }
+
+        & img {
+          width: 4rem;
+          height: 4rem;
+          border-radius: 50%;
+          object-fit: cover;
+
+          @include responsive(sm-screen) {
+            width: 6rem;
+            height: 6rem;
+          }
+        }
+      }
+
+      &-content {
+        flex: 1;
+
+        &-rating {
+          margin-bottom: 1rem;
+        }
+
+        &-info {
+          display: flex;
+          align-items: baseline;
+          margin-bottom: 1rem;
+
+          &-author {
+            @include style-text(600, 1.5rem, 1.5rem, $text-color);
+            padding-right: 0.3rem;
+          }
+
+          & svg {
+            position: relative;
+            top: 0.3rem;
+            fill: $text-color;
+          }
+
+          &-date {
+            padding-left: 0.3rem;
+            @include style-text(400, 1.3rem, 1.3rem, $text-color);
+          }
+        }
+
+        &-comment {
+          @include style-text(500, 1.4rem, 2.4rem, $text-color);
+        }
+      }
+
+      &-delete {
+        height: fit-content;
+        padding: 1rem;
+        position: absolute;
+        right: 0;
+        top: 0;
+
+        & svg {
+          fill: $danger;
+          font-size: 1.3rem;
+          @include responsive(lg-screen) {
+            font-size: 1.6rem;
+          }
+          margin-left: auto;
+        }
+      }
+    }
+  }
+
+  &-form {
+    margin-bottom: 3rem;
+
+    &-heading {
+      @include flex(flex-start, center);
+      @include style-text(500, 1.6rem, 2.6rem, $text-color);
+      margin-bottom: 2rem;
+      cursor: pointer;
+      width: fit-content;
+
+      & svg {
+        margin-left: 1rem;
+      }
+    }
+
+    &-wrapper {
+      transition: all 0.2s linear;
+      overflow: hidden;
+    }
+  }
+}

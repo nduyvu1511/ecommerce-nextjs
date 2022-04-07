@@ -1,0 +1,116 @@
+.shipping__detail {
+  &-heading {
+    margin-bottom: 3rem;
+    @include style-text(500, 1.8rem, 2.8rem, $text-color);
+    @include responsive(lg-screen) {
+      font-size: 2rem;
+      line-height: 3rem;
+      margin-bottom: 4rem;
+    }
+  }
+
+  &-list {
+    list-style: none;
+    grid-gap: 2rem;
+
+    &-item {
+      border-radius: 4px;
+      border: 1px solid $border-color-1;
+      padding: 2rem;
+      overflow: hidden;
+      height: fit-content;
+
+      .shipping__detail-wrapper-child {
+        max-height: 0;
+        transition: all 0.2s;
+      }
+
+      .shipping__detail-wrapper-child-expand {
+        transition: all 0.2s;
+        max-height: 500px;
+        border-top: 1px solid $border-color-1;
+        padding-top: 2rem;
+        margin-top: 2rem;
+
+        @include style-text(500, 1.4rem, 2.4rem, $text-color);
+
+        & p:last-child {
+          text-align: right;
+        }
+      }
+
+      &-active {
+        transition: all 0.2s;
+        border: 1px solid $primary;
+      }
+
+      .shipping__detail-wrapper {
+        display: flex;
+        justify-content: space-between;
+        cursor: pointer;
+
+        &-content {
+          flex: 1;
+          margin-right: 2rem;
+
+          & h3 {
+            @include style-text(500, 1.4rem, 2.4rem, $text-color);
+            margin-bottom: 1rem;
+            @include responsive(lg-screen) {
+              font-size: 1.5rem;
+              line-height: 2.5rem;
+            }
+          }
+          & p {
+            @include style-text(500, 1.4rem, 2.4rem, $text-color);
+          }
+        }
+
+        &-option {
+          height: 100%;
+          @include flex(space-between, center);
+          flex-direction: column;
+
+          & button {
+            margin-top: 0.5rem;
+            padding: 1rem;
+            & svg {
+              font-size: 2rem;
+              color: $text-color-opacity;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &-input {
+    margin-top: 4rem;
+
+    @include responsive(md-screen) {
+      margin-top: 4rem;
+    }
+
+    @include responsive(lg-screen) {
+      margin-top: 6rem;
+    }
+
+    & textarea {
+      width: 100%;
+      border: 1px solid $border-color-1;
+      border-radius: 0.4rem;
+      padding: 1.5rem;
+      @include style-text(500, 1.4rem, 2.4rem, $text-color);
+      background-color: #fff;
+      resize: vertical;
+    }
+  }
+
+  &-footer {
+    margin-top: 3rem;
+
+    & button {
+      margin-left: auto;
+    }
+  }
+}

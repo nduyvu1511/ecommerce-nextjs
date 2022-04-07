@@ -1,0 +1,30 @@
+.popup-container {
+  .modal {
+    max-width: 500px;
+    width: 100%;
+    height: auto;
+    background-color: transparent;
+    padding: 0;
+  }
+
+  .popup {
+    &-close-btn {
+      position: absolute;
+      right: 0;
+      top: 0;
+
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid $border-color-1;
+      box-shadow: $box-shadow-1;
+      @include flex-center;
+      background-color: $white;
+
+      & svg {
+        font-size: 2.4rem;
+        fill: $text-color;
+      }
+    }
+  }
+}

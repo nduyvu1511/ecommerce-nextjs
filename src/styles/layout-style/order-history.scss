@@ -1,0 +1,69 @@
+.order__history {
+  &-table {
+    width: 100%;
+    border-collapse: collapse;
+
+    & th,
+    td {
+      text-align: left;
+    }
+
+    & thead {
+      th {
+        padding-bottom: 2rem;
+        @include style-text(500, 1.3rem, 2rem, $text-color);
+        @include responsive(md-screen) {
+          font-size: 1.4rem;
+          line-height: 2.2rem;
+        }
+      }
+
+      tr {
+        border-bottom: 1px solid $border-color-2;
+      }
+    }
+
+    & tbody {
+      td {
+        padding-block: 1.2rem;
+        @include style-text(400, 1.2rem, 2rem, $text-color);
+        @include responsive(md-screen) {
+          font-size: 1.3rem;
+          padding-block: 2rem;
+          line-height: 2.3rem;
+        }
+
+        &:first-child {
+          color: $primary-color;
+          font-size: 1.3rem;
+          font-weight: 500;
+          @include responsive(md-screen) {
+            font-size: 1.4rem;
+            font-weight: 600;
+          }
+        }
+      }
+
+      tr {
+        border-bottom: 1px solid $border-color-2;
+      }
+
+      & td:last-child {
+        border-bottom: 0;
+      }
+    }
+  }
+
+  &-detail-btn {
+    width: 30px;
+    height: 30px;
+    @include flex-center;
+    background-color: $primary-color-opacity;
+    border-radius: 50%;
+
+    & svg {
+      color: $primary-color;
+      font-size: 1.6rem;
+    }
+  }
+}

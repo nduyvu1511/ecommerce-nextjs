@@ -1,0 +1,48 @@
+.user__address {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 2rem;
+
+  @include responsive(lg-screen) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  &-btn-add {
+    font-family: $second-font;
+    border: 1px solid $border-color-1;
+    height: 80px;
+    width: 50%;
+    margin: 0 auto;
+    padding-block: 3rem;
+    border-radius: 4px;
+    background-color: $primary-color-opacity;
+    @include flex-center;
+    @include style-text(600, 1.3rem, 2.3rem, $text-color);
+
+    @include responsive(lg-screen) {
+      margin: unset;
+      @include style-text(600, 1.5rem, 2.5rem, $text-color);
+    }
+
+    & svg {
+      font-size: 1.8rem;
+      margin-right: 0.6rem;
+      @include responsive(lg-screen) {
+        font-size: 2rem;
+      }
+    }
+  }
+}
+
+.address__container {
+  .modal {
+    width: 100%;
+    max-height: 96vh;
+    max-width: 500px;
+    padding: 3rem 2rem;
+
+    @include responsive(md-screen) {
+      padding: 3rem;
+    }
+  }
+}

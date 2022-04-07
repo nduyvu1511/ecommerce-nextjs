@@ -1,0 +1,120 @@
+.cart__container {
+  .cart__wrapper {
+    margin-bottom: 5rem;
+
+    .cart__page-empty {
+      @include flex-center;
+      flex-direction: column;
+      padding-block: 5rem;
+
+      & svg {
+        margin-bottom: 2rem;
+      }
+
+      &-title {
+        margin-bottom: 3rem;
+        text-align: center;
+        font-family: $second-font;
+        @include style-text(600, 1.8rem, 2.8rem, $danger);
+      }
+    }
+
+    .cart__body {
+      &-cart {
+        &-header-sm {
+          display: block;
+          @include flex(space-between, center);
+          padding-top: 1rem;
+          padding-bottom: 2rem;
+          border-bottom: 1px solid $border-color-1;
+
+          @include responsive(md-screen) {
+            display: none;
+          }
+
+          & p {
+            @include style-text(600, 1.4rem, 1.4rem, $text-color);
+          }
+        }
+
+        &-header {
+          padding: 2rem 0;
+          border-bottom: 1px solid $border-color-1;
+          display: none;
+          @include responsive(md-screen) {
+            display: flex;
+          }
+
+          & p {
+            @include style-text(600, 1.3rem, 1.3rem, $text-color);
+          }
+
+          &-check {
+            width: 8%;
+            @include flex-center;
+          }
+
+          &-space {
+            width: 12%;
+            margin-right: 2rem !important;
+          }
+
+          &-wrapper {
+            width: 80%;
+            display: flex;
+            align-items: center;
+
+            & .cart-title-product {
+              width: 40%;
+              margin-right: 2rem;
+            }
+
+            & .cart-title-price {
+              width: 15%;
+              margin-right: 1rem;
+            }
+
+            & .cart-title-subtotal {
+              width: 15%;
+              margin-right: 1rem;
+            }
+
+            & .cart-title-quantity {
+              width: 20%;
+            }
+
+            & p:last-child {
+              width: 5%;
+            }
+          }
+        }
+
+        &-list {
+          margin-top: 1rem;
+
+          .cart__page__item {
+            padding-block: 3rem;
+            border-bottom: 1px solid $border-color-1;
+
+            @include responsive(md-screen) {
+              padding-block: 2rem;
+            }
+          }
+        }
+      }
+
+      & .cart__body-footer {
+        margin-top: 3rem;
+        @include flex(space-between, center);
+
+        &-btn {
+          height: 100%;
+          background-color: $red;
+          font-weight: 600;
+          margin-left: auto;
+          padding-inline: 5rem;
+        }
+      }
+    }
+  }
+}

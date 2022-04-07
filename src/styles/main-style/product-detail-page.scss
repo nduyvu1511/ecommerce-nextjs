@@ -1,0 +1,133 @@
+.product__detail-container {
+  background-color: $bg-product-detail;
+  padding-bottom: 9rem;
+
+  .product__detail-heading {
+    font-family: $second-font;
+    text-transform: uppercase;
+    margin-bottom: 1.6rem;
+    @include style-text(600, 1.8rem, 2.8rem, $home-heading-color);
+
+    @include responsive(sm-screen) {
+      font-size: 2rem;
+      line-height: 3rem;
+    }
+  }
+
+  .product__detail-wrapper {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 2rem 1rem;
+    border: 1px solid $border-color-2;
+    @include responsive(sm-screen) {
+      padding: 2rem 2rem;
+    }
+
+    @include responsive(md-screen) {
+      padding: 4rem 6rem;
+    }
+
+    @include responsive(lg-sreen) {
+      padding: 4rem 3rem;
+    }
+
+    @include responsive(xl-sreen) {
+      padding: 5rem 5rem;
+    }
+
+    .modal__product {
+      padding: 0;
+      background-color: #fff;
+
+      &-sub {
+        padding: 0;
+        border-bottom: 0;
+      }
+
+      .modal__product-sub {
+        .star-wrapper {
+          display: block;
+        }
+      }
+
+      .star-wrapper {
+        display: none;
+      }
+
+      .product__intro-shop {
+        margin-bottom: 3rem;
+        flex-direction: column;
+        align-items: flex-start;
+        @media screen and (min-width: 400px) {
+          flex-direction: row;
+          align-items: center;
+        }
+
+        &-btn {
+          margin-top: 3rem;
+          margin-left: 0;
+
+          @media screen and (min-width: 400px) {
+            margin-top: 0;
+            margin-left: 2rem;
+          }
+        }
+      }
+
+      &-content {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-gap: 1rem;
+
+        @include responsive(lg-screen) {
+          grid-template-rows: 1fr;
+          grid-template-columns: 1fr 1fr;
+          grid-column-gap: 1rem;
+        }
+
+        .product__intro {
+          margin-top: 1rem;
+          padding: 0;
+          @include responsive(lg-screen) {
+            padding-left: 4rem;
+          }
+          margin-left: 0;
+
+          &-status {
+            margin-bottom: 3rem;
+          }
+
+          .modal__product-header {
+            .modal__product-title {
+              margin-right: 0;
+            }
+          }
+
+          .button-share {
+            display: flex;
+          }
+        }
+      }
+    }
+  }
+
+  .product__detail-tabs-wrapper {
+    margin-top: 5rem;
+  }
+
+  .product__detail-related {
+    margin-top: 5rem;
+
+    .swiper-wrapper .product__card__img {
+      height: unset;
+    }
+  }
+
+  .product__detail-recently {
+    margin-top: 5rem;
+  }
+}
+
+.product__detail-loading {
+  padding-block: 4rem;
+}

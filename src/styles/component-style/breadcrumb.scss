@@ -1,0 +1,55 @@
+.breadcrumb {
+  @include flex(flex-start, flex-start);
+  flex-direction: column;
+
+  @include responsive(lg-screen) {
+    flex-direction: row;
+    align-items: center;
+  }
+  font-family: $second-font;
+  padding: 3rem 0;
+  text-transform: uppercase;
+
+  &-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    @include responsive(lg-screen) {
+      margin-bottom: 0;
+    }
+
+    & svg {
+      font-size: 1.3rem;
+      opacity: 0.7;
+      fill: $text-color;
+    }
+
+    .breadcrumb-icon-sm {
+      margin-right: 0.8rem;
+      @include responsive(lg-screen) {
+        display: none;
+      }
+    }
+
+    & a {
+      @include style-text(600, 1.3rem, 1.8rem, $home-heading-color);
+    }
+
+    & p {
+      @include style-text(600, 1.3rem, 1.8rem, $text-color-opacity);
+      flex: 1;
+    }
+  }
+
+  .breadcrumb-icon-lg {
+    display: none;
+    @include responsive(lg-screen) {
+      display: block;
+      margin: 0 1rem;
+    }
+  }
+}
