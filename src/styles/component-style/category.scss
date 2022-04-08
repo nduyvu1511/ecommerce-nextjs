@@ -25,7 +25,7 @@
 
   &-list {
     list-style: none;
-    max-height: 600px;
+    max-height: 560px;
     overflow-y: auto;
     @include hide-scrollbar;
     &-item {

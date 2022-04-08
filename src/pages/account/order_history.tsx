@@ -2,7 +2,7 @@ import { Modal, OrderStatus } from "@/components"
 import { AccountContainer } from "@/container"
 import { RootState } from "@/core/store"
 import { formatMoneyVND } from "@/helper"
-import { MainLayout } from "@/layout"
+import { MainAuthLayout } from "@/layout"
 import { OrderHistory, OrderHistoryDetail } from "@/models"
 import userApi from "@/services/userApi"
 import { useEffect, useRef, useState } from "react"
@@ -14,19 +14,6 @@ const OrderHistory: any = () => {
   const containerRef = useRef<HTMLSelectElement>(null)
   const dispatch = useDispatch()
   const { token } = useSelector((state: RootState) => state.user)
-
-  // const {
-  //   orderHistoryList: list,
-  //   token,
-  //   orderDetailHistory,
-  // } = useSelector((state: RootState) => state.user)
-  // const [page, setPage] = useState<number>(() => (list.length > 0 ? 1 : 0))
-
-  // const { data: orderHistoryList, totalPage } = usePagination({
-  //   limit: 12,
-  //   list,
-  //   page,
-  // })
 
   const [isOpen, setOpen] = useState<boolean>(false)
   const [orderHistoryList, setOrderHistoryList] = useState<OrderHistory[]>()
@@ -109,8 +96,8 @@ const OrderHistory: any = () => {
           </Modal>
         ) : null}
 
-        <div className="">
-          {/* {totalPage > 1 ? (
+        {/* <div className=""> */}
+        {/* {totalPage > 1 ? (
           <Pagination
             currentPage={page}
             onPaginate={(page: number) => {
@@ -120,12 +107,12 @@ const OrderHistory: any = () => {
             totalPage={totalPage}
           />
         ) : null} */}
-        </div>
+        {/* </div> */}
       </section>
     </AccountContainer>
   )
 }
 
-OrderHistory.Layout = MainLayout
+OrderHistory.Layout = MainAuthLayout
 
 export default OrderHistory

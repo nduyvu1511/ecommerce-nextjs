@@ -10,6 +10,7 @@
     color: $text-color;
 
     &-name {
+      @include limit-line-text(2);
       @include style-text(600, 1.2rem, 1.8rem, $text-color);
       margin-top: 2rem;
       text-align: center;

@@ -1,3 +1,5 @@
 export * from "./empty"
 export * from "./main"
 export * from "./noFooter"
+export * from "./mainAuth"
+export * from "./mainAuthNoFooter"

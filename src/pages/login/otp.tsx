@@ -81,6 +81,7 @@ const LoginWithOTP = () => {
         .then((res: any) => {
           const result = res.result
           if (result.success) {
+            router.push("/")
             dispatch(setToken(result.data.token))
             dispatch(
               setMessage({ title: "Đăng nhập thành công!", isOpen: true })
@@ -94,7 +95,6 @@ const LoginWithOTP = () => {
                 }
               })
 
-            router.push("/")
             setOtpLoading(false)
           } else {
             toast.error(result.message, {
@@ -104,9 +104,14 @@ const LoginWithOTP = () => {
           }
         })
     } catch (error) {
-      toast.error("Vui lòng nhập đúng mã OTP!", {
-        position: "top-right",
-      })
+      setOtpLoading(false)
+      dispatch(
+        setMessage({
+          title: "Vui lòng nhập đúng mã OTP",
+          isOpen: true,
+          type: "danger",
+        })
+      )
     }
   }
 

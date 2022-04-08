@@ -33,6 +33,10 @@
         height: 100%;
         object-fit: cover;
       }
+
+      & .image-container {
+        height: 100%;
+      }
     }
 
     &-category {

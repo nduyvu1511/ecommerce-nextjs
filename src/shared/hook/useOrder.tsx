@@ -66,11 +66,11 @@ const useOrder = (isFetch = true): ProductSWR => {
         customer_id,
         token,
         note,
-        partner_shipping_id: address?.id || null,
+        // partner_shipping_id: address?.id || null,
         list_products: [
           {
-            payment_term_id: payment?.acquirer_id || null,
-            coupon_code: promotion?.coupon_code || null,
+            // payment_term_id: payment?.acquirer_id || null,
+            // coupon_code: promotion?.coupon_code || null,
             products: productListToObjectIdQuantity(productList),
           },
         ],

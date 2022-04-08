@@ -1,5 +1,5 @@
 import { OrderContainer } from "@/container"
-import { MainNoFooter } from "@/layout"
+import { MainAuthLayoutNoFooter } from "@/layout"
 import { setAddress, setMessage } from "@/modules"
 import { useRouter } from "next/router"
 import { useEffect } from "react"
@@ -74,6 +74,6 @@ const Address = () => {
   )
 }
 
-Address.Layout = MainNoFooter
+Address.Layout = MainAuthLayoutNoFooter
 
 export default Address

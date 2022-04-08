@@ -1,3 +1,4 @@
+import { companyIcon } from "@/assets"
 import { formatMoneyVND, isObjectHasValue } from "@/helper"
 import { OrderHistoryDetail } from "@/models"
 import { DOMAIN_URL } from "@/services"
@@ -63,7 +64,7 @@ export const OrderStatus = ({ type, order }: OrderStatusProps) => {
                   </li>
                   <li className="order__status-summary-list-item">
                     <h3>Tình trạng vận chuyển</h3>
-                    <p>{order.state_delivery}</p>
+                    <p>{order.state_delivery}</p> 
                   </li>
                   <li className="order__status-summary-list-item">
                     <h3>Tình trạng thanh toán</h3>
@@ -114,9 +115,13 @@ export const OrderStatus = ({ type, order }: OrderStatusProps) => {
                             </p>
                             <div className="image-container">
                               <Image
-                                src={`${DOMAIN_URL}${
-                                  item.image_url?.[0] || ""
-                                }`}
+                                src={
+                                  item.image_url?.[0]
+                                    ? `${`${DOMAIN_URL}${
+                                        item.image_url?.[0] || ""
+                                      }`}`
+                                    : companyIcon
+                                }
                                 alt=""
                                 className="image"
                                 layout="fill"
@@ -128,9 +133,13 @@ export const OrderStatus = ({ type, order }: OrderStatusProps) => {
                           <div className="order__history-table-detail-image order__history-table-detail-item">
                             <div className="image-container">
                               <Image
-                                src={`${DOMAIN_URL}${
-                                  item.image_url?.[0] || ""
-                                }`}
+                                src={
+                                  item.image_url?.[0]
+                                    ? `${`${DOMAIN_URL}${
+                                        item.image_url?.[0] || ""
+                                      }`}`
+                                    : companyIcon
+                                }
                                 alt=""
                                 className="image"
                                 layout="fill"

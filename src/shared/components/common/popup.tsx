@@ -3,7 +3,7 @@ import Image from "next/image"
 import { useRouter } from "next/router"
 import { RiCloseFill } from "react-icons/ri"
 import { useDispatch, useSelector } from "react-redux"
-import Modal from "../modal/modal"
+import { Modal } from "../modal"
 
 export const Popup = () => {
   const dispatch = useDispatch()

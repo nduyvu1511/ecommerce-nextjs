@@ -1,4 +1,5 @@
 import { Footer, Header } from "@/components"
+import { Footer2 } from "@/components/footer/footer2"
 import { ModalContainer } from "@/container"
 import { LayoutProps } from "@/models"
 
@@ -10,7 +11,7 @@ export const MainLayout = ({ children }: LayoutProps) => {
     >
       <Header />
       <main style={{ flex: 1 }}>{children}</main>
-      <Footer />
+      <Footer2 />
 
       <ModalContainer />
     </section>

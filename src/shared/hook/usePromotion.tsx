@@ -1,6 +1,6 @@
 import { RootState } from "@/core/store"
-import { Promotion } from "@/models"
-import { setMessage, setPromotion } from "@/modules"
+import { Promotion, PromotionLine } from "@/models"
+import { setMessage, setPromotion, setPromotionLineList } from "@/modules"
 import orderApi from "@/services/orderApi"
 import userApi from "@/services/userApi"
 import { useDispatch, useSelector } from "react-redux"
@@ -11,7 +11,11 @@ interface CouponSWR {
   error: any
   isValidating: boolean
   setCoupon: (coupon: Promotion) => void
-  applyPromotion: (coupon_code: string, handleSuccess: Function) => void
+  applyPromotion: (
+    coupon_code: Promotion,
+    handleSuccess?: (props: PromotionLine[]) => void
+  ) => void
+  cancelPromotion: (callback?: Function) => void
 }
 
 const usePromotion = (isFetch = true): CouponSWR => {
@@ -60,20 +64,59 @@ const usePromotion = (isFetch = true): CouponSWR => {
   }
 
   const applyPromotion = async (
-    coupon_code: string,
-    handleSuccess: Function
+    promotion: Promotion,
+    handleSuccess?: Function
   ) => {
-    if (!token || !coupon_code || !orderDraft) return
+    if (!token || !orderDraft) return
 
     const res: any = await orderApi.applyPromotion({
-      coupon_code,
+      coupon_code: promotion.coupon_code || null,
+      order_id: orderDraft.order_id,
+      token,
+    })
+
+    const result = res.result
+    if (result.success) {
+      dispatch(
+        setMessage({
+          title: "Đã áp dụng voucher",
+          isOpen: true,
+          direction: "top",
+        })
+      )
+      dispatch(setPromotion(promotion))
+      const promotionLineList = result?.data?.promtion_line
+      dispatch(
+        setPromotionLineList(
+          promotionLineList?.length > 0 ? promotionLineList : undefined
+        )
+      )
+      handleSuccess && handleSuccess()
+    } else {
+      dispatch(
+        setMessage({
+          isOpen: true,
+          title: result.message,
+          type: "danger",
+          direction: "top",
+        })
+      )
+    }
+  }
+
+  const cancelPromotion = async (handleSuccess?: Function) => {
+    if (!token || !orderDraft) return
+
+    const res: any = await orderApi.cancelPromotion({
       order_id: orderDraft?.order_id,
       token,
     })
 
     const result = res.result
     if (result.success) {
-      handleSuccess(result?.data?.promtion_line || [])
+      dispatch(setPromotion(undefined))
+      dispatch(setPromotionLineList(undefined))
+      handleSuccess && handleSuccess()
     } else {
       dispatch(
         setMessage({
@@ -92,6 +135,7 @@ const usePromotion = (isFetch = true): CouponSWR => {
     isValidating,
     setCoupon,
     applyPromotion,
+    cancelPromotion,
   }
 }
 

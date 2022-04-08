@@ -7,12 +7,12 @@ import {
   setOrderDraft,
   setPayment,
   setProductList,
-  setPromotion,
   setPromotionLineList,
   updateCartQuantity,
 } from "@/modules"
 import { deleteCartItem as deleteCartItems } from "@/modules/cart/cartSlice"
 import { useDispatch, useSelector } from "react-redux"
+import { usePromotion } from "./usePromotion"
 
 interface UseCartOrderProps {
   toggleEachInput: (cart: CartItem) => void
@@ -26,6 +26,7 @@ interface UseCartOrderProps {
 
 const useCartOrder = (): UseCartOrderProps => {
   const dispatch = useDispatch()
+  const { cancelPromotion } = usePromotion(false)
   const {
     productList,
     orderDraft,
@@ -51,7 +52,7 @@ const useCartOrder = (): UseCartOrderProps => {
       dispatch(setPayment(undefined))
     }
     if (promotion) {
-      dispatch(setPromotion(undefined))
+      cancelPromotion()
     }
     if (promotionLineList) {
       dispatch(setPromotionLineList(undefined))

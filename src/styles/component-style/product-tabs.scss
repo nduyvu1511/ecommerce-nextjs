@@ -26,20 +26,20 @@
 
     &-heading {
       font-family: $second-font;
-      padding: 1.6rem 0;
-      padding-right: 2rem;
+      padding-block: 1.6rem;
       text-transform: uppercase;
       @include style-text(600, 1.6rem, 3rem, $text-color-opacity);
       cursor: pointer;
 
       & + & {
         @include responsive(sm-screen) {
-          padding-left: 2rem;
+          margin-left: 3rem;
         }
       }
 
       &-active {
         color: $home-heading-color;
+        border-bottom: 2px solid $primary-color;
       }
     }
   }

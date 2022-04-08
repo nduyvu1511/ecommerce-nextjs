@@ -12,7 +12,7 @@ export const ProductTabs = ({ description }: { description: string }) => {
   })
 
   const [tabOpen, setTabOpen] = useState<
-    "description" | "information" | "review"
+    "description" | "information" | "review" | "rating"
   >("description")
 
   useEffect(() => {
@@ -54,8 +54,21 @@ export const ProductTabs = ({ description }: { description: string }) => {
           }`}
         >
           {language === "vni"
-            ? `Đánh giá (${reviews?.length || 0})`
-            : `Reviews (${reviews?.length || 0})`}
+            ? `Hỏi đáp (${reviews?.length || 0})`
+            : `Q&A (${reviews?.length || 0})`}
+        </h5>
+
+        <h5
+          onClick={() => setTabOpen("rating")}
+          className={`product__detail-tabs-header-heading ${
+            tabOpen === "review"
+              ? "product__detail-tabs-header-heading-active"
+              : ""
+          }`}
+        >
+          {language === "vni"
+            ? `Hỏi đáp (${reviews?.length || 0})`
+            : `Q&A (${reviews?.length || 0})`}
         </h5>
       </div>
       <div className="product__detail-tabs-content">

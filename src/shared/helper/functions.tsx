@@ -202,16 +202,29 @@ export function isArrayHasValue(array: any): boolean {
 }
 
 export function getPriceProduct(product: Product): number {
-  const compute_price = product?.daily_deal_promotion?.compute_price
-  if (compute_price) {
-    if (compute_price === "fixed") {
-      return product.price - product.daily_deal_promotion.fixed_price
+  const deal = product?.daily_deal_promotion
+  if (deal && Object.keys(deal).length > 0) {
+    if (deal.compute_price === "fixed") {
+      return deal.fixed_price
     }
 
-    if (compute_price === "percentage") {
-      return (
-        product.price * (1 - product.daily_deal_promotion.percent_price / 100)
-      )
+    if (deal.compute_price === "percentage") {
+      return product.price * (1 - deal.percent_price / 100)
+    }
+  }
+
+  return product.price
+}
+
+export function getPercentageProductDeal(product: Product): number {
+  const deal = product?.daily_deal_promotion
+  if (deal && Object.keys(deal).length > 0) {
+    if (deal.compute_price === "fixed") {
+      return ((deal.fixed_price - product.price) / product.price) * 100
+    }
+
+    if (deal.compute_price === "percentage") {
+      return deal.percent_price
     }
   }
 

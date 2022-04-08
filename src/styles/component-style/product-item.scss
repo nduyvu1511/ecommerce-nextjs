@@ -43,6 +43,19 @@
     overflow: hidden;
     flex: 1;
 
+    & .product__card-deal-label {
+      position: absolute;
+      left: 0.4rem;
+      top: 0.4rem;
+      z-index: 2;
+      padding: 0.2rem 0.6rem;
+      border-radius: 0.2rem;
+      background-color: $danger;
+      @include style-text(600, 1.2rem, 1.2rem, $white);
+      font-family: $second-font;
+      white-space: nowrap;
+    }
+
     &-item {
       aspect-ratio: 3/4;
 
@@ -299,6 +312,11 @@
         opacity: 0.2;
         font-size: 1.8rem;
       }
+
+      & svg {
+        font-size: 1.6rem;
+        margin-right: 0.6rem;
+      }
     }
   }
   .product__card__bottom-hover {
@@ -329,6 +347,11 @@
       margin: 2rem 0 1rem 0;
       @include responsive(lg-screen) {
         margin-top: 1rem;
+      }
+
+      & svg {
+        font-size: 1.6rem;
+        margin-right: 0.6rem;
       }
     }
   }

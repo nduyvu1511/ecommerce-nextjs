@@ -79,6 +79,11 @@
       @media screen and(min-width: 400px) {
         max-width: 200px;
       }
+
+      & svg {
+        font-size: 1.6rem;
+        margin-right: 0.6rem;
+      }
     }
 
     &-btn-sm {

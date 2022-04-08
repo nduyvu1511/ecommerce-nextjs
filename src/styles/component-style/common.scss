@@ -126,3 +126,48 @@
     border-radius: 0.4rem;
   }
 }
+
+.return__policy {
+  padding-top: 2rem;
+  @include style-text(500, 1.4rem, 2.4rem, $text-color);
+
+  @include responsive(lg-screen) {
+    font-size: 1.6rem;
+    line-height: 2.6rem;
+  }
+
+  & ul {
+    margin-block: 2rem;
+
+    & p {
+      margin-bottom: 1rem;
+    }
+
+    & li {
+      margin-left: 3rem;
+    }
+  }
+}
+
+.return__policy {
+  & h3 {
+    margin-bottom: 1.2rem;
+  }
+
+  &-heading {
+    margin-top: 2rem;
+
+    @include responsive(lg-screen) {
+      margin-top: 3rem;
+    }
+  }
+
+  & p {
+    @include style-text(400, 1.4rem, 3.4rem, $text-color);
+
+    @include responsive(lg-screen) {
+      font-size: 1.6rem;
+      line-height: 3.6rem;
+    }
+  }
+}

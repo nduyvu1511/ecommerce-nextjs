@@ -17,6 +17,9 @@ export const appStoreIcon = require("./icons/app-store.png")
 export const categoryIcon = require("./icons/categoryIcon.png")
 export const companyIcon = require("./icons/company_logo.jpeg")
 
+export const paymentMethodsImage = require("./icons/payment-methods.png")
+export const boCongThuong = require("./icons/bo-cong-thuong.png")
+
 export const cartEmptyIcon = (
   <svg
     xmlns="http://www.w3.org/2000/svg"

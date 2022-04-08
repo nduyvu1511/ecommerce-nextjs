@@ -1,25 +1,77 @@
 import { RootState } from "@/core/store"
-import { formatMoneyVND, isObjectHasValue } from "@/helper"
+import { formatMoneyVND, getTotalPrice } from "@/helper"
+import { PromotionLine } from "@/models"
 import { toggleModalCoupons } from "@/modules"
 import { BiGift } from "react-icons/bi"
 import { useDispatch, useSelector } from "react-redux"
+import { useScrollTop } from "shared/hook"
+import { useOrder } from "shared/hook/useOrder"
 import { PromotionModal } from "../promotion"
+import { CartSummaryProductList } from "./cartSummaryProductList"
 
 interface CartTotalProps {
   isShowPromotion?: boolean
 }
 
-const CartTotal = ({ isShowPromotion }: CartTotalProps) => {
+export const CartSummary = ({ isShowPromotion }: CartTotalProps) => {
   const language = "vni"
   const dispatch = useDispatch()
+  const { createOrderDraft } = useOrder()
+  const height = useScrollTop()
 
-  const { orderDraft, delivery, productList } = useSelector(
+  const { delivery, productList, promotionLineList, orderDraft } = useSelector(
     (state: RootState) => state.order
   )
   const { isOpenModalCoupons } = useSelector((state: RootState) => state.common)
 
+  const handleOpenPromotionModal = () => {
+    dispatch(toggleModalCoupons(true))
+    if (!orderDraft) {
+      createOrderDraft()
+    }
+  }
+
+  const getPromotionLineMoney = (promotion: PromotionLine) => {
+    const { type } = promotion.discount_line
+    if (type === "percentage") {
+      return (
+        promotion.qty *
+        promotion.price_unit *
+        (1 - promotion.discount_line.value / 100)
+      )
+    }
+
+    if (type === "fixed") {
+      return (
+        promotion.qty * promotion.price_unit * -promotion.discount_line.value
+      )
+    }
+
+    return promotion.qty * promotion.price_unit
+  }
+
+  const getTotalPromotion = (): number => {
+    let total = 0
+    promotionLineList
+      ? promotionLineList.forEach((val) => {
+          if (val.discount_line.type === "percentage") {
+            total += (val.discount_line.value / 100) * val.price_unit
+          } else if (val.discount_line.type === "fixed") {
+            total += val.discount_line.value
+          }
+
+          return total
+        })
+      : 0
+    return total
+  }
+
   return (
-    <div className="cart__body-total">
+    <div
+      className={`cart__body-total 
+      ${height >= 420 ? "cart__body-total-sticky" : ""}
+    `}
+    >
       <h3 className="cart__body-total-heading">
         {language === "vni" ? "Tồng giỏ hàng" : "Cart totals"}
       </h3>
@@ -36,71 +88,29 @@ const CartTotal = ({ isShowPromotion }: CartTotalProps) => {
               : "Products"}
           </h3>
 
-          {productList ? (
-            <span className="cart__body-total-product-title-quantity">
-              {orderDraft && isObjectHasValue(orderDraft)
-                ? orderDraft.detail_order.order_line_view.length
-                : 0}
-            </span>
-          ) : null}
+          <span className="cart__body-total-product-title-quantity">
+            {productList?.length || 0}
+          </span>
         </div>
 
-        {orderDraft && productList ? (
-          <ul className="cart__total-product-list">
-            {orderDraft.detail_order.order_line_view.length > 0 &&
-              orderDraft.detail_order.order_line_view.map((cart) => (
-                <li
-                  key={cart.product_id}
-                  className="cart__total-product-list-item"
-                >
-                  <p className="cart__total-product-list-item-title">
-                    {cart.name}
-                  </p>
-
-                  <ul className="cart__total-price-list">
-                    <li className=" cart__total-price-list-item">
-                      {formatMoneyVND(cart.price_total)}
-                    </li>
-                    {cart.discount_line.type === "percent" &&
-                    cart.discount_line.value ? (
-                      <li className=" cart__total-price-list-item">
-                        Giảm: {cart.discount_line.value}%
-                      </li>
-                    ) : null}
-
-                    {cart.discount_line.type === "fixed" &&
-                    cart.discount_line.value ? (
-                      <li className=" cart__total-price-list-item">
-                        Giảm: {formatMoneyVND(cart.discount_line.value)}
-                      </li>
-                    ) : null}
-
-                    <li className=" cart__total-price-list-item">
-                      Số lượng: {cart.qty}
-                    </li>
-                    <li className="cart__total-price-list-item-danger cart__total-price-list-item">
-                      Thành tiền:{" "}
-                      {formatMoneyVND(
-                        cart.price_subtotal + (delivery?.shipping_fee || 0)
-                      )}
-                    </li>
-                  </ul>
-                </li>
-              ))}
-          </ul>
+        {productList ? (
+          <CartSummaryProductList
+            promotionLineList={promotionLineList}
+            productList={promotionLineList ? undefined : productList}
+          />
         ) : null}
       </div>
 
-      {orderDraft && productList ? (
-        <>
+      {productList ? (
+        <div className="cart__body-total-summary">
           <div className="cart__body-total-subtotal">
             <p className="cart__body-total-subtotal-title">
               {language === "vni" ? "Tổng phụ phí" : "Merchandise Subtotal"}:{" "}
             </p>
-            {formatMoneyVND(orderDraft.amount_untaxed)}
+            {formatMoneyVND(getTotalPrice(productList))}
           </div>
 
-          {orderDraft.promo_price ? (
+          {(orderDraft?.promo_price || 0) > 0 ? (
             <div className="cart__body-total-subtotal">
               <p className="cart__body-total-subtotal-title">
                 {language === "vni"
@@ -109,21 +119,21 @@ const CartTotal = ({ isShowPromotion }: CartTotalProps) => {
                 :
               </p>
               <p className="cart__body-total-subtotal-price">
-                {formatMoneyVND(orderDraft.promo_price)}
+                {formatMoneyVND(orderDraft?.promo_price || 0)}
               </p>
             </div>
           ) : null}
 
-          {orderDraft.amount_tax > 0 ? (
+          {/* {(orderDraft?.amount_tax || 0) > 0 ? (
             <div className="cart__body-total-subtotal">
               <p className="cart__body-total-subtotal-title">
                 {language === "vni" ? "Thuế" : "Tax"}:
               </p>
               <p className="cart__body-total-subtotal-price">
-                {formatMoneyVND(orderDraft.amount_tax)}
+                {formatMoneyVND(orderDraft?.amount_tax || 0)}
               </p>
             </div>
-          ) : null}
+          ) : null} */}
 
           <div className="cart__body-total-subtotal">
             <p className="cart__body-total-subtotal-title">
@@ -143,34 +153,34 @@ const CartTotal = ({ isShowPromotion }: CartTotalProps) => {
             </p>
             <p className="cart__body-total-subtotal-price">
               {formatMoneyVND(
-                orderDraft.amount_total + (delivery?.shipping_fee || 0)
+                getTotalPrice(productList) +
+                  (delivery?.shipping_fee || 0) -
+                  getTotalPromotion()
               )}
             </p>
           </div>
-        </>
+        </div>
       ) : null}
+
+      {console.log(delivery)}
 
       {isShowPromotion && productList ? (
         <div className="cart__body-total-coupons">
           {productList ? (
             <button
-              onClick={() => dispatch(toggleModalCoupons(true))}
-              className="btn-primary cart__body-total-coupons-btn"
+              onClick={handleOpenPromotionModal}
+              className={`btn-primary cart__body-total-coupons-btn ${
+                !productList ? "btn-disabled" : ""
+              }`}
             >
               <BiGift />
               {language === "vni" ? "Thêm mã giảm giá" : "Add discount code"}
             </button>
           ) : null}
 
-          {isOpenModalCoupons ? (
-            <PromotionModal
-              handleCloseModal={() => dispatch(toggleModalCoupons(false))}
-            />
-          ) : null}
+          {isOpenModalCoupons ? <PromotionModal /> : null}
         </div>
       ) : null}
     </div>
   )
 }
-
-export default CartTotal

@@ -1,7 +1,6 @@
 import DeliveryItem from "@/components/delivery/deliveryItem"
 import { OrderContainer } from "@/container"
-import { isObjectHasValue } from "@/helper"
-import { MainNoFooter } from "@/layout"
+import { MainAuthLayoutNoFooter } from "@/layout"
 import { Delivery, DeliveryDetailWithId } from "@/models"
 import { setDelivery, setMessage } from "@/modules"
 import { useRouter } from "next/router"
@@ -131,6 +130,6 @@ const ShippingDetail = () => {
   )
 }
 
-ShippingDetail.Layout = MainNoFooter
+ShippingDetail.Layout = MainAuthLayoutNoFooter
 
 export default ShippingDetail

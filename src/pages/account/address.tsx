@@ -1,5 +1,5 @@
 import { AccountContainer } from "@/container"
-import { MainLayout } from "@/layout"
+import { MainAuthLayout, MainLayout } from "@/layout"
 import Address from "../../shared/components/address/address"
 
 const UserAddress = () => {
@@ -10,6 +10,6 @@ const UserAddress = () => {
   )
 }
 
-UserAddress.Layout = MainLayout
+UserAddress.Layout = MainAuthLayout
 
 export default UserAddress

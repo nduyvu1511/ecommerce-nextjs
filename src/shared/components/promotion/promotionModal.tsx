@@ -1,13 +1,8 @@
 import { cartEmptyIcon } from "@/assets"
 import { Modal } from "@/components"
 import { RootState } from "@/core/store"
-import { Promotion, PromotionLine } from "@/models"
-import {
-  setMessage,
-  setPromotion,
-  setPromotionLineList,
-  toggleModalCoupons,
-} from "@/modules"
+import { Promotion } from "@/models"
+import { setMessage, toggleModalCoupons } from "@/modules"
 import { memo, useState } from "react"
 import { RiLoader4Line } from "react-icons/ri"
 import { useDispatch, useSelector } from "react-redux"
@@ -17,27 +12,35 @@ import { PromotionItem } from "./promotionItem"
 export const PromotionModal = memo(function PromotionModalChild() {
   const dispatch = useDispatch()
   const language = "vni"
-  const { data: promotionList, isValidating, applyPromotion } = usePromotion()
+  const {
+    data: promotionList,
+    isValidating,
+    applyPromotion,
+    cancelPromotion,
+  } = usePromotion()
 
   const { promotion } = useSelector((state: RootState) => state.order)
-
   const [promotionCode, setPromotionCode] = useState<string>()
 
   const handleAddPromotion = (promotionProps: Promotion) => {
-    applyPromotion(
-      promotionProps.coupon_code,
-      (promoLineList: PromotionLine[]) => {
-        dispatch(setPromotion(promotionProps))
-        dispatch(setPromotionLineList(promoLineList))
-        dispatch(
-          setMessage({
-            title: "Đã áp dụng voucher",
-            isOpen: true,
-            direction: "top",
-          })
-        )
+    console.log(promotionProps)
+    if (!promotion) {
+      applyPromotion(promotionProps)
+    } else {
+      if (promotion?.promotion_id === promotionProps.promotion_id) {
+        cancelPromotion(() => {
+          dispatch(
+            setMessage({
+              title: "Đã hủy áp dụng voucher",
+              isOpen: true,
+              direction: "top",
+            })
+          )
+        })
+      } else {
+        applyPromotion(promotionProps)
       }
-    )
+    }
   }
 
   return (

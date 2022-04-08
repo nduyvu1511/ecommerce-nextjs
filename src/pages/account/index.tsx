@@ -1,11 +1,15 @@
 import { AccountContainer } from "@/container"
-import { MainLayout } from "@/layout"
+import { MainAuthLayout } from "@/layout"
 import { BsFillHeartFill } from "react-icons/bs"
 import { CgCalculator } from "react-icons/cg"
 import { FaShoppingCart } from "react-icons/fa"
+import { useCart, useWishlist } from "shared/hook"
 
 const AccountGeneral = () => {
   const language = "vni"
+
+  const { carts } = useCart()
+  const { data: wishlists } = useWishlist(false)
 
   return (
     <AccountContainer heading="General" desc="This is desc">
@@ -16,7 +20,7 @@ const AccountGeneral = () => {
               <FaShoppingCart />
             </span>
             <h3>
-              {10} {language === "vni" ? "Sản Phẩm" : "Product"}
+              {carts?.length || 0} {language === "vni" ? "Sản Phẩm" : "Product"}
             </h3>
             <p>
               {language === "vni" ? "Trong giỏ hàng của bạn" : "In your cart"}
@@ -28,7 +32,8 @@ const AccountGeneral = () => {
               <BsFillHeartFill />
             </span>
             <h3>
-              {10} {language === "vni" ? "Sản Phẩm" : "Product"}
+              {wishlists?.length || 0}{" "}
+              {language === "vni" ? "Sản Phẩm" : "Product"}
             </h3>
             <p>
               {language === "vni"
@@ -42,8 +47,7 @@ const AccountGeneral = () => {
               <CgCalculator />
             </span>
             <h3>
-              {10}
-              {language === "vni" ? "Sản Phẩm" : "Product"}
+              {10} {language === "vni" ? "Đơn hàng" : "Product"}
             </h3>
             <p>{language === "vni" ? "Bạn đã đặt hàng" : "You ordered"}</p>
           </li>
@@ -53,6 +57,6 @@ const AccountGeneral = () => {
   )
 }
 
-AccountGeneral.Layout = MainLayout
+AccountGeneral.Layout = MainAuthLayout
 
 export default AccountGeneral

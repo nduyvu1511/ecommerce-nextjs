@@ -70,13 +70,13 @@ export interface DraftProductList {
 export interface OrderDraftPost {
   token: string
   api_version: "2.1"
-  partner_shipping_id: number | null
-  coupon_code?: string | null
+  // partner_shipping_id: number | null
+  // coupon_code?: string | null
   customer_id: number
   list_products: [
     {
-      payment_term_id?: number | null
-      coupon_code?: string | null
+      // payment_term_id?: number | null
+      // coupon_code?: string | null
       products: DraftProductList
     }
   ]
@@ -147,9 +147,12 @@ export interface CreateOrderDraftProps {
   handleError?: Function
 }
 
-export interface ApplyPromotion extends Token {
+export interface CancelPromotion extends Token {
   order_id: number
-  coupon_code: string
+}
+
+export interface ApplyPromotion extends CancelPromotion {
+  coupon_code: string | null
 }
 
 export interface UpdateOrderDraft extends Token {

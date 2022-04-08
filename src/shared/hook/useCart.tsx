@@ -1,5 +1,6 @@
 import { RootState } from "@/core/store"
 import { CartItem } from "@/models"
+import { useMemo } from "react"
 import { useSelector } from "react-redux"
 
 interface UseCart {
@@ -13,6 +14,12 @@ const useCart = (): UseCart => {
     userInfo: { id },
     token,
   } = useSelector((state: RootState) => state.user)
+
+  // const carts = useMemo(() => {
+  //   if (!token) return []
+
+  //   return cartList.filter((item) => item.partner_id === id)
+  // }, [token, cartList])
 
   if (!token) return { totalMoney: 0, carts: [] }
 

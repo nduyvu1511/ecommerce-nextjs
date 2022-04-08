@@ -1,6 +1,7 @@
+/* eslint-disable @next/next/no-img-element */
 import { InputCheckbox } from "@/components"
 import { OrderContainer } from "@/container"
-import { MainNoFooter } from "@/layout"
+import { MainAuthLayoutNoFooter } from "@/layout"
 import { Payment } from "@/models"
 import { setMessage, setPayment } from "@/modules"
 import { useRouter } from "next/router"
@@ -30,6 +31,7 @@ const Payment: any = () => {
     if (!delivery) {
       router.push("shipping_detail")
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [productList, address, delivery])
 
   // Functions
@@ -60,7 +62,7 @@ const Payment: any = () => {
   }
 
   return (
-    <OrderContainer>
+    <OrderContainer isShowPromotion={false}>
       <section className="payment">
         <h3 className="payment-heading">
           {language === "vni"
@@ -114,6 +116,6 @@ const Payment: any = () => {
   )
 }
 
-Payment.Layout = MainNoFooter
+Payment.Layout = MainAuthLayoutNoFooter
 
 export default Payment

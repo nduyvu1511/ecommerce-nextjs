@@ -3,15 +3,13 @@ import {
   ProductDetail,
   ProductDetailLoading,
   ProductItem,
-  ProductTabs,
+  ProductTabs
 } from "@/components"
 import {
   getAttributeList,
-  getListAttributeId,
-  getProductId,
-  isArrayHasValue,
+  getListAttributeId, isArrayHasValue,
   isObjectHasValue,
-  mergeProductAndProductDetail,
+  mergeProductAndProductDetail
 } from "@/helper"
 import { MainLayout } from "@/layout"
 import { Product, ProductDetail as IProductDetail } from "@/models"

@@ -1,3 +1,4 @@
+import { formatMoneyVND, getPriceProduct } from "@/helper"
 import { AttributeWithParentId, Product } from "@/models"
 import {
   addProductCompare,
@@ -8,14 +9,14 @@ import Link from "next/link"
 import { useRef, useState } from "react"
 import { RiArrowUpDownLine } from "react-icons/ri"
 import { useDispatch } from "react-redux"
-import { formatMoneyVND, getPriceProduct } from "@/helper"
+import { useReview } from "shared/hook"
 import { ButtonAddCard } from "../button"
 import ButtonWishlist from "../button/buttonAddWishlist"
+import ButtonShare from "../button/buttonShare"
+import { Rating } from "../star/star"
 import { Stars } from "../common"
 import { InputQuantity } from "../inputs"
 import { ProductVariation } from "./productVariation"
-import ButtonShare from "../button/buttonShare"
-import { useReview } from "shared/hook"
 
 interface IProductIntro {
   product: Product
@@ -65,7 +66,12 @@ export const ProductIntro = ({ product, type }: IProductIntro) => {
               </p>
 
               <div className="modal__product-sub-rating">
-                <Stars count={5} />
+                {/* <Rating
+                  ratingValue={4.3}
+                  allowHalfIcon={true}
+                  allowHover={false}
+                /> */}
+                <Stars count={0} />
                 <small className="modal__product-sub-rating-review">
                   {reviewList?.length || 0}{" "}
                   {language === "vni" ? "Đánh giá" : "REVIEWS"}`

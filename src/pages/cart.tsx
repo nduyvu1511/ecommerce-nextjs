@@ -7,8 +7,7 @@ import Link from "next/link"
 import { useRouter } from "next/router"
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { useCart, useCartOrder } from "shared/hook"
-import { useOrder } from "shared/hook/useOrderBackup"
+import { useCart, useCartOrder, useOrder } from "shared/hook"
 import { RootState } from "../core"
 
 const Cart = () => {

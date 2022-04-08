@@ -14,10 +14,10 @@ import { DOMAIN_URL } from "@/services"
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/router"
+import { FaShoppingBasket } from "react-icons/fa"
 import { IoExpandOutline } from "react-icons/io5"
 import { RiBarChartFill } from "react-icons/ri"
 import { useDispatch, useSelector } from "react-redux"
-import { toast } from "react-toastify"
 import ButtonWishlist from "../button/buttonAddWishlist"
 
 interface IProductItem {
@@ -33,6 +33,16 @@ export const ProductItem = ({ product, type, isLoading }: IProductItem) => {
     token,
     userInfo: { id: partner_id },
   } = useSelector((state: RootState) => state.user)
+
+  const handleAddToCompareList = () => {
+    dispatch(toggleShowCompareModal(true))
+    dispatch(addProductCompare(product))
+  }
+
+  const handleOpenModalProduct = () => {
+    dispatch(toggleModalProduct(true))
+    dispatch(setProduct(product))
+  }
 
   const handleAddToCart = () => {
     if (!token || !partner_id) {
@@ -60,21 +70,12 @@ export const ProductItem = ({ product, type, isLoading }: IProductItem) => {
     }
   }
 
-  const handleAddToCompareList = () => {
-    dispatch(toggleShowCompareModal(true))
-    dispatch(addProductCompare(product))
-  }
-
-  const handleOpenModalProduct = () => {
-    dispatch(toggleModalProduct(true))
-    dispatch(setProduct(product))
-  }
-
   return (
     <>
       {!isLoading && isObjectHasValue(product) ? (
         <div className="product__card">
           <div className="product__card__img">
+            <span className="product__card-deal-label">22%</span>
             {/* Show on hover: wishlist, compare, detail  */}
             <div className="product__card__sub">
               {!router.query.productId ? (
@@ -220,7 +221,7 @@ export const ProductItem = ({ product, type, isLoading }: IProductItem) => {
                 onClick={handleAddToCart}
                 className="product__card__bottom-btn"
               >
-                Thêm giỏ hàng
+                <FaShoppingBasket /> Thêm giỏ hàng
               </button>
             </div>
           </div>

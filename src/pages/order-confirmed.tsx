@@ -1,6 +1,6 @@
 import { OrderStatus } from "@/components"
 import { OrderContainer } from "@/container"
-import { MainNoFooter } from "@/layout"
+import { MainAuthLayoutNoFooter, MainNoFooter } from "@/layout"
 import { clearOrderData } from "@/modules"
 import Link from "next/link"
 import { useRouter } from "next/router"
@@ -43,6 +43,6 @@ const OrderConfirmed = () => {
   )
 }
 
-OrderConfirmed.Layout = MainNoFooter
+OrderConfirmed.Layout = MainAuthLayoutNoFooter
 
 export default OrderConfirmed

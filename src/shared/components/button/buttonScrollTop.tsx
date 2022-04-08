@@ -1,15 +1,15 @@
-import { RiArrowUpLine } from 'react-icons/ri';
-import useScrollTop from '../../hook/useScrollTop';
+import { RiArrowUpLine } from "react-icons/ri"
+import { useScrollTop } from "shared/hook"
 
 export const ButtonScrollTop = () => {
-  const height = useScrollTop();
+  const height = useScrollTop()
 
   const handleScrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth',
-    });
-  };
+      behavior: "smooth",
+    })
+  }
 
   return (
     <>
@@ -19,7 +19,7 @@ export const ButtonScrollTop = () => {
         </button>
       ) : null}
     </>
-  );
-};
+  )
+}
 
-export default ButtonScrollTop;
+export default ButtonScrollTop

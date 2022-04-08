@@ -1,3 +1,5 @@
+import { Token } from "./user"
+
 export interface Unit {
   id: number
   name: string
@@ -26,6 +28,7 @@ export interface Product {
   product_name: string
   barcode: string | boolean
   product_available: number
+  star_rating: number
   uom: Unit
   vat: number
   description: string
@@ -68,7 +71,7 @@ export interface ProductDetailRes {
   description_sale: string
   wholesales: Array<string>
   categ_id: string
-  type: string
+  type: "product" | "combo"
   id: number
   product_tmpl_id: number
   name: string
@@ -301,6 +304,11 @@ export interface ShopFiltterParams {
   category_id?: number
 }
 
+interface ProductIdAndToken {
+  token: string
+  product_id: number
+}
+
 export interface DeleteWishlistHook {
   product_id: number
   wishlist_id: number
@@ -309,4 +317,75 @@ export interface DeleteWishlistHook {
 export interface ProductIds {
   product_tmpl_id: number
   product_prod_id: number
+}
+
+export interface AttachmentProps extends ProductIdAndToken {
+  attachments: {
+    file: string
+    type: "image" | "video"
+  }[]
+}
+
+export interface PurchasedProductProps extends Token {
+  limit?: number
+  offset?: number
+}
+
+export type RatingRangePost = 1 | 2 | 3 | 4 | 5
+
+export type RatingRange = 0 | 1 | 2 | 3 | 4 | 5
+
+export interface UpdateRatingProps extends ProductIdAndToken {
+  star_rating: RatingRangePost
+  tag_ids?: Array<number>
+  attachment_ids: Array<number>
+  limit?: number
+  offset?: number
+}
+
+export interface TagRating {
+  tag_id: number
+  tag_content: string
+}
+
+export interface DeleteRatingProps extends ProductIdAndToken {
+  history_line_id: number
+}
+
+export interface PurchasedProduct {
+  history_line_id: number
+  sale_order: {
+    sale_id: number
+    sale_name: string
+  }
+  product: {
+    product_id: number
+    product_name: string
+    qty_product: number
+    price_unit: number
+    amount_total: number
+  }
+  comment_rating: {}
+}
+
+export interface DeleteRatingRes {
+  history_line_id: number
+  comment_rating_id: number
+}
+
+export interface CommentRating {
+  comment_id: number
+  message: string | false
+  star_rating: "1" | "2" | "3" | "4" | "5"
+  star_rating_int: RatingRangePost
+  rating_tag: TagRating[]
+  product_id: number
+  date: string
+}
+
+export interface GetRatingByProductProps extends Token {
+  limit?: number
+  offset?: number
+  product_id: number
+  comment_type: ["comment" | "rating"]
 }

@@ -2,7 +2,7 @@ import { AccountContainer } from "@/container"
 import { inputs } from "@/container/account/data"
 import { userInfoSchema } from "@/core/schema"
 import { RootState } from "@/core/store"
-import { MainLayout } from "@/layout"
+import { MainAuthLayout, MainLayout } from "@/layout"
 import { editUserInfo, setMessage } from "@/modules"
 import userApi from "@/services/userApi"
 import { Field, Form, Formik } from "formik"
@@ -118,6 +118,6 @@ const UserInfo = () => {
   )
 }
 
-UserInfo.Layout = MainLayout
+UserInfo.Layout = MainAuthLayout
 
 export default UserInfo

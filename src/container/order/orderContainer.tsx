@@ -1,6 +1,5 @@
 import { CartSummary } from "@/components"
 import { RootState } from "@/core/store"
-import {} from "@/helper"
 import { useRouter } from "next/router"
 import { ReactNode } from "react"
 import { BsCheck2Circle } from "react-icons/bs"
@@ -23,7 +22,6 @@ export const OrderContainer = ({
 }: IOrderContainer) => {
   const language = "vni"
   const router = useRouter()
-
   const { address, productList, delivery, payment, orderDone } = useSelector(
     (state: RootState) => state.order
   )

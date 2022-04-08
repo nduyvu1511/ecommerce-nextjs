@@ -1,5 +1,6 @@
 import {
   ApplyPromotion,
+  CancelPromotion,
   ConfirmDelivery,
   GetDeliveryListProps,
   GetPriceOfDeliveryProps,
@@ -47,6 +48,12 @@ const orderApi = {
 
   applyPromotion: (params: ApplyPromotion) => {
     return axiosClient.post("/promotion_api/apply_promotion", {
+      params: params,
+    })
+  },
+
+  cancelPromotion: (params: CancelPromotion) => {
+    return axiosClient.post("/promotion_api/cancel_promotion", {
       params: params,
     })
   },

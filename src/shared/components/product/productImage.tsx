@@ -27,7 +27,7 @@ export const ProductImg = ({ images, type }: IProductImage) => {
   return (
     <>
       <div className="product__img-show">
-        <figure
+        <div
           style={{
             backgroundPosition: imageZoomPosition,
             backgroundImage: `url(${DOMAIN_URL}${images[slideIndex]})`,
@@ -52,7 +52,7 @@ export const ProductImg = ({ images, type }: IProductImage) => {
               />
             )
           })}
-        </figure>
+        </div>
 
         <div className="product__img-show-sub">
           {images.map((img, index) => {

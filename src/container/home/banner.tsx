@@ -40,10 +40,10 @@ export const MainBanner = () => {
           navigation
           pagination={{ clickable: true }}
           loop={true}
-          autoplay={{
-            delay: 4000,
-            disableOnInteraction: false,
-          }}
+          // autoplay={{
+          //   delay: 4000,
+          //   disableOnInteraction: false,
+          // }}
         >
           {!isValidating && isArrayHasValue(bannerUrls) ? (
             bannerUrls.map((banner, index) => (
@@ -61,22 +61,25 @@ export const MainBanner = () => {
         <div className="home__banner-category">
           <Swiper
             modules={[Navigation]}
-            slidesPerView={2}
+            slidesPerView={3}
             spaceBetween={20}
             navigation
             loop={false}
             breakpoints={{
-              500: {
-                slidesPerView: 3,
-              },
-              768: {
+              400: {
                 slidesPerView: 4,
               },
-              1024: {
+              576: {
                 slidesPerView: 5,
               },
-              1200: {
+              768: {
                 slidesPerView: 6,
+              },
+              1024: {
+                slidesPerView: 7,
+              },
+              1200: {
+                slidesPerView: 8,
               },
             }}
           >

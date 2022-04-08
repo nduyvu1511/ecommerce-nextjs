@@ -6,11 +6,11 @@ export interface CartItem extends Product {
   attribute_names?: Array<string>
 }
 
-export interface CartQuantity {
-  id: number
-  quantity: number
-}
+// export interface CartQuantity {
+//   id: number
+//   quantity: number
+// }
 
-export interface CartSlice {
-  data: CartItem[]
-}
+// export interface CartSlice {
+//   data: CartItem[]
+// }

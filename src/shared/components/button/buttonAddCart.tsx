@@ -8,6 +8,7 @@ import {
 } from "@/modules"
 import { useRouter } from "next/router"
 import React from "react"
+import { FaShoppingBasket } from "react-icons/fa"
 import { useDispatch, useSelector } from "react-redux"
 
 interface ButtonAddCardProps {
@@ -79,6 +80,7 @@ export const ButtonAddCard = ({
           : "product__intro-shop-btn"
       } ${className ? className : ""}`}
     >
+      <FaShoppingBasket />
       {language === "vni" ? "Thêm giỏ hàng" : "Add to cart"}
     </button>
   )

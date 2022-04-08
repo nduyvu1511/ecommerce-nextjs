@@ -1,7 +1,7 @@
 import { logo } from "@/assets"
 import { RootState } from "@/core/store"
 import { formatMoneyVND } from "@/helper"
-import { logOut } from "@/modules"
+import { clearOrderData, logOut } from "@/modules"
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/router"
@@ -101,7 +101,10 @@ export const Header = () => {
                       </Link>
                     ) : (
                       <button
-                        onClick={() => dispatch(logOut())}
+                        onClick={() => {
+                          dispatch(logOut())
+                          dispatch(clearOrderData())
+                        }}
                         className="btn-reset"
                       >
                         {language === "vni" ? "Đăng xuất" : "Log out"}
