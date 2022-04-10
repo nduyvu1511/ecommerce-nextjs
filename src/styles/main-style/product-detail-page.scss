@@ -16,24 +16,24 @@
 
   .product__detail-wrapper {
     background-color: #fff;
-    border-radius: 10px;
+    border-radius: 0.4rem;
     padding: 2rem 1rem;
     border: 1px solid $border-color-2;
     @include responsive(sm-screen) {
-      padding: 2rem 2rem;
+      padding: 2rem;
     }
 
     @include responsive(md-screen) {
-      padding: 4rem 6rem;
+      padding: 3rem;
     }
 
-    @include responsive(lg-sreen) {
-      padding: 4rem 3rem;
+    @include responsive(lg-screen) {
+      padding: 4rem;
     }
 
-    @include responsive(xl-sreen) {
-      padding: 5rem 5rem;
-    }
+    // @include responsive(xl-screen) {
+    //   padding: 6rem;
+    // }
 
     .modal__product {
       padding: 0;
@@ -89,7 +89,7 @@
           margin-top: 1rem;
           padding: 0;
           @include responsive(lg-screen) {
-            padding-left: 4rem;
+            margin-left: 3rem;
           }
           margin-left: 0;
 

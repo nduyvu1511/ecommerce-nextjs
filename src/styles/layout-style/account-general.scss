@@ -1,4 +1,10 @@
 .account__general {
+  background-color: #fff;
+  padding: 2rem 1.5rem;
+  @include responsive(lg-screen) {
+    padding-inline: 3rem;
+  }
+
   &-list {
     list-style: none;
     display: grid;

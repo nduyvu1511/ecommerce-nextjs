@@ -34,41 +34,6 @@ const productApi = {
       params: {},
     })
   },
-
-  getRatingTags: (product_id?: number) => {
-    return axiosClient.post("/comment_controller/get_rating_tag", {
-      params: {
-        product_id: product_id || null,
-      },
-    })
-  },
-
-  createAttachment: () => {
-    return axiosClient.post("/comment_controller/create_attachment", {
-      params: {},
-    })
-  },
-
-  getProductsPurchased: () => {
-    return axiosClient.post(
-      "/comment_controller/get_purchase_product_history",
-      {
-        params: {},
-      }
-    )
-  },
-
-  updateRatingProduct: () => {
-    return axiosClient.post("/comment_controller/update_rating_product", {
-      params: {},
-    })
-  },
-
-  deleteRatingProduct: () => {
-    return axiosClient.post("/comment_controller/delete_rating_product", {
-      params: {},
-    })
-  },
 }
 
 export default productApi

@@ -13,7 +13,6 @@ export const Stars = ({ count }: IStar) => {
   const handleHover = (index: RatingRangePost) => {
     setNumberHover(index)
   }
-  console.log(number)
   return (
     <p className="star-wrapper">
       {Array.from({ length: 5 }).map((item, index) =>

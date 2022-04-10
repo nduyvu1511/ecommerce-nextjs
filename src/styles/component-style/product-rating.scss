@@ -1,0 +1,266 @@
+.product__rating {
+  &-header {
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid $border-color-1;
+
+    & h3 {
+      @include style-text(500, 1.7rem, 2.7rem, $home-heading-color);
+      margin-bottom: 1rem;
+    }
+
+    &-summary {
+      display: flex;
+      align-items: flex-end;
+      margin-bottom: 1rem;
+
+      & p {
+        margin-right: 1rem;
+        font-size: 2.4rem;
+        font-weight: 700;
+        font-family: $second-font;
+      }
+
+      & .star-icon {
+        font-size: 2.4rem;
+      }
+    }
+
+    &-count {
+      @include style-text(500, 1.4rem, 2.4rem, $text-color-opacity);
+    }
+
+    &-add {
+      margin-top: 2rem;
+    }
+
+    &-form-wrapper {
+      margin-top: 2rem;
+    }
+
+    &-tags {
+      margin-bottom: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+
+      & .tag {
+        margin-right: 1rem;
+        margin-bottom: 1rem;
+      }
+    }
+
+    &-form {
+      margin-top: 2rem;
+
+      & textarea {
+        width: 100%;
+        padding: 1rem;
+        border: 1px solid $border-color-1;
+        border-radius: 0.4rem;
+        margin-bottom: 2rem;
+        @include style-text(400, 1.5rem, 2.5rem, $text-color);
+        resize: vertical;
+      }
+
+      & button {
+      }
+    }
+
+    &-attachment {
+      margin-top: 1rem;
+
+      & label {
+        padding: 0.6rem 1.2rem;
+        width: fit-content;
+        user-select: none;
+
+        & svg {
+          margin-right: 0.3rem;
+        }
+      }
+
+      &-image {
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: 1rem;
+
+        &-item {
+          margin-right: 1rem;
+          margin-bottom: 1rem;
+          width: 70px;
+          height: 70px;
+          position: relative;
+
+          & span {
+            position: absolute;
+            background-color: rgba($color: #000000, $alpha: 0.3);
+            @include flex-center;
+
+            & svg {
+              font-size: 1.4rem;
+              color: white;
+            }
+          }
+
+          & span:first-child {
+            top: 0;
+            right: 0;
+            width: 1.5rem;
+            height: 1.5rem;
+          }
+          & img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+
+          &-loading {
+            position: absolute;
+            inset: 0;
+            z-index: 10;
+
+            & svg {
+              font-size: 3rem;
+              color: white;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  & .rating__item {
+    display: flex;
+    padding-block: 1rem;
+
+    &-avatar {
+      width: 40px;
+      margin-right: 2rem;
+      & img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+      }
+    }
+
+    &-content {
+      flex: 1;
+
+      &-name {
+        margin-bottom: 0.2rem;
+        @include style-text(500, 1.3rem, 2.3rem, $text-color);
+      }
+
+      &-rate {
+        margin-bottom: 1rem;
+
+        & .star-icon {
+          font-size: 1.6rem;
+        }
+      }
+
+      &-date {
+        margin-bottom: 1rem;
+        @include style-text(400, 1.2rem, 2.2rem, $text-color);
+      }
+
+      &-desc {
+        @include style-text(500, 1.4rem, 2.4rem, $text-color);
+      }
+
+      &-image {
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: 1.6rem;
+
+        &-item {
+          margin-right: 1rem;
+          margin-bottom: 1rem;
+          width: 70px;
+          height: 70px;
+
+          & img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+        }
+      }
+    }
+
+    &-options {
+      margin-left: 1rem;
+      width: 30px;
+      position: relative;
+
+      & button {
+        & svg {
+          font-size: 1.6rem;
+          color: $text-color;
+        }
+      }
+
+      &-child {
+        position: absolute;
+        top: 2rem;
+        right: 2rem;
+        border-radius: 0.4rem;
+        background-color: #fff;
+        border: 1px solid $border-color-2;
+        box-shadow: $box-shadow-1;
+
+        & svg:first-child {
+          fill: $danger;
+        }
+
+        & p {
+          white-space: nowrap;
+          padding: 2rem 2rem 2rem 1.4rem;
+          cursor: pointer;
+          @include flex(flex-start, center);
+          @include style-text(500, 1.3rem, 1.3rem, $text-color);
+
+          & svg {
+            font-size: 1.4rem;
+            margin-right: 0.8rem;
+          }
+
+          &:hover {
+            background-color: $gray-color-opacity;
+          }
+        }
+
+        & p:last-child {
+          & svg {
+            color: $info;
+            fill: transparent;
+          }
+        }
+      }
+    }
+  }
+}
+
+.rating-no-rating {
+  @include flex-center;
+  flex-direction: column;
+  padding-block: 2rem;
+
+  & svg {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: $text-color-opacity;
+
+    @include responsive(lg-screen) {
+      font-size: 5rem;
+    }
+  }
+
+  & p {
+    @include style-text(400, 1.4rem, 2.4rem, $text-color);
+    @include responsive(lg-screen) {
+      font-size: 1.6rem;
+      line-height: 2.6rem;
+    }
+  }
+}

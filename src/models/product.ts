@@ -337,10 +337,15 @@ export type RatingRange = 0 | 1 | 2 | 3 | 4 | 5
 
 export interface UpdateRatingProps extends ProductIdAndToken {
   star_rating: RatingRangePost
+  content: string
   tag_ids?: Array<number>
   attachment_ids: Array<number>
   limit?: number
   offset?: number
+}
+
+export interface UpdateRatingPropsWithLineId extends UpdateRatingProps {
+  history_line_id: number
 }
 
 export interface TagRating {
@@ -352,25 +357,43 @@ export interface DeleteRatingProps extends ProductIdAndToken {
   history_line_id: number
 }
 
+export interface DeleteRatingHook {
+  history_line_id: number
+  product_id: number
+}
+
+export interface DeleteRatingRes {
+  history_line_id: number
+  comment_rating_id: number
+}
+
+export interface PurchaseProduct {
+  product_id: number
+  product_name: string
+  qty_product: number
+  price_unit: number
+  amount_total: number
+  image_url: Array<number>
+}
+
 export interface PurchasedProduct {
   history_line_id: number
   sale_order: {
     sale_id: number
     sale_name: string
   }
-  product: {
-    product_id: number
-    product_name: string
-    qty_product: number
-    price_unit: number
-    amount_total: number
-  }
-  comment_rating: {}
+  product: PurchaseProduct
+  comment_rating: CommentRating
 }
 
 export interface DeleteRatingRes {
   history_line_id: number
   comment_rating_id: number
+}
+
+export interface RatingsByProduct {
+  data_count: number
+  data: CommentRating[]
 }
 
 export interface CommentRating {
@@ -379,8 +402,16 @@ export interface CommentRating {
   star_rating: "1" | "2" | "3" | "4" | "5"
   star_rating_int: RatingRangePost
   rating_tag: TagRating[]
-  product_id: number
   date: string
+  partner_id: number
+  partner_name: string
+  partner_avatar: string
+  content: string
+  product_id: {
+    id: number
+    name: string
+  }
+  editable: boolean
 }
 
 export interface GetRatingByProductProps extends Token {

@@ -85,6 +85,7 @@ export const Address = ({ type }: IAddress) => {
         <>
           <Modal
             unsetSize={true}
+            disableOverLay={true}
             direction="center"
             isShowModal={true}
             heading={language === "vni" ? "Địa chỉ mới" : "Create New Address"}

@@ -1,4 +1,4 @@
-import { ProductItemLoading, Stars } from "@/components"
+import { ProductItemLoading } from "@/components"
 import { RootState } from "@/core/store"
 import { formatMoneyVND, getPriceProduct, isObjectHasValue } from "@/helper"
 import { Product } from "@/models"
@@ -8,7 +8,7 @@ import {
   setMessage,
   setProduct,
   toggleModalProduct,
-  toggleShowCompareModal,
+  toggleShowCompareModal
 } from "@/modules"
 import { DOMAIN_URL } from "@/services"
 import Image from "next/image"
@@ -19,6 +19,7 @@ import { IoExpandOutline } from "react-icons/io5"
 import { RiBarChartFill } from "react-icons/ri"
 import { useDispatch, useSelector } from "react-redux"
 import ButtonWishlist from "../button/buttonAddWishlist"
+import { Star } from "../star"
 
 interface IProductItem {
   product: Product
@@ -187,7 +188,7 @@ export const ProductItem = ({ product, type, isLoading }: IProductItem) => {
               </p>
 
               <div className="product__card__content-rating">
-                <Stars count={4.8} />
+                <Star size={15} ratingValue={product.star_rating * 20} />
                 {/* <span className="product__card__content-rating-review">
                   {product.product_available}
                 </span> */}

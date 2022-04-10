@@ -1,6 +1,6 @@
 .product__detail-tabs {
   background-color: $white;
-  border-radius: 10px;
+  border-radius: 0.4rem;
   border: 1px solid $border-color-2;
 
   &-header {
@@ -39,7 +39,18 @@
 
       &-active {
         color: $home-heading-color;
-        border-bottom: 2px solid $primary-color;
+        position: relative;
+
+        &::after {
+          content: "";
+          position: absolute;
+          bottom: 0;
+          height: 2px;
+          width: 100%;
+          background-color: $primary-color;
+          left: 50%;
+          transform: translateX(-50%);
+        }
       }
     }
   }
@@ -53,7 +64,7 @@
     }
 
     @include responsive(lg-screen) {
-      padding: 4rem 4rem;
+      padding: 2rem 4rem;
     }
 
     .product__tab-content-text {

@@ -97,7 +97,7 @@ export interface Props {
   tooltipStyle?: React.CSSProperties
 }
 
-export function Rating({
+export function Star({
   onClick,
   initialValue = 0,
   ratingValue = 0,
@@ -310,7 +310,7 @@ export function Rating({
           }}
           title={`${
             (hoverValue && renderValue(hoverValue)) || renderValue(localRating)
-          } out of ${iconsCount}`}
+          } trên ${iconsCount}`}
         >
           {[...Array(iconsCount)].map((_, index) => (
             <Fragment key={index}>

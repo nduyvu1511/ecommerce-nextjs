@@ -1,13 +1,8 @@
 .modal__product {
-  // padding: 2rem 1rem;
   @include responsive(lg-screen) {
     padding: 4rem 3rem;
   }
   position: relative;
-
-  & .product__img-show-container {
-    aspect-ratio: 1;
-  }
 
   &-btn-close {
     position: absolute;

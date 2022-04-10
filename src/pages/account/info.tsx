@@ -2,7 +2,7 @@ import { AccountContainer } from "@/container"
 import { inputs } from "@/container/account/data"
 import { userInfoSchema } from "@/core/schema"
 import { RootState } from "@/core/store"
-import { MainAuthLayout, MainLayout } from "@/layout"
+import { MainAuthLayout } from "@/layout"
 import { editUserInfo, setMessage } from "@/modules"
 import userApi from "@/services/userApi"
 import { Field, Form, Formik } from "formik"
@@ -46,7 +46,7 @@ const UserInfo = () => {
   }
 
   return (
-    <AccountContainer heading="Your profile" desc="this is profile">
+    <AccountContainer heading="Your profile">
       <div className="user__info-body-form">
         {_.isObject(userInfo) && Object.keys(userInfo).length > 0 && (
           <Formik

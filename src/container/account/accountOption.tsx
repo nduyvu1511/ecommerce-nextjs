@@ -1,5 +1,9 @@
+/* eslint-disable @next/next/no-img-element */
+import { avatar } from "@/assets"
 import { RootState } from "@/core/store"
 import { toggleModalAccountOption } from "@/modules"
+import { DOMAIN_URL } from "@/services"
+import Image from "next/image"
 import { useRouter } from "next/router"
 import { FiEdit2 } from "react-icons/fi"
 import { useDispatch, useSelector } from "react-redux"
@@ -9,12 +13,30 @@ export const AccountOption = () => {
   const language = "vni"
   const dispatch = useDispatch()
   const router = useRouter()
-
   const { userInfo } = useSelector((state: RootState) => state.user)
 
   return (
     <>
       <header className="account__left-header">
+        <input type="file" name="" hidden id="account-avatar" />
+        <div className="account__left-header-avatar image-container">
+          <label htmlFor="account-avatar">
+            <img
+              src={
+                userInfo?.avatar
+                  ? `data:image/jpeg;base64,${userInfo.avatar}`
+                  : avatar
+              }
+              alt=""
+            />
+          </label>
+          {/* <Image
+            src={`${DOMAIN_URL}${userInfo.avatar}` || ""}
+            layout="fill"
+            alt=""
+            className="image"
+          /> */}
+        </div>
         <p className="account__left-header-title">{userInfo.name}</p>
         <p className="account__left-header-edit">
           {language === "vni" ? "Sửa hồ sơ" : "Edit info"} <FiEdit2 />

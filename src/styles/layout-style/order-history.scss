@@ -1,4 +1,10 @@
 .order__history {
+  background-color: #fff;
+  padding: 2rem 1.5rem;
+  @include responsive(lg-screen) {
+    padding-inline: 3rem;
+  }
+
   &-table {
     width: 100%;
     border-collapse: collapse;

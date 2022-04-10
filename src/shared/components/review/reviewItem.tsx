@@ -2,6 +2,7 @@ import { Stars } from "@/components"
 import { RootState } from "@/core/store"
 import { Comment } from "@/models"
 import { setCurrentReviewId, toggleModalConfirm } from "@/modules"
+import moment from "moment"
 import Image from "next/image"
 import { BiTrash } from "react-icons/bi"
 import { useDispatch, useSelector } from "react-redux"
@@ -21,12 +22,15 @@ export const ReviewItem = ({ comment }: CommentItemProps) => {
     <>
       <li className="comment__list-item">
         <div className="comment__list-item-img image-container">
-          <Image src={avatar} alt="" layout="fill" className="image" />
+          <Image
+            // src={`data:image/jpeg;base64,${rating.partner_avatar}`}
+            src={avatar}
+            alt=""
+            layout="fill"
+            className="image"
+          />
         </div>
         <div className="comment__list-item-content">
-          <div className="comment__list-item-content-rating">
-            <Stars count={comment.star_rating} />
-          </div>
           <p className="comment__list-item-content-info">
             <span className="comment__list-item-content-info-author">
               {comment.partner_name}

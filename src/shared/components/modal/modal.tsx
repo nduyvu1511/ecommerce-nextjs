@@ -12,6 +12,7 @@ export interface IModal {
   unsetSize?: boolean
   isShowConfirmModal?: boolean
   heading?: string
+  disableOverLay?: boolean
 }
 
 export const Modal = ({
@@ -23,6 +24,7 @@ export const Modal = ({
   unsetSize,
   heading,
   isShowConfirmModal,
+  disableOverLay = false,
 }: IModal) => {
   const dispatch = useDispatch()
 
@@ -53,10 +55,10 @@ export const Modal = ({
       </section>
 
       <div
-        onClick={closeModalHandler}
+        onClick={() => !disableOverLay && closeModalHandler()}
         className={`overlay ${isShowModal ? "overlay-active" : ""} ${
           stack ? "overlay-stack" : ""
-        } ${isShowConfirmModal ? "disabled" : ""} `}
+        } ${isShowConfirmModal || disableOverLay ? "overlay-disabled" : ""} `}
       ></div>
     </>
   )

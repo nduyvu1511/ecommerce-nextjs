@@ -1,6 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
+import { isArrayHasValue, isObjectHasValue } from "@/helper"
 import { DOMAIN_URL } from "@/services"
 import { useEffect, useState } from "react"
+import { Swiper, SwiperSlide } from "swiper/react"
+import ImageShow from "../common/imageShow"
 
 interface IProductImage {
   images: Array<string>
@@ -8,60 +11,56 @@ interface IProductImage {
 }
 
 export const ProductImg = ({ images, type }: IProductImage) => {
-  const [slideIndex, setSlideIndex] = useState(0)
-
-  const [imageZoomPosition, setImageZoomPosition] = useState("0% 0%")
-
-  const handleMouseMove = (e: any) => {
-    const { left, top, width, height } = e.target.getBoundingClientRect()
-    const x = ((e.pageX - left) / width) * 100
-    const y = ((e.pageY - top) / height) * 100
-    setImageZoomPosition(`${x}% ${y}%`)
-  }
+  const [swiper, setSwiper] = useState<any>({})
+  const [activeIndex, setActiveIndex] = useState<number>(1)
+  const [imageShow, setImageShow] = useState<string>()
 
   useEffect(() => {
-    if (slideIndex > 0) setSlideIndex(0)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [images])
+    return () => {
+      setActiveIndex(1)
+      console.log("unmount")
+      if (isObjectHasValue(swiper)) {
+        swiper?.slideTo(1)
+      }
+      // setSwiper({})
+    }
+  }, [])
 
   return (
     <>
-      <div className="product__img-show">
-        <div
-          style={{
-            backgroundPosition: imageZoomPosition,
-            backgroundImage: `url(${DOMAIN_URL}${images[slideIndex]})`,
+      <div className="product__img-show-container">
+        <Swiper
+          slidesPerView={1}
+          loop={true}
+          onInit={(ev) => {
+            ev.init()
+            setSwiper(ev)
           }}
-          onMouseMove={handleMouseMove}
-          onMouseOut={() => setImageZoomPosition(`${0}% ${0}%`)}
-          className={`product__img-show-container ${
-            type === "detail" ? "product__img-show-container-detail" : ""
-          }`}
+          onSlideChange={(e) => setActiveIndex(e.activeIndex)}
         >
-          {images.map((img, index) => {
-            return (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                key={index}
-                style={{
-                  transform: `translateX(-${slideIndex * 100}%)`,
-                }}
-                className="product__img-show-banner"
-                src={`${DOMAIN_URL}${img}`}
-                alt=""
-              />
-            )
-          })}
-        </div>
+          {isArrayHasValue(images)
+            ? images.map((img, index) => (
+                <SwiperSlide onClick={() => setImageShow(img)} key={index}>
+                  <img
+                    className="img-fluid"
+                    src={`${DOMAIN_URL}${img}`}
+                    alt=""
+                  />
+                </SwiperSlide>
+              ))
+            : null}
+        </Swiper>
 
         <div className="product__img-show-sub">
           {images.map((img, index) => {
             return (
               <div
                 key={index}
-                onClick={() => setSlideIndex(index)}
+                onClick={() => {
+                  swiper?.slideTo(index + 1)
+                }}
                 className={`product__img-show-sub-child ${
-                  index === slideIndex ? "active" : ""
+                  index === activeIndex - 1 || 0 ? "active" : ""
                 }`}
               >
                 <img
@@ -75,6 +74,10 @@ export const ProductImg = ({ images, type }: IProductImage) => {
         </div>
         {/* <div className="product__img-show-label">23%</div> */}
       </div>
+
+      {imageShow ? (
+        <ImageShow onClose={() => setImageShow("")} url={imageShow || ""} />
+      ) : null}
     </>
   )
 }

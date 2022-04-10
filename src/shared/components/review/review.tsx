@@ -2,9 +2,10 @@ import { RootState } from "@/core/store"
 import { Field, Form, Formik } from "formik"
 import { useRouter } from "next/router"
 import { useRef, useState } from "react"
+import { CgSmile } from "react-icons/cg"
 import {
   MdOutlineKeyboardArrowDown,
-  MdOutlineKeyboardArrowUp
+  MdOutlineKeyboardArrowUp,
 } from "react-icons/md"
 import { useSelector } from "react-redux"
 import { useReview } from "shared/hook"
@@ -69,7 +70,7 @@ const ProductReview = () => {
           onClick={() => setOpenReviewForm(!isOpenReviewForm)}
           className="product__review-form-heading"
         >
-          {language === "vni" ? "Thêm đánh giá" : "Add a review"}
+          {language === "vni" ? "Thêm bình luận" : "Add a review"}
           {isOpenReviewForm ? (
             <MdOutlineKeyboardArrowDown />
           ) : (
@@ -107,8 +108,8 @@ const ProductReview = () => {
                       type="area"
                       placeholder={
                         language === "vni"
-                          ? "Your review..."
-                          : "Đánh giá của bạn..."
+                          ? "Mời bạn để lại bình luận..."
+                          : "Mời bạn để lại bình luận..."
                       }
                       name="message"
                     />
@@ -134,7 +135,10 @@ const ProductReview = () => {
 
       {
         reviews?.length === 0 ? (
-          <p className="product__tab-content-text">{"Chưa có đánh giá nào!"}</p>
+          <div className="rating-no-rating">
+            <CgSmile />
+            <p>Chưa có hỏi đáp nào cho sản phẩm này</p>
+          </div>
         ) : null
         // <p className="product__tab-content-text">{`${reviews.length} Đánh giá cho sản phẩm ${product.name}`}</p>
       }

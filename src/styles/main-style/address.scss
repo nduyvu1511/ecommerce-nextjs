@@ -1,3 +1,13 @@
+.account__option-layout-body {
+  & .user__address {
+    background-color: #fff;
+    padding: 2rem 1.5rem;
+    @include responsive(lg-screen) {
+      padding-inline: 3rem;
+    }
+  }
+}
+
 .user__address {
   display: grid;
   grid-template-columns: 1fr;

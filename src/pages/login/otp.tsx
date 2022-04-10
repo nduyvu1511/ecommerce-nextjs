@@ -79,8 +79,8 @@ const LoginWithOTP = () => {
           firebase_access_token: res._tokenResponse.idToken,
         })
         .then((res: any) => {
-          const result = res.result
-          if (result.success) {
+          const result = res?.result
+          if (result?.success) {
             router.push("/")
             dispatch(setToken(result.data.token))
             dispatch(
@@ -97,9 +97,14 @@ const LoginWithOTP = () => {
 
             setOtpLoading(false)
           } else {
-            toast.error(result.message, {
-              position: "top-right",
-            })
+            dispatch(
+              setMessage({
+                title: result.message,
+                isOpen: true,
+                type: "danger",
+              })
+            )
+
             setOtpLoading(false)
           }
         })

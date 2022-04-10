@@ -9,11 +9,10 @@ import { RootState } from "../../core/store"
 interface AccountContainerProps {
   children: ReactNode
   heading: string
-  desc: string
 }
 
 export const AccountContainer = (props: AccountContainerProps) => {
-  const { children, heading, desc } = props
+  const { children, heading } = props
 
   const dispatch = useDispatch()
   const { isOpenModalOptionAccount } = useSelector(
@@ -33,7 +32,6 @@ export const AccountContainer = (props: AccountContainerProps) => {
               <header className="account__option-layout-header">
                 <div>
                   <h3>{heading}</h3>
-                  <p>{desc}</p>
                 </div>
                 <button
                   onClick={() =>

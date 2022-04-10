@@ -13,6 +13,8 @@ import { FcGoogle } from "react-icons/fc"
 import { toast } from "react-toastify"
 import { authentication, fbProvider, googleProvider } from "@/core/config"
 import userApi from "@/services/userApi"
+import { useDispatch } from "react-redux"
+import { setMessage } from "@/modules"
 
 interface IAuthLayout {
   children: React.ReactNode
@@ -22,6 +24,7 @@ interface IAuthLayout {
 export const AuthContainer = ({ children, type }: IAuthLayout) => {
   const language = "vni"
   const router = useRouter()
+  const dispatch = useDispatch()
 
   const handleLoginWithGoogle = async () => {
     try {
@@ -47,7 +50,9 @@ export const AuthContainer = ({ children, type }: IAuthLayout) => {
         .then((res) => {
           const result = res.data.result
           if (result.success) {
-            toast.success("Đăng nhập thành công")
+            dispatch(
+              setMessage({ title: "Đăng nhập thành công!", isOpen: true })
+            )
             router.push("/")
             // setToken(result.data.token)
             if (userInfoRes) {

@@ -1,6 +1,7 @@
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import { useReview } from "shared/hook"
+import { Rating } from "../rating"
 import ProductReview from "../review/review"
 
 export const ProductTabs = ({ description }: { description: string }) => {
@@ -13,7 +14,7 @@ export const ProductTabs = ({ description }: { description: string }) => {
 
   const [tabOpen, setTabOpen] = useState<
     "description" | "information" | "review" | "rating"
-  >("description")
+  >("rating")
 
   useEffect(() => {
     return () => {
@@ -61,16 +62,15 @@ export const ProductTabs = ({ description }: { description: string }) => {
         <h5
           onClick={() => setTabOpen("rating")}
           className={`product__detail-tabs-header-heading ${
-            tabOpen === "review"
+            tabOpen === "rating"
               ? "product__detail-tabs-header-heading-active"
               : ""
           }`}
         >
-          {language === "vni"
-            ? `Hỏi đáp (${reviews?.length || 0})`
-            : `Q&A (${reviews?.length || 0})`}
+          {language === "vni" ? `Đánh giá sản phẩm` : "Product Ratings"}
         </h5>
       </div>
+
       <div className="product__detail-tabs-content">
         {tabOpen === "description" ? (
           <div className="product__detail-tabs-content-desc">
@@ -91,6 +91,12 @@ export const ProductTabs = ({ description }: { description: string }) => {
         {tabOpen === "review" ? (
           <div className="product__detail-tabs-content-info">
             <ProductReview />
+          </div>
+        ) : null}
+
+        {tabOpen === "rating" ? (
+          <div className="product__detail-tabs-content-info">
+            <Rating />
           </div>
         ) : null}
       </div>

@@ -116,6 +116,10 @@
   &-stack {
     z-index: 1004;
   }
+
+  &-disabled {
+    cursor: default;
+  }
 }
 
 .modal_container {

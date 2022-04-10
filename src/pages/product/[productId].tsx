@@ -3,13 +3,14 @@ import {
   ProductDetail,
   ProductDetailLoading,
   ProductItem,
-  ProductTabs
+  ProductTabs,
 } from "@/components"
 import {
   getAttributeList,
-  getListAttributeId, isArrayHasValue,
+  getListAttributeId,
+  isArrayHasValue,
   isObjectHasValue,
-  mergeProductAndProductDetail
+  mergeProductAndProductDetail,
 } from "@/helper"
 import { MainLayout } from "@/layout"
 import { Product, ProductDetail as IProductDetail } from "@/models"
@@ -82,6 +83,10 @@ const ProductDetailPage = ({ product }: ProduductDetailPageProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.query.productId])
 
+  useEffect(() => {
+    document.title = product?.name || ""
+  }, [])
+
   // Get viewed recently products
   useEffect(() => {
     if (!isObjectHasValue(product)) return
@@ -134,7 +139,7 @@ const ProductDetailPage = ({ product }: ProduductDetailPageProps) => {
           />
         </section>
         <div className="product__detail-tabs-wrapper">
-          <ProductTabs description={product.description_sale} />
+          <ProductTabs description={product?.description_sale || ""} />
         </div>
 
         {/* Related Products */}
@@ -157,6 +162,9 @@ const ProductDetailPage = ({ product }: ProduductDetailPageProps) => {
                 },
                 1024: {
                   slidesPerView: 4,
+                },
+                1200: {
+                  slidesPerView: 5,
                 },
               }}
             >
@@ -195,6 +203,9 @@ const ProductDetailPage = ({ product }: ProduductDetailPageProps) => {
                 },
                 1024: {
                   slidesPerView: 4,
+                },
+                1200: {
+                  slidesPerView: 5,
                 },
               }}
             >

@@ -1,10 +1,10 @@
 import { AccountContainer } from "@/container"
-import { MainAuthLayout, MainLayout } from "@/layout"
+import { MainAuthLayout } from "@/layout"
 import Address from "../../shared/components/address/address"
 
 const UserAddress = () => {
   return (
-    <AccountContainer heading="Your Address" desc="This is address">
+    <AccountContainer heading="Your Address">
       <Address type="account" />
     </AccountContainer>
   )

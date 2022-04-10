@@ -13,7 +13,7 @@
   }
 
   &-active {
-    border: 1px solid $primary;
+    border: 1px solid $primary-color;
 
     &-label {
       display: block;
@@ -24,7 +24,7 @@
 
       & svg {
         font-size: 2rem;
-        fill: $primary;
+        fill: $primary-color;
       }
     }
   }

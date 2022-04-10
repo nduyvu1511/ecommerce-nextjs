@@ -1,7 +1,8 @@
 import { RootState } from "@/core/store"
 import { Comment } from "@/models"
+import { setMessage } from "@/modules"
 import userApi from "@/services/userApi"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import useSWR from "swr"
 
 interface AddReviewHook {
@@ -28,6 +29,7 @@ interface ReivewSWR {
 }
 
 const useReview = ({ product_id }: Props): ReivewSWR => {
+  const dispatch = useDispatch()
   const { token } = useSelector((state: RootState) => state.user)
 
   const { data, error, isValidating, mutate } = useSWR(
@@ -36,7 +38,7 @@ const useReview = ({ product_id }: Props): ReivewSWR => {
       ? () =>
           userApi
             .getReviews({ token, product_id })
-            .then((res: any) => res?.result)
+            .then((res: any) => res?.result || [])
       : null,
     {
       revalidateOnFocus: false,
@@ -46,8 +48,21 @@ const useReview = ({ product_id }: Props): ReivewSWR => {
     if (!token || !content || !product_id) return
 
     const res: any = await userApi.addReview({ content, product_id, token })
-
-    mutate([res.result, ...data], false)
+    if (res?.result?.id) {
+      if (!data) {
+        mutate([res.result], false)
+      } else {
+        mutate([res.result, ...data], false)
+      }
+    } else {
+      dispatch(
+        setMessage({
+          type: "danger",
+          isOpen: true,
+          title: res?.result?.message || "",
+        })
+      )
+    }
   }
 
   const handleDeleteReview = async ({

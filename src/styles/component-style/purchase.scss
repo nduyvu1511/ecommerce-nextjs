@@ -1,0 +1,144 @@
+.purchase__list {
+  margin-top: 1.4rem;
+
+  &-item {
+    list-style: none;
+    background-color: #fff;
+
+    padding: 2rem 1.5rem;
+
+    @include responsive(lg-screen) {
+      padding-inline: 3rem;
+    }
+
+    & + & {
+      margin-top: 1.4rem;
+    }
+
+    & .purchase__item {
+      &-top {
+        @include flex(flex-start, center);
+        border-bottom: 1px solid $border-color-1;
+        padding-block: 1rem;
+      }
+
+      &-avatar {
+        width: 80px;
+        margin-right: 1rem;
+
+        & img {
+          width: 80px;
+          height: 80px;
+          object-fit: cover;
+        }
+      }
+
+      &-content {
+        flex: 1;
+        &-name {
+          @include style-text(500, 1.5rem, 2.5rem, $text-color);
+          margin-bottom: 0.6rem;
+        }
+
+        &-qty {
+          @include style-text(500, 1.3rem, 2.3rem, $gray);
+        }
+      }
+
+      &-price {
+        & p {
+          @include style-text(600, 1.4rem, 2.4rem, $danger);
+        }
+      }
+
+      &-middle {
+        padding-block: 1rem;
+        border-bottom: 1px solid $border-color-1;
+
+        & .purchase__item-total-price {
+          @include style-text(600, 1.4rem, 2.4rem, $text-color);
+          @include flex(end, center);
+
+          & span {
+            color: $danger;
+            margin-left: 1rem;
+            font-size: 1.8rem;
+            line-height: 2.8rem;
+          }
+        }
+      }
+
+      &-actions {
+        @include flex(end, center);
+        padding-top: 2rem;
+
+        & button {
+          padding: 0.8rem 1.6rem;
+        }
+
+        & button:first-child {
+          margin-right: 1rem;
+        }
+      }
+    }
+  }
+}
+
+.purchase__modal {
+  & .modal {
+    // height: 80vh;
+    max-width: 750px;
+    width: 100%;
+    padding: 3rem;
+
+    & .rating__form {
+      &-star {
+        width: 100%;
+        text-align: center;
+        padding-block: 1rem;
+      }
+
+      &-header {
+        display: flex;
+        //   margin-bottom: 2rem;
+        margin-top: 2rem;
+
+        &-img {
+          margin-right: 1rem;
+
+          & img {
+            height: 70px;
+            width: 70px;
+            object-fit: cover;
+          }
+        }
+
+        &-info {
+          &-name {
+            @include style-text(500, 1.4rem, 2.4rem, $home-heading-color);
+          }
+
+          &-variant {
+            @include style-text(500, 1.3rem, 2.3rem, $text-color);
+          }
+        }
+      }
+
+      &-footer {
+        @include flex(end, center);
+        margin-top: 2rem;
+
+        & button {
+          padding: 0.8rem 1.5rem;
+        }
+
+        & button:first-child {
+          margin-right: 1rem;
+          background-color: white;
+          color: $text-color;
+          border: 1px solid $border-color-1;
+        }
+      }
+    }
+  }
+}
