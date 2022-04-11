@@ -41,13 +41,14 @@ export const CartPageItem = ({
         <Link passHref href={`/product/${cart.product_tmpl_id}`}>
           <div className="image-container">
             <button
-              onClick={() =>
+              onClick={(e) => {
+                e.stopPropagation()
                 onDeleteItem &&
-                onDeleteItem({
-                  product_tmpl_id: cart.product_tmpl_id,
-                  product_prod_id: cart.product_prod_id,
-                })
-              }
+                  onDeleteItem({
+                    product_tmpl_id: cart.product_tmpl_id,
+                    product_prod_id: cart.product_prod_id,
+                  })
+              }}
               className="btn-reset cart__item-delete-btn"
             >
               <RiCloseCircleFill />

@@ -4,7 +4,6 @@ import { formatMoneyVND } from "@/helper"
 import { clearOrderData, logOut } from "@/modules"
 import Image from "next/image"
 import Link from "next/link"
-import { useRouter } from "next/router"
 import { useState } from "react"
 import { AiOutlineShopping, AiOutlineUser } from "react-icons/ai"
 import { FiMenu } from "react-icons/fi"
@@ -22,7 +21,6 @@ import NavMobile from "./navMobile"
 
 export const Header = () => {
   const dispatch = useDispatch()
-  const router = useRouter()
   useWishlist(true)
   useCategory()
   const height = useScrollTop()
@@ -153,24 +151,21 @@ export const Header = () => {
                   </Link>
                 </div>
 
-                <div
-                  onClick={() => router.push("/cart")}
-                  className={`header__main-top-actions-cart cursor-pointer`}
-                >
+                <div className={`header__main-top-actions-cart`}>
                   <Link passHref href="/cart">
-                    <p className="header__main-top-actions-cart-price">
+                    <p className="header__main-top-actions-cart-price cursor-pointer">
                       {formatMoneyVND(totalMoney)}
                     </p>
                   </Link>
 
                   <div className="header__main-top-actions-cart-wrapper">
                     <Link passHref href="/cart">
-                      <p className="header__main-top-actions-icon header__main-top-actions-icon-danger">
+                      <a className="header__main-top-actions-icon header__main-top-actions-icon-danger">
                         <AiOutlineShopping />
                         <span className="header__main-top-actions-icon-absolute">
                           {carts.length}
                         </span>
-                      </p>
+                      </a>
                     </Link>
 
                     <button

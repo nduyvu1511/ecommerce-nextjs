@@ -1,29 +1,22 @@
 import { formatMoneyVND } from "@/helper"
-import { CartItem as ICartItem } from "@/models"
-import { deleteCartItem } from "@/modules"
+import { CartItem as ICartItem, ProductIds } from "@/models"
 import { DOMAIN_URL } from "@/services"
 import Image from "next/image"
 import Link from "next/link"
 import { BiTrash } from "react-icons/bi"
 import { MdOutlineClose } from "react-icons/md"
-import { useDispatch } from "react-redux"
 
 interface InterfaceCartItem {
   cart: ICartItem
   handleClose?: Function
+  onDelete: (props: ProductIds) => void
 }
 
-export const CartItem = ({ cart, handleClose }: InterfaceCartItem) => {
-  const dispatch = useDispatch()
-  const handleDelete = () => {
-    dispatch(
-      deleteCartItem({
-        product_prod_id: cart.product_prod_id,
-        product_tmpl_id: cart.product_tmpl_id,
-      })
-    )
-  }
-
+export const CartItem = ({
+  cart,
+  handleClose,
+  onDelete,
+}: InterfaceCartItem) => {
   return (
     <div className="cart__item">
       <div className="cart__item-image">
@@ -71,7 +64,14 @@ export const CartItem = ({ cart, handleClose }: InterfaceCartItem) => {
             </p>
           </div>
           <button
-            onClick={handleDelete}
+            onClick={(e) => {
+              e.stopPropagation()
+              onDelete &&
+                onDelete({
+                  product_prod_id: cart.product_prod_id,
+                  product_tmpl_id: cart.product_tmpl_id,
+                })
+            }}
             className="btn-reset cart__item-btn-delete"
           >
             <BiTrash />

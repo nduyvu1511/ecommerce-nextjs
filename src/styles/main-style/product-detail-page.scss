@@ -87,11 +87,10 @@
 
         .product__intro {
           margin-top: 1rem;
-          padding: 0;
           @include responsive(lg-screen) {
-            margin-left: 3rem;
+            padding-left: 3rem;
+            margin-top: 0;
           }
-          margin-left: 0;
 
           &-status {
             margin-bottom: 3rem;

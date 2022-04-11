@@ -11,6 +11,7 @@ import {
   updateCartQuantity,
 } from "@/modules"
 import { deleteCartItem as deleteCartItems } from "@/modules/cart/cartSlice"
+import { useMemo } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { usePromotion } from "./usePromotion"
 
@@ -22,6 +23,9 @@ interface UseCartOrderProps {
   findProductFromProductList: (
     productIds: ProductIds
   ) => CartItem | null | undefined
+  handleResetOrderField: Function
+  carts: CartItem[]
+  totalMoney: number
 }
 
 const useCartOrder = (): UseCartOrderProps => {
@@ -100,13 +104,18 @@ const useCartOrder = (): UseCartOrderProps => {
   }
 
   const deleteCartItem = (productIds: ProductIds) => {
-    handleResetOrderField()
     dispatch(deleteCartItems(productIds))
 
     if (productList) {
       dispatch(setProductList(getDiffCartsById(productList, productIds)))
-    } else {
+
+      if (productList.find((item) => isExistCart(productIds, item))) {
+        console.log("reset product list ")
+        handleResetOrderField()
+      }
+
       if (carts.length === 1) {
+        console.log("set product list to undefined")
         dispatch(setProductList(undefined))
       }
     }
@@ -126,12 +135,19 @@ const useCartOrder = (): UseCartOrderProps => {
     }
   }
 
+  const totalMoney = useMemo(() => {
+    return carts.reduce((a, b) => b.price * b.quantity + a, 0)
+  }, [carts])
+
   return {
     toggleEachInput,
     toggleCheckAllCart,
     updateQuantity,
     deleteCartItem,
     findProductFromProductList,
+    handleResetOrderField,
+    carts,
+    totalMoney,
   }
 }
 

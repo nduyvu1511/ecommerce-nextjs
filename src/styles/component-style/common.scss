@@ -179,10 +179,27 @@
   padding: 0.6rem 1.2rem;
   cursor: pointer;
   transition: all 0.2s linear;
+  user-select: none;
+
+  &-sm {
+    padding: 0.4rem 0.8rem;
+    font-size: 1.1rem;
+    line-height: 1.7rem;
+  }
+
+  &-md {
+    padding: 0.5rem 1rem;
+    font-size: 1.2rem;
+    line-height: 1.8rem;
+  }
 
   &-active {
     border: 1px solid $primary-color;
     color: $primary-color;
+  }
+
+  &-disabled {
+    pointer-events: none;
   }
 }
 

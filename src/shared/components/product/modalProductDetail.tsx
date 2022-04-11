@@ -1,6 +1,10 @@
 import { RootState } from "@/core/store"
 import { Product, ProductDetail as IProductDetail } from "@/models"
-import { setAttributeList, setProduct, toggleModalProduct } from "@/modules"
+import {
+  setAttributeList,
+  setProduct as setProductStore,
+  toggleModalProduct,
+} from "@/modules"
 import productApi from "@/services/productApi"
 import { memo, useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
@@ -63,13 +67,18 @@ export const ModalProductDetail = memo(function ModalProductDetailChild() {
   }, [productProps])
 
   useEffect(() => {
+    return () => {
+      dispatch(setProductStore(null))
+    }
+  }, [])
+
+  useEffect(() => {
     if (!productProps?.product_tmpl_id) return
 
     const attributeList = getAttributeList(productProps)
     if (isArrayHasValue(attributeList)) {
       dispatch(setAttributeList(attributeList))
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

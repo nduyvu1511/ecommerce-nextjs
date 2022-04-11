@@ -14,7 +14,7 @@ import {
 } from "@/helper"
 import { MainLayout } from "@/layout"
 import { Product, ProductDetail as IProductDetail } from "@/models"
-import { setAttributeList } from "@/modules"
+import { setAttributeList, setProduct } from "@/modules"
 import productApi from "@/services/productApi"
 import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from "next"
 import { useRouter } from "next/router"
@@ -70,6 +70,7 @@ const ProductDetailPage = ({ product }: ProduductDetailPageProps) => {
   useEffect(() => {
     if (!isObjectHasValue(product)) return
 
+    dispatch(setProduct(product))
     const attributeList = getAttributeList(product)
     if (isArrayHasValue(attributeList)) {
       dispatch(setAttributeList(attributeList))
@@ -77,9 +78,9 @@ const ProductDetailPage = ({ product }: ProduductDetailPageProps) => {
 
     return () => {
       clearProductDetail()
+      dispatch(setProduct(null))
       clearComments()
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.query.productId])
 

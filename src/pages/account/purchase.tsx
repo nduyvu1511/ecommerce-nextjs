@@ -1,11 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
-import { Modal } from "@/components"
-import { RatingForm } from "@/components"
+import { Modal, RatingForm } from "@/components"
 import { AccountContainer } from "@/container"
 import { formatMoneyVND } from "@/helper"
 import { MainAuthLayout } from "@/layout"
 import { PurchasedProduct } from "@/models"
 import { DOMAIN_URL } from "@/services"
+import Link from "next/link"
 import React, { useState } from "react"
 import { RiLoader4Line } from "react-icons/ri"
 import { useProductRating } from "shared/hook"
@@ -16,8 +16,9 @@ const Purchase = () => {
     data: { data_count = 0, data: purchaseList = [] } = { data: {} },
     isValidating,
     updateCommentRating,
+    deleteCommentRating,
   } = useProductRating({ shouldFetch: true, type: "purchase" })
-
+  console.log(purchaseList)
   return (
     <>
       <AccountContainer heading="Danh sách đơn mua">
@@ -28,18 +29,26 @@ const Purchase = () => {
                 <div className="purchase__item">
                   <div className="purchase__item-top">
                     <div className="purchase__item-avatar">
-                      <img
-                        src={`${DOMAIN_URL}${
-                          item?.product.image_url?.[0] || ""
-                        }`}
-                        alt=""
-                      />
+                      <Link
+                        passHref
+                        href={`/product/${item.product.product_tmpl_id}`}
+                      >
+                        <img
+                          className="cursor-pointer"
+                          src={`${DOMAIN_URL}${
+                            item?.product.image_url?.[0] || ""
+                          }`}
+                          alt=""
+                        />
+                      </Link>
                     </div>
 
                     <div className="purchase__item-content">
-                      <p className="purchase__item-content-name">
-                        {item.product.product_name}
-                      </p>
+                      <Link href={`/product/${item.product.product_tmpl_id}`}>
+                        <a className="purchase__item-content-name">
+                          {item.product.product_name}
+                        </a>
+                      </Link>
                       <p className="purchase__item-content-qty">
                         Số lượng: <span>{item.product.qty_product}</span>
                       </p>
@@ -109,6 +118,11 @@ const Purchase = () => {
                   )
                 }}
                 purchaseForm={purchase}
+                onDeleteRating={(deleteForm) =>
+                  deleteCommentRating(deleteForm, () => {
+                    setPurchase(undefined)
+                  })
+                }
               />
             </div>
           </Modal>

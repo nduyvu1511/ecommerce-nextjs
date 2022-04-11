@@ -3,7 +3,7 @@ import { AttributeWithParentId, Product } from "@/models"
 import {
   addProductCompare,
   changeAttributeItem,
-  toggleShowCompareModal,
+  toggleShowCompareModal
 } from "@/modules"
 import Link from "next/link"
 import { useRef, useState } from "react"
@@ -13,9 +13,8 @@ import { useReview } from "shared/hook"
 import { ButtonAddCard } from "../button"
 import ButtonWishlist from "../button/buttonAddWishlist"
 import ButtonShare from "../button/buttonShare"
-import { Rating } from "../star/star"
-import { Stars } from "../common"
 import { InputQuantity } from "../inputs"
+import { Star } from "../star"
 import { ProductVariation } from "./productVariation"
 
 interface IProductIntro {
@@ -66,12 +65,12 @@ export const ProductIntro = ({ product, type }: IProductIntro) => {
               </p>
 
               <div className="modal__product-sub-rating">
-                {/* <Rating
-                  ratingValue={4.3}
-                  allowHalfIcon={true}
-                  allowHover={false}
-                /> */}
-                <Stars count={0} />
+               
+                <Star
+                  ratingValue={product.star_rating * 20}
+                  size={15}
+                  readonly
+                />
                 <small className="modal__product-sub-rating-review">
                   {reviewList?.length || 0}{" "}
                   {language === "vni" ? "Đánh giá" : "REVIEWS"}`

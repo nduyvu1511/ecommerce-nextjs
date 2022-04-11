@@ -21,6 +21,7 @@ const Cart = () => {
     updateQuantity,
     deleteCartItem,
     findProductFromProductList,
+    handleResetOrderField,
   } = useCartOrder()
 
   const { productList, orderDraft } = useSelector(
@@ -29,8 +30,12 @@ const Cart = () => {
   const { createOrderDraft } = useOrder()
 
   useEffect(() => {
-    if (productList === undefined && carts?.length > 0) {
-      dispatch(setProductList(carts))
+    if (carts?.length > 0) {
+      if (productList === undefined) {
+        dispatch(setProductList(carts))
+      }
+    } else {
+      handleResetOrderField()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch])

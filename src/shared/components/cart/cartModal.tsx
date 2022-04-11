@@ -1,11 +1,12 @@
 import { cartEmptyIcon } from "@/assets"
 import { RootState } from "@/core/store"
+import { formatMoneyVND } from "@/helper"
+import { ProductIds } from "@/models"
+import Link from "next/link"
 import { useRouter } from "next/router"
 import { memo } from "react"
 import { useSelector } from "react-redux"
-import { formatMoneyVND, isObjectHasValue } from "@/helper"
-import { useCart } from "shared/hook"
-import Link from "next/link"
+import { useCartOrder } from "shared/hook"
 import { CartItem } from "./cartItem"
 
 export const CartModal = memo(function CartModalChild({
@@ -14,26 +15,29 @@ export const CartModal = memo(function CartModalChild({
   handleClose?: Function
 }) {
   const language = "vni"
-  const { carts, totalMoney } = useCart()
+  const { deleteCartItem, carts, totalMoney } = useCartOrder()
   const router = useRouter()
-  const { orderDraft, address, delivery } = useSelector(
+  const { address, delivery, payment } = useSelector(
     (state: RootState) => state.order
   )
 
-  const handleRedirectToPayment = () => {
+  const handleRedirect = () => {
     handleClose && handleClose()
-
-    if (isObjectHasValue(orderDraft)) {
-      if (isObjectHasValue(delivery)) {
-        return router.push("/payment")
-      }
-      if (isObjectHasValue(address)) {
-        return router.push("/shipping_detail")
-      }
-      return router.push("/address")
-    } else {
-      return router.push("/cart")
+    if (payment) {
+      return router.push("/payment")
     }
+    if (delivery) {
+      return router.push("/delivery")
+    }
+    if (address) {
+      return router.push("/address")
+    }
+
+    return router.push("/cart")
+  }
+
+  const handleDeleteCartItem = (productIds: ProductIds) => {
+    deleteCartItem(productIds)
   }
 
   return (
@@ -52,7 +56,12 @@ export const CartModal = memo(function CartModalChild({
           <div className="cart__modal-list">
             {carts.length > 0
               ? carts.map((cart, index) => (
-                  <CartItem handleClose={handleClose} key={index} cart={cart} />
+                  <CartItem
+                    onDelete={handleDeleteCartItem}
+                    handleClose={handleClose}
+                    key={index}
+                    cart={cart}
+                  />
                 ))
               : null}
           </div>
@@ -71,7 +80,7 @@ export const CartModal = memo(function CartModalChild({
                 </a>
               </Link>
               <span
-                onClick={handleRedirectToPayment}
+                onClick={handleRedirect}
                 className="cart__modal-bottom-actions-item"
               >
                 {language === "vni" ? "Thanh toán" : " Checkout"}

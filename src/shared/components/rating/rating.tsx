@@ -1,8 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
+import { RootState } from "@/core/store"
 import { CommentRating } from "@/models"
 import { useRouter } from "next/router"
 import React, { useCallback } from "react"
 import { CgSmile } from "react-icons/cg"
+import { useSelector } from "react-redux"
 import { useProductRating } from "shared/hook"
 import { Pagination } from "../button"
 import { Star } from "../star"
@@ -16,12 +18,12 @@ export const Rating = () => {
       shouldFetch: true,
       type: "product",
     })
+  const { product } = useSelector((state: RootState) => state.product)
 
+  // Functions
   const handleAddRating = useCallback(() => {}, [])
 
-  const handleDeleteRating = (product_id: number) => {
-    console.log(product_id)
-  }
+  const handleDeleteRating = (product_id: number) => {}
 
   return (
     <div className="product__rating">
@@ -29,8 +31,8 @@ export const Rating = () => {
         <h3>Đánh Giá - Nhận Xét Từ Khách Hàng</h3>
 
         <div className="product__rating-header-summary">
-          <p>{4.7}</p>
-          <Star ratingValue={4.5 * 20} />
+          <p>{product?.star_rating || 0}</p>
+          <Star ratingValue={product?.star_rating || 0 * 20} />
         </div>
 
         <p className="product__rating-header-count">

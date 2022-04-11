@@ -15,7 +15,7 @@ const useCategory = (): CategorySWR => {
   const { data, error, isValidating } = useSWR(
     "category",
     () => productApi.getCategories().then((res: any) => res?.result?.data),
-    { revalidateOnFocus: false }
+    { revalidateOnFocus: false, dedupingInterval: 120000 }
   )
 
   const bannerUrls: Array<string> = []

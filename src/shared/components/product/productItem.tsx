@@ -1,6 +1,11 @@
 import { ProductItemLoading } from "@/components"
 import { RootState } from "@/core/store"
-import { formatMoneyVND, getPriceProduct, isObjectHasValue } from "@/helper"
+import {
+  formatMoneyVND,
+  getPercentageProductDeal,
+  getPriceProduct,
+  isObjectHasValue,
+} from "@/helper"
 import { Product } from "@/models"
 import {
   addProductCompare,
@@ -8,7 +13,7 @@ import {
   setMessage,
   setProduct,
   toggleModalProduct,
-  toggleShowCompareModal
+  toggleShowCompareModal,
 } from "@/modules"
 import { DOMAIN_URL } from "@/services"
 import Image from "next/image"
@@ -76,7 +81,13 @@ export const ProductItem = ({ product, type, isLoading }: IProductItem) => {
       {!isLoading && isObjectHasValue(product) ? (
         <div className="product__card">
           <div className="product__card__img">
-            <span className="product__card-deal-label">22%</span>
+            {product?.daily_deal_promotion &&
+            getPercentageProductDeal(product) ? (
+              <span className="product__card-deal-label">
+                {getPercentageProductDeal(product)}%
+              </span>
+            ) : null}
+
             {/* Show on hover: wishlist, compare, detail  */}
             <div className="product__card__sub">
               {!router.query.productId ? (
@@ -122,7 +133,7 @@ export const ProductItem = ({ product, type, isLoading }: IProductItem) => {
                 <Link passHref href={`/product/${product.product_tmpl_id}`}>
                   <Image
                     className="image img-cover"
-                    src={`${DOMAIN_URL}${product.image_url[0]}`}
+                    src={`${DOMAIN_URL}${product?.image_url?.[0] || ""}`}
                     alt=""
                     layout="fill"
                     placeholder="blur"
@@ -139,7 +150,7 @@ export const ProductItem = ({ product, type, isLoading }: IProductItem) => {
                   <Link passHref href={`/product/${product.product_tmpl_id}`}>
                     <Image
                       className="image"
-                      src={`${DOMAIN_URL}${product.image_url[0]}`}
+                      src={`${DOMAIN_URL}${product?.image_url?.[0] || ""}`}
                       alt=""
                       layout="fill"
                       placeholder="blur"
@@ -156,7 +167,7 @@ export const ProductItem = ({ product, type, isLoading }: IProductItem) => {
                     <Link passHref href={`/product/${product.product_tmpl_id}`}>
                       <Image
                         className="image"
-                        src={`${DOMAIN_URL}${product.image_url[1]}`}
+                        src={`${DOMAIN_URL}${product?.image_url?.[1] || ""}`}
                         alt=""
                         layout="fill"
                       />

@@ -1,5 +1,4 @@
 /* eslint-disable @next/next/no-img-element */
-import { DOMAIN_URL } from "@/services"
 import React from "react"
 import { HiOutlineMinusSm, HiOutlinePlusSm } from "react-icons/hi"
 import { MdOutlineClose } from "react-icons/md"
@@ -27,7 +26,6 @@ const ImageShow = ({ url, onClose }: ImageShowProps) => {
                   <HiOutlinePlusSm />
                 </button>
                 <button onClick={() => zoomOut()}>
-                  {" "}
                   <HiOutlineMinusSm />
                 </button>
                 <button onClick={() => resetTransform()}>
@@ -35,7 +33,7 @@ const ImageShow = ({ url, onClose }: ImageShowProps) => {
                 </button>
               </div>
               <TransformComponent>
-                <img src={`${DOMAIN_URL}${url}`} alt="test" />
+                <img src={url} alt="" />
               </TransformComponent>
             </React.Fragment>
           )}

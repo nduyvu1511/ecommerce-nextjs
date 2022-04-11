@@ -168,6 +168,17 @@
         @include style-text(500, 1.4rem, 2.4rem, $text-color);
       }
 
+      &-tags {
+        margin-top: 1rem;
+        display: flex;
+        flex-wrap: wrap;
+
+        & .tag {
+          margin-bottom: 1rem;
+          margin-right: 1rem;
+        }
+      }
+
       &-image {
         display: flex;
         flex-wrap: wrap;
@@ -178,6 +189,7 @@
           margin-bottom: 1rem;
           width: 70px;
           height: 70px;
+          cursor: zoom-in;
 
           & img {
             width: 100%;

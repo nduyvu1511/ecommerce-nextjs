@@ -4,7 +4,6 @@
   &-item {
     list-style: none;
     background-color: #fff;
-
     padding: 2rem 1.5rem;
 
     @include responsive(lg-screen) {
@@ -18,7 +17,7 @@
     & .purchase__item {
       &-top {
         @include flex(flex-start, center);
-        border-bottom: 1px solid $border-color-1;
+        border-bottom: 1px solid $border-color-2;
         padding-block: 1rem;
       }
 
@@ -35,6 +34,8 @@
 
       &-content {
         flex: 1;
+        margin-right: 2rem;
+
         &-name {
           @include style-text(500, 1.5rem, 2.5rem, $text-color);
           margin-bottom: 0.6rem;
@@ -53,7 +54,7 @@
 
       &-middle {
         padding-block: 1rem;
-        border-bottom: 1px solid $border-color-1;
+        border-bottom: 1px solid $border-color-2;
 
         & .purchase__item-total-price {
           @include style-text(600, 1.4rem, 2.4rem, $text-color);
@@ -86,7 +87,6 @@
 
 .purchase__modal {
   & .modal {
-    // height: 80vh;
     max-width: 750px;
     width: 100%;
     padding: 3rem;
@@ -96,12 +96,12 @@
         width: 100%;
         text-align: center;
         padding-block: 1rem;
+        margin-bottom: 1rem;
       }
 
       &-header {
         display: flex;
-        //   margin-bottom: 2rem;
-        margin-top: 2rem;
+        margin-top: 3rem;
 
         &-img {
           margin-right: 1rem;

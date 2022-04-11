@@ -1,7 +1,4 @@
 .modal__product {
-  @include responsive(lg-screen) {
-    padding: 4rem 3rem;
-  }
   position: relative;
 
   &-btn-close {

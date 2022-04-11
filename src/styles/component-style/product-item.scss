@@ -45,10 +45,10 @@
 
     & .product__card-deal-label {
       position: absolute;
-      left: 0.4rem;
-      top: 0.4rem;
+      left: 0.6rem;
+      top: 0.6rem;
       z-index: 2;
-      padding: 0.2rem 0.6rem;
+      padding: 0.4rem 0.6rem;
       border-radius: 0.2rem;
       background-color: $danger;
       @include style-text(600, 1.2rem, 1.2rem, $white);

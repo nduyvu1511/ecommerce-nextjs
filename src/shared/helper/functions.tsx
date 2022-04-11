@@ -220,7 +220,10 @@ export function getPercentageProductDeal(product: Product): number {
   const deal = product?.daily_deal_promotion
   if (deal && Object.keys(deal).length > 0) {
     if (deal.compute_price === "fixed") {
-      return ((deal.fixed_price - product.price) / product.price) * 100
+      const percentage =
+        ((product.price - deal.fixed_price) / product.price) * 100
+
+      return percentage > 0 ? +percentage.toFixed(0) : 0
     }
 
     if (deal.compute_price === "percentage") {
@@ -257,7 +260,6 @@ export function getTotalPrice(productList: CartItem[]) {
 
 export const setToLocalStorage: any = (key: string, value: any) => {
   if (typeof window !== "undefined") {
-    console.log(value)
     if (typeof value !== "object" && typeof value !== "function") {
       window.localStorage.setItem(key, JSON.stringify(value))
     } else {

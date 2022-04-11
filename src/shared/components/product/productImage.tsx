@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { isArrayHasValue, isObjectHasValue } from "@/helper"
 import { DOMAIN_URL } from "@/services"
+import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import { Swiper, SwiperSlide } from "swiper/react"
 import ImageShow from "../common/imageShow"
@@ -40,7 +41,13 @@ export const ProductImg = ({ images, type }: IProductImage) => {
         >
           {isArrayHasValue(images)
             ? images.map((img, index) => (
-                <SwiperSlide onClick={() => setImageShow(img)} key={index}>
+                <SwiperSlide
+                  style={{
+                    cursor: `${type === "detail" ? "zoom-in" : "default"}`,
+                  }}
+                  onClick={() => setImageShow(img)}
+                  key={index}
+                >
                   <img
                     className="img-fluid"
                     src={`${DOMAIN_URL}${img}`}
@@ -75,8 +82,11 @@ export const ProductImg = ({ images, type }: IProductImage) => {
         {/* <div className="product__img-show-label">23%</div> */}
       </div>
 
-      {imageShow ? (
-        <ImageShow onClose={() => setImageShow("")} url={imageShow || ""} />
+      {imageShow && type === "detail" ? (
+        <ImageShow
+          onClose={() => setImageShow("")}
+          url={`${DOMAIN_URL}${imageShow || ""}`}
+        />
       ) : null}
     </>
   )

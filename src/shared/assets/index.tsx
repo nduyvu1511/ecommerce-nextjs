@@ -19,6 +19,7 @@ export const companyIcon = require("./icons/company_logo.jpeg")
 
 export const paymentMethodsImage = require("./icons/payment-methods.png")
 export const boCongThuong = require("./icons/bo-cong-thuong.png")
+export const logoTest = require("./images/DALATFARM21.png")
 
 export const cartEmptyIcon = (
   <svg

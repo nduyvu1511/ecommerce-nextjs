@@ -322,7 +322,7 @@ export interface ProductIds {
 export interface AttachmentProps extends ProductIdAndToken {
   attachments: {
     file: string
-    type: "image" | "video"
+    type: "picture" | "video"
   }[]
 }
 
@@ -357,17 +357,13 @@ export interface DeleteRatingProps extends ProductIdAndToken {
   history_line_id: number
 }
 
-export interface DeleteRatingHook {
-  history_line_id: number
-  product_id: number
-}
-
 export interface DeleteRatingRes {
   history_line_id: number
   comment_rating_id: number
 }
 
 export interface PurchaseProduct {
+  product_tmpl_id: number
   product_id: number
   product_name: string
   qty_product: number
@@ -401,7 +397,7 @@ export interface CommentRating {
   message: string | false
   star_rating: "1" | "2" | "3" | "4" | "5"
   star_rating_int: RatingRangePost
-  rating_tag: TagRating[]
+  rating_tag: Array<string>
   date: string
   partner_id: number
   partner_name: string
@@ -412,6 +408,11 @@ export interface CommentRating {
     name: string
   }
   editable: boolean
+  attachment_ids: {
+    id: number
+    file: string
+    mimetype: "image/jpeg" | "image/png"
+  }[]
 }
 
 export interface GetRatingByProductProps extends Token {

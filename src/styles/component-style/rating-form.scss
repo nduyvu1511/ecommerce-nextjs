@@ -93,4 +93,11 @@
       }
     }
   }
+
+  &-footer {
+    &-danger-btn {
+      margin-right: 1rem;
+      background-color: $danger;
+    }
+  }
 }

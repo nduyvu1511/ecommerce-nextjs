@@ -1,4 +1,4 @@
-import { OrderStatus } from "@/components"
+import { OrderStatus } from "@/components/account/status"
 import { OrderContainer } from "@/container"
 import { MainAuthLayoutNoFooter, MainNoFooter } from "@/layout"
 import { clearOrderData } from "@/modules"

@@ -1,7 +1,7 @@
 import { RootState } from "@/core/store"
 import {
   CommentRating,
-  DeleteRatingHook,
+  DeleteRatingProps,
   DeleteRatingRes,
   PurchasedProduct,
   UpdateRatingPropsWithLineId,
@@ -16,7 +16,7 @@ interface RatingSWR {
   data: any
   error: any
   isValidating: boolean
-  deleteCommentRating: (props: DeleteRatingHook, callback: Function) => void
+  deleteCommentRating: (props: DeleteRatingProps, callback: Function) => void
   updateCommentRating: (
     props: UpdateRatingPropsWithLineId,
     callback: Function
@@ -64,7 +64,7 @@ const useProductRating = ({
   )
 
   const deleteCommentRating = async (
-    deleteRating: DeleteRatingHook,
+    deleteRating: DeleteRatingProps,
     callback: Function
   ) => {
     if (!token) return
@@ -74,14 +74,40 @@ const useProductRating = ({
       token,
     })
 
-    const comment: DeleteRatingRes = res?.result?.data
+    if (!res?.result?.success) return
 
-    if (res?.result?.success) {
-      mutate()
-      // [...data?.data].filter(
-      //   (item: CommentRating) => item.comment_id !== comment.comment_rating_id
-      // ),
-      // false
+    const comment: DeleteRatingRes = res?.result?.data
+    if (comment) {
+      mutate(
+        {
+          ...data,
+          data: [...data?.data].map((item: PurchasedProduct) =>
+            item.history_line_id === comment.history_line_id
+              ? {
+                  ...item,
+                  comment_rating: {
+                    comment_id: false,
+                    partner_id: false,
+                    partner_name: false,
+                    partner_avatar: false,
+                    content: false,
+                    product_id: { id: false, name: false },
+                    id: false,
+                    name: false,
+                    date: false,
+                    editable: false,
+                    star_rating: false,
+                    star_rating_int: 0,
+                    rating_tag: [],
+                    attachment_ids: [],
+                  },
+                }
+              : item
+          ),
+        },
+        false
+      )
+
       callback()
       dispatch(setMessage({ title: "Xóa đánh giá thành công", isOpen: true }))
     }
@@ -93,8 +119,6 @@ const useProductRating = ({
   ) => {
     if (!token) return
 
-    const { history_line_id, ...comment_rating } = commentRating
-
     const res: any = await ratingApi.updateRatingProduct(commentRating)
     if (res?.result?.success) {
       const comment_rating: CommentRating = res.result.data?.data?.[0]
@@ -102,24 +126,26 @@ const useProductRating = ({
 
       if (type === "product") {
       } else if (type === "purchase") {
-        if (data?.data?.length === 0) return
+        if (!res?.result?.success) return
 
-        mutate()
-        // {
-        //   ...data.data_count,
-        //   data: [...data.data].map((item: PurchasedProduct) =>
-        //     item.history_line_id === history_line_id
-        //       ? {
-        //           ...item,
-        //           comment_rating: {
-        //             ...comment_rating,
-        //             content: `<p>${comment_rating.message}</p>`,
-        //           },
-        //         }
-        //       : item
-        //   ),
-        // },
-        // false
+        mutate(
+          {
+            ...data.data_count,
+            data: [...data.data].map((item: PurchasedProduct) =>
+              item.history_line_id === commentRating.history_line_id
+                ? {
+                    ...item,
+                    comment_rating: {
+                      ...comment_rating,
+                      content: comment_rating.message,
+                      editable: true,
+                    },
+                  }
+                : item
+            ),
+          },
+          false
+        )
 
         callback()
       }
