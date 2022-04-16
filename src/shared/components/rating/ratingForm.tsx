@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { RootState } from "@/core/store"
 import {
+  AttachmentRes,
   DeleteRatingProps,
   PurchasedProduct,
   RatingRangePost,
@@ -10,15 +11,14 @@ import {
 import { setMessage, toggleModalConfirm } from "@/modules"
 import { DOMAIN_URL } from "@/services"
 import ratingApi from "@/services/ratingApi"
+import Image from "next/image"
 import { useRouter } from "next/router"
-import React, { memo, useState } from "react"
+import { memo, useEffect, useState } from "react"
 import { AiOutlineCamera } from "react-icons/ai"
 import { IoMdClose } from "react-icons/io"
 import { RiLoader4Fill } from "react-icons/ri"
 import { useDispatch, useSelector } from "react-redux"
-import { useInputText } from "shared/hook"
-import { useAttachment } from "shared/hook/useAttachment"
-import useSWR from "swr"
+import { useAttachment, useAuth, useInputText } from "shared/hook"
 import { Tag } from "../common"
 import { ModalConfirm } from "../modal/modalConfirm"
 import { Star } from "../star"
@@ -40,11 +40,19 @@ export const RatingForm = memo(function RatingFormChild({
 }: RatingFormProps) {
   const dispatch = useDispatch()
   const router = useRouter()
-  const { token } = useSelector((state: RootState) => state.user)
+  const { token } = useAuth()
   const { isOpenModalConfirm } = useSelector((state: RootState) => state.common)
 
-  const { deleteImage, ratingImages, uploadImages, setRatingImages } =
-    useAttachment(5)
+  const { deleteImage, ratingImages, getBase64Images, setRatingImages } =
+    useAttachment({
+      limit: 5,
+      initRatingImages:
+        purchaseForm?.comment_rating?.image_urls?.length > 0
+          ? purchaseForm.comment_rating.image_urls.map(
+              (item) => `${DOMAIN_URL}${item.image_url}`
+            )
+          : undefined,
+    })
 
   // Rating input field
   const commentRating = purchaseForm?.comment_rating?.content || ""
@@ -59,35 +67,48 @@ export const RatingForm = memo(function RatingFormChild({
     purchaseForm?.comment_rating?.star_rating_int
   )
 
-  // Rating tags from API server
-  const { data: ratingTagsRes, isValidating } = useSWR(
-    "product_tags",
-    ratingVal
-      ? () =>
-          ratingApi
-            .getRatingTags(Number(router?.query?.productId) || 0)
-            .then((res: any) => {
-              const tags = res?.result
-              return tags?.length > 0 ? tags : undefined
-            })
-      : null,
-    {
-      shouldRetryOnError: false,
-      dedupingInterval: 100,
+  // rating tags
+  const [ratingTags, setRatingTags] = useState<TagRating[] | undefined>()
+  const [ratingTagIds, setRatingTagId] = useState<Array<number> | undefined>(
+    () => {
+      const ratingTags = purchaseForm?.comment_rating?.rating_tag
+      if (!ratingTags || ratingTags?.length === 0) return undefined
+      return ratingTags.map((item) => item.tag_id)
     }
   )
-  const [ratingTagIds, setRatingTagId] = useState<Array<number> | undefined>()
 
   // Rating image ids after upload successfully to server
+  const [attachmentIds, setAttachmentIds] = useState<Array<number>>()
+  const [ratingImageIdsLoading, setRatingImageIdsLoading] = useState<
+    Array<string> | undefined
+  >()
   const [ratingImageIds, setRatingImageIds] = useState<Array<number>>()
-  const [ratingImageLoading, setRatingImageLoading] = useState<boolean>()
+
+  // Get rating tags if update
+  useEffect(() => {
+    if (purchaseForm?.comment_rating?.editable) {
+      getRatingTags().then((tags: TagRating[]) => setRatingTags(tags))
+    }
+  }, [])
 
   // Functions
+
+  const getRatingTags = async () => {
+    const res: any = await ratingApi.getRatingTags(
+      Number(router?.query?.productId) || 0
+    )
+    const tags = res?.result
+    return tags?.length > 0 ? tags : undefined
+  }
+
   const handleClearRatingForm = () => {
     setRatingImages(undefined)
     setRatingVal(undefined)
-    setRatingImageIds(undefined)
+    setAttachmentIds(undefined)
     setRatingTagId(undefined)
+    setRatingTags(undefined)
+    setRatingImageIdsLoading(undefined)
+    setRatingImageIds(undefined)
   }
 
   const handleToggleTag = (tagId: number) => {
@@ -109,7 +130,7 @@ export const RatingForm = memo(function RatingFormChild({
       onDeleteRating &&
       onDeleteRating({
         history_line_id: purchaseForm.history_line_id,
-        product_id: purchaseForm.product.product_tmpl_id,
+        product_id: purchaseForm.product.product_id,
         token,
       })
   }
@@ -122,31 +143,35 @@ export const RatingForm = memo(function RatingFormChild({
         star_rating: ratingVal,
         content: inputProps.value,
         tag_ids: ratingTagIds || [],
-        attachment_ids: ratingImageIds || [],
-        product_id: purchaseForm?.product.product_tmpl_id,
+        attachment_ids: attachmentIds || [],
+        product_id: purchaseForm?.product.product_id,
+        image_ids: ratingImageIds || [],
         token,
       })
   }
 
   const handleUploadImages = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files || !purchaseForm?.product?.product_tmpl_id) return
-    setRatingImageLoading(true)
+    if (!e.target.files || !purchaseForm?.product?.product_id) return
 
-    uploadImages(e.target.files, async (urls: Array<string>) => {
-      const res: any = await ratingApi.createAttachment({
-        product_id: purchaseForm.product.product_tmpl_id,
-        token,
-        attachments: urls.map((url) => ({
-          file: url,
-          type: "picture",
-        })),
-      })
+    try {
+      getBase64Images(e.target.files, async (urls: Array<string>) => {
+        setRatingImageIdsLoading(urls)
 
-      const imageIds: Array<number> = res?.result?.data
+        const res: any = await ratingApi.createAttachment({
+          product_id: purchaseForm.product.product_tmpl_id,
+          token,
+          attachments: urls.map((url) => ({
+            file: url.replace(/^data:image\/\w+;base64,/, ""),
+            type: "picture",
+          })),
+        })
 
-      try {
+        setRatingImageIdsLoading(undefined)
+
+        const imageIds: AttachmentRes[] = res?.result?.data
         if (imageIds?.length > 0) {
-          setRatingImageIds(imageIds)
+          setAttachmentIds(imageIds.map((item) => item.attachment_id))
+          setRatingImageIds(imageIds.map((item) => item.image_id))
         } else {
           dispatch(
             setMessage({
@@ -157,12 +182,11 @@ export const RatingForm = memo(function RatingFormChild({
             })
           )
         }
-
-        setRatingImageLoading(false)
-      } catch (error) {
-        setRatingImageLoading(false)
-      }
-    })
+        setRatingImageIdsLoading(undefined)
+      })
+    } catch (error) {
+      setRatingImageIdsLoading(undefined)
+    }
   }
 
   return (
@@ -191,9 +215,14 @@ export const RatingForm = memo(function RatingFormChild({
             <Star
               initialValue={ratingVal}
               allowHover={false}
-              onClick={(val: number) =>
+              onClick={(val: number) => {
                 setRatingVal((val / 20) as RatingRangePost)
-              }
+                if (!ratingTags) {
+                  getRatingTags().then((tags: TagRating[]) =>
+                    setRatingTags(tags)
+                  )
+                }
+              }}
               ratingValue={0}
               size={35}
               iconsCount={5}
@@ -202,14 +231,15 @@ export const RatingForm = memo(function RatingFormChild({
 
           {ratingVal ? (
             <div className="rating__form-wrapper">
-              {ratingTagsRes?.length > 0 ? (
+              {ratingTags ? (
                 <div className="rating__form-tags">
-                  {ratingTagsRes.map((item: TagRating) => (
+                  {ratingTags.map((item: TagRating) => (
                     <Tag
                       key={item.tag_id}
                       id={item.tag_id}
                       name={item.tag_content}
                       onChange={() => handleToggleTag(item.tag_id)}
+                      isActive={ratingTagIds?.includes(item.tag_id)}
                     />
                   ))}
                 </div>
@@ -252,7 +282,11 @@ export const RatingForm = memo(function RatingFormChild({
                 <label
                   htmlFor="rating-attachment"
                   className={`btn-primary-outline ${
-                    ratingImages?.length === 5 ? "btn-disabled" : ""
+                    ratingImages?.length === 5 ||
+                    (purchaseForm?.comment_rating?.attachment_ids?.length > 0 &&
+                      purchaseForm?.comment_rating?.editable)
+                      ? "btn-disabled"
+                      : ""
                   }`}
                 >
                   <AiOutlineCamera />
@@ -269,25 +303,35 @@ export const RatingForm = memo(function RatingFormChild({
                         key={index}
                         className="rating__form-attachment-image-item"
                       >
-                        {ratingImages?.includes(url) && !ratingImageLoading ? (
+                        {purchaseForm?.comment_rating?.attachment_ids
+                          ?.length === 0 ? (
                           <span
                             onClick={(e) => {
                               e.stopPropagation()
                               deleteImage(url)
                             }}
-                            className="btn-reset"
+                            className="btn-reset rating__form-attachment-image-item-delete"
                           >
                             <IoMdClose />
                           </span>
                         ) : null}
 
-                        {ratingImages?.includes(url) && ratingImageLoading ? (
+                        {ratingImageIdsLoading &&
+                        !ratingImageIdsLoading?.includes(url) ? (
                           <span className="rating__form-attachment-image-item-loading">
                             <RiLoader4Fill className="loader" />
                           </span>
                         ) : null}
 
-                        <img src={url} alt="" />
+                        <div className="image-container">
+                          <Image
+                            src={url}
+                            alt=""
+                            layout="fill"
+                            quality={25}
+                            className="image"
+                          />
+                        </div>
                       </div>
                     ))}
                   </div>

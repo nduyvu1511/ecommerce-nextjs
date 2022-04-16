@@ -1,4 +1,4 @@
-@import 'variables';
+@import "variables";
 
 @mixin prefix($property, $value) {
   -webkit-#{$property}: #{$value};
@@ -39,6 +39,8 @@
   display: -webkit-box;
   -webkit-line-clamp: $line;
   -webkit-box-orient: vertical;
+  box-orient: vertical;
+  line-clamp: $line;
 }
 
 /// Horizontal, vertical or absolute centering.
@@ -122,21 +124,21 @@
   transform: translateY(-50%);
 }
 
-@mixin center-absolute($direction: 'both') {
+@mixin center-absolute($direction: "both") {
   position: absolute;
 
-  @if $direction == 'left' {
+  @if $direction == "left" {
     left: 50%;
     transform: translateX(-50%);
   }
 
-  @if $direction == 'top' {
+  @if $direction == "top" {
     top: 50%;
     right: 50%;
     transform: translate(-50%, -50%);
   }
 
-  @if $direction == 'both' {
+  @if $direction == "both" {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);

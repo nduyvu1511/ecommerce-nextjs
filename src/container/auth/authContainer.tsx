@@ -1,20 +1,13 @@
 import { otpImage, signinBg } from "@/assets"
-import {
-  FacebookAuthProvider,
-  GoogleAuthProvider,
-  signInWithPopup,
-} from "firebase/auth"
+import { setMessage, setToken } from "@/modules"
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import { BsFacebook } from "react-icons/bs"
 import { FaPhoneAlt } from "react-icons/fa"
 import { FcGoogle } from "react-icons/fc"
-import { toast } from "react-toastify"
-import { authentication, fbProvider, googleProvider } from "@/core/config"
-import userApi from "@/services/userApi"
 import { useDispatch } from "react-redux"
-import { setMessage } from "@/modules"
+import { useAuth } from "shared/hook"
 
 interface IAuthLayout {
   children: React.ReactNode
@@ -26,68 +19,22 @@ export const AuthContainer = ({ children, type }: IAuthLayout) => {
   const router = useRouter()
   const dispatch = useDispatch()
 
+  const { loginWithGoogle, loginWithFacebook } = useAuth()
+
   const handleLoginWithGoogle = async () => {
-    try {
-      const response: any = await signInWithPopup(
-        authentication,
-        googleProvider
-      )
-
-      const credential = GoogleAuthProvider.credentialFromResult(response)
-      const google_access_token: any = credential?.accessToken
-      const firebase_access_token = credential?.idToken
-
-      if (!googleProvider || !firebase_access_token) return
-
-      const userInfoRes = response.user
-
-      userApi
-        .firebaseAuth({
-          firebase_access_token,
-          google_access_token,
-          account_type: "google",
-        })
-        .then((res) => {
-          const result = res.data.result
-          if (result.success) {
-            dispatch(
-              setMessage({ title: "Đăng nhập thành công!", isOpen: true })
-            )
-            router.push("/")
-            // setToken(result.data.token)
-            if (userInfoRes) {
-              // dispatch(setUserInfo({
-              //   name: userInfoRes.displayName,
-              //   phone: userInfoRes.phoneNumber || '',
-              //   email: userInfoRes.email,
-              // }));
-            }
-          } else {
-            toast.error(result.message)
-          }
-        })
-    } catch (error) {
-      console.log(error)
-    }
+    loginWithGoogle((token: string) => {
+      dispatch(setToken(token))
+      router.push("/")
+      dispatch(setMessage({ title: "Đăng nhâp thành công", isOpen: true }))
+    })
   }
 
   const handleLoginWithFacebook = async () => {
-    try {
-      const result = await signInWithPopup(authentication, fbProvider)
-      const credential: any = FacebookAuthProvider.credentialFromResult(result)
-      const facebook_access_token = credential.accessToken
-      const firebase_access_token = credential.accessToken
-
-      // dispatch(
-      //   fetchLoginWithFirebase({
-      //     firebase_access_token,
-      //     facebook_access_token,
-      //     account_type: "facebook",
-      //   })
-      // )
-    } catch (error: any) {
-      console.log("error: ", error.message)
-    }
+    loginWithFacebook((token) => {
+      dispatch(setToken(token))
+      router.push("/")
+      dispatch(setMessage({ title: "Đăng nhâp thành công", isOpen: true }))
+    })
   }
 
   return (

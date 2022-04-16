@@ -14,13 +14,24 @@
     flex: 1;
     overflow: hidden;
 
+    & .swiper {
+      max-height: 550px;
+    }
+
     & img {
       height: 100%;
+      object-fit: cover;
     }
 
     & .swiper-slide {
       & img {
         height: 100%;
+      }
+    }
+
+    &-modal {
+      & .swiper {
+        max-height: 410px;
       }
     }
   }
@@ -54,6 +65,17 @@
       cursor: pointer;
       width: 60px;
       height: 60px;
+
+      & .image-container {
+        height: 100%;
+
+        & span {
+          height: 100%;
+          & img {
+            height: 100%;
+          }
+        }
+      }
 
       & + & {
         margin-left: 1rem;

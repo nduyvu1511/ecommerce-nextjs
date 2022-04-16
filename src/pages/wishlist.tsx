@@ -53,7 +53,7 @@ const Wishlist = () => {
   return (
     <section className="wishlist-container">
       <div className="container">
-        <Breadcrumb page="wishlist" />
+        <Breadcrumb breadcrumbList={[{ name: "Yêu thích", path: "" }]} />
 
         <div className="wishlist-wrapper">
           <h2 className="wishlist-heading">Danh sách yêu thích</h2>

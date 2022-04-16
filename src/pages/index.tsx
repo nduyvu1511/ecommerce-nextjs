@@ -1,10 +1,13 @@
-import { CategoryItem } from "@/components"
+import { CategoryItem, HomeCategory } from "@/components"
 import { MainBanner, MainContent, ProductSaleContainer } from "@/container"
 import { MainLayout } from "@/layout"
-import { LayoutProps, NextPageWithLayout } from "@/models"
+import { LayoutProps } from "@/models"
 import { useTranslation } from "next-i18next"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import { useCategory } from "shared/hook"
+import "swiper/css"
+import "swiper/css/navigation"
+import "swiper/css/pagination"
 
 export async function getStaticProps({ locale }: { locale: string }) {
   return {
@@ -27,6 +30,10 @@ const Home = ({ locale }: LayoutProps) => {
 
       {/* saleProduct */}
       <ProductSaleContainer />
+
+      <div className="container">
+        <HomeCategory />
+      </div>
 
       {/* Content */}
       <div className="container">

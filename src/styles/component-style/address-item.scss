@@ -70,7 +70,7 @@
       & p {
         white-space: nowrap;
         cursor: pointer;
-        padding: 1rem 3rem;
+        padding: 1rem 3rem 1rem 2rem;
         @include style-text(500, 1.3rem, 2.8rem, $text-color);
 
         &:hover {

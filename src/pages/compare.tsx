@@ -4,7 +4,7 @@ import { MainLayout } from "@/layout"
 const Compare = () => {
   return (
     <div className="container">
-      <Breadcrumb page="Compare" />
+      <Breadcrumb breadcrumbList={[{ name: "So sánh", path: "" }]} />
       <CompareChild type="page" />
     </div>
   )

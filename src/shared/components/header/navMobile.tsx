@@ -1,14 +1,14 @@
-import { useDispatch, useSelector } from "react-redux"
-import useResize from "../../hook/useResize"
-import { navMobileLinks } from "./data"
-import { useRouter } from "next/router"
-import { Modal } from "../modal"
-import { ModalHeading } from "../heading"
-import { Category } from "../category"
-import { SearchForm, SearchResult } from "../search"
-import { RootState } from "@/core/store"
 import { AccountOption } from "@/container"
+import { RootState } from "@/core/store"
 import { toggleModalAccountOption } from "@/modules"
+import { useRouter } from "next/router"
+import { useCallback } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { CategoryMobile } from "../category/categoryMobile"
+import { ModalHeading } from "../heading"
+import { Modal } from "../modal"
+import { SearchForm, SearchResult } from "../search"
+import { navMobileLinks } from "./data"
 
 interface ISetModalOpen {
   isOpen: boolean
@@ -44,6 +44,10 @@ const NavMobile = ({ isModalOpen, setModalOpen }: IModal) => {
     }
   }
 
+  const handleClose = useCallback(() => {
+    setModalOpen({ modalName: "", isOpen: false })
+  }, [])
+
   return (
     <>
       <div className="nav__mobile">
@@ -67,20 +71,13 @@ const NavMobile = ({ isModalOpen, setModalOpen }: IModal) => {
           isShowModal={
             isModalOpen.modalName === "category" && isModalOpen.isOpen
           }
-          handleClickModal={() =>
-            setModalOpen({ modalName: "", isOpen: false })
-          }
+          handleClickModal={handleClose}
         >
           <ModalHeading
             handleClose={() => setModalOpen({ isOpen: false, modalName: "" })}
-            title="Category"
+            title="Danh mục"
           />
-          <Category
-            handleClickModal={() =>
-              setModalOpen({ modalName: "", isOpen: false })
-            }
-            type="full"
-          />
+          <CategoryMobile />
         </Modal>
 
         <Modal
@@ -98,9 +95,7 @@ const NavMobile = ({ isModalOpen, setModalOpen }: IModal) => {
         <Modal
           direction="right"
           isShowModal={isModalOpen.modalName === "search" && isModalOpen.isOpen}
-          handleClickModal={() =>
-            setModalOpen({ modalName: "", isOpen: false })
-          }
+          handleClickModal={handleClose}
         >
           <div className="nav__mobile-search-wrapper">
             <ModalHeading

@@ -1,18 +1,17 @@
-import { useEffect, useRef, useState } from "react"
 import { ScreenLoading } from "@/components"
 import { AuthContainer } from "@/container"
-import { getFromSessionStorage, setToLocalStorage } from "@/helper"
-import userApi from "@/services/userApi"
+import { authentication } from "@/core/config"
+import { OTPSchema, phoneNumberSchema } from "@/core/schema"
+import { getFromSessionStorage } from "@/helper"
+import { MainLayout } from "@/layout"
+import { setMessage, setToken, setUserInfo } from "@/modules"
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth"
 import { Field, Form, Formik } from "formik"
 import { useRouter } from "next/router"
+import { useEffect, useRef, useState } from "react"
 import { HiOutlineArrowSmLeft } from "react-icons/hi"
-import { toast } from "react-toastify"
-import { authentication } from "../../core/config/firebase"
-import { OTPSchema, phoneNumberSchema } from "../../core/schema"
-import { MainLayout } from "@/layout"
 import { useDispatch } from "react-redux"
-import { setMessage, setToken, setUserInfo } from "@/modules"
+import { useAuth } from "shared/hook"
 
 declare global {
   interface Window {
@@ -25,8 +24,8 @@ const LoginWithOTP = () => {
   const language = "vni"
   const router = useRouter()
   const dispatch = useDispatch()
-
   const phoneNumberRef = useRef<string>()
+  const { OTPVerifier, getUserInfo } = useAuth()
 
   const [isLoading, setLoading] = useState<boolean>(false)
   const [isOtpLoading, setOtpLoading] = useState<boolean>(false)
@@ -69,55 +68,25 @@ const LoginWithOTP = () => {
     }
   }
 
-  const OTPVerifier = async ({ OTPInput: code }: { OTPInput: string }) => {
-    const confirmationResult = window.confirmationResult
+  const handleVerifyOTP = async ({ OTPInput: code }: { OTPInput: string }) => {
     setOtpLoading(true)
-    try {
-      const res = await confirmationResult.confirm(code)
-      userApi
-        .firebaseAuth({
-          firebase_access_token: res._tokenResponse.idToken,
-        })
-        .then((res: any) => {
-          const result = res?.result
-          if (result?.success) {
-            router.push("/")
-            dispatch(setToken(result.data.token))
-            dispatch(
-              setMessage({ title: "Đăng nhập thành công!", isOpen: true })
-            )
 
-            userApi
-              .getUserInfo({ token: result.data.token })
-              .then((res: any) => {
-                if (res.result.success) {
-                  dispatch(setUserInfo(res.result.data))
-                }
-              })
-
-            setOtpLoading(false)
-          } else {
-            dispatch(
-              setMessage({
-                title: result.message,
-                isOpen: true,
-                type: "danger",
-              })
-            )
-
-            setOtpLoading(false)
-          }
+    OTPVerifier(
+      code,
+      (token) => {
+        dispatch(setToken(token))
+        router.push("/")
+        dispatch(setMessage({ title: "Đăng nhập thành công!", isOpen: true }))
+        getUserInfo(token, (userInfo) => {
+          dispatch(setUserInfo(userInfo))
         })
-    } catch (error) {
-      setOtpLoading(false)
-      dispatch(
-        setMessage({
-          title: "Vui lòng nhập đúng mã OTP",
-          isOpen: true,
-          type: "danger",
-        })
-      )
-    }
+
+        setOtpLoading(false)
+      },
+      () => {
+        setOtpLoading(false)
+      }
+    )
   }
 
   useEffect(() => {
@@ -191,7 +160,7 @@ const LoginWithOTP = () => {
                   OTPInput: "",
                 }}
                 validationSchema={OTPSchema}
-                onSubmit={OTPVerifier}
+                onSubmit={handleVerifyOTP}
               >
                 {({ errors, touched, isValid }) => (
                   <Form className="form-control">

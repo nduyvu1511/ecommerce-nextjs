@@ -44,13 +44,13 @@
   display: flex;
   @include style-text(500, 1.4rem, 2.4rem, $text-color);
   &-item-wrapper {
-    border-right: 1px solid $border-color-2;
+    border-right: 1px solid $border-color-1;
   }
 
   &-item {
     height: 60px;
     padding: 1rem;
-    border-top: 1px solid $border-color-2;
+    border-top: 1px solid $border-color-1;
 
     &-img {
       height: 200px;
@@ -73,10 +73,17 @@
         top: 1rem;
         right: 1rem;
         z-index: 2;
+        background-color: #fff;
+        width: 3rem;
+        height: 3rem;
+        @include flex-center;
+        box-shadow: $box-shadow-1;
+        border-radius: 50%;
+        border: 1px solid $border-color-1;
 
         & svg {
           fill: $danger;
-          font-size: 2rem;
+          font-size: 1.6rem;
         }
       }
     }
@@ -98,7 +105,7 @@
     @include responsive(md-screen) {
       width: 10%;
     }
-    border: 1px solid $border-color-2;
+    border: 1px solid $border-color-1;
   }
 
   &-body {
@@ -109,7 +116,7 @@
     @include responsive(md-screen) {
       width: 90%;
     }
-    border-block: 1px solid $border-color-2;
+    border-block: 1px solid $border-color-1;
   }
 
   & .swiper-button-prev,

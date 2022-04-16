@@ -5,13 +5,6 @@
     display: none;
   }
 
-  & .home__heading-text-sale {
-    margin-bottom: 2rem;
-    @include responsive(sm-screen) {
-      margin-bottom: 0;
-    }
-  }
-
   & .home__heading-text h3 {
     margin-bottom: 0;
   }

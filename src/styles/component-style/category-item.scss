@@ -1,4 +1,6 @@
 .category__item {
+  user-select: none;
+
   &-wrapper {
     @include flex-center;
     flex-direction: column;
@@ -12,12 +14,13 @@
     &-name {
       @include limit-line-text(2);
       @include style-text(600, 1.2rem, 1.8rem, $text-color);
-      margin-top: 2rem;
+      margin-top: 1rem;
       text-align: center;
 
       @include responsive(sm-screen) {
         font-size: 1.3rem;
         line-height: 2rem;
+        margin-top: 2rem;
       }
     }
   }
@@ -25,7 +28,7 @@
   & .image-container {
     width: 100%;
     height: auto;
-    max-width: 80px;
+    max-width: 70px;
 
     @include responsive(sm-screen) {
       max-width: 100px;

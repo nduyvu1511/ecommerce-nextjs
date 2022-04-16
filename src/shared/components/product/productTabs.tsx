@@ -12,9 +12,9 @@ export const ProductTabs = ({ description }: { description: string }) => {
     product_id: Number(router.query.productId),
   })
 
-  const [tabOpen, setTabOpen] = useState<
-    "description" | "information" | "review" | "rating"
-  >("rating")
+  const [tabOpen, setTabOpen] = useState<"description" | "review" | "rating">(
+    "rating"
+  )
 
   useEffect(() => {
     return () => {
@@ -36,16 +36,7 @@ export const ProductTabs = ({ description }: { description: string }) => {
         >
           {language === "vni" ? "Mô tả" : "Description"}
         </h5>
-        <h5
-          onClick={() => setTabOpen("information")}
-          className={`product__detail-tabs-header-heading ${
-            tabOpen === "information"
-              ? "product__detail-tabs-header-heading-active"
-              : ""
-          }`}
-        >
-          {language === "vni" ? "Thông tin chi tiết" : "Information"}
-        </h5>
+
         <h5
           onClick={() => setTabOpen("review")}
           className={`product__detail-tabs-header-heading ${
@@ -67,7 +58,7 @@ export const ProductTabs = ({ description }: { description: string }) => {
               : ""
           }`}
         >
-          {language === "vni" ? `Đánh giá sản phẩm` : "Product Ratings"}
+          {language === "vni" ? `Đánh giá` : "Product Ratings"}
         </h5>
       </div>
 
@@ -75,15 +66,10 @@ export const ProductTabs = ({ description }: { description: string }) => {
         {tabOpen === "description" ? (
           <div className="product__detail-tabs-content-desc">
             <p className="product__tab-content-text">
-              {description || "Không có mô tả nào!"}
-            </p>
-          </div>
-        ) : null}
-
-        {tabOpen === "information" ? (
-          <div className="product__detail-tabs-content-info">
-            <p className="product__tab-content-text">
-              {"Không có thông tin nào!"}
+              <div
+                className="product__tab-content-desc"
+                dangerouslySetInnerHTML={{ __html: description }}
+              ></div>
             </p>
           </div>
         ) : null}

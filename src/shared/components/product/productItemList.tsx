@@ -7,7 +7,7 @@ import { ProductIntro } from "./productIntro"
 
 interface ProductItemListProps {
   product: Product
-  isLoading: boolean
+  isLoading?: boolean
 }
 
 export const ProductItemList = ({

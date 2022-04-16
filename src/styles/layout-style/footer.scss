@@ -309,7 +309,7 @@
 
 .footer {
   margin-bottom: $nav-bottom-height;
-  margin-top: 3rem;
+  // margin-top: 3rem;
   padding-block: 2rem;
   @include responsive(lg-screen) {
     margin-bottom: 0;

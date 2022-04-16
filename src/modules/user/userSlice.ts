@@ -28,6 +28,10 @@ const userSlice = createSlice({
       state.userInfo.name = payload.name
       state.userInfo.email = payload.email
       state.userInfo.sex = payload.sex
+
+      if (payload?.image) {
+        state.userInfo.avatar = payload.image
+      }
     },
 
     setAddressDefault: (

@@ -21,6 +21,8 @@ export const paymentMethodsImage = require("./icons/payment-methods.png")
 export const boCongThuong = require("./icons/bo-cong-thuong.png")
 export const logoTest = require("./images/DALATFARM21.png")
 
+export const filterNotFound = require("./images/filter-not-found.png")
+
 export const cartEmptyIcon = (
   <svg
     xmlns="http://www.w3.org/2000/svg"

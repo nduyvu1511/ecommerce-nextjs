@@ -17,8 +17,9 @@
   .product__detail-wrapper {
     background-color: #fff;
     border-radius: 0.4rem;
-    padding: 2rem 1rem;
     border: 1px solid $border-color-2;
+    padding: 2rem 1.5rem;
+
     @include responsive(sm-screen) {
       padding: 2rem;
     }

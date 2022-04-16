@@ -37,35 +37,55 @@ export const inputs: UserInfoField[] = [
   },
 ]
 
+export const accountHeaderOptionList = [
+  {
+    path: "/account/",
+    vniTitle: "Tài khoản của tôi",
+    engTitle: "General",
+  },
+
+  {
+    path: "/account/purchase",
+    vniTitle: "Đơn mua",
+    engTitle: "General",
+  },
+
+  {
+    path: "",
+    vniTitle: "Đăng xuất",
+    engTitle: "Logout",
+  },
+]
+
 export const accountOptionList = [
   {
-    id: "general",
+    path: "/account",
     vniTitle: "Tổng quan",
     engTitle: "General",
     icon: <BiHomeAlt />,
   },
 
   {
-    id: "info",
+    path: "/account/info",
     vniTitle: "Hồ sơ",
     engTitle: "Information",
     icon: <MdOutlineInfo />,
   },
   {
-    id: "address",
+    path: "/account/address",
     vniTitle: "Địa chỉ",
     engTitle: "Address",
     icon: <MdOutlineLocationOn />,
   },
   {
-    id: "order_history",
+    path: "/account/order_history",
     vniTitle: "Đơn mua",
     engTitle: "My Order",
     icon: <FiShoppingBag />,
   },
 
   {
-    id: "purchase",
+    path: "/account/purchase",
     vniTitle: "Sản phẩm mua",
     engTitle: "My purchase",
     icon: <HiOutlineClipboardList />,

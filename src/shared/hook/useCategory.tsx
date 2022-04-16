@@ -1,7 +1,6 @@
-import { isArrayHasValue } from "@/helper"
+import { isArrayHasValue, translateDataToTree } from "@/helper"
 import { Category } from "@/models"
 import productApi from "@/services/productApi"
-import _ from "lodash"
 import useSWR from "swr"
 
 interface CategorySWR {
@@ -9,39 +8,43 @@ interface CategorySWR {
   error: any
   isValidating: boolean
   bannerUrls: Array<string>
+  getChildCategories: (parent_id: number) => Promise<Category[]>
 }
 
-const useCategory = (): CategorySWR => {
+const useCategory = (categoryId: number | false = false): CategorySWR => {
   const { data, error, isValidating } = useSWR(
     "category",
-    () => productApi.getCategories().then((res: any) => res?.result?.data),
-    { revalidateOnFocus: false, dedupingInterval: 120000 }
+    () =>
+      productApi
+        .getCategories(categoryId)
+        .then((res: any) => res?.result?.data || []),
+    { revalidateOnFocus: false, dedupingInterval: 12000 }
   )
 
-  const bannerUrls: Array<string> = []
-
-  const getCategories = () => {
+  const getBannerUrls = (): Array<string> => {
     if (!isArrayHasValue(data)) return []
 
-    _(data as Category[]).forEach((f) => {
+    let banners: Array<string> = []
+    data.forEach((f: Category) => {
       if (f.image?.length > 0) {
-        bannerUrls.push(...f.image)
+        banners.push(...f.image)
       }
-
-      f.children = _(data)
-        .filter((g) => g.parent_id === f.id)
-        .value()
     })
-    return _(data)
-      .filter((f) => !f.parent_id)
-      .value()
+
+    return banners
+  }
+
+  const getChildCategories = async (parent_id: number): Promise<Category[]> => {
+    const res: any = await productApi.getCategories(parent_id)
+    return res?.result?.data || []
   }
 
   return {
-    data: getCategories(),
+    bannerUrls: getBannerUrls(),
+    data: translateDataToTree(data),
     error,
     isValidating,
-    bannerUrls,
+    getChildCategories,
   }
 }
 

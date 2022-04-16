@@ -47,6 +47,7 @@ export interface Product {
   }[]
   attributes: ProductAttribute[]
   image_url: Array<string>
+  representative_image: Array<string>
   variant_id?: number
   company: {
     company_id: false
@@ -90,26 +91,42 @@ export interface IOffset {
   offset: number
 }
 
-export interface ILimit {
-  limit: 12 | 24 | 36 | 48
-}
-
-export interface ISortType {
-  type_get: "price_reduction" | "price_increase" | "new" | "sale" | ""
-}
+export type LimitProduct = 6 | 12 | 24 | 36 | 48 | number
 
 export interface ISearch {
   keyword: string
 }
 
+export type TypeGet =
+  | "price_reduction"
+  | "price_increase"
+  | "new"
+  | "top_sale"
+  | ""
+
+// export interface ProductQuery {
+//   type_get?: TypeGet
+//   limit?: LimitProduct
+//   offset?: string
+//   keyword?: string
+//   category_id?: string
+//   min_price?: string
+//   max_price?: string
+//   star_rating?: string
+// }
+// type keyString = {
+//   [key: string]: string | string[]
+// }
+
 export interface ProductParams {
-  type_get?: "price_reduction" | "price_increase" | "new" | "sale" | ""
-  limit?: 6 | 12 | 24 | 36 | 48 | number
+  type_get?: TypeGet
+  limit?: LimitProduct
   offset?: number
   keyword?: string
   category_id?: number | false
   product_id?: number
   partner_id?: number
+  attribute_ids?: AttributeReq[]
 }
 
 export interface ProductSearch {
@@ -144,16 +161,6 @@ export interface ProductCompare {
   image_url: string
 }
 
-export interface ChildCategory {
-  id: number
-  name: string
-  icon: string
-  url?: string | boolean
-  image?: Array<string>
-  parent_id: number | boolean
-  description: string | boolean
-}
-
 export interface Category {
   id: number
   name: string
@@ -163,6 +170,11 @@ export interface Category {
   parent_id: number | boolean
   description: string | boolean
   children: Category[]
+}
+
+export interface ParentChildCategoryList {
+  parent_category: Category[]
+  child_category: Category[]
 }
 
 export interface InitialStateProduct {
@@ -220,10 +232,17 @@ export interface AttributeProductValueItem {
   value_icon: string | boolean
 }
 
+export type DisplayContentAttribute =
+  | "min_max_value"
+  | "only_text"
+  | "star_rating"
+  | "only_image"
+  | "text_image"
+
 export interface AttributeProduct {
   attribute_id: number
   attribute_name: string
-  display_content: string
+  display_content: DisplayContentAttribute
   min_value: number
   max_value: number
   attribute_icon: string | boolean
@@ -262,7 +281,7 @@ export interface ProductSlice {
   product: Product | null
   listAttribute: AttributeWithParentId[] | undefined
   search: {
-    isOpen: boolean | undefined
+    isOpen: boolean
     keyword: string | undefined
     isSearching: boolean | undefined
   }
@@ -282,10 +301,6 @@ export interface GetProductDetail {
 
 export interface IOffset {
   offset: number
-}
-
-export interface ILimit {
-  limit: 12 | 24 | 36 | 48
 }
 
 export interface ISortType {
@@ -339,7 +354,8 @@ export interface UpdateRatingProps extends ProductIdAndToken {
   star_rating: RatingRangePost
   content: string
   tag_ids?: Array<number>
-  attachment_ids: Array<number>
+  image_ids?: Array<number>
+  attachment_ids?: Array<number>
   limit?: number
   offset?: number
 }
@@ -360,6 +376,12 @@ export interface DeleteRatingProps extends ProductIdAndToken {
 export interface DeleteRatingRes {
   history_line_id: number
   comment_rating_id: number
+}
+
+export interface AttachmentRes {
+  attachment_id: number
+  image_id: number
+  image_url: string
 }
 
 export interface PurchaseProduct {
@@ -397,7 +419,7 @@ export interface CommentRating {
   message: string | false
   star_rating: "1" | "2" | "3" | "4" | "5"
   star_rating_int: RatingRangePost
-  rating_tag: Array<string>
+  rating_tag: TagRating[]
   date: string
   partner_id: number
   partner_name: string
@@ -413,9 +435,13 @@ export interface CommentRating {
     file: string
     mimetype: "image/jpeg" | "image/png"
   }[]
+  image_urls: {
+    image_id: number
+    image_url: string
+  }[]
 }
 
-export interface GetRatingByProductProps extends Token {
+export interface GetRatingByProductProps {
   limit?: number
   offset?: number
   product_id: number

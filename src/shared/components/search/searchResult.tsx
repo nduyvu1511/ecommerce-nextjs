@@ -79,13 +79,8 @@ export const SearchResult = memo(function SearchResultChild({
 
           {keyword && isArrayHasValue(searchProducts) ? (
             <li className="search__result-keyword">
-              {`Hiển thị ${searchProducts.length} kết quả cho`}
-              {/* {language === "vni"
-                ? `Hiển thị ${totalResult} kết quả cho`
-                : `Showing ${totalResult} ${
-                    totalResult === 1 ? "results" : "result"
-                  } for`}{" "} */}
-              <p className="keyword">"{keyword}" :</p>
+              <span> {`Hiển thị ${searchProducts.length} kết quả cho`}: </span>
+              <p>"{keyword}"</p>
             </li>
           ) : null}
 

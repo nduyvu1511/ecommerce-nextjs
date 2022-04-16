@@ -52,8 +52,8 @@ export const Address = ({ type }: IAddress) => {
 
   return (
     <div className="address__container">
-      {isValidating && addressList?.length === 0 ? (
-        <BoxGridLoading length={6} />
+      {!isValidating && addressList?.length === 0 ? (
+        <BoxGridLoading height={200} length={2} />
       ) : null}
 
       <div className="user__address">
@@ -108,5 +108,3 @@ export const Address = ({ type }: IAddress) => {
     </div>
   )
 }
-
-export default Address

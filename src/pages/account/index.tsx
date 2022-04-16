@@ -12,7 +12,10 @@ const AccountGeneral = () => {
   const { data: wishlists } = useWishlist(false)
 
   return (
-    <AccountContainer heading="General">
+    <AccountContainer
+      breadcrumbList={[{ path: "/account", name: "Tài khoản" }]}
+      heading="General"
+    >
       <div className="account__general">
         <ul className="account__general-list">
           <li className="account__general-list-item">

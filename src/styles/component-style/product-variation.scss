@@ -4,13 +4,12 @@
   @include responsive(sm-screen) {
     flex-direction: row;
   }
-  align-items: baseline;
+  align-items: center;
 
   &-heading {
     @include style-text(500, 1.3rem, 2rem, $text-color);
     margin-right: 2rem;
-    min-width: 100px;
-    flex-shrink: 0;
+    width: 100px;
     text-transform: capitalize;
     margin-bottom: 1rem;
     @include responsive(sm-screen) {
@@ -29,13 +28,15 @@
       position: relative;
       @include flex-center;
       cursor: pointer;
-      margin-right: 1rem;
-      margin-bottom: 1rem;
-      height: 40px;
-      padding: 0 2rem;
+      margin-right: 0.8rem;
+      margin-bottom: 0.8rem;
+      height: 36px;
+      white-space: nowrap;
+      padding: 0 1.8rem;
       border-radius: 4px;
       border: 1px solid $border-color-1;
       @include style-text(500, 1.2rem, 1.2rem, $home-heading-color);
+      user-select: none;
 
       &:last-child {
         margin-right: 0;

@@ -2,36 +2,30 @@
   background-color: $white;
   border-radius: 0.4rem;
   border: 1px solid $border-color-2;
+  padding-inline: 1.5rem;
+
+  @include responsive(sm-screen) {
+    padding-inline: 2rem;
+  }
+
+  @include responsive(md-screen) {
+    padding-inline: 3rem;
+  }
+  @include responsive(lg-screen) {
+    padding-inline: 4rem;
+  }
 
   &-header {
     border-bottom: 1px solid $border-color-1;
-    @include flex(flex-start, start);
-    flex-direction: column;
-    padding: 0 1rem;
-    @include responsive(xs-screen) {
-      padding: 0 2rem;
-    }
-
-    @include responsive(sm-screen) {
-      align-items: center;
-      flex-direction: row;
-    }
-
-    @include responsive(md-screen) {
-      padding: 0 3rem;
-    }
-    @include responsive(lg-screen) {
-      padding: 0 4rem;
-    }
+    display: flex;
 
     &-heading {
-      font-family: $second-font;
       padding-block: 1.6rem;
-      text-transform: uppercase;
-      @include style-text(600, 1.6rem, 3rem, $text-color-opacity);
+      @include style-text(500, 1.6rem, 2.6rem, $text-color-opacity);
       cursor: pointer;
 
       & + & {
+        margin-left: 2rem;
         @include responsive(sm-screen) {
           margin-left: 3rem;
         }
@@ -54,18 +48,9 @@
       }
     }
   }
-  &-content {
-    padding: 2rem 1rem;
-    @include responsive(sm-screen) {
-      padding: 2rem;
-    }
-    @include responsive(md-screen) {
-      padding: 3rem 3rem;
-    }
 
-    @include responsive(lg-screen) {
-      padding: 2rem 4rem;
-    }
+  &-content {
+    padding-block: 2rem;
 
     .product__tab-content-text {
       @include style-text(400, 1.5rem, 3rem, $text-color);

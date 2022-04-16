@@ -9,21 +9,6 @@
         &:hover {
           border-bottom: 1px solid $border-product-hover;
         }
-
-        &__img {
-          flex-shrink: 0;
-          flex: 1;
-
-          & img {
-            height: 100%;
-            width: 100%;
-            object-fit: cover;
-          }
-        }
-
-        .product__card__content-title {
-          height: 38px;
-        }
       }
     }
   }
@@ -83,14 +68,12 @@
 }
 
 .swiper-pagination-bullet {
-  width: 5px;
-  height: 5px;
+  width: 0.8rem;
+  height: 0.8rem;
   transition: all 0.2s linear;
 }
 
 .swiper-pagination-bullet-active {
-  width: 20px;
-  border-radius: 25px;
   transition: all 0.2s linear;
-  background-color: $primary-color;
+  background-color: #fff;
 }

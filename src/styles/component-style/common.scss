@@ -55,7 +55,7 @@
   border-radius: 0.4rem;
   z-index: 2000;
   animation: fade-in linear 0.3s;
-  // , fade-out linear 0.3s 2s forwards;
+
   &-top {
     top: 10%;
   }
@@ -81,7 +81,11 @@
   }
 
   &-icon {
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
+
+    @include responsive(lg-screen) {
+      margin-bottom: 2rem;
+    }
 
     &-success {
       fill: $success;
@@ -114,16 +118,6 @@
         font-size: 6rem;
       }
     }
-  }
-}
-
-.box__loading {
-  grid-gap: 2rem;
-
-  &-item {
-    height: 200px;
-    animation: skeleton-loading 0.8s linear infinite alternate;
-    border-radius: 0.4rem;
   }
 }
 
@@ -236,6 +230,7 @@
 
       & .transform-component-module_content__2jYgh {
         height: 100%;
+        width: 100%;
       }
     }
 

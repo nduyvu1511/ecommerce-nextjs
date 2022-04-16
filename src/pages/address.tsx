@@ -1,14 +1,13 @@
+import { Address as AddressComponent } from "@/components"
 import { OrderContainer } from "@/container"
+import { isObjectHasValue } from "@/helper"
 import { MainAuthLayoutNoFooter } from "@/layout"
 import { setAddress, setMessage } from "@/modules"
 import { useRouter } from "next/router"
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { useUserAddress } from "shared/hook"
-import { useOrder } from "shared/hook/useOrder"
+import { useOrder, useUserAddress } from "shared/hook"
 import { RootState } from "../core"
-import AddressComponent from "../shared/components/address/address"
-import { isObjectHasValue } from "../shared/helper/functions"
 
 const Address = () => {
   const router = useRouter()

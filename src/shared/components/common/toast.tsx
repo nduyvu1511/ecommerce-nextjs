@@ -26,8 +26,6 @@ export const Toast = () => {
       // setKey(Number(handler))
     }
 
-    console.log("toast")
-
     return () => {
       clearTimeout(handler)
     }

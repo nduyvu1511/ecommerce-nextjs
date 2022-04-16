@@ -72,13 +72,14 @@
     }
 
     .form-heading {
-      @include style-text(600, 1.9rem, 2.4rem, $text-color);
-      font-family: $second-font;
+      @include style-text(500, 1.6rem, 2.6rem, $text-color);
       text-align: center;
-      text-transform: uppercase;
-      padding-top: 6rem;
-      padding-bottom: 3rem;
+      padding-block: 3rem;
       border-bottom: 1px solid $border-color-2;
+
+      @include responsive(lg-screen) {
+        @include style-text(500, 1.8rem, 2.8rem, $text-color);
+      }
     }
 
     .form-control {
@@ -184,7 +185,7 @@
 
   & textarea {
     height: unset;
-    padding: 2rem 1.5rem;
+    padding: 1.2rem;
   }
 
   & .form-item-text-error {

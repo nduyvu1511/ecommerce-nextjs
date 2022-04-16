@@ -41,7 +41,12 @@
     width: 100%;
     position: relative;
     overflow: hidden;
-    flex: 1;
+    display: flex;
+    aspect-ratio: 1;
+
+    & .image-container {
+      width: 100%;
+    }
 
     & .product__card-deal-label {
       position: absolute;
@@ -57,8 +62,6 @@
     }
 
     &-item {
-      aspect-ratio: 3/4;
-
       & > span {
         height: 100% !important;
       }
@@ -85,15 +88,15 @@
         @include responsive(lg-screen) {
           transform: translateX(50%);
           @include hidden;
-          width: 40px;
-          height: 40px;
+          width: 32px;
+          height: 32px;
         }
 
         & svg {
           font-size: 1.2rem;
           fill: $text-color;
           @include responsive(lg-screen) {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
           }
         }
 
@@ -114,8 +117,12 @@
         }
 
         &:first-child {
-          margin-bottom: 1rem;
+          display: none;
+          margin-bottom: 0.5rem;
           transition: all ease 0.2s;
+          @include responsive(lg-screen) {
+            display: block;
+          }
         }
 
         &:nth-child(2) {
@@ -164,7 +171,7 @@
       object-fit: cover;
 
       &-second {
-        transition: opacity 0.8s;
+        transition: opacity 0.5s;
         position: absolute;
         opacity: 0;
       }
@@ -172,7 +179,7 @@
       &-first {
         position: static;
         opacity: 1;
-        transition: opacity 0.8s;
+        transition: opacity 0.5s;
       }
     }
 
@@ -209,22 +216,26 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 1.25rem;
+    padding: 1rem;
+    flex: 1;
+    @include responsive(md-screen) {
+      padding: 1.25rem;
+    }
   }
 
   &__content {
     text-align: left;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 
     &-title {
       cursor: pointer;
-      height: 37px;
-      @include style-text(600, 1.3rem, 2rem, $heading-color);
-      @media screen and(min-width: 400px) {
-        font-size: 1.4rem;
-        line-height: 1.8rem;
-      }
+      flex: 1;
+      @include style-text(500, 1.3rem, 2rem, $heading-color);
       @include limit-line-text(2);
-      margin-bottom: 1.2rem;
+      // height: 3.8rem;
+      margin-bottom: 0.6rem;
 
       &:hover {
         @include responsive(lg-screen) {
@@ -237,7 +248,7 @@
       text-transform: uppercase;
       font-family: $second-font;
       @include style-text(600, 1.1rem, 1.1rem, $green);
-      margin-bottom: 1rem;
+      margin-bottom: 0.5rem;
 
       &-out-of-stock {
         color: $danger;
@@ -245,7 +256,7 @@
     }
 
     &-rating {
-      margin-bottom: 1.2rem;
+      margin-bottom: 0.6rem;
       display: flex;
       align-items: center;
       font-size: 1.4rem;
@@ -253,17 +264,11 @@
       &-item {
         color: $yellow;
       }
-
-      &-review {
-        margin: 0 0 3px 10px;
-        font-size: 1.2rem;
-        display: inline-block;
-      }
     }
 
     &-price {
       font-family: $second-font;
-      @include style-text(500, 1.3rem, 2rem, $heading-color);
+      @include style-text(600, 1.3rem, 2rem, $text-color);
       @include flex(flex-start, center);
 
       &-origin {
@@ -285,7 +290,7 @@
 
   &__bottom {
     @include flex(space-between, center);
-    margin-top: 1.5rem;
+    margin-top: 1rem;
 
     &-btn {
       font-family: $second-font;
@@ -319,6 +324,7 @@
       }
     }
   }
+
   .product__card__bottom-hover {
     @include responsive(lg-screen) {
       position: absolute;
@@ -340,11 +346,15 @@
     }
 
     & .product__card__bottom-btn {
+      display: none;
       font-family: $second-font;
       background-color: $indigo;
       color: $white;
       border: none;
-      margin: 2rem 0 1rem 0;
+      margin-top: 1.5rem;
+      @include responsive(lg-screen) {
+        display: block;
+      }
       @include responsive(lg-screen) {
         margin-top: 1rem;
       }

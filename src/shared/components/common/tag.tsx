@@ -6,6 +6,7 @@ interface TagProps {
   onChange?: (id?: number) => void
   size?: "sm" | "md" | "lg"
   disabled?: boolean
+  isActive?: boolean
 }
 
 export const Tag = ({
@@ -14,22 +15,23 @@ export const Tag = ({
   id,
   size = "lg",
   disabled = false,
+  isActive = false,
 }: TagProps) => {
-  const [open, setOpen] = useState<boolean>(false)
+  const [active, setActive] = useState<boolean>(isActive)
 
   const handleOnClick = () => {
-    if (open) {
-      setOpen(false)
+    if (active) {
+      setActive(false)
       onChange && onChange()
     } else {
-      setOpen(true)
+      setActive(true)
       onChange && onChange(id)
     }
   }
   return (
     <span
       onClick={handleOnClick}
-      className={`tag ${open ? "tag-active" : ""} tag-${size} ${
+      className={`tag ${active ? "tag-active" : ""} tag-${size} ${
         disabled ? "tag-disabled" : ""
       }`}
     >

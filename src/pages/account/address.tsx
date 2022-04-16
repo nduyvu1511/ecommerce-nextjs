@@ -1,10 +1,16 @@
+import { Address } from "@/components"
 import { AccountContainer } from "@/container"
 import { MainAuthLayout } from "@/layout"
-import Address from "../../shared/components/address/address"
 
 const UserAddress = () => {
   return (
-    <AccountContainer heading="Your Address">
+    <AccountContainer
+      breadcrumbList={[
+        { path: "/account", name: "Tài khoản" },
+        { name: "Địa chỉ", path: "" },
+      ]}
+      heading="Your Address"
+    >
       <Address type="account" />
     </AccountContainer>
   )

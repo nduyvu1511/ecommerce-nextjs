@@ -10,6 +10,7 @@ import {
   ProductDetailRes,
   ProductIds,
   ShippingAddress,
+  TypeGet,
 } from "@/models"
 import _ from "lodash"
 
@@ -103,6 +104,8 @@ export function formatMoneyVND(num: number | string) {
 }
 
 export const translateDataToTree = (categories: Category[]) => {
+  if (!isArrayHasValue(categories)) return []
+
   _(categories).forEach((f) => {
     f.children = _(categories)
       .filter((g) => g.parent_id === f.id)
@@ -113,7 +116,7 @@ export const translateDataToTree = (categories: Category[]) => {
     .value()
 }
 
-export const getBannerUrlList = (list: Category[]) => {
+export const getBannerUrls = (list: Category[]) => {
   const bannerUrlList: Array<string> = []
 
   list.forEach((item) => {
@@ -328,52 +331,53 @@ export const listView = [
 
 export const limitProductList: ItemDropdown[] = [
   {
-    id: 1,
-    title: "12",
-    value: { limit: 12 },
-  },
-  {
     id: 2,
     title: "24",
-    value: { limit: 24 },
+    value: 24,
   },
   {
     id: 3,
     title: "36",
-    value: { limit: 36 },
+    value: 36,
   },
   {
     id: 4,
     title: "48",
-    value: { limit: 48 },
+    value: 48,
   },
 ]
 
-export const sortList: ItemDropdown[] = [
+interface SortList {
+  id: number
+  title: string
+  value: TypeGet
+}
+
+export const sortList: SortList[] = [
   {
     id: 5,
-    title: "Mặc định",
-    value: { type_get: "" },
-  },
-  {
-    id: 1,
-    title: "Giá: thấp đến cao",
-    value: { type_get: "price_reduction" },
-  },
-  {
-    id: 2,
-    title: "Giá: cao đến thấp",
-    value: { type_get: "price_increase" },
-  },
-  {
-    id: 3,
-    title: "Mới nhất",
-    value: { type_get: "new" },
+    title: "Phổ biến",
+    value: "",
   },
   {
     id: 4,
-    title: "Khuyến mãi",
-    value: { type_get: "sale" },
+    title: "Bán Chạy",
+    value: "top_sale",
+  },
+  {
+    id: 3,
+    title: "Hàng Mới",
+    value: "new",
+  },
+  {
+    id: 1,
+    title: "Giá Thấp",
+    value: "price_reduction",
+  },
+  {
+    id: 2,
+    title: "Giá Cao",
+    value: "price_increase",
   },
 ]
 

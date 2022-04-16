@@ -52,6 +52,7 @@ export interface CommonSlice {
   }
   currentReviewId: number
   addressForm: ShippingAddress | undefined
+  breadcrumbList: BreadcrumbItem[] | undefined
 }
 
 export interface SetMessageProps {
@@ -63,4 +64,9 @@ export interface SetMessageProps {
     direction?: MessageDirection
     size?: MessageSize
   }
+}
+
+export interface BreadcrumbItem {
+  name: string
+  path: string
 }

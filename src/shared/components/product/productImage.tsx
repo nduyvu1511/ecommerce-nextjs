@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { isArrayHasValue, isObjectHasValue } from "@/helper"
 import { DOMAIN_URL } from "@/services"
+import Image from "next/image"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import { Swiper, SwiperSlide } from "swiper/react"
@@ -19,17 +20,19 @@ export const ProductImg = ({ images, type }: IProductImage) => {
   useEffect(() => {
     return () => {
       setActiveIndex(1)
-      console.log("unmount")
       if (isObjectHasValue(swiper)) {
         swiper?.slideTo(1)
       }
-      // setSwiper({})
     }
   }, [])
 
   return (
     <>
-      <div className="product__img-show-container">
+      <div
+        className={`product__img-show-container ${
+          type === "modal" ? "product__img-show-container-modal" : ""
+        }`}
+      >
         <Swiper
           slidesPerView={1}
           loop={true}

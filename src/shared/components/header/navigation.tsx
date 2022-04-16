@@ -26,7 +26,9 @@ const Navigation = ({ handleClickModal }: IHandleClickModal) => {
         <li
           className={`navigation-list-item ${
             nav.id === 8 ? "hide-on-desktop navigation-list-item-toggle" : ""
-          } ${router.pathname === nav.path ? "active" : ""}`}
+          } ${
+            router.pathname === nav.path ? "navigation-list-item-active" : ""
+          }`}
           key={nav.id}
         >
           <Link href={nav.path} passHref>

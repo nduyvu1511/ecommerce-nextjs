@@ -28,7 +28,7 @@ import { Star } from "../star"
 
 interface IProductItem {
   product: Product
-  type?: string | "sale"
+  type?: "shop" | "sale"
   isLoading?: boolean
 }
 
@@ -125,7 +125,7 @@ export const ProductItem = ({ product, type, isLoading }: IProductItem) => {
               </button>
             </div>
 
-            {product?.image_url?.length === 1 ? (
+            {product?.representative_image?.length === 1 ? (
               <div
                 onClick={() => dispatch(setProduct(product))}
                 className="image-container cursor-pointer product__card__img-item cursor-pointer"
@@ -133,7 +133,9 @@ export const ProductItem = ({ product, type, isLoading }: IProductItem) => {
                 <Link passHref href={`/product/${product.product_tmpl_id}`}>
                   <Image
                     className="image img-cover"
-                    src={`${DOMAIN_URL}${product?.image_url?.[0] || ""}`}
+                    src={`${DOMAIN_URL}${
+                      product?.representative_image?.[0] || ""
+                    }`}
                     alt=""
                     layout="fill"
                     placeholder="blur"
@@ -150,7 +152,9 @@ export const ProductItem = ({ product, type, isLoading }: IProductItem) => {
                   <Link passHref href={`/product/${product.product_tmpl_id}`}>
                     <Image
                       className="image"
-                      src={`${DOMAIN_URL}${product?.image_url?.[0] || ""}`}
+                      src={`${DOMAIN_URL}${
+                        product?.representative_image?.[0] || ""
+                      }`}
                       alt=""
                       layout="fill"
                       placeholder="blur"
@@ -159,7 +163,7 @@ export const ProductItem = ({ product, type, isLoading }: IProductItem) => {
                   </Link>
                 </div>
 
-                {product.image_url?.[1] ? (
+                {product.representative_image?.[1] ? (
                   <div
                     onClick={() => dispatch(setProduct(product))}
                     className="image-container product__card__img-top product__card__img-item product__card__img-top-second cursor-pointer"
@@ -167,7 +171,9 @@ export const ProductItem = ({ product, type, isLoading }: IProductItem) => {
                     <Link passHref href={`/product/${product.product_tmpl_id}`}>
                       <Image
                         className="image"
-                        src={`${DOMAIN_URL}${product?.image_url?.[1] || ""}`}
+                        src={`${DOMAIN_URL}${
+                          product?.representative_image?.[1] || ""
+                        }`}
                         alt=""
                         layout="fill"
                       />
@@ -182,24 +188,26 @@ export const ProductItem = ({ product, type, isLoading }: IProductItem) => {
             <div className="product__card__content">
               <Link href={`/product/${product.product_tmpl_id}`} passHref>
                 <a className="product__card__content-title">
-                  {type === "sale"
-                    ? product.product_name
-                    : product.product_name}
+                  {product.product_name}
                 </a>
               </Link>
 
-              <p
-                className={`product__card__content-status ${
-                  !product.product_available
-                    ? "product__card__content-status-out-of-stock"
-                    : ""
-                }`}
-              >
-                {product.product_available ? "in stock" : "out of stock"}
-              </p>
-
               <div className="product__card__content-rating">
-                <Star size={15} ratingValue={product.star_rating * 20} />
+                <Star
+                  readonly
+                  size={15}
+                  ratingValue={product.star_rating * 20}
+                />
+
+                {/* <p
+                  className={`product__card__content-status ${
+                    !product.product_available
+                      ? "product__card__content-status-out-of-stock"
+                      : ""
+                  }`}
+                >
+                  {product.product_available ? "còn hàng" : "hết hàng"}
+                </p> */}
                 {/* <span className="product__card__content-rating-review">
                   {product.product_available}
                 </span> */}
@@ -222,20 +230,16 @@ export const ProductItem = ({ product, type, isLoading }: IProductItem) => {
                 ) : null}
               </p>
             </div>
-            <div
-              className={` ${
-                type === "shop"
-                  ? "product__card__bottom-hover"
-                  : "product__card__bottom"
-              }`}
-            >
-              <button
-                onClick={handleAddToCart}
-                className="product__card__bottom-btn"
-              >
-                <FaShoppingBasket /> Thêm giỏ hàng
-              </button>
-            </div>
+            {type === "shop" ? (
+              <div className="product__card__bottom-hover">
+                <button
+                  onClick={handleAddToCart}
+                  className="product__card__bottom-btn"
+                >
+                  <FaShoppingBasket /> Thêm giỏ hàng
+                </button>
+              </div>
+            ) : null}
           </div>
         </div>
       ) : (

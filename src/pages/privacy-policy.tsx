@@ -6,7 +6,9 @@ const PrivacyPolicy = () => {
   return (
     <div className="return__policy-wrapper">
       <div className="container">
-        <Breadcrumb page="return-policy" />
+        <Breadcrumb
+          breadcrumbList={[{ name: "Chính sách bảo mật", path: "" }]}
+        />
         <div className="return__policy">
           <h3>TÀI KHOẢN – THÔNG TIN – BẢO MẬT</h3>
           <p>

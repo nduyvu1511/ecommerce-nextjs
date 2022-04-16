@@ -18,6 +18,7 @@ const initialState: ProductSlice = {
     keyword: undefined,
     isSearching: undefined,
   },
+  
 }
 
 const productSlice = createSlice({

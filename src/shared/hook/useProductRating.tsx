@@ -4,11 +4,10 @@ import {
   DeleteRatingProps,
   DeleteRatingRes,
   PurchasedProduct,
-  UpdateRatingPropsWithLineId,
+  UpdateRatingPropsWithLineId
 } from "@/models"
 import { setMessage } from "@/modules"
 import ratingApi from "@/services/ratingApi"
-import { useRouter } from "next/router"
 import { useDispatch, useSelector } from "react-redux"
 import useSWR from "swr"
 
@@ -37,7 +36,6 @@ const useProductRating = ({
   type,
 }: UseRatingProps): RatingSWR => {
   const dispatch = useDispatch()
-  const router = useRouter()
   const { token } = useSelector((state: RootState) => state.user)
 
   const fetcher = async () => {
@@ -51,7 +49,6 @@ const useProductRating = ({
     const res: any = await ratingApi.getRatingsByProduct({
       comment_type: ["rating"],
       product_id: product_id || 0,
-      token,
     })
 
     return res?.result?.data?.rating || []
@@ -164,3 +161,4 @@ const useProductRating = ({
 }
 
 export { useProductRating }
+

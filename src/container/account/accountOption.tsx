@@ -13,54 +13,44 @@ export const AccountOption = () => {
   const language = "vni"
   const dispatch = useDispatch()
   const router = useRouter()
-  const { userInfo } = useSelector((state: RootState) => state.user)
+  const { token, userInfo } = useSelector((state: RootState) => state.user)
+
+  if (!userInfo) return null
 
   return (
     <>
       <header className="account__left-header">
-        <input type="file" name="" hidden id="account-avatar" />
         <div className="account__left-header-avatar image-container">
-          <label htmlFor="account-avatar">
-            <img
+          <div className="image-container">
+            <Image
               src={
-                userInfo?.avatar
-                  ? `data:image/jpeg;base64,${userInfo.avatar}`
-                  : avatar
+                userInfo?.avatar ? `${DOMAIN_URL}${userInfo.avatar}` : avatar
               }
+              quality={30}
+              layout="fill"
+              className="image"
               alt=""
             />
-          </label>
-          {/* <Image
-            src={`${DOMAIN_URL}${userInfo.avatar}` || ""}
-            layout="fill"
-            alt=""
-            className="image"
-          /> */}
+          </div>
         </div>
         <p className="account__left-header-title">{userInfo.name}</p>
         <p className="account__left-header-edit">
           {language === "vni" ? "Sửa hồ sơ" : "Edit info"} <FiEdit2 />
         </p>
       </header>
+
       <div className="account__left-body">
         <ul className="account__left-body-list">
           {accountOptionList.map((item) => (
             <li
               onClick={() => {
-                router.push(`/account/${item.id}`)
+                router.push(item.path)
                 dispatch(toggleModalAccountOption(false))
               }}
-              key={item.id}
+              key={item.path}
               className={`account__left-body-list-item ${
-                item.id === router.pathname.split("/account/")[1]
+                item.path === router.pathname
                   ? "account__left-body-list-item-active"
-                  : ""
-              } ${
-                item.id === "general" &&
-                ((router.pathname.includes("account") &&
-                  router.pathname.split("/account/")[1] === undefined) ||
-                  router.pathname.split("/account/")[1] === "")
-                  ? "account__left-body-list-item-general-active"
                   : ""
               }`}
             >

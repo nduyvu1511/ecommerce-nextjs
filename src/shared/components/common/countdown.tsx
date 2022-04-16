@@ -5,7 +5,12 @@ interface CountdownProps {
   seconds: number | string
 }
 
-const Countdown = ({ days, hours, minutes, seconds }: CountdownProps) => {
+export const Countdown = ({
+  days,
+  hours,
+  minutes,
+  seconds,
+}: CountdownProps) => {
   const language = "vni"
 
   return (
@@ -29,5 +34,3 @@ const Countdown = ({ days, hours, minutes, seconds }: CountdownProps) => {
     </div>
   )
 }
-
-export default Countdown

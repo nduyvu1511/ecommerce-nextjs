@@ -88,7 +88,6 @@
     &-heading {
       @include flex(flex-start, center);
       @include style-text(500, 1.6rem, 2.6rem, $text-color);
-      margin-bottom: 2rem;
       cursor: pointer;
       width: fit-content;
 
@@ -100,6 +99,11 @@
     &-wrapper {
       transition: all 0.2s linear;
       overflow: hidden;
+      margin-top: 2rem;
+
+      & .form-item-inline {
+        margin-bottom: 2rem;
+      }
     }
   }
 }

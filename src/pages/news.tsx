@@ -1,16 +1,19 @@
-import { Breadcrumb } from "@/components";
+import { Breadcrumb } from "@/components"
+import { MainLayout } from "@/layout"
 
 const News = () => {
   return (
     <div className="container">
-      <Breadcrumb page="news" />
+      <Breadcrumb breadcrumbList={[{ name: "Tin tức", path: "" }]} />
       <br />
       Coming soon
       <br />
       <br />
       <br />
     </div>
-  );
-};
+  )
+}
 
-export default News;
+News.Layout = MainLayout
+
+export default News

@@ -32,7 +32,7 @@ export const Rating = () => {
 
         <div className="product__rating-header-summary">
           <p>{product?.star_rating || 0}</p>
-          <Star ratingValue={product?.star_rating || 0 * 20} />
+          <Star readonly ratingValue={(product?.star_rating || 0) * 20} />
         </div>
 
         <p className="product__rating-header-count">

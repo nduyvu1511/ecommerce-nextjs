@@ -21,7 +21,13 @@ const Purchase = () => {
   console.log(purchaseList)
   return (
     <>
-      <AccountContainer heading="Danh sách đơn mua">
+      <AccountContainer
+        breadcrumbList={[
+          { path: "/account", name: "Tài khoản" },
+          { name: "Đơn mua", path: "" },
+        ]}
+        heading="Danh sách đơn mua"
+      >
         {!isValidating && purchaseList?.length > 0 ? (
           <ul className="purchase__list">
             {purchaseList.map((item: PurchasedProduct, index: number) => (

@@ -1,55 +1,174 @@
 .shop-container {
-  margin-bottom: 6rem;
+  padding-bottom: 4rem;
 
   .shop {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    grid-gap: 2rem;
-    @include responsive(xl-screen) {
-      grid-gap: 3rem;
-    }
-
+    display: flex;
     &__filter-wrapper {
+      width: 20%;
       display: none;
       height: fit-content;
-      @include responsive(screen-1024) {
-        grid-column: 1/5;
-        display: block;
-      }
+      margin-right: 0;
       @include responsive(xl-screen) {
-        grid-column: 1/4;
+        display: block;
+        margin-right: 2rem;
       }
 
       &-active {
         @include responsive(xl-screen) {
           position: fixed;
           top: 10rem;
-          // left: 300px;
         }
       }
     }
 
     &__products {
-      grid-column: 1/13;
-      @include responsive(screen-1024) {
-        grid-column: 5/13;
-      }
+      width: 100%;
       @include responsive(xl-screen) {
-        grid-column: 4/13;
+        width: 80%;
       }
 
       &-header {
-        background-color: $bg-gray;
-        margin-bottom: 3rem;
-        border-radius: 5px;
+        border-radius: 4px;
         @include flex(space-between, center);
-        padding-left: 2rem;
+        margin-bottom: 1rem;
+        border-bottom: 1px solid $border-color-2;
+
+        @include responsive(xl-screen) {
+          margin-bottom: 2rem;
+        }
+
+        & .shop__products-header-item {
+          width: 100%;
+          @include responsive(xl-screen) {
+            width: 50%;
+          }
+          &-sort {
+            &-list {
+              @include flex(flex-start, center);
+              list-style: none;
+              height: 100%;
+
+              &-item {
+                @include style-text(500, 1.1rem, 2.1rem, $heading-color);
+                cursor: pointer;
+                position: relative;
+                padding-block: 1.5rem;
+                flex: 1;
+                text-align: center;
+                padding-inline: 1rem;
+
+                @media screen and(min-width: 350px) {
+                  font-size: 1.2rem;
+                  line-height: 2.2rem;
+                }
+
+                @include responsive(xs-screen) {
+                  font-size: 1.4rem;
+                  line-height: 2.4rem;
+                }
+
+                @include responsive(lg-screen) {
+                }
+
+                &:nth-child(4),
+                &:nth-child(5) {
+                  display: none;
+
+                  @include responsive(lg-screen) {
+                    display: block;
+                  }
+                }
+
+                &:last-child {
+                  display: flex;
+                  align-items: center;
+                  display: flex;
+                  justify-content: center;
+
+                  @include responsive(lg-screen) {
+                    display: none;
+                  }
+
+                  & svg {
+                    font-size: 1.6rem;
+                    margin-left: 0.5rem;
+                  }
+                }
+
+                &::after {
+                  position: absolute;
+                  content: "";
+                  height: 3px;
+                  width: 100%;
+                  background-color: $primary-color;
+                  left: 50%;
+                  bottom: 0;
+                  transform: translate(-50%);
+                  display: none;
+                }
+
+                &:not(:first-child) {
+                  margin-left: 1.4rem;
+                  padding-inline: 0.6rem;
+                }
+
+                &:first-child {
+                  padding-left: 0;
+                }
+
+                &:hover {
+                  @include responsive(lg-screen) {
+                    color: $primary-color;
+                    &:after {
+                      display: block;
+                    }
+                  }
+                }
+
+                &-active {
+                  position: relative;
+                  font-weight: 600;
+                  color: $primary-color;
+                  &::after {
+                    display: block;
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        &-right {
+          display: none;
+
+          @include responsive(xl-screen) {
+            display: flex;
+            align-items: center;
+          }
+
+          & .dropdown {
+            padding-bottom: 0.5rem;
+
+            &-title {
+              padding: 1rem;
+              border: 1px solid $border-color-1;
+            }
+          }
+
+          &-view {
+            margin-right: 1rem;
+          }
+        }
       }
 
       & .shop__products-view-filter-btn {
-        @include flex(flex-start, end);
+        display: flex;
+        align-items: end;
+        width: fit-content;
+        margin-left: auto;
+        margin-bottom: 1.5rem;
         cursor: pointer;
-        @include responsive(screen-1024) {
+        @include responsive(xl-screen) {
           display: none;
         }
 
@@ -59,17 +178,31 @@
         }
 
         & svg {
-          font-size: 2rem;
+          font-size: 1.8rem;
+        }
+
+        @include responsive(xs-screen) {
+          font-size: 1.4rem;
+          line-height: 2.4rem;
+
+          & span {
+            @include style-text(500, 1.4rem, 1.4rem, $text-color);
+            margin-left: 0.6rem;
+          }
+
+          & svg {
+            font-size: 2rem;
+          }
         }
       }
 
       & .shop__products-view-list {
         display: none;
+        list-style: none;
         @include responsive(xl-screen) {
           display: flex;
           align-items: center;
         }
-        list-style: none;
 
         .shop__view-item-active {
           & button {
@@ -129,15 +262,16 @@
       }
 
       .shop__product-container {
-        grid-gap: 1.5rem;
-        @include responsive(sm-screen) {
-          grid-gap: 2rem;
+        grid-gap: 0.5rem;
+
+        @include responsive(md-screen) {
+          grid-gap: 1rem;
         }
       }
     }
 
     &__pagination {
-      margin-top: 5rem;
+      margin-top: 2rem;
       padding: 2rem 0;
       display: flex;
       flex-direction: column;
@@ -145,8 +279,9 @@
       justify-content: center;
 
       & svg {
-        margin-bottom: 3rem;
+        margin-bottom: 2rem;
         font-size: 3rem;
+        color: $gray;
       }
 
       &-btn {
@@ -158,7 +293,49 @@
 
 .shop__products--not-found {
   padding: 1.5rem 2rem;
-  background-color: $warning;
-  @include style-text(400, 1.4rem, 2rem, $text-color);
   border-radius: 4px;
+  @include flex-center;
+  flex-direction: column;
+
+  & img {
+    width: 100px;
+    height: auto;
+    object-fit: cover;
+  }
+
+  & p {
+    @include style-text(500, 1.6rem, 2.6rem, $text-color);
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+}
+
+.shop__loading {
+  display: flex;
+  flex-direction: column;
+  margin-block: 3rem;
+
+  @include responsive(xl-screen) {
+    flex-direction: row;
+  }
+
+  &-left {
+    display: none;
+    @include responsive(xl-screen) {
+      display: block;
+      width: 20%;
+      margin-right: 2rem;
+    }
+  }
+
+  &-right {
+    @include responsive(xl-screen) {
+      width: 80%;
+    }
+
+    &-products {
+      grid-gap: 1rem;
+      margin-top: 2rem;
+    }
+  }
 }

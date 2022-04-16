@@ -17,7 +17,7 @@
 
   &-title {
     @include style-text(500, 1.5rem, 2.5rem, $home-heading-color);
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     margin-right: 4rem;
 
     @include responsive(sm-screen) {
@@ -44,7 +44,7 @@
       @include flex(flex-start, start);
       flex-direction: column;
       flex-wrap: nowrap;
-      border-bottom: 1px solid $border-color-1;
+      border-bottom: 1px solid $border-color-2;
       padding-bottom: 2rem;
       margin-bottom: 1.6rem;
     }

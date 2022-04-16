@@ -140,7 +140,7 @@ const ProductDetailPage = ({ product }: ProduductDetailPageProps) => {
           />
         </section>
         <div className="product__detail-tabs-wrapper">
-          <ProductTabs description={product?.description_sale || ""} />
+          <ProductTabs description={product?.description || ""} />
         </div>
 
         {/* Related Products */}
@@ -153,13 +153,14 @@ const ProductDetailPage = ({ product }: ProduductDetailPageProps) => {
               modules={[Navigation]}
               slidesPerView={2}
               navigation
-              spaceBetween={15}
+              spaceBetween={5}
               breakpoints={{
                 576: {
                   spaceBetween: 20,
                 },
                 768: {
                   slidesPerView: 3,
+                  spaceBetween: 10,
                 },
                 1024: {
                   slidesPerView: 4,
@@ -194,13 +195,14 @@ const ProductDetailPage = ({ product }: ProduductDetailPageProps) => {
               modules={[Navigation]}
               slidesPerView={2}
               navigation
-              spaceBetween={15}
+              spaceBetween={5}
               breakpoints={{
                 576: {
                   spaceBetween: 20,
                 },
                 768: {
                   slidesPerView: 3,
+                  spaceBetween: 10,
                 },
                 1024: {
                   slidesPerView: 4,

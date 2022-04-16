@@ -40,7 +40,17 @@ const useCartOrder = (): UseCartOrderProps => {
     promotion,
     promotionLineList,
   } = useSelector((state: RootState) => state.order)
-  const { data: carts } = useSelector((state: RootState) => state.cart)
+  const { data: cartList } = useSelector((state: RootState) => state.cart)
+  const {
+    token,
+    userInfo: { id: partner_id },
+  } = useSelector((state: RootState) => state.user)
+
+  const carts = useMemo(() => {
+    if (!token) return []
+
+    return cartList.filter((item) => item.partner_id === partner_id)
+  }, [token, cartList])
 
   const handleResetOrderField = () => {
     if (orderDraft) {

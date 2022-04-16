@@ -1,5 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
+import { avatar } from "@/assets"
 import { CommentRating } from "@/models"
+import { DOMAIN_URL } from "@/services"
 import React, { useState } from "react"
 import { Tag } from "../common"
 import ImageShow from "../common/imageShow"
@@ -19,11 +21,20 @@ export const RatingItem = ({ rating, onDelete }: RatingItemProps) => {
   //   setOpen(false)
   // })
 
+  console.log(rating)
+
   return (
     <>
       <div className="rating__item">
         <div className="rating__item-avatar">
-          <img src={`data:image/jpeg;base64,${rating.partner_avatar}`} alt="" />
+          <img
+            src={
+              rating?.partner_avatar
+                ? `${DOMAIN_URL}${rating?.partner_avatar}`
+                : avatar
+            }
+            alt=""
+          />
         </div>
 
         <div className="rating__item-content">
@@ -51,23 +62,23 @@ export const RatingItem = ({ rating, onDelete }: RatingItemProps) => {
                   key={index}
                   size="sm"
                   disabled={true}
-                  name={item}
+                  name={item.tag_content}
                   id={index}
                 />
               ))}
             </div>
           ) : null}
 
-          {rating.attachment_ids?.length > 0 ? (
+          {rating.image_urls?.length > 0 ? (
             <div className="rating__item-content-image">
-              {rating.attachment_ids.map((item, index) => (
+              {rating.image_urls.map((item, index) => (
                 <div
                   key={index}
-                  onClick={() => setImageUrl(item.file)}
+                  onClick={() => setImageUrl(`${DOMAIN_URL}${item.image_url}`)}
                   className="rating__item-content-image-item"
                 >
                   {/* data:image/jpeg;base64, */}
-                  <img src={item.file} alt="" />
+                  <img src={`${DOMAIN_URL}${item.image_url}`} alt="" />
                 </div>
               ))}
             </div>

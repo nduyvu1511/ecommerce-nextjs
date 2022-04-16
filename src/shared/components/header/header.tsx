@@ -1,17 +1,23 @@
 import { logo } from "@/assets"
+import { accountHeaderOptionList } from "@/container/account/data"
 import { RootState } from "@/core/store"
-import { formatMoneyVND } from "@/helper"
 import { clearOrderData, logOut } from "@/modules"
 import Image from "next/image"
 import Link from "next/link"
 import { useState } from "react"
 import { AiOutlineShopping, AiOutlineUser } from "react-icons/ai"
+import { BiWorld } from "react-icons/bi"
 import { FiMenu } from "react-icons/fi"
+import { IoMdNotificationsOutline } from "react-icons/io"
 import { IoChevronDownOutline, IoCloseCircleSharp } from "react-icons/io5"
 import { useDispatch, useSelector } from "react-redux"
-import { useCart, useCategory, useScrollTop, useWishlist } from "shared/hook"
+import {
+  useCartOrder,
+  useCategory,
+  useScrollTop,
+  useWishlist,
+} from "shared/hook"
 import { CartModal } from "../cart"
-import { CategoryDropdown } from "../category"
 import { ModalHeading } from "../heading"
 import { Modal } from "../modal"
 import { SearchForm, SearchResult } from "../search"
@@ -29,7 +35,7 @@ export const Header = () => {
   const { isOpen: isOpenSearchResult, keyword } = useSelector(
     (state: RootState) => state.product.search
   )
-  const { carts, totalMoney } = useCart()
+  const { carts } = useCartOrder()
 
   const [isModalOpen, setModalOpen] = useState({
     modalName: "",
@@ -46,12 +52,6 @@ export const Header = () => {
   return (
     <>
       <header className={`header ${height > 150 ? "header-sticky" : ""}`}>
-        <div className="header__notification">
-          <h3>
-            Due to the <strong>COVID</strong> 19 epidemic, orders may be
-            processed with a slight delay
-          </h3>
-        </div>
         <div className="header__actions-wrapper">
           <div className="container">
             <div className="header__actions">
@@ -66,49 +66,38 @@ export const Header = () => {
                   ))}
                 </ul>
               </div>
-              <div className="header__actions-right">
-                <div className="header__actions-right-notification">
-                  <p>
-                    {/* {language === "eng"
-                      ? " 100% Secure delivery without contacting the courier"
-                      : "100% Giao hàng an toàn mà không cần liên hệ với chuyển phát nhanh"} */}
-                    100% Secure delivery without contacting the courier
-                  </p>
-                  <p>
-                    {" "}
-                    {language === "vni"
-                      ? "Cần trợ giúp? Gọi chúng tôi"
-                      : "Need help? Call Us"}
-                    : <strong>0909.099.580</strong>
-                  </p>
-                </div>
 
+              <div className="header__actions-right">
                 <div className="header__actions-right-tools">
+                  <div className="header__actions-right-tools-noti">
+                    <Link href="/account/notifications">
+                      <a>
+                        <IoMdNotificationsOutline />
+                        Thông báo
+                      </a>
+                    </Link>
+                  </div>
+
                   <div className="header__actions-right-tools-language">
-                    <p>{language === "vni" ? "Tiếng Việt" : "English"}</p>
+                    <p>
+                      <BiWorld />
+                      {language === "vni" ? "Tiếng Việt" : "English"}
+                    </p>
                     <IoChevronDownOutline />
 
                     <div className="header__actions-language-dropdown">
                       <p>{language === "vni" ? "English" : "Tiếng Việt"}</p>
+                      <p>{language === "vni" ? "Tiếng Việt" : "Tiếng Việt"}</p>
                     </div>
                   </div>
-                  <div className="header__actions-right-tools-option">
-                    {!token ? (
+
+                  {!token ? (
+                    <div className="header__actions-right-tools-option">
                       <Link href="/login">
-                        {language === "vni" ? "Đăng nhập" : "Login"}
+                        <a>{language === "vni" ? "Đăng nhập" : "Login"}</a>
                       </Link>
-                    ) : (
-                      <button
-                        onClick={() => {
-                          dispatch(logOut())
-                          dispatch(clearOrderData())
-                        }}
-                        className="btn-reset"
-                      >
-                        {language === "vni" ? "Đăng xuất" : "Log out"}
-                      </button>
-                    )}
-                  </div>
+                    </div>
+                  ) : null}
                 </div>
               </div>
             </div>
@@ -149,15 +138,33 @@ export const Header = () => {
                       <AiOutlineUser />
                     </a>
                   </Link>
+
+                  {token ? (
+                    <div className="header__main-top-actions-user-absolute">
+                      <ul className="account__option-list">
+                        {accountHeaderOptionList.map((item, index) => (
+                          <li
+                            onClick={() => {
+                              if (!item.path) {
+                                dispatch(logOut())
+                                dispatch(clearOrderData())
+                              }
+                            }}
+                            className="account__option-list-item"
+                            key={index}
+                          >
+                            <Link href={item.path}>
+                              <a>{item.vniTitle}</a>
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ) : null}
                 </div>
 
-                <div className={`header__main-top-actions-cart`}>
-                  <Link passHref href="/cart">
-                    <p className="header__main-top-actions-cart-price cursor-pointer">
-                      {formatMoneyVND(totalMoney)}
-                    </p>
-                  </Link>
-
+                {/* cart */}
+                <div className="header__main-top-actions-cart">
                   <div className="header__main-top-actions-cart-wrapper">
                     <Link passHref href="/cart">
                       <a className="header__main-top-actions-icon header__main-top-actions-icon-danger">
@@ -183,22 +190,33 @@ export const Header = () => {
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-
-            <div className="header__main-bottom">
-              <div className="header__main-bottom-right">
-                <CategoryDropdown type="header" />
-              </div>
-
-              <div className="header__main-bottom-left">
-                <Navigation />
+                {/* cart end */}
               </div>
             </div>
           </div>
         </div>
+
         <div className="header-border-bottom"></div>
+
+        {/* <div className="header__bottom-category">
+          <div className="container">
+            <ul className="header__bottom-category-list">
+              {categories.map(
+                (item, index) =>
+                  !item.parent_id && (
+                    <li
+                      className="header__bottom-category-list-item"
+                      key={index}
+                    >
+                      {item.name}
+                    </li>
+                  )
+              )}
+            </ul>
+          </div>
+        </div> */}
       </header>
+      
       <NavMobile
         isModalOpen={isModalOpen}
         setModalOpen={(name: string) => handleItemClick(name)}
@@ -226,7 +244,7 @@ export const Header = () => {
               <IoCloseCircleSharp />
             </button>
           </header>
-          <CategoryDropdown />
+          {/* <CategoryDropdown /> */}
           <Navigation
             handleClickModal={() =>
               setModalOpen({ isOpen: false, modalName: "" })

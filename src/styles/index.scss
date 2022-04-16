@@ -10,6 +10,7 @@
 @import "./main-style/shipping-detail.scss";
 @import "./main-style/payment.scss";
 @import "./main-style/contact.scss";
+@import "./main-style/category.scss";
 
 @import "./layout-style/header.scss";
 @import "./layout-style/footer.scss";
@@ -19,6 +20,7 @@
 @import "./layout-style/order-container.scss";
 @import "./layout-style/order-history.scss";
 @import "./layout-style/order-status.scss";
+@import "./layout-style/layout.scss";
 
 @import "./component-style/search-container.scss";
 @import "./component-style/product-sale.scss";
@@ -27,7 +29,6 @@
 @import "./component-style/modal-confirm.scss";
 @import "./component-style/modal-heading.scss";
 @import "./component-style/cart-item.scss";
-@import "./component-style/home-heading.scss";
 @import "./component-style/cart-modal.scss";
 @import "./component-style/category.scss";
 @import "./component-style/product-image.scss";
@@ -37,14 +38,11 @@
 @import "./component-style/product-item-list.scss";
 @import "./component-style/modal-product-detail.scss";
 @import "./component-style/input-quantity.scss";
-@import "./component-style/category-dropdown.scss";
 @import "./component-style/product-promotion.scss";
-@import "./component-style/product-trending.scss";
 @import "./component-style/form-control.scss";
 @import "./component-style/breadcrumb.scss";
 @import "./component-style/compare.scss";
 @import "./component-style/stars.scss";
-@import "./component-style/heading.scss";
 @import "./component-style/input-range.scss";
 @import "./component-style/custom-library.scss";
 @import "./component-style/button-share.scss";

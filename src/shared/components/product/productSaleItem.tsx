@@ -1,3 +1,4 @@
+import { isObjectHasValue } from "@/helper"
 import { Product, ProductSale as IProductSale } from "@/models"
 import Link from "next/link"
 import { useEffect } from "react"
@@ -8,9 +9,7 @@ import "swiper/css"
 import "swiper/css/navigation"
 import "swiper/css/pagination"
 import { Swiper, SwiperSlide } from "swiper/react"
-
-import { isObjectHasValue } from "../../helper/functions"
-import Countdown from "../common/countdown"
+import { Countdown } from "../common"
 import { ProductItem } from "./productItem"
 
 interface ProductSaleItemProps {
@@ -70,21 +69,21 @@ export const ProductSaleItem = ({
           </div>
           <Swiper
             modules={[Navigation]}
-            slidesPerView={1}
+            slidesPerView={2}
             navigation
-            spaceBetween={15}
+            spaceBetween={5}
             breakpoints={{
-              400: {
-                slidesPerView: 2,
-              },
-              768: {
+              576: {
                 slidesPerView: 3,
               },
               992: {
                 slidesPerView: 4,
               },
-              1200: {
+              1024: {
                 slidesPerView: 5,
+              },
+              1200: {
+                slidesPerView: 6,
               },
             }}
           >

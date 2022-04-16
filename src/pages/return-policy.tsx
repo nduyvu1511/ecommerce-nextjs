@@ -6,7 +6,9 @@ const ReturnPolicy = () => {
   return (
     <div className="return__policy-wrapper">
       <div className="container">
-        <Breadcrumb page="return-policy" />
+        <Breadcrumb
+          breadcrumbList={[{ name: "Chính sách trả hàng", path: "" }]}
+        />
         <div className="return__policy">
           <p>
             <strong>Womart</strong> đảm bảo rằng tất cả các sản phẩm là trong

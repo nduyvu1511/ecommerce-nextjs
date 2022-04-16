@@ -1,42 +1,46 @@
 import { ProductSaleItem } from "@/components"
-import HomeProductSlideLoading from "@/components/loader/homeProductSlideLoading"
+import { isArrayHasValue } from "@/helper"
 import { ProductSale } from "@/models"
 import productApi from "@/services/productApi"
-import { useEffect, useState } from "react"
 import "swiper/css"
 import "swiper/css/navigation"
 import "swiper/css/pagination"
+import useSWR from "swr"
 
 export const ProductSaleContainer = () => {
-  const [productsSale, setProductsSale] = useState<ProductSale[]>()
-  const [isLoading, setLoading] = useState<boolean>(true)
-
-  useEffect(() => {
-    productApi
-      .getSaleProductList()
-      .then((res: any) => {
-        const result = res?.result
-        if (result.success) {
-          setLoading(false)
-          setProductsSale(result.data)
+  const {
+    data: productSales,
+    isValidating,
+    mutate,
+  } = useSWR(
+    "product_deals",
+    () =>
+      productApi.getSaleProductList().then((res: any) => {
+        if (isArrayHasValue(res?.result?.data)) {
+          return res?.result?.data
         }
-      })
-      .catch(() => setLoading(false))
-  }, [])
+        return []
+      }),
+    {
+      revalidateOnFocus: false,
+    }
+  )
 
   return (
     <>
-      {isLoading ? <HomeProductSlideLoading item={5} /> : null}
-
-      {productsSale && productsSale?.length > 0 ? (
+      {productSales && productSales?.length > 0 ? (
         <div className="container home__sale-container">
-          {productsSale?.map((product: ProductSale) => (
+          {productSales?.map((product: ProductSale) => (
             <ProductSaleItem
               key={product.deal_id}
-              isLoading={isLoading}
+              isLoading={isValidating}
               setProductsSale={(deal_id: number) =>
-                setProductsSale([
-                  ...productsSale.filter((item) => item.deal_id !== deal_id),
+                mutate([
+                  ...productSales.filter(
+                    (item: ProductSale) => item.deal_id !== deal_id
+                  ),
+                  ,
+                  false,
                 ])
               }
               productSale={product}

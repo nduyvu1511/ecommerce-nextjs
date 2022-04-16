@@ -196,10 +196,14 @@ a {
 .container {
   width: 100%;
   max-width: $container-width;
-  padding: 0 1.5rem;
+  padding: 0 1rem;
   margin: 0 auto;
 
-  @include responsive(sm-screen) {
+  @include responsive(xs-screen) {
+    padding: 0 1.5rem;
+  }
+
+  @include responsive(md-screen) {
     padding: 0 3rem;
   }
 

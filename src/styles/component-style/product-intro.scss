@@ -141,6 +141,15 @@
   .product__intro-variation-wrapper {
     margin-bottom: 3rem;
   }
+
+  & .product__countdown {
+    margin-left: 2rem;
+    margin-top: 0;
+
+    &-remains {
+      display: none;
+    }
+  }
 }
 
 .product__intro-horizontal {
@@ -154,6 +163,10 @@
   align-items: baseline;
   margin-bottom: 1.6rem;
   font-family: $second-font;
+
+  &-wrapper {
+    @include flex(flex-start, baseline);
+  }
 
   @include responsive(sm-screen) {
     margin-bottom: 2rem;

@@ -1,107 +1,154 @@
+/* eslint-disable @next/next/no-img-element */
+import {
+  appStoreIcon,
+  boCongThuong,
+  googlePlayIcon,
+  paymentMethodsImage,
+} from "@/assets"
 import Image from "next/image"
 import Link from "next/link"
-import { useState } from "react"
-import { FiPhoneCall } from "react-icons/fi"
-import { HiOutlineMail } from "react-icons/hi"
+import React from "react"
+import { HiOutlineMailOpen } from "react-icons/hi"
+import { IoLocationOutline } from "react-icons/io5"
 import {
   RiFacebookCircleFill,
   RiGlobalLine,
   RiYoutubeFill,
 } from "react-icons/ri"
-import { useCategory } from "shared/hook"
-import { appStoreIcon, couponImg, googlePlayIcon, paymentImg } from "@/assets"
-import { slogans } from "./data"
 
 export const Footer = () => {
-  const language = "vni"
-  const [value, setValue] = useState("")
-  const { data: categories } = useCategory()
-
   return (
-    <section className="footer">
-      <div className="footer__notification">
+    <footer className="footer">
+      <div className="footer__top-wrapper">
         <div className="container">
-          <div className="footer__notification-wrapper">
-            <div className="footer__notification-left">
-              <h3>
-                {language === "vni"
-                  ? "Đăng ký nhận tin"
-                  : "Join our newsletter and get..."}
+          <div className="footer__top">
+            <HiOutlineMailOpen />
+            <div className="footer__top-text">
+              <p>Đăng ký nhận bản tin Womart</p>
+              <p>Đừng bỏ lỡ hàng ngàn sản phẩm và chương trình siêu hấp dẫn</p>
+            </div>
+            <div className="footer__top-input">
+              <input placeholder="Địa chỉ email của bạn" type="text" />
+              <button className="btn-primary">Đăng ký</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="footer__body">
+        <div className="container">
+          <ul className="footer__body-list grid grid-col-1 grid-col-sm-2 grid-col-md-3 grid-col-lg-4 grid-col-xl-5">
+            <li className="footer__body-list-item">
+              <h3 className="footer__body-list-item-heading">
+                HỖ TRỢ KHÁCH HÀNG
               </h3>
-              <p>
-                {language === "vni"
-                  ? "Đăng ký bằng email để nhận được ưu đãi mới nhất từ chúng tôi"
-                  : "Join our email subscription now to get updates on promotions and coupons"}
-              </p>
-              <form className="footer__notification-left-form">
-                <input
-                  onChange={(e) => setValue(e.target.value)}
-                  value={value}
-                  type="text"
-                  placeholder={
-                    language === "vni"
-                      ? "Địa chỉ email của bạn"
-                      : "Your email address"
-                  }
-                />
-                <HiOutlineMail />
-                <input
-                  type="submit"
-                  value={language === "vni" ? "Đăng Ký" : "Subscribe"}
-                />
-              </form>
-            </div>
-            <div className="footer__notification-right">
-              <div className="image-container">
-                <Image src={couponImg} alt="" className="image" layout="fill" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="container">
-        <div className="footer__slogan">
-          <ul className="footer__slogan-list">
-            {slogans.map((slo) => (
-              <li key={slo.id} className="footer__slogan-list-item">
-                {language === "vni" ? slo.vniName : slo.engName}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-      <div className="footer__main">
-        {categories && categories.length > 0 && (
-          <div className="footer__main-category">
-            <div className="container">
-              <ul className="category-list">
-                {categories.map((cate) => (
-                  <li key={cate.id} className="category-list-item">
-                    <Link href={`/shop/category/${cate.id}`} passHref>
-                      <a className="cateegory-list-item-heading">{cate.name}</a>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        )}
+              <Link href="/return-policy">
+                <a className="footer__body-list-item-title">
+                  Các câu hỏi thường gặp
+                </a>
+              </Link>
+              <Link href="/return-policy">
+                <a className="footer__body-list-item-title">
+                  Gửi yêu cầu hỗ trợ
+                </a>
+              </Link>
+              <Link href="/return-policy">
+                <a className="footer__body-list-item-title">
+                  Hướng dẫn đặt hàng
+                </a>
+              </Link>
+              <Link href="/return-policy">
+                <a className="footer__body-list-item-title">
+                  Phương thức vận chuyển
+                </a>
+              </Link>
+              <Link href="/return-policy">
+                <a className="footer__body-list-item-title">
+                  Chính sách đổi trả
+                </a>
+              </Link>
 
-        <div className="footer__main-contact">
-          <div className="container">
-            <div className="footer__main-contact-wrapper">
-              <div className="footer__main-contact-left">
-                <span className="phone-icon">
-                  <FiPhoneCall />
-                </span>
-                <div className="phone-info">
-                  <p>0909.099.580</p>
-                  <p>Working 8:00 - 22:00</p>
-                </div>
+              <Link href="/return-policy">
+                <a className="footer__body-list-item-title">
+                  Chính sách hàng nhập khẩu
+                </a>
+              </Link>
+
+              <Link href="/return-policy">
+                <a className="footer__body-list-item-title">
+                  Báo lỗi bảo mật: security@womart.vn
+                </a>
+              </Link>
+            </li>
+
+            <li className="footer__body-list-item">
+              <h3 className="footer__body-list-item-heading">VỀ WOMART</h3>
+              <Link href="/privacy-policy">
+                <a className="footer__body-list-item-title">Tuyển Dụng</a>
+              </Link>
+              <Link href="/privacy-policy">
+                <a className="footer__body-list-item-title">
+                  Chính sách bảo mật thanh toán
+                </a>
+              </Link>
+              <Link href="/privacy-policy">
+                <a className="footer__body-list-item-title">
+                  Chính sách bảo mật thông tin cá nhân
+                </a>
+              </Link>
+              <Link href="/privacy-policy">
+                <a className="footer__body-list-item-title">
+                  Chính sách giải quyết khiếu nại
+                </a>
+              </Link>
+              <Link href="/privacy-policy">
+                <a className="footer__body-list-item-title">
+                  Bán hàng doanh nghiệp
+                </a>
+              </Link>
+            </li>
+            <li className="footer__body-list-item">
+              <h3 className="footer__body-list-item-heading">
+                HỢP TÁC VÀ LIÊN KẾT
+              </h3>
+              <Link href="/return-policy">
+                <a className="footer__body-list-item-title">
+                  Quy chế hoạt động Sàn GDTMĐT
+                </a>
+              </Link>
+              <Link href="/return-policy">
+                <a className="footer__body-list-item-title">
+                  Bán hàng cùng Womart
+                </a>
+              </Link>
+            </li>
+            <li className="footer__body-list-item">
+              <h3 className="footer__body-list-item-heading">
+                PHƯƠNG THỨC THANH TOÁN
+              </h3>
+              <img className="img-fluid" src={paymentMethodsImage} alt="" />
+            </li>
+            <li className="footer__body-list-item">
+              <h3 className="footer__body-list-item-heading">
+                KẾT NỐI VỚI CHÚNG TÔI
+              </h3>
+
+              <div className="footer__body-icon-wrapper">
+                <a href="https://www.facebook.com/satavancom">
+                  <RiFacebookCircleFill />
+                </a>
+                <a href="https://www.youtube.com/channel/UCiiDiJ6Zmuwdhvej9XFvEFA">
+                  <RiYoutubeFill />
+                </a>
+                <a href="https://satavan.com">
+                  <RiGlobalLine />
+                </a>
               </div>
+
               <div className="footer__main-contact-right">
-                <h3 className="heading">Download App on mobile: </h3>
-                <div className="image-wrapper">
+                <h3 className="footer__body-list-item-heading footer__main-contact-right-heading">
+                  Tải Ứng dụng trên điện thoại{" "}
+                </h3>
+                <div className="footer__body-image-wrapper">
                   <a href="https://play.google.com/store/apps/details?id=com.satavan.app">
                     <div className="image-container image-wrapper-item">
                       <Image
@@ -123,33 +170,56 @@ export const Footer = () => {
                     </div>
                   </a>
                 </div>
-                <div className="icon-wrapper">
-                  <a href="https://www.facebook.com/satavancom">
-                    <RiFacebookCircleFill />
-                  </a>
-                  <a href="https://www.youtube.com/channel/UCiiDiJ6Zmuwdhvej9XFvEFA">
-                    <RiYoutubeFill />
-                  </a>
-                  <a href="https://satavan.com">
-                    <RiGlobalLine />
-                  </a>
-                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div className="footer__bottom-wrapper">
+        <div className="footer__body-address-wrapper">
+          <div className="container">
+            <div className="footer__body-address">
+              <div className="footer__body-address-icon">
+                <IoLocationOutline />
+              </div>
+              <div className="footer__body-address-info">
+                <p>
+                  <strong>Địa chỉ văn phòng:</strong> 1004B Âu Cơ, Phường Hòa
+                  Thạnh, Quận Tân Phú, Tp. HCM.
+                </p>
+                {/* <p>
+                <strong>Số điện thoại: </strong>
+                096 737 0333
+              </p>
+              <p>
+                <strong>Email: </strong>
+                happyfood@hunghau.vn
+              </p> */}
+                <p>
+                  Womart nhận đặt hàng trực tuyến và giao hàng tận nơi, chưa hỗ
+                  trợ mua và nhận hàng trực tiếp tại văn phòng hoặc trung tâm xử
+                  lý đơn hàng
+                </p>
               </div>
             </div>
           </div>
         </div>
-
         <div className="container">
-          <div className="footer__main-info">
-            <p>
-              Copyrights © 2014. All rights reserved by Satavan It Solutions
-            </p>
-            <div className="image-container">
-              <Image src={paymentImg} alt="" layout="fill" className="image" />
+          <div className="footer__bottom">
+            <div className="footer__bottom-left">
+              <h4>© 2022 - Bản quyền của Công Ty Cổ Phần Womart - Womart.vn</h4>
+              <p>
+                Giấy chứng nhận Đăng ký Kinh doanh số 0309532909 do Sở Kế hoạch
+                và Đầu tư Thành phố Hồ Chí Minh cấp ngày 06/01/2010
+              </p>
+            </div>
+            <div className="footer__bottom-right">
+              <img className="img-fluid" src={boCongThuong} alt="" />
             </div>
           </div>
         </div>
       </div>
-    </section>
+    </footer>
   )
 }

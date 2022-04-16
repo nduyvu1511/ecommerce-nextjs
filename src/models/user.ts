@@ -17,7 +17,8 @@ export interface AuthSlice {
 export interface UserEdit {
   email: string
   name: string
-  sex: "male" | "female"
+  sex: "male" | "female" | ""
+  image?: string
 }
 
 export interface ILogin {
@@ -82,6 +83,17 @@ export interface OrderHistory {
   state_paid: string
   state_return_delivery: string
   state_return_paid: string
+}
+
+export interface UpdateUserPropsHook {
+  name_customs: string
+  image?: string
+  sex: "male" | "female" | ""
+  email: string
+}
+
+export interface UpdateUserProps extends UpdateUserPropsHook {
+  token: string
 }
 
 interface ProductOrderHistory {

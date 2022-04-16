@@ -2,9 +2,19 @@ import { GetProductDetail, ProductParams } from "@/models"
 import axiosClient from "."
 
 const productApi = {
-  getCategories: () => {
+  getCategories: (parent_id: number | false = false) => {
     return axiosClient.post("/api/v2.0/product/category", {
-      params: {},
+      params: {
+        parent_id,
+      },
+    })
+  },
+
+  getChildCategories: (parent_id: number | false = false) => {
+    return axiosClient.post("/api/v3.0/product/category", {
+      params: {
+        parent_id,
+      },
     })
   },
 
@@ -15,16 +25,18 @@ const productApi = {
   },
 
   getProductList: (params?: ProductParams) => {
-    return axiosClient.post("/attribute_filter/top_sale/", {
+    return axiosClient.post("/attribute_filter/top_sale", {
       params,
     })
   },
 
-  getProductAttributeList: () => {
+  getProductAttributeList: (categ_id: number) => {
     return axiosClient.post(
       "/attribute_controller/get_product_attribute_list",
       {
-        params: {},
+        params: {
+          categ_id,
+        },
       }
     )
   },
@@ -33,6 +45,15 @@ const productApi = {
     return axiosClient.post("/daily_deal_controller/get_daily_deal", {
       params: {},
     })
+  },
+
+  filterProducts: (params?: ProductParams) => {
+    return axiosClient.post(
+      "/attribute_controller/search_product_by_attribute",
+      {
+        params,
+      }
+    )
   },
 }
 

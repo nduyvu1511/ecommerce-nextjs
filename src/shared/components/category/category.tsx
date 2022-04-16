@@ -1,14 +1,16 @@
 import { categoryIcon } from "@/assets"
 import { isArrayHasValue } from "@/helper"
+import { Category as ICategory } from "@/models"
 import { DOMAIN_URL } from "@/services"
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import { useRef, useState } from "react"
 import { VscChevronDown, VscChevronRight } from "react-icons/vsc"
-import { useCategory } from "shared/hook"
 
-interface ICategory {
+interface CategoryProps {
+  showChild?: boolean
+  categories: ICategory[]
   handleClickModal?: Function
   toggleCategoryDropdown?: Function
   type?: "large" | "small" | "full"
@@ -17,12 +19,11 @@ interface ICategory {
 export const Category = ({
   handleClickModal,
   toggleCategoryDropdown,
-}: ICategory) => {
+  categories,
+  showChild = true,
+}: CategoryProps) => {
   const { asPath, query } = useRouter()
-
   const childCategory = useRef<HTMLDivElement>(null)
-
-  const { data: categories } = useCategory()
 
   const categoryIdActive = asPath.includes("category_id")
     ? asPath.split("category_id=")[1].split("&")[0]
@@ -87,7 +88,7 @@ export const Category = ({
               </Link>
 
               {/* button open child category */}
-              {car1.children?.length > 0 && (
+              {car1.children?.length > 0 && showChild && (
                 <>
                   <VscChevronRight className="hide-on-screen-smaller-1200 btn-right" />
                   <button
@@ -118,7 +119,7 @@ export const Category = ({
             </div>
 
             {/* Child category */}
-            {car1.children && (
+            {car1.children && showChild && (
               <>
                 <div
                   ref={childCategory}

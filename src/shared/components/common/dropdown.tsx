@@ -44,7 +44,6 @@ export const Dropdown = ({
 
     return {
       title: titleProp ? "" : list[0].title || list[0].name,
-
       id: titleProp ? 0 : list[0].id,
     }
   })

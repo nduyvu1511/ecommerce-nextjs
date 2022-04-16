@@ -16,18 +16,18 @@ import {
 } from "react-icons/ri"
 
 export const navLinks = [
-  { id: 1, engName: "About Us", vniName: "Về chúng tôi", path: "/about" },
-  {
-    id: 2,
-    engName: "My Account",
-    vniName: "Tài khoản",
-    path: "/account",
-  },
+  { id: 1, engName: "Compare", vniName: "So sánh", path: "/compare" },
   {
     id: 3,
     engName: "Wishlist",
     vniName: "Yêu thích",
     path: "/wishlist",
+  },
+  {
+    id: 2,
+    engName: "My Account",
+    vniName: "Tài khoản",
+    path: "/account",
   },
   {
     id: 4,

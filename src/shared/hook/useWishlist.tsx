@@ -68,7 +68,10 @@ const useWishlist = (isFetchData: boolean): WishlistSWR => {
 
   const handleToggleWishlist = useCallback(
     (product: Product) => {
-      if (!token) router.push("/login")
+      if (!token) {
+        router.push("/login")
+        return
+      }
 
       if (!product || Object.keys(product).length === 0) return
 
@@ -82,12 +85,6 @@ const useWishlist = (isFetchData: boolean): WishlistSWR => {
             dispatch(setFetchingCurrentWishlistBtn(false))
 
             if (isObjectHasValue(res.result)) {
-              dispatch(
-                setMessage({
-                  isOpen: true,
-                  title: "Đã Thêm vào danh sách yêu thích",
-                })
-              )
               mutate([res.result], false)
             }
           })

@@ -9,13 +9,12 @@ import userApi from "@/services/userApi"
 import { useRef, useState } from "react"
 import { AiFillEye } from "react-icons/ai"
 import { RiLoader4Line } from "react-icons/ri"
-import { useDispatch, useSelector } from "react-redux"
+import { useSelector } from "react-redux"
 import useSWR from "swr"
 
 const OrderHistory: any = () => {
   const language = "vni"
   const containerRef = useRef<HTMLSelectElement>(null)
-  const dispatch = useDispatch()
   const { token } = useSelector((state: RootState) => state.user)
 
   const [isOpen, setOpen] = useState<boolean>(false)
@@ -29,7 +28,12 @@ const OrderHistory: any = () => {
           userApi
             .getOrderListHistory({ token })
             .then((res: any) => res?.result?.data?.list_booking || [])
-      : null
+      : null,
+    {
+      shouldRetryOnError: false,
+      revalidateOnFocus: false,
+      dedupingInterval: 100,
+    }
   )
 
   const handleGetOrderDetail = (sale_order_id: number) => {
@@ -42,7 +46,13 @@ const OrderHistory: any = () => {
   }
 
   return (
-    <AccountContainer heading="Order history">
+    <AccountContainer
+      breadcrumbList={[
+        { path: "/account", name: "Tài khoản" },
+        { name: "Lịch sử đơn hàng", path: "" },
+      ]}
+      heading="Order history"
+    >
       <section ref={containerRef} className="order__history">
         {isValidating && orderHistoryList?.length === 0 ? (
           <div className="loader-container">

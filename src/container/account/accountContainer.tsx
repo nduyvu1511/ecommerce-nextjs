@@ -1,18 +1,20 @@
 import { Breadcrumb, Modal, ModalHeading } from "@/components"
 import { AccountOption } from "@/container"
+import { RootState } from "@/core/store"
+import { BreadcrumbItem } from "@/models"
 import { toggleModalAccountOption } from "@/modules"
 import { ReactNode } from "react"
 import { RiMenuFill } from "react-icons/ri"
 import { useDispatch, useSelector } from "react-redux"
-import { RootState } from "../../core/store"
 
 interface AccountContainerProps {
   children: ReactNode
   heading: string
+  breadcrumbList: BreadcrumbItem[]
 }
 
 export const AccountContainer = (props: AccountContainerProps) => {
-  const { children, heading } = props
+  const { children, heading, breadcrumbList } = props
 
   const dispatch = useDispatch()
   const { isOpenModalOptionAccount } = useSelector(
@@ -22,7 +24,7 @@ export const AccountContainer = (props: AccountContainerProps) => {
   return (
     <div className="account-container">
       <div className="container">
-        <Breadcrumb page="account" />
+        <Breadcrumb breadcrumbList={breadcrumbList} />
         <div className="account-wrapper">
           <div className="account__left">
             <AccountOption />

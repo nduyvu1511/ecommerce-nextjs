@@ -1,5 +1,6 @@
 import {
   BooleanType,
+  BreadcrumbItem,
   CommonSlice,
   SetMessageProps,
   ShippingAddress,
@@ -27,6 +28,7 @@ const initialState: CommonSlice = {
   },
   currentReviewId: 0,
   addressForm: undefined,
+  breadcrumbList: undefined,
 }
 
 const ModalSlice = createSlice({
@@ -99,6 +101,13 @@ const ModalSlice = createSlice({
     ) => {
       state.addressForm = payload
     },
+
+    setBreadcrumbList: (
+      state,
+      { payload }: { payload: BreadcrumbItem[] | undefined }
+    ) => {
+      state.breadcrumbList = payload
+    },
   },
 })
 
@@ -119,4 +128,5 @@ export const {
   setMessage,
   setAddressForm,
   setCurrentReviewId,
+  setBreadcrumbList,
 } = ModalSlice.actions

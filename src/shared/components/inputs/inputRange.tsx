@@ -1,32 +1,32 @@
+import classnames from "classnames"
 import {
   ChangeEvent,
   FC,
   useCallback,
   useEffect,
-  useState,
   useRef,
+  useState,
 } from "react"
-import classnames from "classnames"
 import { formatMoneyVND } from "../../helper/functions"
-import useResize from "../../hook/useResize"
 
 interface MultiRangeSliderProps {
   min: number
   max: number
   onChange: Function
+  parentWidth: number
 }
 
 export const InputRange: FC<MultiRangeSliderProps> = ({
   min,
   max,
   onChange,
+  parentWidth,
 }) => {
   const [minVal, setMinVal] = useState(min)
   const [maxVal, setMaxVal] = useState(max)
   const minValRef = useRef<HTMLInputElement>(null)
   const maxValRef = useRef<HTMLInputElement>(null)
   const range = useRef<HTMLDivElement>(null)
-  const windowWidth = useResize()
 
   // Convert to percentage
   const getPercent = useCallback(
@@ -67,9 +67,7 @@ export const InputRange: FC<MultiRangeSliderProps> = ({
   return (
     <div className="input__range-container">
       <input
-        style={{
-          width: `${windowWidth <= 420 ? `${windowWidth - 30}px` : ""}`,
-        }}
+        style={{ width: `${parentWidth - 20}px` }}
         type="range"
         min={min}
         max={max}
@@ -85,9 +83,7 @@ export const InputRange: FC<MultiRangeSliderProps> = ({
         })}
       />
       <input
-        style={{
-          width: `${windowWidth <= 420 ? `${windowWidth - 30}px` : ""}`,
-        }}
+        style={{ width: `${parentWidth - 20}px` }}
         type="range"
         min={min}
         max={max}
@@ -101,12 +97,7 @@ export const InputRange: FC<MultiRangeSliderProps> = ({
         className="thumb thumb--zindex-4"
       />
 
-      <div
-        style={{
-          width: `${windowWidth <= 420 ? `${windowWidth - 30}px` : ""}`,
-        }}
-        className="slider"
-      >
+      <div style={{ width: `${parentWidth - 20}px` }} className="slider">
         <div className="slider__track"></div>
         <div ref={range} className="slider__range"></div>
         <div className="slider__left-value">{formatMoneyVND(minVal)}</div>

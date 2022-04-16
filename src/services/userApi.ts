@@ -13,6 +13,7 @@ import {
   GetComment,
   DeleteComment,
   TokenAndSaleOrderId,
+  UpdateUserProps,
 } from "@/models"
 import axiosClient from "."
 
@@ -25,7 +26,7 @@ const userApi = {
     return axiosClient.post("/api/v2.0/user/account/info", { params: data })
   },
 
-  updateUser: (address: UserInfo) => {
+  updateUser: (address: UpdateUserProps) => {
     return axiosClient.post("/api/v2.0/information_customers/update_user", {
       params: address,
     })
@@ -121,6 +122,18 @@ const userApi = {
 
   deleteReview: (params: DeleteComment) => {
     return axiosClient.post("/api/v2.0/delete_comment_product", {
+      params: params,
+    })
+  },
+
+  getNotifications: (params: DeleteComment) => {
+    return axiosClient.post("/api/get_notifications", {
+      params: params,
+    })
+  },
+
+  checkNotifications: (params: DeleteComment) => {
+    return axiosClient.post("/api/get_notifications", {
       params: params,
     })
   },

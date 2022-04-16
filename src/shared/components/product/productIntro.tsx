@@ -3,7 +3,7 @@ import { AttributeWithParentId, Product } from "@/models"
 import {
   addProductCompare,
   changeAttributeItem,
-  toggleShowCompareModal
+  toggleShowCompareModal,
 } from "@/modules"
 import Link from "next/link"
 import { useRef, useState } from "react"
@@ -15,6 +15,7 @@ import ButtonWishlist from "../button/buttonAddWishlist"
 import ButtonShare from "../button/buttonShare"
 import { InputQuantity } from "../inputs"
 import { Star } from "../star"
+import ProductDetailCountdown from "./productDetailCountdown"
 import { ProductVariation } from "./productVariation"
 
 interface IProductIntro {
@@ -65,7 +66,6 @@ export const ProductIntro = ({ product, type }: IProductIntro) => {
               </p>
 
               <div className="modal__product-sub-rating">
-               
                 <Star
                   ratingValue={product.star_rating * 20}
                   size={15}
@@ -78,7 +78,7 @@ export const ProductIntro = ({ product, type }: IProductIntro) => {
               </div>
 
               <p className="modal__product-sub-sku">
-                Unit: <small>{product.uom.name}</small>
+                SKU: <small>{product.barcode}</small>
               </p>
             </div>
           </div>
@@ -96,31 +96,36 @@ export const ProductIntro = ({ product, type }: IProductIntro) => {
             <a className="product__intro-title">{product.product_name}</a>
           </Link>
         ) : null}
+        {console.log(product)}
         {type !== "item" ? (
           <div className="product__intro-price">
-            <p
-              className={`${
-                product?.daily_deal_promotion?.compute_price
-                  ? "product__intro-price-old"
-                  : "product__intro-price-current"
-              }`}
-            >
-              {formatMoneyVND(
-                product?.daily_deal_promotion?.compute_price
-                  ? product.price * quantity
-                  : getPriceProduct(product) * quantity
-              )}
-            </p>
-
-            {product?.daily_deal_promotion?.compute_price ? (
-              <p className="product__intro-price-current">
-                {formatMoneyVND(getPriceProduct(product) * quantity)}
+            <div className="product__intro-price-wrapper">
+              <p
+                className={`${
+                  product?.daily_deal_promotion?.compute_price
+                    ? "product__intro-price-old"
+                    : "product__intro-price-current"
+                }`}
+              >
+                {formatMoneyVND(
+                  product?.daily_deal_promotion?.compute_price
+                    ? product.price * quantity
+                    : getPriceProduct(product) * quantity
+                )}
               </p>
-            ) : null}
 
-            <span className="product__intro-price-unit">
-              / {quantity > 1 ? quantity : ""} {product?.uom?.name}
-            </span>
+              {product?.daily_deal_promotion?.compute_price ? (
+                <p className="product__intro-price-current">
+                  {formatMoneyVND(getPriceProduct(product) * quantity)}
+                </p>
+              ) : null}
+
+              <span className="product__intro-price-unit">
+                / {quantity > 1 ? quantity : ""} {product?.uom?.name}
+              </span>
+            </div>
+
+            <ProductDetailCountdown targetDate="" />
           </div>
         ) : null}
 
@@ -145,9 +150,10 @@ export const ProductIntro = ({ product, type }: IProductIntro) => {
         {/* {product.qty_available === 0 ? (
           <p
             className={`product__intro-status ${
-              type === 'item' ? 'product__intro-status-sm' : ''
-            } ${product.qty_available ? 'in-stock' : ''}`}>
-            {language === 'vni' ? 'Hết hàng' : ' out of stock'}
+              type === "item" ? "product__intro-status-sm" : ""
+            } ${product.qty_available ? "in-stock" : ""}`}
+          >
+            {language === "vni" ? "Hết hàng" : " out of stock"}
           </p>
         ) : null} */}
 
@@ -197,7 +203,7 @@ export const ProductIntro = ({ product, type }: IProductIntro) => {
                   : getPriceProduct(product) * quantity
               )}
             </p>
-            {console.log(product.daily_deal_promotion)}
+
             {product?.daily_deal_promotion?.compute_price ? (
               <p className="product__intro-price-current">
                 {formatMoneyVND(getPriceProduct(product) * quantity)}

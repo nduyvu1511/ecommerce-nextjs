@@ -10,7 +10,7 @@ const Contact = () => {
   return (
     <section className="contact__container">
       <div className="container">
-        <Breadcrumb page="contact" />
+        <Breadcrumb breadcrumbList={[{ name: "Liên hệ", path: "" }]} />
         <header className="contact__header">
           <h2 className="contact-heading">
             {language === "vni" ? "Liên Lạc" : "Get In Touch"}

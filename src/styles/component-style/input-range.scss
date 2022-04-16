@@ -2,9 +2,14 @@
   padding-bottom: 4rem;
   padding-top: 1rem;
   width: 100%;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  @include responsive(lg-screen) {
+    justify-content: flex-start;
+  }
   .slider {
     position: relative;
-    width: 240px;
   }
 
   .slider__track,
@@ -27,7 +32,7 @@
   }
 
   .slider__range {
-    background-color: $primary-color;
+    background-color: $indigo;
     z-index: 2;
   }
 
@@ -36,14 +41,15 @@
     font-family: $second-font;
     @include style-text(700, 1.4rem, 1.8rem, $text-color);
     margin-top: 3rem;
+    user-select: none;
   }
 
   .slider__left-value {
-    left: 6px;
+    left: 4px;
   }
 
   .slider__right-value {
-    right: -4px;
+    right: 4px;
   }
 
   /* Removing the default appearance */
@@ -57,7 +63,6 @@
     pointer-events: none;
     position: absolute;
     height: 0;
-    width: 240px;
     outline: none;
   }
 
@@ -75,7 +80,7 @@
 
   /* For Chrome browsers */
   .thumb::-webkit-slider-thumb {
-    background-color: $primary-color;
+    background-color: $indigo;
     border: none;
     border-radius: 50%;
     box-shadow: 0 0 1px 1px #ced4da;
@@ -89,7 +94,7 @@
 
   /* For Firefox browsers */
   .thumb::-moz-range-thumb {
-    background-color: $primary-color;
+    background-color: $indigo;
     border: none;
     border-radius: 50%;
     box-shadow: 0 0 1px 1px #ced4da;
@@ -99,23 +104,5 @@
     margin-top: 4px;
     pointer-events: all;
     position: relative;
-  }
-}
-
-.modal {
-  .input__range-container {
-    .slider {
-      position: relative;
-      width: 340px;
-      @media screen and (max-width: 400px) {
-        width: 370px;
-      }
-    }
-  }
-  .input__range-container .thumb {
-    width: 340px;
-    @media screen and (max-width: 400px) {
-      width: 370px;
-    }
   }
 }
