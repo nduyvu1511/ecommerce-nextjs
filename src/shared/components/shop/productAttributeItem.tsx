@@ -18,26 +18,29 @@ export const ProductAttributeItem = ({
 }: ProductAttributeItemProps) => (
   <div
     onClick={() => onClick && onClick(valueItem)}
-    className="product__attribute-list-item"
+    className={`product__attribute-list-item ${
+      itemActive ? "product__attribute-list-item-active" : ""
+    }`}
   >
     <InputCheckbox
       isChecked={itemActive || false}
       onCheck={() => onClick && onClick(valueItem)}
     />
     <div className="product__attribute-list-item-wrapper">
-      {console.log(valueItem.value_icon)}
       {type === "text_image" || type === "only_image" ? (
         <div
           className={`image-container ${
             valueItem.value_icon ? "" : "product__attribute-no-image"
           }`}
         >
-          <Image
-            layout="fill"
-            className="image"
-            src={`${DOMAIN_URL}${valueItem.value_icon || ""}`}
-            alt=""
-          />
+          {valueItem.value_icon ? (
+            <Image
+              layout="fill"
+              className="image"
+              src={`${DOMAIN_URL}${valueItem.value_icon || ""}`}
+              alt=""
+            />
+          ) : null}
         </div>
       ) : null}
 

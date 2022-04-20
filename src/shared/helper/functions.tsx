@@ -323,10 +323,19 @@ export function mergeProductAndProductDetail({
 }
 
 export const listView = [
-  { id: 1, icon: view1Icon, value: "1" },
-  { id: 2, icon: view2Icon, value: "2" },
-  { id: 3, icon: view3Icon, value: "3" },
-  { id: 4, icon: view4Icon, value: "4" },
+  { id: 1, icon: view1Icon, value: 1 },
+  { id: 2, icon: view2Icon, value: 2 },
+  { id: 3, icon: view3Icon, value: 3 },
+  { id: 4, icon: view4Icon, value: 4 },
+]
+
+export const productListView = [
+  { id: 1, icon: view1Icon, value: 1, name: "1" },
+  { id: 2, icon: view2Icon, value: 2, name: "2" },
+  { id: 3, icon: view3Icon, value: 3, name: "3" },
+  { id: 4, icon: view4Icon, value: 4, name: "4" },
+  { id: 5, icon: view4Icon, value: 5, name: "5" },
+  { id: 6, icon: view4Icon, value: 6, name: "6" },
 ]
 
 export const limitProductList: ItemDropdown[] = [
@@ -389,4 +398,20 @@ export function convertBase64(file: File) {
     fileReader.onload = () => resolve(fileReader.result)
     fileReader.onerror = (error) => reject(error)
   })
+}
+
+export function convertViToEn(str: string, toUpperCase = false) {
+  str = str.toLowerCase()
+  str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a")
+  str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e")
+  str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i")
+  str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o")
+  str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u")
+  str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y")
+  str = str.replace(/đ/g, "d")
+  // Some system encode vietnamese combining accent as individual utf-8 characters
+  str = str.replace(/\u0300|\u0301|\u0303|\u0309|\u0323/g, "") // Huyền sắc hỏi ngã nặng
+  str = str.replace(/\u02C6|\u0306|\u031B/g, "") // Â, Ê, Ă, Ơ, Ư
+
+  return toUpperCase ? str.toUpperCase() : str
 }

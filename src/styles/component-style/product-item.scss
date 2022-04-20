@@ -72,6 +72,10 @@
       top: 1rem;
       right: 1rem;
       z-index: 2;
+      display: none;
+      @include responsive(md-screen) {
+        display: block;
+      }
 
       &-item {
         @include flex-center;
@@ -239,7 +243,7 @@
 
       &:hover {
         @include responsive(lg-screen) {
-          color: $blue;
+          color: $primary-color;
         }
       }
     }

@@ -16,43 +16,32 @@ export const ProductVariation = ({
 
   const handleClick = (item: Attribute) => {
     if (item.id === id) return
-
     onChangeAttribute && onChangeAttribute({ parentId: attribute.id, ...item })
-
     setId(item.id)
   }
 
   return (
     <div className="product__variation">
       <p className="product__variation-heading">{attribute.name}</p>
-      {attribute.values.length >= 5 ? (
-        <div className="variation__dropdown">
-          <Dropdown
-            handleClick={(att: Attribute) => handleClick(att)}
-            list={attribute.values}
-          />
-        </div>
-      ) : (
-        <ul className="product__variation-list">
-          {attribute.values?.length > 0 &&
-            attribute.values.map((item) => (
-              <li
-                onClick={() => handleClick(item)}
-                key={item.id}
-                className={`product__variation-list-item ${
-                  id === item.id ? "active" : ""
-                }`}
-              >
-                {item.id === id ? (
-                  <span className="product__variation-list-item-icon">
-                    <BsCheck />
-                  </span>
-                ) : null}
-                {item.name}
-              </li>
-            ))}
-        </ul>
-      )}
+      <ul className="product__variation-list">
+        {attribute.values?.length > 0 &&
+          attribute.values.map((item) => (
+            <li
+              onClick={() => handleClick(item)}
+              key={item.id}
+              className={`product__variation-list-item ${
+                id === item.id ? "active" : ""
+              }`}
+            >
+              {item.id === id ? (
+                <span className="product__variation-list-item-icon">
+                  <BsCheck />
+                </span>
+              ) : null}
+              {item.name}
+            </li>
+          ))}
+      </ul>
     </div>
   )
 }

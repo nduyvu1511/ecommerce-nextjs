@@ -6,7 +6,7 @@ interface HomeSlideProductProps {
   children: ReactChild
   path: string
   name: string
-  title: string
+  title?: string
   isLoading?: boolean
 }
 
@@ -27,10 +27,10 @@ export const HomeSlideProduct = ({
           </div>
 
           <Link href={path} passHref>
-            <p className="home__heading-btn">
+            <span className="home__heading-btn">
               {"Xem tất cả"}
               <CgArrowLongRight />
-            </p>
+            </span>
           </Link>
         </div>
       ) : (

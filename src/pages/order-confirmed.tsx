@@ -1,6 +1,6 @@
 import { OrderStatus } from "@/components/account/status"
 import { OrderContainer } from "@/container"
-import { MainAuthLayoutNoFooter, MainNoFooter } from "@/layout"
+import { MainAuthLayoutNoFooter } from "@/layout"
 import { clearOrderData } from "@/modules"
 import Link from "next/link"
 import { useRouter } from "next/router"
@@ -11,7 +11,6 @@ import { RootState } from "../core"
 const OrderConfirmed = () => {
   const router = useRouter()
   const dispatch = useDispatch()
-
   const { orderDone } = useSelector((state: RootState) => state.order)
 
   useEffect(() => {
@@ -27,7 +26,11 @@ const OrderConfirmed = () => {
   return (
     <>
       {orderDone ? (
-        <OrderContainer isShowOrderSummary={false} isShowPromotion={false}>
+        <OrderContainer
+          headerTitle="Hoàn tất đặt hàng"
+          isShowOrderSummary={false}
+          isShowPromotion={false}
+        >
           <div className="order__confirm">
             <OrderStatus type="order" order={orderDone} />
 

@@ -7,13 +7,19 @@ import React from "react"
 interface CategoryListProps {
   categoryList: Category[]
   idActive: number
+  onClick?: Function
 }
 
-export const CategoryList = ({ categoryList, idActive }: CategoryListProps) => {
+export const CategoryList = ({
+  categoryList,
+  idActive,
+  onClick,
+}: CategoryListProps) => {
   return (
     <ul className="category__list">
       {categoryList.map((cate) => (
         <li
+          onClick={() => onClick && onClick()}
           className={`category__list-item ${
             cate.id === idActive ? "category__list-item-active" : ""
           }`}
@@ -38,4 +44,3 @@ export const CategoryList = ({ categoryList, idActive }: CategoryListProps) => {
     </ul>
   )
 }
-

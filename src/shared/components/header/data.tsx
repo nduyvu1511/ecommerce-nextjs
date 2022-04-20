@@ -1,5 +1,6 @@
+import { toggleOpenCategoryModal, toggleOpenSearchModal } from "@/modules"
 import { AiOutlineUser } from "react-icons/ai"
-import { BiCategoryAlt } from "react-icons/bi"
+import { BiCategory, BiMessage } from "react-icons/bi"
 import { BsBarChart, BsHeart } from "react-icons/bs"
 import { MdOutlineLanguage } from "react-icons/md"
 import {
@@ -10,7 +11,6 @@ import {
   RiHome2Line,
   RiNewspaperLine,
   RiNotification3Line,
-  RiSearch2Line,
   RiShoppingBasketLine,
   RiStoreLine,
 } from "react-icons/ri"
@@ -103,13 +103,7 @@ export const navs = [
     vniName: "Liên hệ",
     path: "/contact",
   },
-  // {
-  //   id: 5,
-  //   icon: <RiPagesLine />,
-  //   engName: 'Blog',
-  //   vniName: 'Blog',
-  //   path: '/blog',
-  // },
+
   {
     id: 6,
     icon: <RiHeartLine />,
@@ -161,33 +155,34 @@ export const mobileNavIcons = [
 
 export const navMobileLinks = [
   {
-    id: "category",
-    icon: <BiCategoryAlt />,
-    engName: "Category",
-    vniName: "Danh mục",
-  },
-  {
-    id: "search",
-    icon: <RiSearch2Line />,
-    engName: "Search",
-    vniName: "Tìm kiếm",
-  },
-  {
-    id: "home",
+    id: "/",
     icon: <RiHome2Line />,
-    engName: "Home",
-    vniName: "Trang chủ",
+    name: "Home",
+    onClick: null,
   },
   {
-    id: "account",
+    id: "category",
+    icon: <BiCategory />,
+    name: "Danh mục",
+    onClick: toggleOpenCategoryModal,
+  },
+  {
+    id: "chat",
+    icon: <BiMessage />,
+    engName: "Chat",
+    name: "Tin nhắn",
+    onClick: toggleOpenSearchModal,
+  },
+  {
+    id: "/account",
     icon: <AiOutlineUser />,
-    engName: "Account",
-    vniName: "Tài khoản",
+    name: "Tài khoản",
+    onClick: null,
   },
   {
     id: "notification",
     icon: <RiNotification3Line />,
-    engName: "Notification",
-    vniName: "Thông báo",
+    name: "Thông báo",
+    onClick: null,
   },
 ]

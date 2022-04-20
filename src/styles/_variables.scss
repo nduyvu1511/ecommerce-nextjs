@@ -1,11 +1,24 @@
 $second-font: "Dosis", sans-serif;
 $main-font: "Inter", sans-serif;
 $container-width: 1200px;
-$blue: #007bff;
+
+$header-mobile-height: 45px;
+$header-mobile-box-shadow: rgba(0, 0, 0, 0.06) 0px 0px 6px 0px;
+
+$bg-white-opacity-linear-gradient: rgba(0, 0, 0, 0)
+  linear-gradient(to right, rgb(255, 255, 255), rgba(255, 255, 255, 0)) repeat
+  scroll 0% 0%;
+
+$text-white: #dcefff;
+$product-heading-color: #202435;
+$primary: #007bff;
+$primary-opacity-2: #1b7fe9;
+$chat-primary: #daf3ff;
+$bg-primary-opacity: #f5f5fa;
+$primary-color: #2bbef9;
+$primary-color-opacity: #f0faff;
 $indigo: #233a95;
 $indigo-opacity: #435392;
-$purple: #6f42c1;
-$pink: #e83e8c;
 $red: #dc3545;
 $orange: #fd7e14;
 $yellow: #ffc107;
@@ -19,9 +32,6 @@ $cyan: #53cafa;
 $white: #fff;
 $gray: #6c757d;
 $gray-dark: #343a40;
-$primary: #007bff;
-$primary-opacity-2: #1b7fe9;
-$chat-primary: #daf3ff;
 $chat-secondary: #efefef;
 $secondary: #6c757d;
 $success: #28a745;
@@ -29,8 +39,6 @@ $info: #0dcaf0;
 $warning: #ffc107;
 $danger: #dc3545;
 $danger-opacity: #ffeef2;
-$light: #f8f9fa;
-$dark: #343a40;
 $heading-color: #50566a;
 $text-color: #3e445a;
 $text-color-opacity: #9b9bb4;
@@ -41,14 +49,11 @@ $gray-color-opacity-active: #e0e0e0;
 $border-color-1: #e3e4e6;
 $border-color-2: #edeef5;
 $home-heading-color: #202435;
-$nav-bottom-height: 60px;
+$nav-bottom-height: 55px;
 $banner-2-bg: #f8efea;
 $input-bg: #f3f4f7;
 $bg-gray: #f7f8fd;
 $border-product-hover: #d8d8e3;
-$bg-product-detail: #f7f8fd;
-$bg-primary: #e5e5f7;
-// $bg-primary: #f5f5fa;
 
 $black-opacity-005: rgba(
   $color: #000000,
@@ -69,11 +74,6 @@ $black-opacity-02: rgba(
   $color: #000000,
   $alpha: 0.2,
 );
-
-$product-heading-color: #202435;
-
-$primary-color: #2bbef9;
-$primary-color-opacity: #f0faff;
 
 $transition-1: all 0.25s cubic-bezier(0.17, 0.62, 0.44, 0.99);
 $box-shadow-1: 0px 5px 10px rgba(62, 68, 90, 0.1);

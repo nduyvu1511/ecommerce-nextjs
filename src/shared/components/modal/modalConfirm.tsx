@@ -1,5 +1,6 @@
 import { RootState } from "@/core/store"
 import { toggleModalConfirm } from "@/modules"
+import { useEffect } from "react"
 import { RiCloseFill } from "react-icons/ri"
 import { VscChromeClose } from "react-icons/vsc"
 import { useDispatch, useSelector } from "react-redux"
@@ -11,8 +12,20 @@ interface ModalConfirmProps {
 export const ModalConfirm = ({ desc, confirmModal }: ModalConfirmProps) => {
   const language = "vni"
   const dispatch = useDispatch()
-
   const { isOpenModalConfirm } = useSelector((state: RootState) => state.common)
+
+  useEffect(() => {
+    const htmlTag = document.querySelector("html")
+    if (htmlTag) {
+      htmlTag.style.overflow = "hidden"
+    }
+
+    return () => {
+      if (htmlTag) {
+        htmlTag.style.overflow = "auto"
+      }
+    }
+  }, [])
 
   const handleCloseModal = () => {
     dispatch(toggleModalConfirm(!isOpenModalConfirm))
@@ -44,7 +57,7 @@ export const ModalConfirm = ({ desc, confirmModal }: ModalConfirmProps) => {
               <VscChromeClose />
             </span>
             <h3 className="modal__confirm-body-heading">
-              {language === "vni" ? "Bạn có chăc chắn?" : "Are you sure?"}
+              {language === "vni" ? "Bạn có chắc chắn?" : "Are you sure?"}
             </h3>
             <p className="modal__confirm-body-desc">{desc}</p>
           </div>
@@ -53,13 +66,13 @@ export const ModalConfirm = ({ desc, confirmModal }: ModalConfirmProps) => {
               onClick={handleCloseModal}
               className="btn-primary modal__confirm-footer-btn modal__confirm-footer-btn-cancel"
             >
-              {language === "vni" ? "Cancel" : "Hủy"}
+              {language === "vni" ? "Hủy" : "Hủy"}
             </button>
             <button
               onClick={handleConfirmModal}
               className="btn-primary modal__confirm-footer-btn modal__confirm-footer-btn-delete"
             >
-              {language === "vni" ? "Confirm" : "Xác nhận"}
+              {language === "vni" ? "Xác nhận" : "Xác nhận"}
             </button>
           </footer>
         </div>

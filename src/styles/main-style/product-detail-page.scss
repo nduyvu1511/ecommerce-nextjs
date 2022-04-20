@@ -1,17 +1,32 @@
 .product__detail-container {
-  background-color: $bg-product-detail;
-  padding-bottom: 9rem;
+  background-color: $bg-primary-opacity;
+  padding-bottom: 4rem;
+  @include responsive(md-screen) {
+    padding-bottom: 6rem;
+  }
+  @include responsive(lg-screen) {
+    padding-bottom: 9rem;
+  }
 
   .product__detail-heading {
-    font-family: $second-font;
-    text-transform: uppercase;
+    text-transform: capitalize;
     margin-bottom: 1.6rem;
-    @include style-text(600, 1.8rem, 2.8rem, $home-heading-color);
+    @include style-text(600, 1.5rem, 2.3rem, $home-heading-color);
 
     @include responsive(sm-screen) {
-      font-size: 2rem;
-      line-height: 3rem;
+      font-size: 1.6rem;
+      line-height: 2.4rem;
     }
+
+    @include responsive(lg-screen) {
+      font-size: 1.8rem;
+      line-height: 2.6rem;
+    }
+  }
+
+  & .modal__product-header {
+    border-bottom: 0;
+    margin-bottom: 0;
   }
 
   .product__detail-wrapper {
@@ -31,10 +46,6 @@
     @include responsive(lg-screen) {
       padding: 4rem;
     }
-
-    // @include responsive(xl-screen) {
-    //   padding: 6rem;
-    // }
 
     .modal__product {
       padding: 0;
@@ -56,22 +67,114 @@
       }
 
       .product__intro-shop {
-        margin-bottom: 3rem;
-        flex-direction: column;
-        align-items: flex-start;
-        @media screen and (min-width: 400px) {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin-bottom: 0;
+        height: 55px;
+        align-items: flex-end;
+        justify-content: flex-end;
+        flex-direction: row-reverse;
+        background-color: $white;
+        z-index: 200;
+        border-top: 1px solid $border-color-1;
+        overflow: hidden;
+        flex-direction: row-reverse;
+
+        @include responsive(md-screen) {
+          height: 45px;
+          position: static;
+          border-top: 0;
+          overflow: unset;
+          justify-content: flex-start;
+          padding: 0;
+          margin-bottom: 2rem;
           flex-direction: row;
-          align-items: center;
+        }
+
+        @include responsive(lg-screen) {
+          margin-bottom: 3rem;
         }
 
         &-btn {
-          margin-top: 3rem;
-          margin-left: 0;
+          height: 100%;
+          max-width: unset;
+          flex: 2;
+          width: 100%;
+          display: none;
 
-          @media screen and (min-width: 400px) {
-            margin-top: 0;
-            margin-left: 2rem;
+          @include responsive(md-screen) {
+            flex: unset;
+            width: 200px;
+            display: flex;
           }
+        }
+
+        & .product__intro-shop-cart-btn {
+          flex: 2;
+          cursor: pointer;
+          display: flex;
+          height: 100%;
+
+          @include responsive(md-screen) {
+            display: none;
+          }
+
+          & .product__intro-shop-btn {
+            pointer-events: none;
+            display: flex;
+            border-radius: 0;
+
+            @include responsive(md-screen) {
+              border-radius: 0.2rem;
+            }
+          }
+        }
+
+        &-chat-btn {
+          display: flex;
+          border: none;
+          flex: 1;
+          height: 100%;
+          background-color: $green;
+          @include flex-center;
+          font-family: $second-font;
+          color: $white;
+          border-radius: 0;
+          outline: none;
+          padding-inline: 2rem;
+
+          @include responsive(md-screen) {
+            margin-left: 1.4rem;
+            flex: unset;
+            border-radius: 0.2rem;
+          }
+
+          & svg {
+            margin-right: 0.6rem;
+            font-size: 1.6rem;
+          }
+
+          & span {
+            @include style-text(500, 1.5rem, 1.5rem, $white);
+          }
+        }
+      }
+
+      & .product__intro-quantity {
+        display: none;
+
+        @include responsive(md-screen) {
+          display: flex;
+        }
+      }
+
+      & .product__intro-variation-wrapper {
+        display: none;
+
+        @include responsive(md-screen) {
+          display: block;
         }
       }
 
@@ -112,11 +215,17 @@
   }
 
   .product__detail-tabs-wrapper {
-    margin-top: 5rem;
+    margin-top: 3rem;
+    @include responsive(lg-screen) {
+      margin-top: 5rem;
+    }
   }
 
   .product__detail-related {
-    margin-top: 5rem;
+    margin-top: 3rem;
+    @include responsive(lg-screen) {
+      margin-top: 5rem;
+    }
 
     .swiper-wrapper .product__card__img {
       height: unset;
@@ -124,7 +233,10 @@
   }
 
   .product__detail-recently {
-    margin-top: 5rem;
+    margin-top: 3rem;
+    @include responsive(lg-screen) {
+      margin-top: 5rem;
+    }
   }
 }
 

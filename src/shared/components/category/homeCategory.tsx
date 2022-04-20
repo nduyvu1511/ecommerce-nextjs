@@ -1,4 +1,5 @@
 import { CategoryItem } from "@/components"
+import { HomeSlideProduct } from "@/container"
 import { isArrayHasValue } from "@/helper"
 import { Category as ICategory } from "@/models"
 import { useCategory } from "shared/hook"
@@ -10,16 +11,14 @@ import { Swiper, SwiperSlide } from "swiper/react"
 import { CategoryItemLoading } from "../loader"
 
 export const HomeCategory = () => {
-  const { data: parentCategories = [], isValidating } = useCategory()
+  const { data: parentCategories = [], isValidating } = useCategory(false)
 
   return (
-    <div className="home__category">
-      <div className="home__heading">
-        <div className="home__heading-text">
-          <h3 className="home__baner-category-heading">Danh mục sản phẩm</h3>
-        </div>
-      </div>
-
+    <HomeSlideProduct
+      path="/category"
+      name="Danh mục sản phẩm"
+      isLoading={isValidating && !isArrayHasValue(parentCategories)}
+    >
       <Swiper
         modules={[Navigation]}
         slidesPerView={4}
@@ -28,24 +27,30 @@ export const HomeCategory = () => {
         navigation
         loop={false}
         breakpoints={{
-          400: {
-            slidesPerView: 4,
-          },
           500: {
             slidesPerView: 5,
+            slidesPerGroup: 5,
           },
           576: {
             slidesPerView: 6,
+            slidesPerGroup: 6,
           },
           768: {
             spaceBetween: 20,
             slidesPerView: 8,
+            slidesPerGroup: 8,
+          },
+          992: {
+            slidesPerView: 9,
+            slidesPerGroup: 9,
           },
           1024: {
             slidesPerView: 10,
+            slidesPerGroup: 10,
           },
           1200: {
             slidesPerView: 12,
+            slidesPerGroup: 12,
           },
         }}
       >
@@ -55,16 +60,14 @@ export const HomeCategory = () => {
                 <CategoryItemLoading />
               </SwiperSlide>
             ))
-          : parentCategories.map((cate: ICategory) => (
+          : parentCategories.map((cate: ICategory, index) => (
               <>
-                {cate.icon ? (
-                  <SwiperSlide key={cate.id}>
-                    <CategoryItem category={cate} />
-                  </SwiperSlide>
-                ) : null}
+                <SwiperSlide key={index}>
+                  <CategoryItem category={cate} />
+                </SwiperSlide>
               </>
             ))}
       </Swiper>
-    </div>
+    </HomeSlideProduct>
   )
 }

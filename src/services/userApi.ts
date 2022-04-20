@@ -1,7 +1,6 @@
 import {
   ILogin,
   Token,
-  UserInfo,
   StateId,
   DistrictId,
   AddressDelete,

@@ -6,7 +6,7 @@ import { HomeSlideProduct } from "./homeSlide"
 export const MainContent = () => {
   const { data: topProducts, isValidating: isTopLoading } = useProduct({
     key: "top_products",
-    params: { type_get: "sale", limit: 12, offset: 2 },
+    params: { type_get: "top_sale", limit: 12, offset: 2 },
   })
   const { data: newProducts, isValidating: isNewProductLoading } = useProduct({
     key: "products",
@@ -17,7 +17,7 @@ export const MainContent = () => {
     <section className="home__content">
       <div className="home__content-right">
         <HomeSlideProduct
-          path="/shop"
+          path="/products&type_get=top_sale"
           name="Bán Chạy"
           title="Đừng bỏ lỡ nhưng ưu đãi mới nhất"
           isLoading={isTopLoading && !isArrayHasValue(topProducts)}
@@ -43,7 +43,7 @@ export const MainContent = () => {
         <HomeSlideProduct
           name="Sản phẩm mới"
           title="Những sản phẩm mới nhất đến từ shop"
-          path="/shop?type_get=new"
+          path="/products&type_get=new"
           isLoading={isNewProductLoading && !isArrayHasValue(newProducts)}
         >
           <div className="home__content-products-grid grid grid-col-2 grid-col-sm-3 grid-col-lg-4 grid-col-1024-5 grid-col-xl-6">

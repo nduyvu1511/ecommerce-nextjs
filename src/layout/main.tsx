@@ -8,7 +8,6 @@ export const MainLayout = ({ children }: LayoutProps) => {
       <Header />
       <main>{children}</main>
       <Footer />
-
       <ModalContainer />
     </section>
   )

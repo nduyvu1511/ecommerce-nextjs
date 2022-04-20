@@ -100,6 +100,11 @@
       z-index: 1011;
     }
   }
+
+  &-full {
+    width: 100%;
+    max-width: unset;
+  }
 }
 
 .overlay {

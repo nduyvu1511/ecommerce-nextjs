@@ -1,11 +1,17 @@
 .home {
-  padding-block: 1.5rem;
+  padding-bottom: 3rem;
   @include responsive(lg-screen) {
-    padding-block: 2rem;
+    padding-bottom: 4rem;
   }
+
   &__banner {
     display: flex;
     margin-bottom: 3rem;
+    margin-top: 1.5rem;
+
+    @include responsive(md-screen) {
+      margin-top: 2rem;
+    }
 
     &-left {
       display: none;
@@ -48,9 +54,6 @@
     }
   }
 
-  &__sale-container {
-  }
-
   &__content {
     margin-top: 3rem;
 
@@ -74,21 +77,6 @@
           }
         }
       }
-    }
-  }
-
-  &__category {
-    margin-bottom: 3rem;
-
-    .category__item-link {
-      & img {
-        max-height: 120px;
-      }
-    }
-
-    &-list {
-      list-style: none;
-      grid-gap: 2rem;
     }
   }
 
@@ -147,6 +135,7 @@
       transition: all 0.3s;
       white-space: nowrap;
       margin-top: 1rem;
+      cursor: pointer;
 
       @include responsive(sm-screen) {
         margin-top: 0;
@@ -161,4 +150,7 @@
       }
     }
   }
+}
+
+.header__mobile {
 }

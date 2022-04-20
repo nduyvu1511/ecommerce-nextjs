@@ -2,18 +2,17 @@ import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import { useReview } from "shared/hook"
 import { Rating } from "../rating"
-import ProductReview from "../review/review"
+import { ProductReview } from "../review"
 
 export const ProductTabs = ({ description }: { description: string }) => {
   const language = "vni"
   const router = useRouter()
-
   const { data: reviews } = useReview({
     product_id: Number(router.query.productId),
   })
 
   const [tabOpen, setTabOpen] = useState<"description" | "review" | "rating">(
-    "rating"
+    "description"
   )
 
   useEffect(() => {
@@ -67,6 +66,7 @@ export const ProductTabs = ({ description }: { description: string }) => {
           <div className="product__detail-tabs-content-desc">
             <p className="product__tab-content-text">
               <div
+                style={{ overflow: "hidden" }}
                 className="product__tab-content-desc"
                 dangerouslySetInnerHTML={{ __html: description }}
               ></div>

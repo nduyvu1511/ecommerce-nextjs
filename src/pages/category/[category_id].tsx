@@ -1,10 +1,12 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
 import { filterNotFound } from "@/assets"
 import {
   BoxGridLoading,
   Breadcrumb,
+  ButtonSeeMore,
   CategoryLoading,
-  Dropdown,
+  HeaderMobile,
   Modal,
   ModalHeading,
   ProductItem,
@@ -12,28 +14,31 @@ import {
   ProductItemLoading,
   ShopFilter,
 } from "@/components"
+import ProductFilter from "@/components/product/productFilter"
+import ProductContainer from "@/container/product/productContainer"
+import { RootState } from "@/core/store"
 import {
   DEFAULT_LIMIT_PRODUCT,
   isArrayHasValue,
   isObjectHasValue,
-  limitProductList,
-  listView,
-  sortList,
 } from "@/helper"
 import { MainLayout } from "@/layout"
 import {
+  AttributeReq,
+  AttributeWithParentId,
   BreadcrumbItem,
   Category as ICategory,
   ParentChildCategoryList,
   Product,
 } from "@/models"
+import { toggleOpenModalFilter } from "@/modules"
 import productApi from "@/services/productApi"
 import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from "next"
 import { useRouter } from "next/router"
 import React, { useEffect, useRef, useState } from "react"
-import { IoMdArrowRoundDown, IoMdArrowRoundUp } from "react-icons/io"
-import { RiArrowUpDownLine, RiFilterLine, RiLoader4Fill } from "react-icons/ri"
-import { useQueryProducts } from "shared/hook/useQueryProducts"
+import { FiFilter } from "react-icons/fi"
+import { useDispatch, useSelector } from "react-redux"
+import { useQueryProducts } from "shared/hook"
 
 interface CategoryProps {
   products: Product[]
@@ -42,11 +47,12 @@ interface CategoryProps {
 
 const ProductList = ({ products, category }: CategoryProps) => {
   const router = useRouter()
+  const dispatch = useDispatch()
   const offset = Number(router.query?.offset) || 0
   const limit = Number(router.query?.limit) || DEFAULT_LIMIT_PRODUCT
   const language = "vni"
   const shopFilterRef = useRef<HTMLDivElement>(null)
-  const shopProductRef = useRef<HTMLDivElement>(null)
+  const { isOpenModalFilter } = useSelector((state: RootState) => state.common)
 
   const {
     products: productList,
@@ -60,7 +66,6 @@ const ProductList = ({ products, category }: CategoryProps) => {
     isFetching,
   } = useQueryProducts()
 
-  const [isOpenFilterModal, setOpenFilterModal] = useState<boolean>(false)
   const [currentListView, setCurrentListView] = useState<number>(4)
   const [breadcrumbList, setBreadcrumbList] = useState<BreadcrumbItem[]>([])
 
@@ -78,7 +83,7 @@ const ProductList = ({ products, category }: CategoryProps) => {
     if (isArrayHasValue(category?.parent_category))
       [
         setBreadcrumbList([
-          { name: "Danh Mục", path: "/category/all" },
+          { name: "Danh Mục", path: "/category" },
           ...category.parent_category.map((item) => ({
             name: item.name,
             path: `/category/${item.id}`,
@@ -109,7 +114,7 @@ const ProductList = ({ products, category }: CategoryProps) => {
 
     if (isObjectHasValue(attribute)) {
       const attribute_ids = Object.keys(attribute).reduce(
-        (prev: any, curr) =>
+        (prev: AttributeReq[], curr) =>
           [...prev].concat({
             attribute_id: Number(curr.split("attributes_")[1]) || 0,
             display_content: curr.includes("attributes_")
@@ -165,7 +170,7 @@ const ProductList = ({ products, category }: CategoryProps) => {
       <div className="container">
         <div className="shop__loading">
           <div className="shop__loading-left">
-            <CategoryLoading />
+            <CategoryLoading length={16} />
           </div>
           <div className="shop__loading-right">
             <div className="shop__loading-right-header">
@@ -182,198 +187,110 @@ const ProductList = ({ products, category }: CategoryProps) => {
     )
   }
 
+  // Product list
+  const ProductList = () => (
+    <>
+      <ProductFilter
+        gridView={currentListView}
+        onSelectGridView={(count) => setCurrentListView(count)}
+      />
+
+      {/* Product list */}
+      <div
+        className={`product__list-container grid ${
+          currentListView === 1 ? "" : `grid-col-2 grid-col-sm-3 grid-col-lg-4`
+        } grid-col-xl-${currentListView}`}
+      >
+        {/* {!isLoading && isObjectHasValue(products) ? */}
+        {isArrayHasValue(productList) && !isFetching ? (
+          <>
+            {currentListView === 1
+              ? productList.map((product, index) => (
+                  <ProductItemList key={index} product={product} />
+                ))
+              : productList.map((product, index) => (
+                  <ProductItem key={index} type="shop" product={product} />
+                ))}
+          </>
+        ) : null}
+
+        {/* Show when product status is fetching and has no data */}
+        {isFetching
+          ? Array.from({ length: 24 }).map((_, index) => (
+              <ProductItemLoading key={index} />
+            ))
+          : null}
+      </div>
+
+      {!isArrayHasValue(productList) && (!isFetching || !isLoadingMore) ? (
+        <div className="shop__products--not-found">
+          <img src={filterNotFound} alt="" />
+          <p>
+            Không có sản phẩm nào. Bạn thử tắt điều kiện lọc và tìm lại nhé?
+          </p>
+          <button
+            onClick={() =>
+              router.push(
+                `/category/${Number(router.query.category_id)}?offset=0`
+              )
+            }
+            className="btn-primary"
+          >
+            Xóa bộ lọc
+          </button>
+        </div>
+      ) : null}
+
+      {!isLimit && isArrayHasValue(products) ? (
+        <ButtonSeeMore
+          isLoading={isLoadingMore}
+          onClick={() => handleChangePage()}
+        />
+      ) : null}
+    </>
+  )
+
   return (
     <>
+      <HeaderMobile
+        showSearchInput
+        rightChild={
+          <button
+            onClick={() => dispatch(toggleOpenModalFilter(true))}
+            className="shop__products-view-filter-btn btn-reset"
+          >
+            <FiFilter />
+          </button>
+        }
+      />
+
       <section className="shop-container">
         <div className="container">
           <Breadcrumb breadcrumbList={breadcrumbList} />
-          <div className="shop">
-            <div ref={shopFilterRef} className="shop__filter-wrapper">
-              <ShopFilter categories={category?.child_category || []} />
-            </div>
-            <div ref={shopProductRef} className="shop__products">
-              <header className="shop__products-header">
-                <div className="shop__products-header-item">
-                  <div className="shop__products-header-item-sort">
-                    <ul className="shop__products-header-item-sort-list">
-                      {sortList.map((item, index) => (
-                        <li
-                          className={`shop__products-header-item-sort-list-item ${
-                            item.value === (router.query?.type_get || "")
-                              ? "shop__products-header-item-sort-list-item-active"
-                              : ""
-                          }`}
-                          onClick={() => {
-                            handleSortProducts(item.value)
-                          }}
-                          key={index}
-                        >
-                          {item.title}
-                        </li>
-                      ))}
 
-                      <li
-                        className={`shop__products-header-item-sort-list-item ${
-                          router.query?.type_get?.includes("price")
-                            ? "shop__products-header-item-sort-list-item-active"
-                            : ""
-                        }`}
-                        onClick={() => {
-                          handleSortProducts(
-                            router.query.type_get === "price_reduction"
-                              ? "price_increase"
-                              : "price_reduction"
-                          )
-                        }}
-                      >
-                        <p>Giá</p>
-
-                        {!router.query?.type_get?.includes("price") ? (
-                          <RiArrowUpDownLine />
-                        ) : null}
-
-                        {router.query?.type_get === "price_increase" ? (
-                          <IoMdArrowRoundDown />
-                        ) : null}
-
-                        {router.query?.type_get === "price_reduction" ? (
-                          <IoMdArrowRoundUp />
-                        ) : null}
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-
-                <div className="shop__products-header-right">
-                  <div className="shop__products-header-right-view">
-                    <ul className="shop__products-view-list">
-                      {listView.map((item) => (
-                        <li
-                          key={item.id}
-                          className={`shop__view-item ${
-                            +item.value === currentListView
-                              ? "shop__view-item-active"
-                              : ""
-                          }`}
-                        >
-                          <button
-                            onClick={() => setCurrentListView(+item.value)}
-                            className="btn-reset shop__view-item-btn"
-                          >
-                            {item.icon}
-                          </button>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div className="shop__products-header-right-limit">
-                    <Dropdown
-                      list={limitProductList}
-                      handleClick={(limit: number) =>
-                        router.push(
-                          {
-                            query: {
-                              ...router.query,
-                              limit,
-                              offset: 0,
-                            },
-                          },
-                          undefined,
-                          { scroll: false, shallow: true }
-                        )
-                      }
-                    />
-                  </div>
-                </div>
-              </header>
-
-              <div
-                onClick={() => setOpenFilterModal(true)}
-                className="shop__products-view-filter-btn btn-reset"
-              >
-                <RiFilterLine />
-                <span>{language === "vni" ? "Lọc" : "Filter"}</span>
-              </div>
-
-              {isObjectHasValue(router.query) &&
-              productList?.length === 0 &&
-              !isFetching ? (
-                <div className="shop__products--not-found">
-                  <img src={filterNotFound} alt="" />
-                  <p>
-                    Không có sản phẩm nào. Bạn thử tắt điều kiện lọc và tìm lại
-                    nhé?
-                  </p>
-                  <button
-                    onClick={() =>
-                      router.push(
-                        `/category/${Number(router.query.category_id)}?offset=0`
-                      )
-                    }
-                    className="btn-primary"
-                  >
-                    Xóa bộ lọc
-                  </button>
-                </div>
-              ) : null}
-
-              <div
-                className={`shop__product-container grid ${
-                  currentListView === 1
-                    ? ""
-                    : `grid-col-2 grid-col-sm-3 grid-col-lg-4`
-                } grid-col-xl-${currentListView}`}
-              >
-                {/* {!isLoading && isObjectHasValue(products) ? */}
-                {isObjectHasValue(productList) && !isFetching ? (
-                  <>
-                    {currentListView === 1
-                      ? productList.map((product, index) => (
-                          <ProductItemList key={index} product={product} />
-                        ))
-                      : productList.map((product, index) => (
-                          <ProductItem
-                            key={index}
-                            type="shop"
-                            product={product}
-                          />
-                        ))}
-                  </>
-                ) : (
-                  Array.from({ length: 24 }).map((_, index) => (
-                    <ProductItemLoading key={index} />
-                  ))
-                )}
-              </div>
-
-              {!isLimit && isArrayHasValue(products) ? (
-                <div className="shop__pagination">
-                  {isLoadingMore ? <RiLoader4Fill className="loader" /> : null}
-                  <button
-                    onClick={() => handleChangePage()}
-                    className="btn-primary-outline shop__pagination-btn"
-                  >
-                    {language === "vni" ? "Xem Thêm" : "Load More"}
-                  </button>
-                </div>
-              ) : null}
-            </div>
-          </div>
+          <ProductContainer
+            leftChild={
+              <ShopFilter categories={category.child_category || []} />
+            }
+            rightChild={<ProductList />}
+          ></ProductContainer>
         </div>
       </section>
 
       {/* Modal filter in mobile */}
       <Modal
-        isShowModal={isOpenFilterModal}
-        handleClickModal={() => setOpenFilterModal(false)}
+        isShowModal={isOpenModalFilter}
+        handleClickModal={() => dispatch(toggleOpenModalFilter(false))}
         direction="right"
       >
         <ModalHeading
-          handleClose={() => setOpenFilterModal(false)}
+          handleClose={() => dispatch(toggleOpenModalFilter(false))}
           title={`${language === "vni" ? "Lọc sản phẩm" : "Filter products"} `}
         />
-        <ShopFilter categories={category?.child_category || []} />
+        <ShopFilter
+          isCloseModal={true}
+          categories={category?.child_category || []}
+        />
       </Modal>
     </>
   )

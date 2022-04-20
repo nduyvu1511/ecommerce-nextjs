@@ -12,8 +12,6 @@
 @import "./main-style/contact.scss";
 @import "./main-style/category.scss";
 
-@import "./layout-style/header.scss";
-@import "./layout-style/footer.scss";
 @import "./layout-style/shop-filter.scss";
 @import "./layout-style/account.scss";
 @import "./layout-style/cart.scss";
@@ -21,7 +19,11 @@
 @import "./layout-style/order-history.scss";
 @import "./layout-style/order-status.scss";
 @import "./layout-style/layout.scss";
+@import "./layout-style/product-container.scss";
 
+@import "./component-style/footer.scss";
+@import "./component-style/header.scss";
+@import "./component-style/header-mobile.scss";
 @import "./component-style/search-container.scss";
 @import "./component-style/product-sale.scss";
 @import "./component-style/drop-down.scss";
@@ -56,7 +58,7 @@
 @import "./component-style/cart-page-item.scss";
 @import "./component-style/input-checkbox.scss";
 @import "./component-style/promotion-modal.scss";
-@import "./component-style/cart-total.scss";
+@import "./component-style/cart-summary.scss";
 @import "./component-style/popup.scss";
 @import "./component-style/product-review.scss";
 @import "./component-style/common.scss";
@@ -65,3 +67,6 @@
 @import "./component-style/product-rating.scss";
 @import "./component-style/rating-form.scss";
 @import "./component-style/purchase.scss";
+@import "./component-style/category-slide.scss";
+@import "./component-style/product-variant-modal.scss";
+@import "./component-style/secondary-banner.scss";

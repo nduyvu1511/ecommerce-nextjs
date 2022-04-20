@@ -1,8 +1,7 @@
+import { isObjectHasValue } from "@/helper"
 import { Product } from "@/models"
 import _ from "lodash"
 import { RiCloseCircleFill } from "react-icons/ri"
-import { useReview } from "shared/hook"
-import { Stars } from "../common"
 import { ProductDetailLoading } from "../loader"
 import ProductImg from "./productImage"
 import { ProductIntro } from "./productIntro"
@@ -20,13 +19,9 @@ export const ProductDetail = ({
   product,
   isLoading,
 }: ModalProduct) => {
-  const { data: reviewList } = useReview({
-    product_id: product?.product_tmpl_id || 0,
-  })
-
   return (
     <>
-      {isLoading ? (
+      {isLoading && !isObjectHasValue(product) ? (
         <ProductDetailLoading />
       ) : _.isObject(product) && Object.keys(product).length > 0 ? (
         <div className="modal__product">
@@ -42,31 +37,16 @@ export const ProductDetail = ({
           {type === "modal" ? (
             <div className="modal__product-header">
               <h1 className="modal__product-title">{product.product_name}</h1>
-              <div className="modal__product-sub">
-                <p className="modal__product-sub-brand">
-                  Company:{" "}
-                  <small className="modal__product-sub-brand-title">
-                    {product.company.company_name || "Unknown"}
-                  </small>
-                </p>
-
-                <div className="modal__product-sub-rating">
-                  <Stars count={5} />
-                  <small className="modal__product-sub-rating-review">
-                    {reviewList?.length || 0} REVIEW
-                  </small>
-                </div>
-
-                <p className="modal__product-sub-sku">
-                  SKU: <small>{product.barcode || "sku default"}</small>
-                </p>
-              </div>
             </div>
           ) : null}
 
           <div className="modal__product-content">
             {_.isArray(product.image_url) && product.image_url.length > 0 ? (
-              <ProductImg type={type} images={product.image_url} />
+              <ProductImg
+                isStock={product.qty_available > 0}
+                type={type}
+                images={product.image_url}
+              />
             ) : null}
             <ProductIntro type={type} product={product} />
           </div>

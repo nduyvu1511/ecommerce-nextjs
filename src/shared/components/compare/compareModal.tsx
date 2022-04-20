@@ -15,7 +15,7 @@ export const CompareModal = ({ isShowModal }: { isShowModal: boolean }) => {
     >
       <ModalHeading
         handleClose={() => dispatch(toggleShowCompareModal(false))}
-        title="compare"
+        title="So Sánh"
       />
       <div className="compare-modal">
         <Compare />

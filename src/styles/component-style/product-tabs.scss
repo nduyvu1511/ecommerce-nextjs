@@ -20,9 +20,19 @@
     display: flex;
 
     &-heading {
-      padding-block: 1.6rem;
-      @include style-text(500, 1.6rem, 2.6rem, $text-color-opacity);
       cursor: pointer;
+      padding-block: 1.6rem;
+      @include style-text(500, 1.4rem, 2.2rem, $text-color);
+
+      @include responsive(sm-screen) {
+        font-size: 1.5rem;
+        line-height: 2.3rem;
+      }
+
+      @include responsive(lg-screen) {
+        font-size: 1.6rem;
+        line-height: 2.4rem;
+      }
 
       & + & {
         margin-left: 2rem;
@@ -32,14 +42,14 @@
       }
 
       &-active {
-        color: $home-heading-color;
+        color: $primary-color;
         position: relative;
 
         &::after {
           content: "";
           position: absolute;
           bottom: 0;
-          height: 2px;
+          height: 3px;
           width: 100%;
           background-color: $primary-color;
           left: 50%;

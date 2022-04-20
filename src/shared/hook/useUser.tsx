@@ -1,6 +1,11 @@
 import { RootState } from "@/core/store"
 import { UpdateUserPropsHook, UserInfo } from "@/models"
-import { editUserInfo, setMessage, setUserInfo } from "@/modules"
+import {
+  editUserInfo,
+  setMessage,
+  setUserInfo,
+  toggleOpenScreenLoading,
+} from "@/modules"
 import userApi from "@/services/userApi"
 import { useDispatch, useSelector } from "react-redux"
 import useSWR from "swr"
@@ -33,32 +38,46 @@ const useUser = (): UserRes => {
   const updateUser = (user: UpdateUserPropsHook) => {
     if (!token) return
 
-    userApi.updateUser({ ...user, token }).then((res: any) => {
-      if (res?.result?.success) {
-        dispatch(
-          editUserInfo({
+    dispatch(toggleOpenScreenLoading(true))
+
+    userApi
+      .updateUser({ ...user, token })
+      .then((res: any) => {
+        if (res?.result?.success) {
+          const newUser = {
             email: user.email,
             name: user.name_customs,
             sex: user.sex,
-            image: user?.image || "",
-          })
-        )
-        dispatch(
-          setMessage({
-            title: "Chỉnh sửa thông tin thành công!",
-            isOpen: true,
-          })
-        )
-      } else {
-        dispatch(
-          setMessage({
-            title: res?.result?.message || "",
-            isOpen: true,
-            type: "danger",
-          })
-        )
-      }
-    })
+            image: user.image
+              ? res?.result?.data?.find((item: any) => item.image_url)
+                  ?.image_url?.[0] || ""
+              : "",
+          }
+
+          dispatch(editUserInfo(newUser))
+          mutate({ ...data, newUser }, true)
+
+          dispatch(toggleOpenScreenLoading(false))
+          dispatch(
+            setMessage({
+              title: "Chỉnh sửa thông tin thành công!",
+              isOpen: true,
+            })
+          )
+        } else {
+          dispatch(
+            setMessage({
+              title: res?.result?.message || "",
+              isOpen: true,
+              type: "danger",
+            })
+          )
+          dispatch(toggleOpenScreenLoading(false))
+        }
+      })
+      .catch(() => {
+        dispatch(toggleOpenScreenLoading(false))
+      })
   }
   return {
     data,

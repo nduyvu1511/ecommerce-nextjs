@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import React, { useRef, useState } from "react"
+import React, { ReactElement, useRef, useState } from "react"
 import { BiChevronDown } from "react-icons/bi"
 import { IoClose } from "react-icons/io5"
 import { useClickOutside } from "shared/hook"
@@ -10,6 +10,7 @@ export interface ItemDropdown {
   name?: string
   id: number
   price?: number
+  icon?: ReactElement
 }
 
 interface DropdownProps {
@@ -129,6 +130,7 @@ export const Dropdown = ({
                   }`}
                 >
                   {item.title || item.name}
+                  {item.icon || null}
                 </li>
               )
             )}

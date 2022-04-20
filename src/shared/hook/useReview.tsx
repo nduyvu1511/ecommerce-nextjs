@@ -2,6 +2,7 @@ import { RootState } from "@/core/store"
 import { Comment } from "@/models"
 import { setMessage } from "@/modules"
 import userApi from "@/services/userApi"
+import { useRouter } from "next/router"
 import { useDispatch, useSelector } from "react-redux"
 import useSWR from "swr"
 
@@ -30,6 +31,7 @@ interface ReivewSWR {
 
 const useReview = ({ product_id }: Props): ReivewSWR => {
   const dispatch = useDispatch()
+  const router = useRouter()
   const { token } = useSelector((state: RootState) => state.user)
 
   const { data, error, isValidating, mutate } = useSWR(
@@ -45,6 +47,9 @@ const useReview = ({ product_id }: Props): ReivewSWR => {
     }
   )
   const handleAddReview = async ({ content, product_id }: AddReviewHook) => {
+    if (!token) {
+      router.push("/login")
+    }
     if (!token || !content || !product_id) return
 
     const res: any = await userApi.addReview({ content, product_id, token })

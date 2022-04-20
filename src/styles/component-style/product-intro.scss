@@ -27,31 +27,6 @@
     }
   }
 
-  &-status {
-    font-family: $second-font;
-    font-weight: 700;
-    display: inline-block;
-    font-size: 1.1rem;
-    padding: 7px 10px;
-    border-radius: 25px;
-    text-transform: uppercase;
-    background-color: #71778e;
-    color: #fff;
-    margin-bottom: 2rem;
-
-    &.out-of-stock {
-      background-color: $danger-opacity;
-      color: $danger;
-    }
-
-    &.in-stock {
-      background-color: $green-opacity;
-      border-radius: 25px;
-      font-family: $second-font;
-      @include style-text(600, 1.2rem, 1.2rem, $green);
-    }
-  }
-
   &-status-sm {
     margin: 1rem 0;
     width: fit-content;
@@ -61,21 +36,28 @@
   &-shop {
     display: flex;
     align-items: center;
-    margin-bottom: 3rem;
+    height: 45px;
+    margin-bottom: 2rem;
+
+    @include responsive(lg-screen) {
+      margin-bottom: 3rem;
+    }
 
     @media screen and(min-width: 400px) {
       flex-direction: row;
     }
 
     &-btn {
-      @include button($indigo, $white, 1.5rem, 500, 1.4rem, 1.2rem);
+      @include button($primary-color, $white, 1.5rem, 500, 1.4rem, 1.2rem);
       max-width: 150px;
       font-family: $second-font;
       width: 100%;
       margin-left: 0;
-      border-radius: 25px;
+      border-radius: 0.2rem;
       cursor: pointer;
-      margin-left: 2rem;
+      margin-left: 1.4rem;
+      height: 100%;
+
       @media screen and(min-width: 400px) {
         max-width: 200px;
       }
@@ -91,10 +73,46 @@
       padding: 0.9rem 2rem;
       margin-left: 0;
     }
+
+    &-chat-btn {
+      display: none;
+    }
+
+    & button {
+      & span {
+        // display: none;
+      }
+    }
+  }
+
+  &-quantity {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+    @include responsive(lg-screen) {
+      margin-bottom: 3rem;
+    }
+
+    & .input__quantity {
+      width: fit-content;
+    }
+
+    & p {
+      font-weight: 500;
+      font-size: 1.3rem;
+      line-height: 2rem;
+      color: #3e445a;
+      margin-right: 2rem;
+      width: 100px;
+      text-transform: capitalize;
+    }
   }
 
   &-sub {
-    margin-bottom: 3rem;
+    margin-bottom: 1.5rem;
+    @include responsive(lg-screen) {
+      margin-bottom: 3rem;
+    }
     display: flex;
     align-items: center;
 
@@ -106,7 +124,7 @@
       text-transform: uppercase;
       padding: 0.5rem 2rem;
       border: 1px solid $border-color-1;
-      border-radius: 25px;
+      border-radius: 0.3rem;
       cursor: pointer;
 
       & svg {
@@ -123,7 +141,10 @@
   }
 
   .product__intro-bottom {
-    margin-bottom: 3rem;
+    margin-bottom: 1.5rem;
+    @include responsive(lg-screen) {
+      margin-bottom: 3rem;
+    }
   }
 
   & .product__intro-item {
@@ -139,7 +160,12 @@
   }
 
   .product__intro-variation-wrapper {
-    margin-bottom: 3rem;
+    margin-bottom: 0.5rem;
+    margin-top: 2rem;
+    @include responsive(lg-screen) {
+      margin-bottom: 1rem;
+      margin-top: 3rem;
+    }
   }
 
   & .product__countdown {
@@ -148,6 +174,16 @@
 
     &-remains {
       display: none;
+    }
+  }
+
+  & .variation__dropdown {
+    & .dropdown {
+      width: fit-content;
+    }
+    & .dropdown__list {
+      width: 100%;
+      overflow-x: hidden;
     }
   }
 }
@@ -185,12 +221,19 @@
   }
 
   &-current {
-    font-size: 2rem;
+    font-size: 1.8rem;
+    line-height: 2.6rem;
+    @include responsive(sm-screen) {
+      font-size: 2rem;
+      line-height: 2.8rem;
+    }
     @include responsive(lg-screen) {
       font-size: 2.2rem;
+      line-height: 3rem;
     }
     @include responsive(xl-screen) {
       font-size: 2.6rem;
+      line-height: 3.4rem;
     }
     font-weight: 600;
     color: $red;

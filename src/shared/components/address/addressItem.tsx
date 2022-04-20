@@ -30,23 +30,20 @@ export const AddressItem = ({
   const language = "vni"
   const { deleteAddress } = useUserAddress(false)
   const dispatch = useDispatch()
+  const optionRef = useRef<HTMLDivElement>(null)
+  const buttonRef = useRef<HTMLButtonElement>(null)
+  useClickOutside([optionRef, buttonRef], () => setOpenOption(false))
 
   const {
     token,
     userInfo: { id: partner_id },
     addressDefault,
   } = useSelector((state: RootState) => state.user)
-
   const { address: addressOrder } = useSelector(
     (state: RootState) => state.order
   )
 
-  const optionRef = useRef<HTMLDivElement>(null)
-  const buttonRef = useRef<HTMLButtonElement>(null)
-
   const [openOption, setOpenOption] = useState<boolean>(false)
-
-  useClickOutside([optionRef, buttonRef], () => setOpenOption(false))
 
   // Function
   const handleChangeDefault = () => {

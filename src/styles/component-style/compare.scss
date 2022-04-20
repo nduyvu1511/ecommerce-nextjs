@@ -42,7 +42,11 @@
 
 .compare__table {
   display: flex;
-  @include style-text(500, 1.4rem, 2.4rem, $text-color);
+  @include style-text(500, 1.3rem, 2.3rem, $text-color);
+  @include responsive(sm-screen) {
+    font-size: 1.4rem;
+    line-height: 2.4rem;
+  }
   &-item-wrapper {
     border-right: 1px solid $border-color-1;
   }

@@ -2,32 +2,48 @@
   display: flex;
   align-items: center;
   width: 100%;
-  height: 45px;
+  height: 35px;
   position: relative;
+
+  @include responsive(lg-screen) {
+    height: 40px;
+  }
 
   .header__search-input {
     flex: 1;
+    font-family: $main-font;
     height: 100%;
     outline: none;
-    padding-left: 1.2rem;
-    padding-right: 10rem;
-    @include style-text(500, 1.5rem, 1.5rem, $text-color);
+    padding-left: 0.8rem;
+    @include style-text(400, 1.3rem, 1.3rem, $text-color);
     background-color: #fff;
-    border-radius: 0.3rem;
-    border: 1px solid $border-color-1;
+    border-radius: 0.2rem;
+    border: 0;
+    padding-right: 2.8rem;
+    width: 100%;
 
-    &:focus {
-      border: 2px solid $primary-color;
+    @include responsive(sm-screen) {
+      font-size: 1.4rem;
+      line-height: 1.4rem;
+      font-weight: 500;
+    }
+
+    @include responsive(lg-screen) {
+      font-size: 1.5rem;
+      line-height: 1.5rem;
+      padding-left: 1.2rem;
+      padding-right: 5rem;
     }
   }
 
   .header__search-input-clear {
     @include hidden;
     position: absolute;
-    right: 7rem;
     top: 50%;
     transform: translateY(-50%);
     @include flex-center;
+    right: 0.8rem;
+
     &-active {
       @include show;
     }
@@ -38,42 +54,57 @@
       pointer-events: none;
       fill: $gray;
     }
+
+    @include responsive(lg-screen) {
+      display: block;
+      right: 5.5rem;
+    }
   }
 
   .header__search-btn {
     color: $text-color;
     position: absolute;
-    right: 0px;
-    border-radius: 0.3rem;
+    border-radius: 0.2rem;
     top: 50%;
     transform: translateY(-50%);
-    height: 88%;
+    height: 89%;
     right: 3px;
-    padding-inline: 1.5rem;
+    padding-inline: 1rem;
     @include flex-center;
     background-color: $primary-color;
+    display: none;
+
+    @include responsive(lg-screen) {
+      padding-inline: 1.5rem;
+    }
 
     & svg {
-      font-size: 2rem;
+      font-size: 1.6rem;
       pointer-events: none;
       color: white;
+    }
+
+    @include responsive(lg-screen) {
+      display: block;
     }
   }
 }
 
 .search__result {
-  max-height: 88vh;
-  height: 100%;
+  height: 100vh;
+  padding-bottom: 5rem;
   overflow-y: scroll;
   @include responsive(lg-screen) {
     position: absolute;
-    top: calc(100% + 0.4rem);
+    top: 100%;
     left: 0;
     height: unset;
     width: 100%;
     max-height: 50vh;
     margin-bottom: 2rem;
-    box-shadow: $box-shadow-2;
+    border-top: 1px solid rgb(225, 225, 225);
+    box-shadow: rgba(0, 0, 0, 0.28) 0px 6px 12px 0px;
+    padding-bottom: 0;
   }
 
   &-sm {
@@ -113,7 +144,7 @@
 
     & .search__result-loading {
       background-color: #fff;
-      padding: 1.5rem 0;
+      padding: 5rem 0;
       @include flex-center;
 
       & svg {
@@ -126,8 +157,13 @@
     .search__result-keyword {
       padding: 1.5rem;
       @include flex(flex-start, center);
-      @include style-text(500, 1.4rem, 2.4rem, $text-color);
+      @include style-text(500, 1.3rem, 2.3rem, $text-color);
       border-bottom: 1px solid $black-opacity-007;
+
+      @include responsive(lg-screen) {
+        font-size: 1.4rem;
+        line-height: 2.4rem;
+      }
 
       & span {
         white-space: nowrap;
@@ -139,9 +175,13 @@
 
       & p {
         font-weight: 600;
-        font-size: 1.6rem;
+        font-size: 1.4rem;
         margin-left: 0.6rem;
         @include limit-line-text(1);
+
+        @include responsive(lg-screen) {
+          font-size: 1.5rem;
+        }
       }
     }
 
@@ -169,6 +209,32 @@
         width: 35px;
         pointer-events: none;
       }
+    }
+  }
+}
+
+.search-overlay {
+  background: rgba($color: #000000, $alpha: 0.6);
+  z-index: 100;
+  position: fixed;
+  inset: 0;
+  display: none;
+  @include responsive(lg-screen) {
+    display: block;
+  }
+}
+
+.search__mobile-modal {
+  background-color: $primary-color;
+  padding: 1rem 1.6rem;
+  display: flex;
+  align-items: center;
+
+  &-btn-back {
+    margin-right: 1.6rem;
+    & svg {
+      color: $white;
+      font-size: 2.4rem;
     }
   }
 }

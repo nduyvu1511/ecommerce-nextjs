@@ -47,11 +47,12 @@ const OrderHistory: any = () => {
 
   return (
     <AccountContainer
+      headerMobileTitle="Lịch sử đơn hàng"
       breadcrumbList={[
         { path: "/account", name: "Tài khoản" },
         { name: "Lịch sử đơn hàng", path: "" },
       ]}
-      heading="Order history"
+      heading="Lịch sử đơn hàng"
     >
       <section ref={containerRef} className="order__history">
         {isValidating && orderHistoryList?.length === 0 ? (

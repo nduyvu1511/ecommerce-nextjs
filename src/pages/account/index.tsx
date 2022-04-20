@@ -13,8 +13,9 @@ const AccountGeneral = () => {
 
   return (
     <AccountContainer
+      headerMobileTitle="Tài khoản"
       breadcrumbList={[{ path: "/account", name: "Tài khoản" }]}
-      heading="General"
+      heading="Tổng quan"
     >
       <div className="account__general">
         <ul className="account__general-list">

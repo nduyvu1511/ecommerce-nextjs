@@ -32,7 +32,7 @@
   }
 
   .slider__range {
-    background-color: $indigo;
+    background-color: $primary-color;
     z-index: 2;
   }
 
@@ -40,7 +40,7 @@
   .slider__right-value {
     font-family: $second-font;
     @include style-text(700, 1.4rem, 1.8rem, $text-color);
-    margin-top: 3rem;
+    margin-top: 2rem;
     user-select: none;
   }
 
@@ -80,7 +80,7 @@
 
   /* For Chrome browsers */
   .thumb::-webkit-slider-thumb {
-    background-color: $indigo;
+    background-color: $primary-color;
     border: none;
     border-radius: 50%;
     box-shadow: 0 0 1px 1px #ced4da;
@@ -94,7 +94,7 @@
 
   /* For Firefox browsers */
   .thumb::-moz-range-thumb {
-    background-color: $indigo;
+    background-color: $primary-color;
     border: none;
     border-radius: 50%;
     box-shadow: 0 0 1px 1px #ced4da;

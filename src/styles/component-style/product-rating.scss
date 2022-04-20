@@ -5,8 +5,18 @@
     border-bottom: 1px solid $border-color-1;
 
     & h3 {
-      @include style-text(500, 1.7rem, 2.7rem, $home-heading-color);
+      @include style-text(500, 1.4rem, 2.2rem, $home-heading-color);
       margin-bottom: 1rem;
+
+      @include responsive(sm-screen) {
+        font-size: 1.5rem;
+        line-height: 2.3rem;
+      }
+
+      @include responsive(lg-screen) {
+        font-size: 1.7rem;
+        line-height: 2.5rem;
+      }
     }
 
     &-summary {
@@ -16,9 +26,13 @@
 
       & p {
         margin-right: 1rem;
-        font-size: 2.4rem;
+        font-size: 2.2rem;
         font-weight: 700;
         font-family: $second-font;
+
+        @include responsive(lg-screen) {
+          font-size: 2.4rem;
+        }
       }
 
       & .star-icon {

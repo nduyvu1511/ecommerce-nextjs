@@ -29,12 +29,6 @@
     overflow-y: auto;
     @include hide-scrollbar;
     &-item {
-      // &:hover {
-      //   @include responsive(screen-1024) {
-      //     background-color: $primary-color-opacity;
-      //   }
-      // }
-
       &-link-wrapper {
         @include flex(space-between, center);
 
@@ -213,9 +207,10 @@
 .category__select {
   height: 100%;
   display: flex;
+  padding-bottom: 4rem;
 
   & .category__left-list {
-    width: 20%;
+    width: 25%;
     height: 100%;
     list-style: none;
     overflow-y: auto;
@@ -242,7 +237,7 @@
 
       & p {
         text-align: center;
-        @include style-text(500, 1rem, 1.4rem, $text-color);
+        @include style-text(500, 1.2rem, 1.4em, $text-color);
       }
 
       &-active {
@@ -268,16 +263,8 @@
     }
   }
 
-  & .category__right-list {
+  &-right {
     flex: 1;
-    height: fit-content;
-    list-style: none;
-    overflow-y: auto;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: min-content;
-    grid-gap: 1rem;
-
     &-no-category {
       flex: 1;
       @include flex-center;
@@ -295,28 +282,58 @@
       }
     }
 
-    &-item {
-      user-select: none;
-      padding: 1rem;
-      @include flex-center;
-      flex-direction: column;
-      cursor: pointer;
-      height: fit-content;
+    &-loading {
+      width: 75%;
+      display: flex;
+      justify-content: center;
 
-      & .image-container {
-        margin-bottom: 1rem;
-
-        & img {
-          width: 2.8rem !important;
-          height: 2.8rem !important;
-          margin-bottom: 1.2rem;
-        }
+      & svg {
+        color: $gray;
+        font-size: 3rem;
+        margin-top: 5rem;
       }
+    }
+  }
+}
 
+.category__grid-list {
+  width: 100%;
+  height: fit-content;
+  list-style: none;
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: min-content;
+  grid-gap: 1rem;
+
+  &-item {
+    user-select: none;
+    padding: 1rem;
+    @include flex-center;
+    flex-direction: column;
+    cursor: pointer;
+    height: fit-content;
+
+    & .image-container {
+      margin-bottom: 1rem;
+
+      & img {
+        width: 2.8rem !important;
+        height: 2.8rem !important;
+        margin-bottom: 1.2rem;
+      }
+    }
+
+    & p {
+      flex: 1;
+      text-align: center;
+      @include style-text(500, 1.2rem, 1.6rem, $text-color);
+      @include limit-line-text(2);
+    }
+
+    &-active {
       & p {
-        flex: 1;
-        text-align: center;
-        @include style-text(500, 1rem, 1.4rem, $text-color);
+        color: $primary-color;
       }
     }
   }

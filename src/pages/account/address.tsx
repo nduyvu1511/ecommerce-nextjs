@@ -5,11 +5,12 @@ import { MainAuthLayout } from "@/layout"
 const UserAddress = () => {
   return (
     <AccountContainer
+      headerMobileTitle="Địa chỉ"
       breadcrumbList={[
         { path: "/account", name: "Tài khoản" },
         { name: "Địa chỉ", path: "" },
       ]}
-      heading="Your Address"
+      heading="Địa chỉ"
     >
       <Address type="account" />
     </AccountContainer>

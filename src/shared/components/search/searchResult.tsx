@@ -1,20 +1,20 @@
 /* eslint-disable react/no-unescaped-entities */
 import { RootState } from "@/core/store"
 import { isArrayHasValue } from "@/helper"
-import { toggleSearchResult } from "@/modules"
+import { toggleOpenSearchModal, toggleSearchResult } from "@/modules"
 import { DOMAIN_URL } from "@/services"
 import Image from "next/image"
 import Link from "next/link"
-import { memo, useRef } from "react"
+import { useRef } from "react"
 import { RiLoader4Line } from "react-icons/ri"
 import { useDispatch, useSelector } from "react-redux"
 import { useClickOutside, useProduct } from "shared/hook"
 
-export const SearchResult = memo(function SearchResultChild({
-  handleClose,
+export const SearchResult = ({
+  isCloseModal = false,
 }: {
-  handleClose?: Function
-}) {
+  isCloseModal?: boolean
+}) => {
   const dispatch = useDispatch()
   const searchResultRef = useRef<HTMLDivElement>(null)
 
@@ -59,58 +59,65 @@ export const SearchResult = memo(function SearchResultChild({
   }
 
   return (
-    <div ref={searchResultRef} className="search__result">
-      {keyword && isSearching === false && !isArrayHasValue(searchProducts) ? (
-        <div className="search__result--no-result">
-          không có kết quả nào cho{" "}
-          <span>
-            <small>"</small>
-            {keyword}
-            <small>"</small>
-          </span>
-        </div>
-      ) : (
-        <ul className="search__result-list">
-          {isSearching && !isArrayHasValue(searchProducts) ? (
-            <li className="search__result-loading">
-              <RiLoader4Line />
-            </li>
-          ) : null}
+    <>
+      <div ref={searchResultRef} className="search__result">
+        {keyword &&
+        isSearching === false &&
+        !isArrayHasValue(searchProducts) ? (
+          <div className="search__result--no-result">
+            không có kết quả nào cho{" "}
+            <span>
+              <small>"</small>
+              {keyword}
+              <small>"</small>
+            </span>
+          </div>
+        ) : (
+          <ul className="search__result-list">
+            {isSearching && !isArrayHasValue(searchProducts) ? (
+              <li className="search__result-loading">
+                <RiLoader4Line />
+              </li>
+            ) : null}
 
-          {keyword && isArrayHasValue(searchProducts) ? (
-            <li className="search__result-keyword">
-              <span> {`Hiển thị ${searchProducts.length} kết quả cho`}: </span>
-              <p>"{keyword}"</p>
-            </li>
-          ) : null}
+            {keyword && isArrayHasValue(searchProducts) ? (
+              <li className="search__result-keyword">
+                <span>
+                  {" "}
+                  {`Hiển thị ${searchProducts.length} kết quả cho`}:{" "}
+                </span>
+                <p>"{keyword}"</p>
+              </li>
+            ) : null}
 
-          {searchProducts.map((product, index) => (
-            <li key={index} className="search__result-list-item">
-              <Link href={`/product/${product.product_tmpl_id}`} passHref>
-                <div
-                  onClick={() => {
-                    handleSearchItemClick()
-                    handleClose && handleClose()
-                  }}
-                  className="search__result-list-item-link cursor-pointer"
-                >
-                  <p className="search__result-list-item-name">
-                    {product.product_name}
-                  </p>
-                  <div className="search__result-list-item-img image-container">
-                    <Image
-                      src={`${DOMAIN_URL}${product.image_url[0]}`}
-                      layout="fill"
-                      alt=""
-                      className="image"
-                    />
+            {searchProducts.map((product, index) => (
+              <li key={index} className="search__result-list-item">
+                <Link href={`/product/${product.product_tmpl_id}`} passHref>
+                  <div
+                    onClick={() => {
+                      handleSearchItemClick()
+                      isCloseModal && dispatch(toggleOpenSearchModal(false))
+                    }}
+                    className="search__result-list-item-link cursor-pointer"
+                  >
+                    <p className="search__result-list-item-name">
+                      {product.product_name}
+                    </p>
+                    <div className="search__result-list-item-img image-container">
+                      <Image
+                        src={`${DOMAIN_URL}${product.image_url[0]}`}
+                        layout="fill"
+                        alt=""
+                        className="image"
+                      />
+                    </div>
                   </div>
-                </div>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </>
   )
-})
+}

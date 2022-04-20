@@ -1,5 +1,5 @@
 import { toggleModalConfirm } from "@/modules"
-import { ReactNode } from "react"
+import { ReactNode, useEffect } from "react"
 import { RiCloseFill } from "react-icons/ri"
 import { useDispatch } from "react-redux"
 
@@ -13,6 +13,8 @@ export interface IModal {
   isShowConfirmModal?: boolean
   heading?: string
   disableOverLay?: boolean
+  fullWidth?: boolean
+  preventScrolling?: boolean
 }
 
 export const Modal = ({
@@ -24,9 +26,25 @@ export const Modal = ({
   unsetSize,
   heading,
   isShowConfirmModal,
+  fullWidth,
   disableOverLay = false,
+  preventScrolling = false,
 }: IModal) => {
   const dispatch = useDispatch()
+
+  useEffect(() => {
+    if (!preventScrolling) return
+
+    const htmlTag = document.querySelector("html")
+    if (htmlTag) {
+      htmlTag.style.overflow = "hidden"
+    }
+    return () => {
+      if (htmlTag) {
+        htmlTag.style.overflow = "auto"
+      }
+    }
+  }, [])
 
   const handleClick = () => {
     handleClickModal && handleClickModal()
@@ -41,7 +59,9 @@ export const Modal = ({
       <section
         className={`modal modal-${direction} ${
           isShowModal ? "modal-active" : ""
-        } ${stack ? "modal-stack" : ""} ${unsetSize ? "modal-size-auto" : ""} `}
+        } ${stack ? "modal-stack" : ""} ${unsetSize ? "modal-size-auto" : ""} ${
+          fullWidth ? "modal-full" : ""
+        }`}
       >
         {heading ? (
           <header className="modal__header">

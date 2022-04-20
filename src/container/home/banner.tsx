@@ -9,11 +9,11 @@ import { Swiper, SwiperSlide } from "swiper/react"
 import { isArrayHasValue } from "../../shared/helper/functions"
 
 export const MainBanner = () => {
-  const { bannerUrls, isValidating } = useCategory()
+  const { bannerUrls, isValidating } = useCategory(false)
 
   return (
     <div className="home__banner">
-      {!isValidating ? (
+      {!isValidating && isArrayHasValue(bannerUrls) ? (
         <div className="home__banner-left">
           <img
             style={{ height: "100%" }}

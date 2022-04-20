@@ -2,7 +2,7 @@ import { cartEmptyIcon } from "@/assets"
 import { CartPageItem, InputCheckbox } from "@/components"
 import { OrderContainer } from "@/container"
 import { MainNoFooter } from "@/layout"
-import { setMessage, setProductList } from "@/modules"
+import { setAddress, setMessage, setProductList } from "@/modules"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import { useEffect } from "react"
@@ -24,7 +24,8 @@ const Cart = () => {
     handleResetOrderField,
   } = useCartOrder()
 
-  const { productList, orderDraft } = useSelector(
+  const { addressDefault } = useSelector((state: RootState) => state.user)
+  const { productList, orderDraft, address } = useSelector(
     (state: RootState) => state.order
   )
   const { createOrderDraft } = useOrder()
@@ -40,6 +41,17 @@ const Cart = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch])
 
+  const redirectUser = () => {
+    if (address) {
+      router.push("/shipping_detail")
+    } else if (!address && addressDefault) {
+      dispatch(setAddress(addressDefault))
+      router.push("/shipping_detail")
+    } else {
+      router.push("/address")
+    }
+  }
+
   const handleNavigateToAddress = () => {
     if (!productList) {
       dispatch(
@@ -53,17 +65,19 @@ const Cart = () => {
       if (!orderDraft) {
         createOrderDraft({
           handleSuccess: () => {
+            // redirectUser()
             router.push("/address")
           },
         })
       } else {
+        // redirectUser()
         router.push("/address")
       }
     }
   }
 
   return (
-    <OrderContainer>
+    <OrderContainer headerTitle="Giỏ hàng">
       <section className="cart__container">
         <div className="container">
           <div className="cart__wrapper">

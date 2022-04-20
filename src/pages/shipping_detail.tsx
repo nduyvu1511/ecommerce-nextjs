@@ -81,7 +81,7 @@ const ShippingDetail = () => {
   }, [address, productList])
 
   return (
-    <OrderContainer isShowPromotion={false}>
+    <OrderContainer headerTitle="Vận chuyển" isShowPromotion={false}>
       <div className="shipping__detail">
         <h3 className="shipping__detail-heading">
           {language === "vni"

@@ -1,5 +1,7 @@
 .category__item {
   user-select: none;
+  height: 100%;
+  list-style: none;
 
   &-wrapper {
     @include flex-center;
@@ -12,12 +14,13 @@
     color: $text-color;
 
     &-name {
+      flex: 1;
       @include limit-line-text(2);
       @include style-text(600, 1.2rem, 1.8rem, $text-color);
       margin-top: 1rem;
       text-align: center;
 
-      @include responsive(sm-screen) {
+      @include responsive(md-screen) {
         font-size: 1.3rem;
         line-height: 2rem;
         margin-top: 2rem;
@@ -26,24 +29,14 @@
   }
 
   & .image-container {
-    width: 100%;
-    height: auto;
-    max-width: 70px;
+    & .image {
+      width: 60px !important;
+      height: 60px !important;
 
-    @include responsive(sm-screen) {
-      max-width: 100px;
-    }
-
-    @include responsive(md-screen) {
-      max-width: 120px;
-    }
-
-    @include responsive(lg-screen) {
-      max-width: 150px;
-    }
-
-    @include responsive(xl-screen) {
-      max-width: 100px;
+      @include responsive(lg-screen) {
+        width: 70px !important;
+        height: 70px !important;
+      }
     }
   }
 }

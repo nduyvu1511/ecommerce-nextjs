@@ -34,6 +34,7 @@
 
 .account__option-layout {
   &-header {
+    margin-bottom: 1.4rem;
     background-color: #fff;
     padding: 1.5rem;
     border-radius: 0.2rem;
@@ -79,7 +80,7 @@
         flex-direction: row;
       }
       background-color: #fff;
-      padding: 2rem 1.5rem;
+      padding: 3rem 1.5rem;
 
       .user__info-form {
         flex: 1;
@@ -225,7 +226,7 @@
         @include style-text(500, 1.4rem, 1.4rem, $text-color);
 
         & svg {
-          margin-right: 1rem;
+          margin-right: 1.6rem;
           font-size: 1.8rem;
           color: $text-color;
         }
@@ -238,6 +239,20 @@
           & svg {
             color: $primary-color;
           }
+        }
+      }
+
+      &-logout {
+        & h3 {
+          color: $danger;
+        }
+
+        & svg {
+          color: $danger;
+        }
+
+        &:hover {
+          background-color: #fff;
         }
       }
     }

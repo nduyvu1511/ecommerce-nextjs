@@ -2,6 +2,10 @@
   height: 100%;
   padding: 2rem;
 
+  @include responsive(lg-screen) {
+    padding: 1.6rem;
+  }
+
   &-heading {
     @include style-text(600, 1.6rem, 2.6rem, $heading-color);
     margin-bottom: 1rem;
@@ -38,24 +42,81 @@
 
   &-star {
     &__list {
+      display: flex;
+      margin-bottom: 1rem;
+
+      @include responsive(xl-screen) {
+        margin-bottom: 0;
+        display: block;
+      }
+
       &-item {
         cursor: pointer;
-        padding-block: 0.6rem;
-        @include flex(flex-start, flex-start);
+        @include flex(center, center);
+        padding: 1rem;
+        border: 1px solid $border-color-1;
+        border-radius: 0.4rem;
+        width: calc(33.333% - 1rem);
+        margin-right: 1rem;
+
+        @include responsive(xl-screen) {
+          align-items: flex-start;
+          justify-content: flex-start;
+          width: 100%;
+          margin-right: 0;
+          border: 0;
+          padding: 0.6rem 0;
+        }
 
         & p {
           font-size: 1.3rem;
           font-weight: 500;
           margin-left: 0.8rem;
         }
+
+        & .react-simple-star-rating {
+          display: none !important;
+
+          @include responsive(xl-screen) {
+            display: block !important;
+          }
+        }
+
+        &-active {
+          border: 1px solid $indigo;
+
+          @include responsive(xl-screen) {
+            border: 0;
+          }
+
+          & p {
+            color: $indigo;
+          }
+        }
       }
     }
   }
 
   &-item {
-    margin-bottom: 1rem;
+    padding-block: 1rem;
+    border-bottom: 1px solid $border-color-2;
+    &:last-child {
+      border-bottom: 0;
+    }
+    &:first-child {
+      margin-top: 0.6rem;
+      @include responsive(xl-screen) {
+        margin-top: 0;
+      }
+    }
+
     @include responsive(xl-screen) {
-      margin-bottom: 2rem;
+      padding-block: 1rem;
+      border-bottom: 0;
+    }
+
+    &:first-child {
+      padding-top: 0;
     }
 
     .header__search-form {
@@ -108,26 +169,50 @@
     & button {
       margin-top: 2rem;
       padding: 0.4rem 1.2rem;
+      margin-left: auto;
+      border-radius: 0.3rem;
+
+      @include responsive(xl-screen) {
+        margin-left: 0;
+      }
     }
   }
 
   .product__attribute-list {
-    // display: flex;
-    // flex-wrap: wrap;
+    display: flex;
+    flex-wrap: wrap;
+    @include responsive(xl-screen) {
+      flex-direction: column;
+    }
 
     &-item {
       @include flex(flex-start, center);
       cursor: pointer;
       margin-bottom: 1rem;
+      margin-right: 1rem;
+      padding: 1rem 2rem;
+      border: 1px solid $border-color-2;
+      border-radius: 0.4rem;
+
+      @include responsive(xl-screen) {
+        margin-right: 0;
+        padding: 0;
+        border: 0;
+      }
 
       &-wrapper {
         @include flex(flex-start, center);
       }
 
       & .input__checkbox {
-        margin-right: 1rem;
-        width: 1.8rem;
-        height: 1.8rem;
+        display: none;
+
+        @include responsive(xl-screen) {
+          display: block;
+          margin-right: 1rem;
+          width: 1.8rem;
+          height: 1.8rem;
+        }
       }
 
       & p {
@@ -149,12 +234,40 @@
       & .product__attribute-no-image {
         border: 1px solid rgba($color: #000000, $alpha: 0.3);
       }
+
+      &-active {
+        border: 1px solid $indigo;
+        & p {
+          color: $indigo;
+        }
+
+        @include responsive(xl-screen) {
+          border: 0;
+        }
+      }
+    }
+  }
+
+  & .category__grid-list {
+    display: grid;
+
+    @include responsive(xl-screen) {
+      display: none;
+    }
+  }
+
+  & .category__list {
+    display: none;
+
+    @include responsive(xl-screen) {
+      display: block;
     }
   }
 }
 
 .modal {
   .shop__filter {
+    padding: 1.5rem 1rem;
     display: block;
     max-height: 100vh;
     padding-bottom: 6rem;

@@ -4,6 +4,7 @@ import {
   formatMoneyVND,
   getPercentageProductDeal,
   getPriceProduct,
+  isArrayHasValue,
   isObjectHasValue,
 } from "@/helper"
 import { Product } from "@/models"
@@ -76,6 +77,10 @@ export const ProductItem = ({ product, type, isLoading }: IProductItem) => {
     }
   }
 
+  const imageUrls: Array<string> = isArrayHasValue(product.representative_image)
+    ? product.representative_image
+    : product.image_url
+
   return (
     <>
       {!isLoading && isObjectHasValue(product) ? (
@@ -125,7 +130,7 @@ export const ProductItem = ({ product, type, isLoading }: IProductItem) => {
               </button>
             </div>
 
-            {product?.representative_image?.length === 1 ? (
+            {imageUrls.length === 1 ? (
               <div
                 onClick={() => dispatch(setProduct(product))}
                 className="image-container cursor-pointer product__card__img-item cursor-pointer"
@@ -133,9 +138,7 @@ export const ProductItem = ({ product, type, isLoading }: IProductItem) => {
                 <Link passHref href={`/product/${product.product_tmpl_id}`}>
                   <Image
                     className="image img-cover"
-                    src={`${DOMAIN_URL}${
-                      product?.representative_image?.[0] || ""
-                    }`}
+                    src={`${DOMAIN_URL}${imageUrls?.[0] || ""}`}
                     alt=""
                     layout="fill"
                     placeholder="blur"
@@ -152,9 +155,7 @@ export const ProductItem = ({ product, type, isLoading }: IProductItem) => {
                   <Link passHref href={`/product/${product.product_tmpl_id}`}>
                     <Image
                       className="image"
-                      src={`${DOMAIN_URL}${
-                        product?.representative_image?.[0] || ""
-                      }`}
+                      src={`${DOMAIN_URL}${imageUrls?.[0] || ""}`}
                       alt=""
                       layout="fill"
                       placeholder="blur"
@@ -171,9 +172,7 @@ export const ProductItem = ({ product, type, isLoading }: IProductItem) => {
                     <Link passHref href={`/product/${product.product_tmpl_id}`}>
                       <Image
                         className="image"
-                        src={`${DOMAIN_URL}${
-                          product?.representative_image?.[1] || ""
-                        }`}
+                        src={`${DOMAIN_URL}${imageUrls?.[1] || ""}`}
                         alt=""
                         layout="fill"
                       />

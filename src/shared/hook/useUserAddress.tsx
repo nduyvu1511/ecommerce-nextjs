@@ -57,7 +57,7 @@ export const useUserAddress = (shouldFetch = true): AccountSWR => {
     try {
       const res: any = await userApi.addAddress(address)
 
-      if (res.result.success) {
+      if (res?.result?.success) {
         if (address.adress_id) {
           mutate(
             {
@@ -100,9 +100,14 @@ export const useUserAddress = (shouldFetch = true): AccountSWR => {
           )
 
           if (router.pathname === "/address" && !orderAddress) {
-            dispatch(setAddress(addressForm))
+            dispatch(
+              setAddress({
+                ...addressForm,
+                id: res.result.data?.[0]?.partner_shipping_id,
+              })
+            )
           }
-
+          console.log("id is: ", res.result.data?.[0]?.partner_shipping_id)
           dispatch(
             setMessage({ title: "Thêm địa chỉ thành công", isOpen: true })
           )

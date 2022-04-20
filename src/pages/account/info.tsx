@@ -2,12 +2,13 @@ import { avatar } from "@/assets"
 import { AccountContainer } from "@/container"
 import { inputs } from "@/container/account/data"
 import { userInfoSchema } from "@/core/schema"
+import { isObjectHasValue } from "@/helper"
 import { MainAuthLayout } from "@/layout"
 import { DOMAIN_URL } from "@/services"
 import { Field, Form, Formik } from "formik"
 import _ from "lodash"
 import Image from "next/image"
-import { ChangeEvent, useState } from "react"
+import { ChangeEvent } from "react"
 import { useAttachment, useUser } from "shared/hook"
 
 interface UserForm {
@@ -20,7 +21,7 @@ interface UserForm {
 const UserInfo = () => {
   const language = "vni"
   const { data: userInfo, updateUser } = useUser()
-  const { getBase64Images, setRatingImages } = useAttachment({ limit: 1 })
+  const { getBase64Images } = useAttachment({ limit: 1 })
 
   const handleChangeAvatar = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e?.target?.files) return
@@ -29,13 +30,10 @@ const UserInfo = () => {
       if (!images?.[0]) return
       updateUser({
         name_customs: userInfo.name,
-        sex: "male",
+        sex: userInfo.sex || "",
         email: userInfo.email,
         image: images?.[0].replace(/^data:image\/\w+;base64,/, ""),
-      }),
-        () => {
-          setRatingImages(undefined)
-        }
+      })
     })
   }
 
@@ -49,15 +47,16 @@ const UserInfo = () => {
 
   return (
     <AccountContainer
+      headerMobileTitle="Thông tin"
       breadcrumbList={[
         { path: "/account", name: "Tài khoản" },
         { path: "/", name: "Hồ sơ" },
       ]}
-      heading="Your profile"
+      heading="Thông tin người dùng"
     >
       <div className="user__info-container">
         <div className="user__info-form">
-          {_.isObject(userInfo) && Object.keys(userInfo).length > 0 && (
+          {isObjectHasValue(userInfo) && (
             <Formik
               initialValues={{
                 phone: userInfo?.phone || "",

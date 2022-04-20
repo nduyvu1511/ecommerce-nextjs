@@ -1,4 +1,9 @@
 .category__section {
+  padding-bottom: 2rem;
+  @include responsive(lg-screen) {
+    padding-bottom: 4rem;
+  }
+
   &-wrapper {
     padding-top: 2rem;
   }
@@ -33,6 +38,7 @@
 
 .category__list {
   list-style: none;
+
   &-item {
     @include flex(flex-start, center);
     cursor: pointer;
@@ -52,6 +58,12 @@
       @include style-text(500, 1.3rem, 2rem, $text-color);
       @include limit-line-text(2);
       &:hover {
+        color: $primary-color;
+      }
+    }
+
+    &-active {
+      & .category__list-item-name {
         color: $primary-color;
       }
     }

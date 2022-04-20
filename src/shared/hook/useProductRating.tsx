@@ -4,9 +4,9 @@ import {
   DeleteRatingProps,
   DeleteRatingRes,
   PurchasedProduct,
-  UpdateRatingPropsWithLineId
+  UpdateRatingPropsWithLineId,
 } from "@/models"
-import { setMessage } from "@/modules"
+import { setMessage, toggleOpenScreenLoading } from "@/modules"
 import ratingApi from "@/services/ratingApi"
 import { useDispatch, useSelector } from "react-redux"
 import useSWR from "swr"
@@ -115,39 +115,48 @@ const useProductRating = ({
     callback: Function
   ) => {
     if (!token) return
+    dispatch(toggleOpenScreenLoading(true))
 
-    const res: any = await ratingApi.updateRatingProduct(commentRating)
-    if (res?.result?.success) {
-      const comment_rating: CommentRating = res.result.data?.data?.[0]
-      if (!comment_rating) return
+    try {
+      const res: any = await ratingApi.updateRatingProduct(commentRating)
+      if (res?.result?.success) {
+        const comment_rating: CommentRating = res.result.data?.data?.[0]
+        if (!comment_rating) return
 
-      if (type === "product") {
-      } else if (type === "purchase") {
-        if (!res?.result?.success) return
+        if (type === "product") {
+        } else if (type === "purchase") {
+          if (!res?.result?.success) return
 
-        mutate(
-          {
-            ...data.data_count,
-            data: [...data.data].map((item: PurchasedProduct) =>
-              item.history_line_id === commentRating.history_line_id
-                ? {
-                    ...item,
-                    comment_rating: {
-                      ...comment_rating,
-                      content: comment_rating.message,
-                      editable: true,
-                    },
-                  }
-                : item
-            ),
-          },
-          false
+          mutate(
+            {
+              ...data.data_count,
+              data: [...data.data].map((item: PurchasedProduct) =>
+                item.history_line_id === commentRating.history_line_id
+                  ? {
+                      ...item,
+                      comment_rating: {
+                        ...comment_rating,
+                        content: comment_rating.message,
+                        editable: true,
+                      },
+                    }
+                  : item
+              ),
+            },
+            false
+          )
+
+          callback()
+        }
+
+        dispatch(
+          setMessage({ title: "Thêm đánh giá thành công!", isOpen: true })
         )
 
-        callback()
+        dispatch(toggleOpenScreenLoading(false))
       }
-
-      dispatch(setMessage({ title: "Thêm đánh giá thành công!", isOpen: true }))
+    } catch (error) {
+      dispatch(toggleOpenScreenLoading(false))
     }
   }
 
@@ -161,4 +170,3 @@ const useProductRating = ({
 }
 
 export { useProductRating }
-

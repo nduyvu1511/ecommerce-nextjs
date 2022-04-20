@@ -1,8 +1,12 @@
 .input__quantity {
   @include flex-center;
-  height: 35px;
-  border-radius: 2.5rem;
+  height: 28px;
+  border-radius: 0.3rem;
   border: 1px solid $black-opacity-02;
+
+  @include responsive(md-screen) {
+    height: 35px;
+  }
 
   &-disabled {
     opacity: 0.4;
@@ -10,7 +14,10 @@
   }
 
   &-btn {
-    width: 40px;
+    width: 30px;
+    @include responsive(md-screen) {
+      height: 40px;
+    }
     height: 100%;
     border: none;
     outline: none;
@@ -18,7 +25,7 @@
     background-color: transparent;
     font-weight: 700;
     cursor: pointer;
-    border-radius: 10px;
+    border-radius: 0.3rem;
     color: $text-color;
   }
 

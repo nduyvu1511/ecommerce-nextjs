@@ -1,0 +1,55 @@
+.product__container {
+  min-height: 100vh;
+  display: flex;
+  border-radius: 0.3rem;
+  background-color: $white;
+
+  &-left {
+    width: 20%;
+    display: none;
+    height: fit-content;
+    @include responsive(xl-screen) {
+      display: block;
+    }
+
+    &-active {
+      @include responsive(xl-screen) {
+        position: fixed;
+        top: 10rem;
+      }
+    }
+  }
+
+  & .product__container-separate {
+    border-right: 1px solid $border-color-2;
+    display: none;
+
+    @include responsive(xl-screen) {
+      display: block;
+    }
+  }
+
+  &-right {
+    width: 100%;
+    @include responsive(xl-screen) {
+      width: 80%;
+    }
+  }
+}
+
+.product__list-container {
+  grid-gap: 0.5rem;
+  padding: 0.8rem 1rem 4rem 1rem;
+
+  @include responsive(sm-screen) {
+    padding-inline: 1.6rem;
+  }
+
+  @include responsive(md-screen) {
+    grid-gap: 1rem;
+  }
+
+  @include responsive(xl-screen) {
+    padding-top: 1.6rem;
+  }
+}

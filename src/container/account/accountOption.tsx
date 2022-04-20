@@ -1,11 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 import { avatar } from "@/assets"
 import { RootState } from "@/core/store"
-import { toggleModalAccountOption } from "@/modules"
+import { clearOrderData, logOut, toggleModalAccountOption } from "@/modules"
 import { DOMAIN_URL } from "@/services"
 import Image from "next/image"
 import { useRouter } from "next/router"
 import { FiEdit2 } from "react-icons/fi"
+import { IoLogOutOutline } from "react-icons/io5"
 import { useDispatch, useSelector } from "react-redux"
 import { accountOptionList } from "./data"
 
@@ -13,7 +14,7 @@ export const AccountOption = () => {
   const language = "vni"
   const dispatch = useDispatch()
   const router = useRouter()
-  const { token, userInfo } = useSelector((state: RootState) => state.user)
+  const { userInfo } = useSelector((state: RootState) => state.user)
 
   if (!userInfo) return null
 
@@ -60,6 +61,19 @@ export const AccountOption = () => {
               </h3>
             </li>
           ))}
+
+          <li
+            onClick={() => {
+              dispatch(clearOrderData())
+              dispatch(logOut())
+            }}
+            className="account__left-body-list-item account__left-body-list-item-logout"
+          >
+            <h3 className="account__left-body-list-item-heading">
+              <IoLogOutOutline />
+              Đăng xuất
+            </h3>
+          </li>
         </ul>
       </div>
     </>

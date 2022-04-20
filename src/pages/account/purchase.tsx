@@ -22,6 +22,7 @@ const Purchase = () => {
   return (
     <>
       <AccountContainer
+        headerMobileTitle="Đơn mua"
         breadcrumbList={[
           { path: "/account", name: "Tài khoản" },
           { name: "Đơn mua", path: "" },

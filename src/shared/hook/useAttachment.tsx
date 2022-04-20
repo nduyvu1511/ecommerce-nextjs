@@ -43,8 +43,9 @@ const useAttachment = (props: UseAttachmentProps): UseAttachmentRes => {
       )
 
       if (
-        files?.length > limit ||
-        (files?.length || 0) + (ratingImages?.length || 0) > limit
+        limit > 1 &&
+        (files?.length > limit ||
+          (files?.length || 0) + (ratingImages?.length || 0) > limit)
       ) {
         dispatch(
           setMessage({

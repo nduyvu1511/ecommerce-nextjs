@@ -43,7 +43,7 @@ const Wishlist = () => {
     })
   }
 
-  const handlesetProduct = (id: number) => {
+  const setProductList = (id: number) => {
     productApi
       .getProductList({ product_id: id })
       .then((res) => console.log(res.data.result))
@@ -105,7 +105,7 @@ const Wishlist = () => {
                         <td className="wishlist__list-item wishlist__list-item-image">
                           <Link href={`/product/${item.id}`} passHref>
                             <div
-                              onClick={() => handlesetProduct(item.product_id)}
+                              onClick={() => setProductList(item.product_id)}
                               className="image-container wishlist__list-item-image"
                             >
                               <Image
@@ -119,9 +119,7 @@ const Wishlist = () => {
                         </td>
                         <td className="wishlist__list-item wishlist__list-item-name">
                           <Link href={`/product/${item.id}`} passHref>
-                            <a
-                              onClick={() => handlesetProduct(item.product_id)}
-                            >
+                            <a onClick={() => setProductList(item.product_id)}>
                               {item.name}
                             </a>
                           </Link>

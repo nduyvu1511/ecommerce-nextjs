@@ -1,11 +1,15 @@
 /* eslint-disable @next/next/no-img-element */
 import { isObjectHasValue } from "@/helper"
 import { AttributeProduct, Category as ICategory } from "@/models"
+import { toggleOpenModalFilter } from "@/modules"
 import productApi from "@/services/productApi"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import { useRef } from "react"
+import { useDispatch } from "react-redux"
+import { useQueryProducts } from "shared/hook"
 import useSWR from "swr"
+import { CategoryGrid } from "../category/categoryGrid"
 import { CategoryList } from "../category/categoryList"
 import { InputRange } from "../inputs"
 import { Star } from "../star"
@@ -13,18 +17,22 @@ import { Attribute } from "./attributes"
 
 interface ShopFilterProps {
   categories: ICategory[] | undefined
+  isCloseModal?: boolean
 }
 
-interface Price {
+export interface Price {
   min: number
   max: number
 }
 
 export const ShopFilter = (props: ShopFilterProps) => {
-  const { categories } = props
+  const { categories, isCloseModal = false } = props
   const router = useRouter()
   const divRef = useRef<HTMLDivElement>(null)
   const prices = useRef<Price>()
+  const dispatch = useDispatch()
+
+  const { filterAttribute, filterPrice, filterStarRating } = useQueryProducts()
 
   const { data: attributeList } = useSWR(
     "product_attributes",
@@ -38,88 +46,48 @@ export const ShopFilter = (props: ShopFilterProps) => {
   )
 
   const handleFilterPrice = () => {
-    if (
-      !prices.current ||
-      !isObjectHasValue(prices.current) ||
-      prices.current.min >= prices.current.max
-    )
-      return
-
-    router.push(
-      {
-        query: {
-          ...router.query,
-          offset: 0,
-          price_range: [prices.current.min, prices.current.max],
-        },
-      },
-      undefined,
-      { shallow: true, scroll: true }
-    )
+    if (!prices.current) return
+    filterPrice(prices.current)
+    isCloseModal && dispatch(toggleOpenModalFilter(false))
   }
 
   const handleFilterAttribute = (parentId: string, childId: string) => {
-    const attribute = `attributes_${parentId}`
-    const attributeIds: any = router.query?.[attribute]
-
-    let query = router.query
-    if (!attributeIds) {
-      query[attribute] = childId
-    } else {
-      if (typeof attributeIds === "string") {
-        if (attributeIds === childId) {
-          delete query[attribute]
-        } else {
-          query[attribute] = [attributeIds, childId]
-        }
-      } else if (typeof attributeIds === "object") {
-        if (attributeIds?.includes(childId)) {
-          query[attribute] = attributeIds.filter(
-            (item: string) => item !== childId
-          )
-        } else {
-          query[attribute] = [...attributeIds, childId]
-        }
-      } else {
-        query[attribute] = childId
-      }
-    }
-
-    router.push(
-      {
-        query: { ...query, offset: 0 },
-      },
-      undefined,
-      { shallow: true, scroll: true }
-    )
+    filterAttribute(parentId, childId)
+    isCloseModal && dispatch(toggleOpenModalFilter(false))
   }
 
   const handleFilterStarRating = (star: string) => {
-    if (router.query?.star_rating === star) return
+    filterStarRating(star)
+    isCloseModal && dispatch(toggleOpenModalFilter(false))
+  }
 
-    router.push(
-      {
-        query: { ...router.query, offset: 0, star_rating: Number(star) },
-      },
-      undefined,
-      {
-        shallow: true,
-        scroll: true,
-      }
-    )
+  const isShowDeleteFilterBtn = () => {
+    const { category_id, type_get, offset = 0, limit, ...query } = router.query
+    return Number(offset) || 0 > 0 || isObjectHasValue(query)
   }
 
   return (
     <div className="shop__filter">
       <div className="shop__filter-category shop__filter-item">
-        <Link href="/category/all">
+        {/* <Link href="/category">
           <a className="shop__filter-heading">Tất Cả Danh Mục</a>
-        </Link>
+        </Link> */}
 
         {categories && (categories?.length || 0) > 0 ? (
-          <CategoryList categoryList={categories} idActive={2} />
+          <CategoryList
+            onClick={() =>
+              isCloseModal && dispatch(toggleOpenModalFilter(false))
+            }
+            categoryList={categories}
+            idActive={Number(router.query?.category_id) || 0}
+          />
+        ) : null}
+
+        {categories && (categories?.length || 0) > 0 ? (
+          <CategoryGrid modalType="filter" categories={categories} />
         ) : null}
       </div>
+
       <div className="shop__filter-star shop__filter-item">
         <h3 className="shop__filter-heading">Đánh giá</h3>
         <ul className="shop__filter-star__list">
@@ -127,7 +95,11 @@ export const ShopFilter = (props: ShopFilterProps) => {
             <li
               onClick={() => handleFilterStarRating(star + "")}
               key={index}
-              className="shop__filter-star__list-item"
+              className={`shop__filter-star__list-item ${
+                Number(router.query?.["star_rating"]) === star
+                  ? "shop__filter-star__list-item-active"
+                  : ""
+              }`}
             >
               <Star readonly size={18} ratingValue={star * 20} />
               <p>Từ {star} sao</p>
@@ -163,6 +135,7 @@ export const ShopFilter = (props: ShopFilterProps) => {
             </div>
           ) : (
             <Attribute
+              key={index}
               attribute={item}
               attributesActive={router.query[`attributes_${item.attribute_id}`]}
               onFilterAttribute={(parentId, childId) =>
@@ -171,11 +144,13 @@ export const ShopFilter = (props: ShopFilterProps) => {
             />
           )
         )}
-      {Object.keys(router?.query).length >= 2 ? (
+
+      {isShowDeleteFilterBtn() ? (
         <div
-          onClick={() =>
+          onClick={() => {
             router.push(`/category/${router.query?.category_id || 0}?offset=0`)
-          }
+            isCloseModal && dispatch(toggleOpenModalFilter(false))
+          }}
           className="shop__filter-item"
         >
           <div className="btn-primary shop__filter-item-clear-btn">

@@ -48,7 +48,7 @@
         height: 2rem;
         @include flex-center;
         @include style-text(600, 1.1rem, 1.1rem, $white);
-        background-color: $indigo;
+        background-color: $primary-color;
       }
     }
 

@@ -2,4 +2,5 @@ export * from "./category"
 export * from "./categoryItem"
 export * from "./categoryList"
 export * from "./homeCategory"
-
+export * from "./categoryMobile"
+export * from "./categorySlide"

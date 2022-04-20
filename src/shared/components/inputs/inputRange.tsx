@@ -67,7 +67,7 @@ export const InputRange: FC<MultiRangeSliderProps> = ({
   return (
     <div className="input__range-container">
       <input
-        style={{ width: `${parentWidth - 20}px` }}
+        style={{ width: `${parentWidth - 10}px` }}
         type="range"
         min={min}
         max={max}
@@ -83,7 +83,7 @@ export const InputRange: FC<MultiRangeSliderProps> = ({
         })}
       />
       <input
-        style={{ width: `${parentWidth - 20}px` }}
+        style={{ width: `${parentWidth - 10}px` }}
         type="range"
         min={min}
         max={max}
@@ -97,7 +97,7 @@ export const InputRange: FC<MultiRangeSliderProps> = ({
         className="thumb thumb--zindex-4"
       />
 
-      <div style={{ width: `${parentWidth - 20}px` }} className="slider">
+      <div style={{ width: `${parentWidth - 10}px` }} className="slider">
         <div className="slider__track"></div>
         <div ref={range} className="slider__range"></div>
         <div className="slider__left-value">{formatMoneyVND(minVal)}</div>

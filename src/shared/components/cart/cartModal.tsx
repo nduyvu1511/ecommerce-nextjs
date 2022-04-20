@@ -2,18 +2,19 @@ import { cartEmptyIcon } from "@/assets"
 import { RootState } from "@/core/store"
 import { formatMoneyVND } from "@/helper"
 import { ProductIds } from "@/models"
+import { toggleOpenCartModal } from "@/modules"
 import Link from "next/link"
 import { useRouter } from "next/router"
-import { memo } from "react"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { useCartOrder } from "shared/hook"
 import { CartItem } from "./cartItem"
 
-export const CartModal = memo(function CartModalChild({
-  handleClose,
-}: {
-  handleClose?: Function
-}) {
+interface CartModalProps {
+  isCloseModal?: boolean
+}
+
+export const CartModal = ({ isCloseModal }: CartModalProps) => {
+  const dispatch = useDispatch()
   const language = "vni"
   const { deleteCartItem, carts, totalMoney } = useCartOrder()
   const router = useRouter()
@@ -21,8 +22,12 @@ export const CartModal = memo(function CartModalChild({
     (state: RootState) => state.order
   )
 
+  const handleCloseModal = () => {
+    dispatch(toggleOpenCartModal(false))
+  }
+
   const handleRedirect = () => {
-    handleClose && handleClose()
+    isCloseModal && handleCloseModal()
     if (payment) {
       return router.push("/payment")
     }
@@ -58,7 +63,7 @@ export const CartModal = memo(function CartModalChild({
               ? carts.map((cart, index) => (
                   <CartItem
                     onDelete={handleDeleteCartItem}
-                    handleClose={handleClose}
+                    handleClose={handleCloseModal}
                     key={index}
                     cart={cart}
                   />
@@ -73,7 +78,7 @@ export const CartModal = memo(function CartModalChild({
             <div className="cart__modal-bottom-actions">
               <Link passHref href="/cart">
                 <a
-                  onClick={() => handleClose && handleClose()}
+                  onClick={() => handleCloseModal && handleCloseModal()}
                   className="cart__modal-bottom-actions-item cursor-pointer"
                 >
                   {language === "vni" ? "Xem giỏ hàng" : "View cart"}
@@ -91,4 +96,4 @@ export const CartModal = memo(function CartModalChild({
       )}
     </div>
   )
-})
+}

@@ -62,7 +62,7 @@ const Payment: any = () => {
   }
 
   return (
-    <OrderContainer isShowPromotion={false}>
+    <OrderContainer headerTitle="Thanh toán" isShowPromotion={false}>
       <section className="payment">
         <h3 className="payment-heading">
           {language === "vni"

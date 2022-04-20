@@ -1,8 +1,6 @@
-import { Stars } from "@/components"
 import { RootState } from "@/core/store"
 import { Comment } from "@/models"
 import { setCurrentReviewId, toggleModalConfirm } from "@/modules"
-import moment from "moment"
 import Image from "next/image"
 import { BiTrash } from "react-icons/bi"
 import { useDispatch, useSelector } from "react-redux"
@@ -35,7 +33,6 @@ export const ReviewItem = ({ comment }: CommentItemProps) => {
             <span className="comment__list-item-content-info-author">
               {comment.partner_name}
             </span>
-            -
             <span className="comment__list-item-content-info-date">
               {comment.date}
             </span>

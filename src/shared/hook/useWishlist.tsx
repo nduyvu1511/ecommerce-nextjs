@@ -8,7 +8,7 @@ import {
 } from "@/modules"
 import userApi from "@/services/userApi"
 import { useRouter } from "next/router"
-import { useCallback, useEffect } from "react"
+import { useCallback } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import useSWR from "swr"
 
@@ -34,7 +34,7 @@ const useWishlist = (isFetchData: boolean): WishlistSWR => {
     isFetchData && token
       ? () => userApi.getWishlists({ token }).then((res: any) => res?.result)
       : null,
-    { revalidateOnFocus: false }
+    { revalidateOnFocus: false, dedupingInterval: 3600000 }
   )
 
   const handleDeleteWishlist = ({
@@ -84,8 +84,9 @@ const useWishlist = (isFetchData: boolean): WishlistSWR => {
           .then((res: any) => {
             dispatch(setFetchingCurrentWishlistBtn(false))
 
-            if (isObjectHasValue(res.result)) {
+            if (isObjectHasValue(res?.result)) {
               mutate([res.result], false)
+            } else {
             }
           })
           .catch(() => {

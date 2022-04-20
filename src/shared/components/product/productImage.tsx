@@ -10,9 +10,10 @@ import ImageShow from "../common/imageShow"
 interface IProductImage {
   images: Array<string>
   type: "modal" | "detail"
+  isStock: boolean
 }
 
-export const ProductImg = ({ images, type }: IProductImage) => {
+export const ProductImg = ({ images, type, isStock }: IProductImage) => {
   const [swiper, setSwiper] = useState<any>({})
   const [activeIndex, setActiveIndex] = useState<number>(1)
   const [imageShow, setImageShow] = useState<string>()
@@ -20,7 +21,7 @@ export const ProductImg = ({ images, type }: IProductImage) => {
   useEffect(() => {
     return () => {
       setActiveIndex(1)
-      if (isObjectHasValue(swiper)) {
+      if (swiper?.slideTo) {
         swiper?.slideTo(1)
       }
     }
@@ -33,6 +34,17 @@ export const ProductImg = ({ images, type }: IProductImage) => {
           type === "modal" ? "product__img-show-container-modal" : ""
         }`}
       >
+        {/* stock status */}
+        {isStock ? (
+          <span className="product-status product-status--in-stock">
+            Còn hàng
+          </span>
+        ) : (
+          <span className="product-status product-status--out-of-stock">
+            Hết hàng
+          </span>
+        )}
+
         <Swiper
           slidesPerView={1}
           loop={true}

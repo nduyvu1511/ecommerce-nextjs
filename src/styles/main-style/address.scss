@@ -1,7 +1,7 @@
 .account__option-layout-body {
   & .user__address {
     background-color: #fff;
-    padding: 2rem 1.5rem;
+    padding: 3rem 1.5rem;
     @include responsive(lg-screen) {
       padding-inline: 3rem;
     }
@@ -55,4 +55,9 @@
       padding: 3rem;
     }
   }
+}
+
+.address-loading {
+  padding: 2rem;
+  background-color: $white;
 }

@@ -28,8 +28,6 @@
     @include responsive(lg-screen) {
       font-size: 2rem;
     }
-    text-transform: uppercase;
     cursor: default;
-    font-family: $second-font;
   }
 }

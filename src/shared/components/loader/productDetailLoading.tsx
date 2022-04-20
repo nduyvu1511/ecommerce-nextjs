@@ -1,6 +1,6 @@
 export const ProductDetailLoading = () => {
   return (
-    <div className="product__detail-loading grid grid-col-1 grid-col-md-2">
+    <div className="product__detail-loading grid grid-col-1 grid-col-lg-2">
       <div className="product__detail-loading-left">
         <div className="product__detail-loading-item product__detail-loading-image"></div>
         <div className="product__detail-loading-image-list">
@@ -8,8 +8,9 @@ export const ProductDetailLoading = () => {
             <div
               key={index}
               className={`product__detail-loading-item product__detail-loading-image-list-item ${
-                index > 2 ? 'product__detail-loading-image-list-item-hide' : ''
-              }`}></div>
+                index > 2 ? "product__detail-loading-image-list-item-hide" : ""
+              }`}
+            ></div>
           ))}
         </div>
       </div>
@@ -23,6 +24,5 @@ export const ProductDetailLoading = () => {
         <div className="product__detail-loading-item product__detail-loading-share"></div>
       </div>
     </div>
-  );
-};
-
+  )
+}

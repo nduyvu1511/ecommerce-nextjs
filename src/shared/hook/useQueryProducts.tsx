@@ -1,5 +1,10 @@
+import { Price } from "@/components"
 import { RootState } from "@/core/store"
-import { DEFAULT_LIMIT_PRODUCT, isArrayHasValue } from "@/helper"
+import {
+  DEFAULT_LIMIT_PRODUCT,
+  isArrayHasValue,
+  isObjectHasValue,
+} from "@/helper"
 import { Product, ProductParams, TypeGet } from "@/models"
 import productApi from "@/services/productApi"
 import { useRouter } from "next/router"
@@ -14,9 +19,11 @@ interface UseQueryProductRes {
   setProducts: (props: Product[]) => void
   setLimit: Function
   handleChangePage: Function
-  handleFilterAttribute: Function
   handleSortProducts: Function
   isFetching: boolean
+  filterAttribute: (parentId: string, childId: string) => void
+  filterPrice: (prices: Price) => void
+  filterStarRating: (star: string) => void
 }
 
 const useQueryProducts = (): UseQueryProductRes => {
@@ -71,11 +78,8 @@ const useQueryProducts = (): UseQueryProductRes => {
       // Set limit and loading more status
       setLimit(productsFetch.length <= _limit)
 
-      if (offset >= _limit) {
-        setLoadingMore(true)
-      } else {
-        setFetching(false)
-      }
+      setLoadingMore(false)
+      setFetching(false)
 
       const newProducts = productsFetch?.slice(0, _limit) || []
 
@@ -95,12 +99,76 @@ const useQueryProducts = (): UseQueryProductRes => {
         setProducts(newProducts)
       }
     } catch (error) {
-      if (offset >= _limit) {
-        setLoadingMore(true)
+      setLoadingMore(false)
+      setFetching(false)
+    }
+  }
+
+  const filterStarRating = (star: string) => {
+    if (router.query?.star_rating === star) return
+
+    router.push(
+      {
+        query: { ...router.query, offset: 0, star_rating: Number(star) },
+      },
+      undefined,
+      {
+        shallow: true,
+        scroll: true,
+      }
+    )
+  }
+
+  const filterAttribute = (parentId: string, childId: string) => {
+    const attribute = `attributes_${parentId}`
+    const attributeIds: any = router.query?.[attribute]
+
+    let query = router.query
+    if (!attributeIds) {
+      query[attribute] = childId
+    } else {
+      if (typeof attributeIds === "string") {
+        if (attributeIds === childId) {
+          delete query[attribute]
+        } else {
+          query[attribute] = [attributeIds, childId]
+        }
+      } else if (typeof attributeIds === "object") {
+        if (attributeIds?.includes(childId)) {
+          query[attribute] = attributeIds.filter(
+            (item: string) => item !== childId
+          )
+        } else {
+          query[attribute] = [...attributeIds, childId]
+        }
       } else {
-        setFetching(false)
+        query[attribute] = childId
       }
     }
+
+    router.push(
+      {
+        query: { ...query, offset: 0 },
+      },
+      undefined,
+      { shallow: true, scroll: true }
+    )
+  }
+
+  const filterPrice = (prices: Price) => {
+    if (!prices || !isObjectHasValue(prices) || prices.min >= prices.max) return
+
+    router.push(
+      {
+        query: {
+          ...router.query,
+          offset: 0,
+          price_range: [prices.min, prices.max],
+        },
+      },
+      undefined,
+      { shallow: true, scroll: true }
+    )
   }
 
   const handleChangePage = () => {
@@ -117,8 +185,6 @@ const useQueryProducts = (): UseQueryProductRes => {
       { scroll: false, shallow: true }
     )
   }
-
-  const handleFilterAttribute = () => {}
 
   const handleSortProducts = (value: TypeGet) => {
     router.push(
@@ -142,9 +208,11 @@ const useQueryProducts = (): UseQueryProductRes => {
     setProducts,
     setLimit,
     handleChangePage,
-    handleFilterAttribute,
+    filterAttribute,
+    filterPrice,
     handleSortProducts,
     isFetching,
+    filterStarRating,
   }
 }
 

@@ -24,8 +24,7 @@
         &-header-sm {
           display: block;
           @include flex(space-between, center);
-          padding-top: 1rem;
-          padding-bottom: 2rem;
+          padding-block: 2rem;
           border-bottom: 1px solid $border-color-1;
 
           @include responsive(md-screen) {
@@ -41,7 +40,8 @@
           padding: 2rem 0;
           border-bottom: 1px solid $border-color-1;
           display: none;
-          @include responsive(md-screen) {
+
+          @include responsive(lg-screen) {
             display: flex;
           }
 
@@ -90,14 +90,12 @@
         }
 
         &-list {
-          margin-top: 1rem;
-
           .cart__page__item {
-            padding-block: 3rem;
+            padding-block: 1rem;
             border-bottom: 1px solid $border-color-1;
 
             @include responsive(md-screen) {
-              padding-block: 2rem;
+              padding-block: 1.6rem;
             }
           }
         }

@@ -18,6 +18,8 @@ const initialState: CommonSlice = {
   isChatboxOpen: false,
   isExpandChatbox: false,
   isChannelGroupOpen: false,
+  isOpenModalFilter: false,
+  isOpenNavLeftModal: false,
   message: {
     isOpen: false,
     title: "",
@@ -29,6 +31,10 @@ const initialState: CommonSlice = {
   currentReviewId: 0,
   addressForm: undefined,
   breadcrumbList: undefined,
+  isOpenCategoryModal: false,
+  isOpenSearchModal: false,
+  isOpenCartModal: false,
+  isOpenScreenLoading: false,
 }
 
 const ModalSlice = createSlice({
@@ -75,6 +81,13 @@ const ModalSlice = createSlice({
       state.message.isOpen = payload
     },
 
+    toggleOpenCategoryModal: (state, { payload }: BooleanType) => {
+      state.isOpenCategoryModal = payload
+    },
+    toggleOpenSearchModal: (state, { payload }: BooleanType) => {
+      state.isOpenSearchModal = payload
+    },
+
     setMessage: (state, { payload }: SetMessageProps) => {
       if (state.message.isOpen) {
         state.message.isOpen = false
@@ -108,6 +121,22 @@ const ModalSlice = createSlice({
     ) => {
       state.breadcrumbList = payload
     },
+
+    toggleOpenModalFilter: (state, { payload }: { payload: boolean }) => {
+      state.isOpenModalFilter = payload
+    },
+
+    toggleOpenCartModal: (state, { payload }: { payload: boolean }) => {
+      state.isOpenCartModal = payload
+    },
+
+    toggleOpenNavLeftModal: (state, { payload }: { payload: boolean }) => {
+      state.isOpenNavLeftModal = payload
+    },
+
+    toggleOpenScreenLoading: (state, { payload }: { payload: boolean }) => {
+      state.isOpenScreenLoading = payload
+    },
   },
 })
 
@@ -129,4 +158,10 @@ export const {
   setAddressForm,
   setCurrentReviewId,
   setBreadcrumbList,
+  toggleOpenModalFilter,
+  toggleOpenCategoryModal,
+  toggleOpenSearchModal,
+  toggleOpenCartModal,
+  toggleOpenNavLeftModal,
+  toggleOpenScreenLoading,
 } = ModalSlice.actions

@@ -10,13 +10,17 @@
       }
 
       &-list {
-        padding-block: 2rem;
+        padding-block: 1rem;
         width: 100%;
         max-width: 1000px;
         margin-inline: auto;
         display: grid;
         grid-template-columns: repeat(5, 1fr);
         list-style: none;
+
+        @include responsive(md-screen) {
+          padding-block: 2rem;
+        }
 
         @include responsive(lg-screen) {
           padding-block: 3rem;

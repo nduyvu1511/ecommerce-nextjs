@@ -15,7 +15,7 @@ import {
   isArrayHasValue,
   isObjectHasValue,
   mergeProductAndProductDetail,
-} from "../../helper/functions"
+} from "@/helper"
 import { ProductDetailLoading } from "../loader"
 import { Modal } from "../modal"
 import { ProductDetail } from "./productDetail"
@@ -82,9 +82,12 @@ export const ModalProductDetail = memo(function ModalProductDetailChild() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  if (!isObjectHasValue(product)) return null
+
   return (
     <>
       <Modal
+        preventScrolling
         direction="center"
         isShowModal={isOpenModalProduct}
         handleClickModal={() => dispatch(toggleModalProduct(false))}

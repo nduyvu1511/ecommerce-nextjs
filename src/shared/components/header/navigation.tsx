@@ -49,4 +49,4 @@ const Navigation = ({ handleClickModal }: IHandleClickModal) => {
   )
 }
 
-export default Navigation
+export { Navigation }

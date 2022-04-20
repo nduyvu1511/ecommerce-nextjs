@@ -1,4 +1,4 @@
-import { CartSummary } from "@/components"
+import { CartSummary, HeaderMobile } from "@/components"
 import { RootState } from "@/core/store"
 import { useRouter } from "next/router"
 import { ReactNode } from "react"
@@ -13,12 +13,14 @@ interface IOrderContainer {
   children: ReactNode
   isShowPromotion?: boolean
   isShowOrderSummary?: boolean
+  headerTitle: string
 }
 
 export const OrderContainer = ({
   children,
   isShowPromotion = true,
   isShowOrderSummary = true,
+  headerTitle,
 }: IOrderContainer) => {
   const language = "vni"
   const router = useRouter()
@@ -69,51 +71,61 @@ export const OrderContainer = ({
   ]
 
   return (
-    <section className="order__container">
-      <div className="container">
-        <div className="order-wrapper">
-          <header className="order__header">
-            <ul className="order__header-list">
-              {orderProcessList.map((item) => (
-                <li
-                  onClick={() => item.isActive && router.push(item.id)}
-                  key={item.id}
-                  className={`order__header-list-item ${
-                    item.isActive
-                      ? "order__header-list-item-active cursor-pointer"
-                      : ""
-                  }`}
-                >
-                  <span
-                    onClick={() => item.isActive && router.push(`/${item.id}`)}
-                    className={`order__header-list-item-btn ${
-                      item.isActive ? "order__header-list-item-btn-active" : ""
-                    } `}
-                  >
-                    {item.icon}
-                    <p>{language === "vni" ? item.vniTitle : item.engTitle}</p>
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </header>
+    <>
+      <HeaderMobile centerChild={<p>{headerTitle}</p>} />
 
-          <div className="order__body">
-            <div
-              className={`order__body-left ${
-                !isShowOrderSummary ? "order__body-left-full" : ""
-              }`}
-            >
-              {children}
-            </div>
-            {isShowOrderSummary ? (
-              <div className="order__body-right">
-                <CartSummary isShowPromotion={isShowPromotion} />
+      <section className="order__container">
+        <div className="container">
+          <div className="order-wrapper">
+            <header className="order__header">
+              <ul className="order__header-list">
+                {orderProcessList.map((item) => (
+                  <li
+                    onClick={() => item.isActive && router.push(item.id)}
+                    key={item.id}
+                    className={`order__header-list-item ${
+                      item.isActive
+                        ? "order__header-list-item-active cursor-pointer"
+                        : ""
+                    }`}
+                  >
+                    <span
+                      onClick={() =>
+                        item.isActive && router.push(`/${item.id}`)
+                      }
+                      className={`order__header-list-item-btn ${
+                        item.isActive
+                          ? "order__header-list-item-btn-active"
+                          : ""
+                      } `}
+                    >
+                      {item.icon}
+                      <p>
+                        {language === "vni" ? item.vniTitle : item.engTitle}
+                      </p>
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </header>
+
+            <div className="order__body">
+              <div
+                className={`order__body-left ${
+                  !isShowOrderSummary ? "order__body-left-full" : ""
+                }`}
+              >
+                {children}
               </div>
-            ) : null}
+              {isShowOrderSummary ? (
+                <div className="order__body-right">
+                  <CartSummary isShowPromotion={isShowPromotion} />
+                </div>
+              ) : null}
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   )
 }

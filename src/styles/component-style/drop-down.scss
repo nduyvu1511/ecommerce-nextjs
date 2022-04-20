@@ -30,6 +30,7 @@
     list-style: none;
     overflow-y: auto;
     animation: fade-in 0.2s linear;
+    overflow-y: hidden;
 
     &-limit {
       max-height: 30vh;

@@ -70,20 +70,25 @@ export const ProductSaleItem = ({
           <Swiper
             modules={[Navigation]}
             slidesPerView={2}
+            slidesPerGroup={2}
             navigation
             spaceBetween={5}
             breakpoints={{
               576: {
                 slidesPerView: 3,
+                slidesPerGroup: 3,
               },
               992: {
                 slidesPerView: 4,
+                slidesPerGroup: 4,
               },
               1024: {
                 slidesPerView: 5,
+                slidesPerGroup: 5,
               },
               1200: {
                 slidesPerView: 6,
+                slidesPerGroup: 6,
               },
             }}
           >

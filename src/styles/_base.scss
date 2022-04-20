@@ -340,9 +340,13 @@ a {
   display: grid;
 }
 
+.hidden {
+  display: none;
+}
+
 .btn-primary {
   font-family: $second-font;
-  @include button($indigo, $white, 1.4rem, 500, 2rem, 1.2rem);
+  @include button($primary-color, $white, 1.4rem, 500, 1.6rem, 1.2rem);
   border-radius: 0.4rem;
   white-space: nowrap;
 
@@ -354,10 +358,10 @@ a {
 
 .btn-primary-outline {
   font-family: $second-font;
-  @include button(#fff, $indigo, 1.4rem, 500, 2rem, 1.2rem);
+  @include button(#fff, $primary-color, 1.4rem, 500, 2rem, 1.2rem);
   border-radius: 0.4rem;
   white-space: nowrap;
-  border: 1px solid $indigo;
+  border: 1px solid $primary-color;
 
   & svg {
     font-size: 1.8rem;
@@ -431,6 +435,20 @@ a {
   }
 }
 
+@keyframes grow-up {
+  0% {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(100%);
+  }
+
+  100% {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0%);
+  }
+}
+
 .image-container {
   & > span {
     position: unset !important;
@@ -454,4 +472,11 @@ a {
   @include responsive(screen-1024) {
     padding-bottom: 3rem;
   }
+}
+
+select {
+  padding: 1rem 2rem;
+  background-color: #fff;
+  border: 1px solid $border-color-1;
+  border-radius: 0.3rem;
 }

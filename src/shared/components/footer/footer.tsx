@@ -7,6 +7,7 @@ import {
 } from "@/assets"
 import Image from "next/image"
 import Link from "next/link"
+import { useRouter } from "next/router"
 import React from "react"
 import { HiOutlineMailOpen } from "react-icons/hi"
 import { IoLocationOutline } from "react-icons/io5"
@@ -17,9 +18,13 @@ import {
 } from "react-icons/ri"
 
 export const Footer = () => {
+  const router = useRouter()
   return (
-    <footer className="footer">
-      <div className="footer__top-wrapper">
+    <footer
+      style={{ marginBottom: router.pathname === "/" ? 60 : 0 }}
+      className="footer"
+    >
+      {/* <div className="footer__top-wrapper">
         <div className="container">
           <div className="footer__top">
             <HiOutlineMailOpen />
@@ -33,7 +38,7 @@ export const Footer = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
       <div className="footer__body">
         <div className="container">
           <ul className="footer__body-list grid grid-col-1 grid-col-sm-2 grid-col-md-3 grid-col-lg-4 grid-col-xl-5">

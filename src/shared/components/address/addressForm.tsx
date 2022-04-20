@@ -2,8 +2,14 @@ import { UserAddressSchema } from "@/core/schema"
 import { RootState } from "@/core/store"
 import { isObjectHasValue } from "@/helper"
 import { AddressAdd, AddressId, ShippingAddress, WardAddress } from "@/models"
-import { setAddressForm, setMessage, toggleModalAddressForm } from "@/modules"
+import {
+  setAddress,
+  setAddressForm,
+  setMessage,
+  toggleModalAddressForm,
+} from "@/modules"
 import { Field, Form, Formik } from "formik"
+import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useUserAddress, useAddress } from "shared/hook"
@@ -17,6 +23,7 @@ interface AddForm {
 
 export const AddressForm = () => {
   const language = "vni"
+  const router = useRouter()
   const dispatch = useDispatch()
   const { addAddress } = useUserAddress(false)
   const { addressForm } = useSelector((state: RootState) => state.common)
@@ -165,6 +172,7 @@ export const AddressForm = () => {
 
     addAddress({ address: newAddress, addressForm: addressRes }).then(() => {
       dispatch(toggleModalAddressForm(false))
+
       clearAddressList()
       setAddressForm(undefined)
     })

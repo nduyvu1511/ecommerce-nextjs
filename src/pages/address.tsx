@@ -25,7 +25,7 @@ const Address = () => {
     if (!address) {
       dispatch(
         setMessage({
-          title: "Vui lòng chọn sản phẩm để tiếp tục",
+          title: "Vui lòng chọn địa chỉ để tiếp tục",
           type: "warning",
           isOpen: true,
         })
@@ -55,13 +55,13 @@ const Address = () => {
   }, [dispatch])
 
   return (
-    <OrderContainer isShowPromotion={false}>
+    <OrderContainer headerTitle="Địa chỉ giao hàng" isShowPromotion={false}>
       <AddressComponent type="order" />
       <div className="order__address-link">
         <button
           onClick={handleRedirect}
           className={`btn-primary ${
-            !isObjectHasValue(address) ? "btn-disabled" : ""
+            !isObjectHasValue(address) ? "disabled" : ""
           }`}
         >
           {language === "vni"

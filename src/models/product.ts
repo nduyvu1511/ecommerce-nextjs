@@ -72,7 +72,6 @@ export interface ProductDetailRes {
   description_sale: string
   wholesales: Array<string>
   categ_id: string
-  type: "product" | "combo"
   id: number
   product_tmpl_id: number
   name: string
@@ -83,6 +82,12 @@ export interface ProductDetailRes {
   seller_price: number
   image_url: Array<string>
   qty_available: number
+  categories: {
+    parent_category: Category[]
+    child_category: Category[]
+  }
+  type: "product"
+  star_rating: 0.0
 }
 
 export type ProductDetail = ProductDetailRes & Product
@@ -103,20 +108,6 @@ export type TypeGet =
   | "new"
   | "top_sale"
   | ""
-
-// export interface ProductQuery {
-//   type_get?: TypeGet
-//   limit?: LimitProduct
-//   offset?: string
-//   keyword?: string
-//   category_id?: string
-//   min_price?: string
-//   max_price?: string
-//   star_rating?: string
-// }
-// type keyString = {
-//   [key: string]: string | string[]
-// }
 
 export interface ProductParams {
   type_get?: TypeGet
@@ -281,7 +272,7 @@ export interface ProductSlice {
   product: Product | null
   listAttribute: AttributeWithParentId[] | undefined
   search: {
-    isOpen: boolean
+    isOpen: boolean | undefined
     keyword: string | undefined
     isSearching: boolean | undefined
   }

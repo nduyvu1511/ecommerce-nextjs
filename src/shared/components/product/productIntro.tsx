@@ -3,10 +3,16 @@ import { AttributeWithParentId, Product } from "@/models"
 import {
   addProductCompare,
   changeAttributeItem,
+  setProductList,
   toggleShowCompareModal,
 } from "@/modules"
+import { DOMAIN_URL } from "@/services"
+import Image from "next/image"
 import Link from "next/link"
+import { useRouter } from "next/router"
 import { useRef, useState } from "react"
+import { BiMessage } from "react-icons/bi"
+import { IoClose } from "react-icons/io5"
 import { RiArrowUpDownLine } from "react-icons/ri"
 import { useDispatch } from "react-redux"
 import { useReview } from "shared/hook"
@@ -14,7 +20,6 @@ import { ButtonAddCard } from "../button"
 import ButtonWishlist from "../button/buttonAddWishlist"
 import ButtonShare from "../button/buttonShare"
 import { InputQuantity } from "../inputs"
-import { Star } from "../star"
 import ProductDetailCountdown from "./productDetailCountdown"
 import { ProductVariation } from "./productVariation"
 
@@ -27,15 +32,20 @@ export const ProductIntro = ({ product, type }: IProductIntro) => {
   const dispatch = useDispatch()
   const language = "vni"
   const divRef = useRef<HTMLDivElement>(null)
-
+  const router = useRouter()
   const { data: reviewList } = useReview({
     product_id: product.product_tmpl_id,
   })
-
+  const [openVariantModal, setOpenVariantModal] = useState<boolean>(false)
   const [quantity, setQuantity] = useState<number>(1)
 
   const handleChangeVariantAttribute = (att: AttributeWithParentId) => {
     dispatch(changeAttributeItem(att))
+  }
+
+  const handleBuyProduct = () => {
+    dispatch(setProductList([{ ...product, quantity, partner_id: 0 }]))
+    router.push("/address")
   }
 
   const handleAddToCompareList = () => {
@@ -57,7 +67,7 @@ export const ProductIntro = ({ product, type }: IProductIntro) => {
         {type === "detail" ? (
           <div className="modal__product-header">
             <p className="modal__product-title">{product.product_name}</p>
-            <div className="modal__product-sub">
+            {/* <div className="modal__product-sub">
               <p className="modal__product-sub-brand">
                 Brands:{" "}
                 <small className="modal__product-sub-brand-title">
@@ -78,12 +88,11 @@ export const ProductIntro = ({ product, type }: IProductIntro) => {
               </div>
 
               <p className="modal__product-sub-sku">
-                SKU: <small>{product.barcode}</small>
+                Unit: <small>{product.barcode}</small>
               </p>
-            </div>
+            </div> */}
           </div>
         ) : null}
-
         {type === "item" ? (
           <Link
             href={`/product/${
@@ -96,7 +105,6 @@ export const ProductIntro = ({ product, type }: IProductIntro) => {
             <a className="product__intro-title">{product.product_name}</a>
           </Link>
         ) : null}
-        {console.log(product)}
         {type !== "item" ? (
           <div className="product__intro-price">
             <div className="product__intro-price-wrapper">
@@ -125,37 +133,9 @@ export const ProductIntro = ({ product, type }: IProductIntro) => {
               </span>
             </div>
 
-            <ProductDetailCountdown targetDate="" />
+            {/* <ProductDetailCountdown targetDate="" /> */}
           </div>
         ) : null}
-
-        {product.qty_available ? (
-          <p
-            className={`product__intro-status in-stock ${
-              type === "item" ? "product__intro-status-sm" : ""
-            }`}
-          >
-            {language === "vni" ? "còn hàng" : "in stock"}
-          </p>
-        ) : (
-          <p
-            className={`product__intro-status out-of-stock ${
-              type === "item" ? "product__intro-status-sm" : ""
-            }`}
-          >
-            {language === "vni" ? "hết hàng" : "out of stock"}
-          </p>
-        )}
-
-        {/* {product.qty_available === 0 ? (
-          <p
-            className={`product__intro-status ${
-              type === "item" ? "product__intro-status-sm" : ""
-            } ${product.qty_available ? "in-stock" : ""}`}
-          >
-            {language === "vni" ? "Hết hàng" : " out of stock"}
-          </p>
-        ) : null} */}
 
         {type !== "item" &&
         product?.attributes &&
@@ -174,20 +154,44 @@ export const ProductIntro = ({ product, type }: IProductIntro) => {
         ) : null}
 
         {type !== "item" ? (
-          <div className="product__intro-shop">
+          <div className="product__intro-quantity">
+            <p>Số lượng</p>
             <InputQuantity
               quantity={quantity}
               onChangeQuantity={(q: number) => setQuantity(q)}
             />
+          </div>
+        ) : null}
+
+        {type !== "item" ? (
+          <div className="product__intro-shop">
+            {type === "detail" ? (
+              <div
+                onClick={() => setOpenVariantModal(true)}
+                className="product__intro-shop-cart-btn"
+              >
+                <ButtonAddCard
+                  product={product}
+                  quantity={quantity}
+                  type="detail"
+                />
+              </div>
+            ) : null}
 
             <ButtonAddCard
               product={product}
               quantity={quantity}
               type="detail"
             />
+
+            {type === "detail" ? (
+              <button className="product__intro-shop-chat-btn">
+                <BiMessage />
+                <span>Nhắn tin</span>
+              </button>
+            ) : null}
           </div>
         ) : null}
-
         {type === "item" ? (
           <div className="product__intro-price product__intro-price-sm">
             <p
@@ -215,7 +219,6 @@ export const ProductIntro = ({ product, type }: IProductIntro) => {
             </span>
           </div>
         ) : null}
-
         <div className="product__intro-sub">
           <ButtonWishlist product={product} type="detail" />
 
@@ -227,7 +230,6 @@ export const ProductIntro = ({ product, type }: IProductIntro) => {
             Compare
           </button>
         </div>
-
         {type === "item" ? (
           <ButtonAddCard
             className="product__intro-shop-btn-sm"
@@ -254,7 +256,6 @@ export const ProductIntro = ({ product, type }: IProductIntro) => {
             </p>
           </div>
         ) : null}
-
         {type !== "item" ? (
           <ButtonShare
             imageUrl={`${process.env.REACT_APP_DOMAIN_URL}${product.image_url[0]}`}
@@ -263,6 +264,74 @@ export const ProductIntro = ({ product, type }: IProductIntro) => {
           />
         ) : null}
       </div>
+
+      {openVariantModal && type === "detail" ? (
+        <>
+          <div className="product__variant-modal">
+            <header className="product__variant-modal-header">
+              <div className="product__variant-modal-header-left">
+                {product?.image_url?.[0] ? (
+                  <div className="image-container">
+                    <Image
+                      src={`${DOMAIN_URL}${product?.image_url?.[0] || ""}`}
+                      alt=""
+                      layout="fill"
+                      className="image"
+                    />
+                  </div>
+                ) : null}
+
+                <p>
+                  {formatMoneyVND(product.price || 0 * quantity)}
+                  <span>/</span>
+                  <span>
+                    {quantity} {product.uom.name}
+                  </span>
+                </p>
+              </div>
+
+              <button
+                onClick={() => setOpenVariantModal(false)}
+                className="btn-reset"
+              >
+                <IoClose />
+              </button>
+            </header>
+            <div className="product__variant-modal-variants">
+              {product.attributes.map((att) => (
+                <ProductVariation
+                  onChangeAttribute={(att: AttributeWithParentId) =>
+                    handleChangeVariantAttribute(att)
+                  }
+                  attribute={att}
+                  key={att.id}
+                />
+              ))}
+            </div>
+
+            <div className="product__variant-modal-quantity">
+              <p>Số lượng</p>
+              <InputQuantity
+                quantity={quantity}
+                onChangeQuantity={(q: number) => setQuantity(q)}
+              />
+            </div>
+
+            <div className="product__variant-modal-btn">
+              <ButtonAddCard
+                product={product}
+                quantity={quantity}
+                type="detail"
+              />
+            </div>
+          </div>
+
+          <div
+            onClick={() => setOpenVariantModal(false)}
+            className="product__variant-modal-overlay"
+          ></div>
+        </>
+      ) : null}
     </>
   )
 }

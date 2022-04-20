@@ -6,7 +6,7 @@ import { useCategory } from "shared/hook"
 
 const AllCategory = () => {
   const router = useRouter()
-  const { data: categories, isValidating } = useCategory(0)
+  const { data: categories, isValidating } = useCategory(true, 0)
 
   const isValid = (categories?.length || 0) > 0 && !isValidating
   return (
@@ -29,7 +29,7 @@ const AllCategory = () => {
                     <CategoryItem category={item} />
                   </div>
                 ))
-              : Array.from({ length: 16 }).map((_, index) => (
+              : Array.from({ length: 24 }).map((_, index) => (
                   <CategoryItemLoading key={index} />
                 ))}
           </ul>

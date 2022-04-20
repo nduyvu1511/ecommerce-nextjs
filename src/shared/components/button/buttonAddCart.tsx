@@ -57,7 +57,6 @@ export const ButtonAddCard = ({
         )
       }
     } else {
-      console.log(listAttribute)
       dispatch(
         addToCart({
           ...product,
@@ -81,7 +80,7 @@ export const ButtonAddCard = ({
       } ${className ? className : ""}`}
     >
       <FaShoppingBasket />
-      {language === "vni" ? "Thêm giỏ hàng" : "Add to cart"}
+      <span>{language === "vni" ? "Thêm giỏ hàng" : "Add to cart"}</span>
     </button>
   )
 }

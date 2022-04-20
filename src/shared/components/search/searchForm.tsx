@@ -1,26 +1,31 @@
 import { RootState } from "@/core/store"
+import { convertViToEn } from "@/helper"
 import { setKeyword, toggleSearchResult } from "@/modules"
 import { useRouter } from "next/router"
 import React, { memo, useEffect, useRef, useState } from "react"
-import { RiCloseFill, RiSearchLine } from "react-icons/ri"
+import { IoCloseCircle } from "react-icons/io5"
+import { RiSearchLine } from "react-icons/ri"
 import { useDispatch, useSelector } from "react-redux"
 import { useProduct } from "shared/hook"
 import useDebounce from "shared/hook/useDebounce"
 
 interface SearchFormProps {
-  onChange?: Function
-  type?: string
+  type?: "header" | "mobile"
+  readonly?: boolean
 }
 
 export const SearchForm = memo(function SearchFormChild({
+  readonly = false,
   type,
-  onChange,
 }: SearchFormProps) {
+  const language = "vni"
   const dispatch = useDispatch()
   const router = useRouter()
   const secondRef = useRef<boolean>(false)
-  const [value, setValue] = useState(router.query.keyword || "")
-  const language = "vni"
+  const inputRef = useRef<HTMLInputElement>(null)
+  const [value, setValue] = useState<string>(
+    (router.query?.keyword || "") as string
+  )
 
   const { handleSearchProduct, clearSearchResult } = useProduct({
     key: "products_search",
@@ -29,20 +34,16 @@ export const SearchForm = memo(function SearchFormChild({
   const {
     search: { keyword },
   } = useSelector((state: RootState) => state.product)
-
-  const valueSearchTerm = useDebounce(value, 500)
+  const valueSearchTerm: string = useDebounce(value, 500)
 
   useEffect(() => {
-    onChange && onChange(value)
     if (secondRef.current) {
-      if (type === "header") {
-        if (valueSearchTerm) {
-          handleSearchProduct(valueSearchTerm)
-          dispatch(setKeyword(valueSearchTerm))
-        } else {
-          clearSearchResult()
-          dispatch(setKeyword(""))
-        }
+      if (valueSearchTerm) {
+        handleSearchProduct(convertViToEn(valueSearchTerm.toLowerCase().trim()))
+        dispatch(setKeyword(valueSearchTerm))
+      } else {
+        clearSearchResult()
+        dispatch(setKeyword(""))
       }
     } else {
       secondRef.current = true
@@ -52,7 +53,6 @@ export const SearchForm = memo(function SearchFormChild({
 
   const handleSubmit = () => {
     if (!value) return
-
     dispatch(toggleSearchResult(false))
     router.push({
       pathname: `/shop`,
@@ -64,6 +64,10 @@ export const SearchForm = memo(function SearchFormChild({
       },
     })
   }
+
+  useEffect(() => {
+    type === "mobile" && inputRef.current?.focus()
+  }, [])
 
   useEffect(() => {
     return () => {
@@ -81,8 +85,10 @@ export const SearchForm = memo(function SearchFormChild({
       className="header__search-form"
     >
       <input
-        onFocus={() => dispatch(toggleSearchResult(true))}
-        onClick={() => dispatch(toggleSearchResult(true))}
+        readOnly={readonly}
+        ref={inputRef}
+        onFocus={() => !readonly && dispatch(toggleSearchResult(true))}
+        onClick={() => !readonly && dispatch(toggleSearchResult(true))}
         className="header__search-input"
         type="text"
         value={value}
@@ -100,7 +106,7 @@ export const SearchForm = memo(function SearchFormChild({
           value ? "header__search-input-clear-active" : ""
         }`}
       >
-        <RiCloseFill />
+        <IoCloseCircle />
       </span>
       <button onClick={handleSubmit} className="btn-reset header__search-btn">
         <RiSearchLine />

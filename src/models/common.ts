@@ -42,6 +42,8 @@ export interface CommonSlice {
   isChatboxOpen: boolean
   isExpandChatbox: boolean
   isChannelGroupOpen: boolean
+  isOpenModalFilter: boolean
+  isOpenNavLeftModal: boolean
   message: {
     isOpen: boolean
     title: string
@@ -53,6 +55,10 @@ export interface CommonSlice {
   currentReviewId: number
   addressForm: ShippingAddress | undefined
   breadcrumbList: BreadcrumbItem[] | undefined
+  isOpenSearchModal: boolean
+  isOpenCategoryModal: boolean
+  isOpenCartModal: boolean
+  isOpenScreenLoading: boolean
 }
 
 export interface SetMessageProps {

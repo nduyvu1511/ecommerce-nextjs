@@ -86,6 +86,10 @@ export const CartPageItem = ({
         <div className="cart__item-info-item cart__item-info-price">
           <p className="cart__item-info-item-title">Giá: </p>
           <p className="info-price-price">{formatMoneyVND(cart.price)}</p>
+
+          <p className="info-price-price-mobile">
+            {formatMoneyVND(cart.quantity * cart.price)}
+          </p>
         </div>
 
         <div className="cart__item-info-item cart__item-info-quantity">

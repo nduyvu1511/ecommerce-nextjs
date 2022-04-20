@@ -23,6 +23,7 @@ export const Category = ({
   showChild = true,
 }: CategoryProps) => {
   const { asPath, query } = useRouter()
+  const limit = Number(query?.limit) || 12
   const childCategory = useRef<HTMLDivElement>(null)
 
   const categoryIdActive = asPath.includes("category_id")
@@ -37,9 +38,6 @@ export const Category = ({
     handleClickModal && handleClickModal()
     toggleCategoryDropdown && toggleCategoryDropdown()
   }
-
-  const limit = Number(query?.limit) || 12
-  const offset = Number(query?.offset) || 0
 
   if (!isArrayHasValue(categories)) return null
 

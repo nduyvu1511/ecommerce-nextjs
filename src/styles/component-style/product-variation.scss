@@ -1,19 +1,19 @@
 .product__variation {
   display: flex;
   flex-direction: column;
-  @include responsive(sm-screen) {
+
+  @include responsive(md-screen) {
     flex-direction: row;
   }
-  align-items: center;
 
   &-heading {
     @include style-text(500, 1.3rem, 2rem, $text-color);
-    margin-right: 2rem;
     width: 100px;
     text-transform: capitalize;
     margin-bottom: 1rem;
-    @include responsive(sm-screen) {
+    @include responsive(md-screen) {
       margin-bottom: 0;
+      margin-right: 2rem;
     }
   }
 
@@ -23,6 +23,7 @@
     align-items: center;
     flex-wrap: wrap;
     margin-bottom: 1rem;
+    flex: 1;
 
     &-item {
       position: relative;
@@ -33,10 +34,15 @@
       height: 36px;
       white-space: nowrap;
       padding: 0 1.8rem;
-      border-radius: 4px;
+      border-radius: 2px;
       border: 1px solid $border-color-1;
-      @include style-text(500, 1.2rem, 1.2rem, $home-heading-color);
+      @include style-text(500, 1.2rem, 1.2rem, $text-color);
       user-select: none;
+
+      @include responsive(sm-screen) {
+        font-size: 1.3rem;
+        line-height: 1.3rem;
+      }
 
       &:last-child {
         margin-right: 0;
@@ -44,9 +50,9 @@
 
       &-icon {
         position: absolute;
-        background-color: $red;
-        right: 0;
-        top: 0;
+        background-color: $primary-color;
+        right: -1px;
+        top: -1px;
         border-top-right-radius: 4px;
 
         & svg {
@@ -56,12 +62,13 @@
       }
     }
     .active {
-      border: 1px solid $red;
+      border: 1px solid $primary-color;
+      color: $primary-color;
     }
   }
 
   .dropdown {
-    border-radius: 0.4rem;
+    border-radius: 0.2rem;
     border: 1px solid $border-color-1;
   }
 

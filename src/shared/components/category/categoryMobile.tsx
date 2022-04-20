@@ -2,31 +2,42 @@ import { cartEmptyIcon, companyIcon } from "@/assets"
 import { Category } from "@/models"
 import { DOMAIN_URL } from "@/services"
 import Image from "next/image"
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
+import { RiLoader4Fill } from "react-icons/ri"
 import { useCategory } from "shared/hook"
+import { CategoryGrid } from "./categoryGrid"
 
 export const CategoryMobile = () => {
-  const { data: categories, getChildCategories } = useCategory()
-  const [childCategories, setChildCategories] = useState<Category[]>()
-  const [currentId, setCurrentId] = useState<number>(
-    () => categories?.[0]?.id || 0
-  )
+  const [currentId, setCurrentId] = useState<number>(0)
+  const {
+    data: categories,
+    getChildCategories,
+    setChildCategories,
+    childCategories,
+    isChildCategoryFetching,
+  } = useCategory(false)
 
   useEffect(() => {
-    if (!currentId) return
+    if (!categories?.[0]?.id) return
+    const id = categories[0].id
+    getChildCategories(id)
+    setCurrentId(id)
 
-    getChildCategories(currentId).then((data: Category[]) =>
-      setChildCategories(data)
-    )
-  }, [currentId])
+    return () => {
+      setChildCategories([])
+    }
+  }, [])
 
   return (
     <div className="category__select">
       <ul className="category__left-list">
         {categories?.length > 0 &&
-          categories.map((item: Category, index) => (
+          categories.map((item: Category) => (
             <li
-              onClick={() => setCurrentId(item.id)}
+              onClick={() => {
+                setCurrentId(item.id)
+                getChildCategories(item.id)
+              }}
               key={item.id}
               className={`category__left-list-item ${
                 item.id === currentId ? "category__left-list-item-active" : ""
@@ -45,28 +56,26 @@ export const CategoryMobile = () => {
           ))}
       </ul>
 
-      {childCategories && childCategories?.length > 0 ? (
-        <ul className="category__right-list">
-          {childCategories.map((item: Category) => (
-            <li key={item.id} className="category__right-list-item">
-              <div className="image-container">
-                <Image
-                  src={item?.icon ? `${DOMAIN_URL}${item.icon}` : companyIcon}
-                  layout="fill"
-                  alt=""
-                  className="image"
-                />
-              </div>
-              <p>{item.name}</p>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <div className="category__right-list-no-category">
-          {cartEmptyIcon}
-          <p>Không có danh mục nào được tìm thấy</p>
-        </div>
-      )}
+      <div className="category__select-right">
+        {!isChildCategoryFetching &&
+        childCategories &&
+        childCategories?.length > 0 ? (
+          <CategoryGrid modalType="category" categories={childCategories} />
+        ) : null}
+
+        {!isChildCategoryFetching && childCategories?.length === 0 ? (
+          <div className="category__select-right-no-category">
+            {cartEmptyIcon}
+            <p>Không có danh mục nào được tìm thấy</p>
+          </div>
+        ) : null}
+
+        {isChildCategoryFetching ? (
+          <div className="category__select-right-loading">
+            <RiLoader4Fill className="loader" />
+          </div>
+        ) : null}
+      </div>
     </div>
   )
 }
