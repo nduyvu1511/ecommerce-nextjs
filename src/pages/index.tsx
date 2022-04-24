@@ -1,9 +1,11 @@
+import { avatar as avatarBlank } from "@/assets"
 import {
   CategoryItem,
   CategorySlide,
   HeaderMobile,
   HomeCategory,
   navMobileLinks,
+  Popup,
 } from "@/components"
 import {
   MainBanner,
@@ -44,10 +46,8 @@ const Home = ({ locale }: LayoutProps) => {
   const { carts } = useCartOrder()
   const router = useRouter()
   const dispatch = useDispatch()
-  const {
-    token,
-    userInfo: { avatar = "" },
-  } = useSelector((state: RootState) => state.user)
+  const { token, userInfo: { avatar = "" } = { userInfo: undefined } } =
+    useSelector((state: RootState) => state.user)
   // to use translation, just use:
 
   return (
@@ -56,11 +56,11 @@ const Home = ({ locale }: LayoutProps) => {
         showSearchInput
         rightChild={
           <>
-            {token && avatar ? (
+            {token ? (
               <Link passHref href="/account">
                 <div className="image-container">
                   <Image
-                    src={`${DOMAIN_URL}${avatar}`}
+                    src={avatar ? `${DOMAIN_URL}${avatar}` : avatarBlank}
                     alt=""
                     layout="fill"
                     className="image"
@@ -69,7 +69,7 @@ const Home = ({ locale }: LayoutProps) => {
               </Link>
             ) : (
               <button
-                onClick={() => dispatch(toggleOpenCartModal(true))}
+                onClick={() => router.push(`/${token ? "account" : "login"}`)}
                 className="btn-reset header__main-top-actions-icon-mobile"
               >
                 <AiOutlineUser />
@@ -143,6 +143,8 @@ const Home = ({ locale }: LayoutProps) => {
           ))}
         </ul>
       </div>
+
+      <Popup />
     </>
   )
 }

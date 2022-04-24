@@ -7,6 +7,7 @@ import { PurchasedProduct } from "@/models"
 import { DOMAIN_URL } from "@/services"
 import Link from "next/link"
 import React, { useState } from "react"
+import { CgSmileNone } from "react-icons/cg"
 import { RiLoader4Line } from "react-icons/ri"
 import { useProductRating } from "shared/hook"
 
@@ -29,6 +30,17 @@ const Purchase = () => {
         ]}
         heading="Danh sách đơn mua"
       >
+        {isValidating ? (
+          <div className="loader-container">
+            <RiLoader4Line className="loader" />
+          </div>
+        ) : purchaseList?.length === 0 ? (
+          <div className="list--empty">
+            <CgSmileNone />
+            <p>Bạn chưa hoàn thành đơn hàng nào </p>
+          </div>
+        ) : null}
+
         {!isValidating && purchaseList?.length > 0 ? (
           <ul className="purchase__list">
             {purchaseList.map((item: PurchasedProduct, index: number) => (
@@ -90,11 +102,7 @@ const Purchase = () => {
               </li>
             ))}
           </ul>
-        ) : (
-          <div className="loader-container">
-            <RiLoader4Line className="loader" />
-          </div>
-        )}
+        ) : null}
       </AccountContainer>
 
       <section className="purchase__modal">

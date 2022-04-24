@@ -13,6 +13,7 @@ import {
   DeleteComment,
   TokenAndSaleOrderId,
   UpdateUserProps,
+  PhoneUpdateProps,
 } from "@/models"
 import axiosClient from "."
 
@@ -62,9 +63,15 @@ const userApi = {
     )
   },
 
-  firebaseAuth: (token: Auth) => {
+  firebaseAuth: (params: Auth) => {
     return axiosClient.post("/api/v2.0/information_customers/auth", {
-      params: token,
+      params,
+    })
+  },
+
+  updatePhoneNumber: (params: PhoneUpdateProps) => {
+    return axiosClient.post("/api/v2.0/update_phone_by_login", {
+      params,
     })
   },
 

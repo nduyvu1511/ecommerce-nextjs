@@ -4,8 +4,8 @@ import {
   addToCart,
   clearProductCompare,
   deleteProductCompare,
+  setModalConfirm,
   setProduct,
-  toggleModalConfirm,
   toggleModalProduct,
   toggleShowCompareModal,
 } from "@/modules"
@@ -30,10 +30,8 @@ export const Compare = ({ type }: { type?: "page" | "modal" }) => {
   const dispatch = useDispatch()
   const router = useRouter()
 
-  const {
-    token,
-    userInfo: { id: partner_id },
-  } = useSelector((state: RootState) => state.user)
+  const { token, userInfo: { id: partner_id = 0 } = { userInfo: undefined } } =
+    useSelector((state: RootState) => state.user)
   const { productsCompare, isShowCompareModal } = useSelector(
     (state: RootState) => state.compare
   )
@@ -41,12 +39,6 @@ export const Compare = ({ type }: { type?: "page" | "modal" }) => {
   const handleAddToCart = (product: Product) => {
     if (!token) {
       router.push("/login")
-      toast.warning(
-        language === "vni"
-          ? "Bạn phải đăng nhập để thêm giỏ hàng"
-          : "You must login to add to cart",
-        { position: "top-right" }
-      )
       return
     }
 
@@ -64,14 +56,7 @@ export const Compare = ({ type }: { type?: "page" | "modal" }) => {
 
   return (
     <div className="compare">
-      <ModalConfirm
-        confirmModal={handleResetCompareList}
-        desc={`${
-          language === "vni"
-            ? "Nếu đồng ý bạn sẽ xóa tất cả sản phẩm trong danh sách so sánh"
-            : "if agree, you will delete all products from compare list"
-        }`}
-      />
+      <ModalConfirm onConfirm={handleResetCompareList} />
       {type === "page" ? (
         <div className="compare__header">
           <h3 className="compare__header-heading">
@@ -79,7 +64,15 @@ export const Compare = ({ type }: { type?: "page" | "modal" }) => {
           </h3>
           {productsCompare.length > 0 ? (
             <button
-              onClick={() => dispatch(toggleModalConfirm(true))}
+              onClick={() =>
+                dispatch(
+                  setModalConfirm({
+                    isOpen: true,
+                    title:
+                      "Nếu đồng ý bạn sẽ xóa tất cả sản phẩm trong danh sách so sánh",
+                  })
+                )
+              }
               className="btn-reset btn-primary"
             >
               {language === "vni" ? "Xóa tất cả" : "Reset Compare List"}

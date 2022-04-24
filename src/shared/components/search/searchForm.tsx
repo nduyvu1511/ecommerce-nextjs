@@ -55,7 +55,7 @@ export const SearchForm = memo(function SearchFormChild({
     if (!value) return
     dispatch(toggleSearchResult(false))
     router.push({
-      pathname: `/shop`,
+      pathname: `/products/search?keyword=${value}`,
       query: {
         ...router.query,
         keyword: value,

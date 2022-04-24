@@ -3,13 +3,13 @@ import { Modal } from "@/components"
 import { RootState } from "@/core/store"
 import { Promotion } from "@/models"
 import { setMessage, toggleModalCoupons } from "@/modules"
-import { memo, useState } from "react"
+import { useState } from "react"
 import { RiLoader4Line } from "react-icons/ri"
 import { useDispatch, useSelector } from "react-redux"
 import { usePromotion } from "shared/hook"
 import { PromotionItem } from "./promotionItem"
 
-export const PromotionModal = memo(function PromotionModalChild() {
+export const PromotionModal = () => {
   const dispatch = useDispatch()
   const language = "vni"
   const {
@@ -23,7 +23,6 @@ export const PromotionModal = memo(function PromotionModalChild() {
   const [promotionCode, setPromotionCode] = useState<string>()
 
   const handleAddPromotion = (promotionProps: Promotion) => {
-    console.log(promotionProps)
     if (!promotion) {
       applyPromotion(promotionProps)
     } else {
@@ -32,7 +31,6 @@ export const PromotionModal = memo(function PromotionModalChild() {
           dispatch(
             setMessage({
               title: "Đã hủy áp dụng voucher",
-              isOpen: true,
               direction: "top",
             })
           )
@@ -45,7 +43,8 @@ export const PromotionModal = memo(function PromotionModalChild() {
 
   return (
     <Modal
-      isShowModal={true}
+      isShowModal
+      disableOverLay
       direction="center"
       heading={language === "vni" ? "Chọn Voucher" : "Choose Voucher"}
       handleClickModal={() => dispatch(toggleModalCoupons(false))}
@@ -104,10 +103,10 @@ export const PromotionModal = memo(function PromotionModalChild() {
             onClick={() => dispatch(toggleModalCoupons(false))}
             className={`btn-primary ${!promotion ? "btn-secondary" : ""}`}
           >
-            {promotion ? "OK" : "Cancel"}
+            {promotion ? "OK" : "Hủy"}
           </button>
         </footer>
       </div>
     </Modal>
   )
-})
+}

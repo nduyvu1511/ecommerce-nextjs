@@ -8,7 +8,7 @@ import {
   TagRating,
   UpdateRatingProps,
 } from "@/models"
-import { setMessage, toggleModalConfirm } from "@/modules"
+import { setMessage, setModalConfirm } from "@/modules"
 import { DOMAIN_URL } from "@/services"
 import ratingApi from "@/services/ratingApi"
 import Image from "next/image"
@@ -41,7 +41,9 @@ export const RatingForm = memo(function RatingFormChild({
   const dispatch = useDispatch()
   const router = useRouter()
   const { token } = useAuth()
-  const { isOpenModalConfirm } = useSelector((state: RootState) => state.common)
+  const {
+    modalConfirm: { isOpen },
+  } = useSelector((state: RootState) => state.common)
 
   const { deleteImage, ratingImages, getBase64Images, setRatingImages } =
     useAttachment({
@@ -176,7 +178,6 @@ export const RatingForm = memo(function RatingFormChild({
           dispatch(
             setMessage({
               type: "warning",
-              isOpen: true,
               title: "Có lỗi xảy ra, vui lòng chọn lại ảnh",
               direction: "top",
             })
@@ -355,7 +356,14 @@ export const RatingForm = memo(function RatingFormChild({
 
             {purchaseForm?.comment_rating?.comment_id ? (
               <button
-                onClick={() => dispatch(toggleModalConfirm(true))}
+                onClick={() =>
+                  dispatch(
+                    setModalConfirm({
+                      isOpen: true,
+                      title: "Nếu đồng ý, bạn sẽ xóa đi đánh giá này",
+                    })
+                  )
+                }
                 className="btn-primary rating__form-footer-danger-btn"
               >
                 Xóa đánh giá
@@ -374,12 +382,7 @@ export const RatingForm = memo(function RatingFormChild({
         ) : null}
       </div>
 
-      {isOpenModalConfirm ? (
-        <ModalConfirm
-          confirmModal={handleDeleteCommentRating}
-          desc="Nếu đồng ý, bạn sẽ xóa đi đánh giá này"
-        />
-      ) : null}
+      <ModalConfirm onConfirm={handleDeleteCommentRating} />
     </>
   )
 })

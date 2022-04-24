@@ -2,17 +2,11 @@ import { UserAddressSchema } from "@/core/schema"
 import { RootState } from "@/core/store"
 import { isObjectHasValue } from "@/helper"
 import { AddressAdd, AddressId, ShippingAddress, WardAddress } from "@/models"
-import {
-  setAddress,
-  setAddressForm,
-  setMessage,
-  toggleModalAddressForm,
-} from "@/modules"
+import { setAddressForm, setMessage, toggleModalAddressForm } from "@/modules"
 import { Field, Form, Formik } from "formik"
-import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { useUserAddress, useAddress } from "shared/hook"
+import { useAddress, useUserAddress } from "shared/hook"
 import { Dropdown } from "../common"
 
 interface AddForm {
@@ -23,14 +17,11 @@ interface AddForm {
 
 export const AddressForm = () => {
   const language = "vni"
-  const router = useRouter()
   const dispatch = useDispatch()
   const { addAddress } = useUserAddress(false)
   const { addressForm } = useSelector((state: RootState) => state.common)
-  const {
-    userInfo: { id: partner_id },
-    token,
-  } = useSelector((state: RootState) => state.user)
+  const { userInfo: { id: partner_id = 0 } = { userInfo: undefined }, token } =
+    useSelector((state: RootState) => state.user)
 
   // Get Address from custom hook
   const {
@@ -41,6 +32,8 @@ export const AddressForm = () => {
     wards,
     clearWards,
     clearAddressList,
+    setDistricts,
+    setWards,
   } = useAddress()
 
   // Local State
@@ -84,17 +77,17 @@ export const AddressForm = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
+  console.log(districts)
   const handleSelectState = (address: AddressId) => {
     setState(address)
     getDistricts(address.id)
 
     if (state?.id) {
       if (state.id !== address.id) {
+        setDistricts([])
         dispatch(
           setMessage({
             title: "Vui lòng chọn lại Quận / Huyện",
-            isOpen: true,
             type: "warning",
             direction: "top",
           })
@@ -119,7 +112,6 @@ export const AddressForm = () => {
         dispatch(
           setMessage({
             title: "Vui lòng chọn lại Phường / Xã",
-            isOpen: true,
             type: "warning",
             direction: "top",
           })
@@ -135,7 +127,6 @@ export const AddressForm = () => {
         setMessage({
           type: "warning",
           title: "Vui lòng chọn lại địa chỉ",
-          isOpen: true,
           direction: "top",
         })
       )
@@ -297,7 +288,7 @@ export const AddressForm = () => {
                   type="area"
                   placeholder={
                     language === "vni"
-                      ? "Địa chỉ cụ thể..."
+                      ? "Ví dụ: 52, đường Trần Hưng Đạo"
                       : "Address detail..."
                   }
                   name="street"
@@ -324,5 +315,3 @@ export const AddressForm = () => {
     </section>
   )
 }
-
-export default AddressForm

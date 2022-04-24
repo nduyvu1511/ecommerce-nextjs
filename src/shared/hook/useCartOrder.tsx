@@ -41,10 +41,8 @@ const useCartOrder = (): UseCartOrderProps => {
     promotionLineList,
   } = useSelector((state: RootState) => state.order)
   const { data: cartList } = useSelector((state: RootState) => state.cart)
-  const {
-    token,
-    userInfo: { id: partner_id },
-  } = useSelector((state: RootState) => state.user)
+  const { token, userInfo: { id: partner_id = 0 } = { userInfo: {} } } =
+    useSelector((state: RootState) => state.user)
 
   const carts = useMemo(() => {
     if (!token) return []
@@ -120,12 +118,10 @@ const useCartOrder = (): UseCartOrderProps => {
       dispatch(setProductList(getDiffCartsById(productList, productIds)))
 
       if (productList.find((item) => isExistCart(productIds, item))) {
-        console.log("reset product list ")
         handleResetOrderField()
       }
 
       if (carts.length === 1) {
-        console.log("set product list to undefined")
         dispatch(setProductList(undefined))
       }
     }

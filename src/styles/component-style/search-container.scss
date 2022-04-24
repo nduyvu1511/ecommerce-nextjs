@@ -15,7 +15,7 @@
     height: 100%;
     outline: none;
     padding-left: 0.8rem;
-    @include style-text(400, 1.3rem, 1.3rem, $text-color);
+    @include style-text(500, 1.3rem, 1.3rem, $text-color);
     background-color: #fff;
     border-radius: 0.2rem;
     border: 0;
@@ -29,8 +29,6 @@
     }
 
     @include responsive(lg-screen) {
-      font-size: 1.5rem;
-      line-height: 1.5rem;
       padding-left: 1.2rem;
       padding-right: 5rem;
     }
@@ -120,8 +118,7 @@
   }
   background-color: #fff;
   z-index: 20;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
+  border-radius: 0 0 2px 2px;
 
   &--no-result {
     padding: 3rem;

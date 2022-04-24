@@ -14,23 +14,22 @@ interface PaymentSWR {
 const usePayment = (): PaymentSWR => {
   const dispatch = useDispatch()
   const { token } = useSelector((state: RootState) => state.user)
-  const { productList, orderDraft, address, delivery } = useSelector(
+  const { productList, orderDraft, address } = useSelector(
     (state: RootState) => state.order
   )
 
-  const { data, error, isValidating, mutate } = useSWR(
-    "delivery",
-    token && productList && orderDraft && address
+  const { data, error, isValidating } = useSWR(
+    "payment",
+    token && productList && orderDraft
       ? () =>
           orderApi.getPaymentList({ token }).then((res: any) => {
-            if (res.result.success) {
+            if (res?.result?.success) {
               return res.result.data
             } else {
               dispatch(
                 setMessage({
                   title: res.result.message,
                   type: "danger",
-                  isOpen: true,
                 })
               )
             }
@@ -40,10 +39,6 @@ const usePayment = (): PaymentSWR => {
       revalidateOnFocus: false,
     }
   )
-
-  const setPayment = () => {
-
-  }
 
   return {
     data,

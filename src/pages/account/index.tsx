@@ -3,13 +3,14 @@ import { MainAuthLayout } from "@/layout"
 import { BsFillHeartFill } from "react-icons/bs"
 import { CgCalculator } from "react-icons/cg"
 import { FaShoppingCart } from "react-icons/fa"
-import { useCart, useWishlist } from "shared/hook"
+import { useCartOrder, useOrderHistory, useWishlist } from "shared/hook"
 
 const AccountGeneral = () => {
   const language = "vni"
 
-  const { carts } = useCart()
+  const { carts } = useCartOrder()
   const { data: wishlists } = useWishlist(false)
+  const { data: orderHistoryList = [] } = useOrderHistory()
 
   return (
     <AccountContainer
@@ -51,7 +52,8 @@ const AccountGeneral = () => {
               <CgCalculator />
             </span>
             <h3>
-              {10} {language === "vni" ? "Đơn hàng" : "Product"}
+              {orderHistoryList?.length || 0}{" "}
+              {language === "vni" ? "Đơn hàng" : "Product"}
             </h3>
             <p>{language === "vni" ? "Bạn đã đặt hàng" : "You ordered"}</p>
           </li>

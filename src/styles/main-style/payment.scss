@@ -1,48 +1,44 @@
-.payment {
+.payment__order {
   &-heading {
     margin-bottom: 3rem;
     @include style-text(500, 1.8rem, 2.8rem, $text-color);
   }
 
   &__list {
-    grid-gap: 2rem;
+    grid-gap: 1rem;
     list-style: none;
 
     &-item {
       @include flex(space-between, center);
       cursor: pointer;
-      padding: 2rem;
-      border-radius: 4px;
+      padding: 1rem;
+      border-radius: 2px;
       border: 1px solid $border-color-1;
 
       &-active {
-        border: 1px solid $primary;
+        border: 1px solid $primary-color;
       }
 
       &-content {
         flex: 1;
         margin-right: 0.5rem;
-        @include flex-center;
-        flex-direction: column;
+        display: flex;
+        align-items: center;
 
         & p {
-          @include style-text(600, 1.4rem, 2.4rem, $text-color);
-          margin-bottom: 1.8rem;
+          @include style-text(500, 1.3rem, 2rem, $text-color);
+          margin-inline: 1.4rem;
         }
 
         & img {
-          max-width: 120px;
-          width: 100%;
+          width: 40px;
+          height: auto;
         }
       }
     }
   }
 
-  &__footer {
-    margin-top: 3rem;
-
-    & button {
-      margin-left: auto;
-    }
+  &-disabled {
+    opacity: 0.5;
   }
 }

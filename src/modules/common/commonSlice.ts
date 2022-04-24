@@ -2,6 +2,7 @@ import {
   BooleanType,
   BreadcrumbItem,
   CommonSlice,
+  ModalConfirmProps,
   SetMessageProps,
   ShippingAddress,
 } from "@/models"
@@ -12,8 +13,11 @@ const initialState: CommonSlice = {
   isOpenModalProduct: false,
   isOpenModalOptionAccount: false,
   isOpenModalCoupons: false,
-  isOpenModalPopup: false,
-  isOpenModalConfirm: false,
+  modalConfirm: {
+    isOpen: false,
+    title: "",
+    heading: "",
+  },
   isOpenAddressForm: false,
   isChatboxOpen: false,
   isExpandChatbox: false,
@@ -35,6 +39,9 @@ const initialState: CommonSlice = {
   isOpenSearchModal: false,
   isOpenCartModal: false,
   isOpenScreenLoading: false,
+  isOpenOrderSummary: false,
+  isOpenOtpLoginModal: false,
+  isOpenLoginModal: false,
 }
 
 const ModalSlice = createSlice({
@@ -53,12 +60,17 @@ const ModalSlice = createSlice({
       state.isOpenModalOptionAccount = payload
     },
 
-    toggleModalPopup: (state, { payload }: BooleanType) => {
-      state.isOpenModalPopup = payload
-    },
-
-    toggleModalConfirm: (state, { payload }: BooleanType) => {
-      state.isOpenModalConfirm = payload
+    setModalConfirm: (
+      state,
+      { payload }: { payload: ModalConfirmProps | undefined }
+    ) => {
+      if (!payload) {
+        state.modalConfirm.heading = ""
+        state.modalConfirm.title = ""
+        state.modalConfirm.isOpen = false
+      } else {
+        state.modalConfirm = payload
+      }
     },
 
     toggleModalAddressForm: (state, { payload }: BooleanType) => {
@@ -89,15 +101,17 @@ const ModalSlice = createSlice({
     },
 
     setMessage: (state, { payload }: SetMessageProps) => {
+      const { title, direction, duration, isOpen = true, size, type } = payload
+
       if (state.message.isOpen) {
         state.message.isOpen = false
       }
-      state.message.title = payload.title
-      state.message.isOpen = payload.isOpen
-      state.message.duration = payload?.duration || 2000
-      state.message.size = payload?.size || "medium"
-      state.message.type = payload?.type || "success"
-      state.message.direction = payload?.direction || "center"
+      state.message.title = title
+      state.message.isOpen = isOpen
+      state.message.duration = duration || 2000
+      state.message.size = size || "medium"
+      state.message.type = type || "success"
+      state.message.direction = direction || "center"
     },
 
     clearMessage: (state) => {
@@ -137,6 +151,18 @@ const ModalSlice = createSlice({
     toggleOpenScreenLoading: (state, { payload }: { payload: boolean }) => {
       state.isOpenScreenLoading = payload
     },
+
+    toggleOpenOrderSummaryModal: (state, { payload }: { payload: boolean }) => {
+      state.isOpenOrderSummary = payload
+    },
+
+    toggleOpenOtpLoginModal: (state, { payload }: { payload: boolean }) => {
+      state.isOpenOtpLoginModal = payload
+    },
+
+    toggleOpenLoginModal: (state, { payload }: { payload: boolean }) => {
+      state.isOpenLoginModal = payload
+    },
   },
 })
 
@@ -147,9 +173,8 @@ export const {
   toggleExpandChatbox,
   toggleModalAccountOption,
   toggleModalAddressForm,
-  toggleModalConfirm,
+  setModalConfirm,
   toggleModalCoupons,
-  toggleModalPopup,
   toggleModalProduct,
   toggleOpenChannelGroup,
   toggleOpenMessage,
@@ -164,4 +189,7 @@ export const {
   toggleOpenCartModal,
   toggleOpenNavLeftModal,
   toggleOpenScreenLoading,
+  toggleOpenOrderSummaryModal,
+  toggleOpenOtpLoginModal,
+  toggleOpenLoginModal,
 } = ModalSlice.actions

@@ -72,7 +72,7 @@
         left: 0;
         right: 0;
         margin-bottom: 0;
-        height: 55px;
+        height: 50px;
         align-items: flex-end;
         justify-content: flex-end;
         flex-direction: row-reverse;
@@ -134,21 +134,21 @@
 
         &-chat-btn {
           display: flex;
-          border: none;
           flex: 1;
           height: 100%;
-          background-color: $green;
+          background-color: $primary-color-opacity;
           @include flex-center;
-          font-family: $second-font;
-          color: $white;
+          color: $primary-color;
           border-radius: 0;
           outline: none;
-          padding-inline: 2rem;
+          padding-inline: 1.4rem;
+          border: none;
 
           @include responsive(md-screen) {
             margin-left: 1.4rem;
             flex: unset;
             border-radius: 0.2rem;
+            border: 1px solid $primary-color;
           }
 
           & svg {
@@ -157,7 +157,7 @@
           }
 
           & span {
-            @include style-text(500, 1.5rem, 1.5rem, $white);
+            @include style-text(500, 1.4rem, 1.4rem, $primary-color);
           }
         }
       }
@@ -215,16 +215,16 @@
   }
 
   .product__detail-tabs-wrapper {
-    margin-top: 3rem;
+    margin-top: 1rem;
     @include responsive(lg-screen) {
-      margin-top: 5rem;
+      margin-top: 3rem;
     }
   }
 
   .product__detail-related {
-    margin-top: 3rem;
+    margin-top: 1rem;
     @include responsive(lg-screen) {
-      margin-top: 5rem;
+      margin-top: 3rem;
     }
 
     .swiper-wrapper .product__card__img {
@@ -233,9 +233,9 @@
   }
 
   .product__detail-recently {
-    margin-top: 3rem;
+    margin-top: 1rem;
     @include responsive(lg-screen) {
-      margin-top: 5rem;
+      margin-top: 3rem;
     }
   }
 }

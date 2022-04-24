@@ -7,11 +7,6 @@
   &__banner {
     display: flex;
     margin-bottom: 3rem;
-    margin-top: 1.5rem;
-
-    @include responsive(md-screen) {
-      margin-top: 2rem;
-    }
 
     &-left {
       display: none;

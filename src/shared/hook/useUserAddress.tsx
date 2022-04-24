@@ -30,7 +30,7 @@ export const useUserAddress = (shouldFetch = true): AccountSWR => {
   const {
     addressDefault,
     token,
-    userInfo: { id: partner_id = 0 },
+    userInfo: { id: partner_id = 0 } = { userInfo: undefined },
   } = useSelector((state: RootState) => state.user)
   const { address: orderAddress } = useSelector(
     (state: RootState) => state.order
@@ -81,7 +81,6 @@ export const useUserAddress = (shouldFetch = true): AccountSWR => {
           dispatch(
             setMessage({
               title: "Chỉnh sửa địa chỉ thành công",
-              isOpen: true,
             })
           )
         } else {
@@ -99,7 +98,7 @@ export const useUserAddress = (shouldFetch = true): AccountSWR => {
             false
           )
 
-          if (router.pathname === "/address" && !orderAddress) {
+          if (router.pathname === "/checkout") {
             dispatch(
               setAddress({
                 ...addressForm,
@@ -107,16 +106,12 @@ export const useUserAddress = (shouldFetch = true): AccountSWR => {
               })
             )
           }
-          console.log("id is: ", res.result.data?.[0]?.partner_shipping_id)
-          dispatch(
-            setMessage({ title: "Thêm địa chỉ thành công", isOpen: true })
-          )
+          dispatch(setMessage({ title: "Thêm địa chỉ thành công" }))
         }
       } else {
         dispatch(
           setMessage({
             title: res.result.message as string,
-            isOpen: true,
             type: "danger",
           })
         )
@@ -143,7 +138,7 @@ export const useUserAddress = (shouldFetch = true): AccountSWR => {
           },
           false
         )
-        dispatch(setMessage({ title: "Xóa địa chỉ thành công", isOpen: true }))
+        dispatch(setMessage({ title: "Xóa địa chỉ thành công" }))
 
         if (addressDefault?.id === address.adress_id) {
           dispatch(setAddressDefault(undefined))
@@ -159,8 +154,8 @@ export const useUserAddress = (shouldFetch = true): AccountSWR => {
         dispatch(
           setMessage({
             title: res.result.message as string,
-            isOpen: true,
             type: "danger",
+            duration: 4000,
           })
         )
       }

@@ -63,7 +63,6 @@ const useReview = ({ product_id }: Props): ReivewSWR => {
       dispatch(
         setMessage({
           type: "danger",
-          isOpen: true,
           title: res?.result?.message || "",
         })
       )

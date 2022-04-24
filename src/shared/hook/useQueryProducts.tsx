@@ -30,9 +30,8 @@ const useQueryProducts = (): UseQueryProductRes => {
   const router = useRouter()
   const offset = Number(router.query?.offset) || 0
   const limit = Number(router.query?.limit) || DEFAULT_LIMIT_PRODUCT
-  const {
-    userInfo: { id: partner_id = 0 },
-  } = useSelector((state: RootState) => state.user)
+  const { userInfo: { id: partner_id = 0 } = { userInfo: undefined } } =
+    useSelector((state: RootState) => state.user)
 
   const [products, setProducts] = useState<Product[]>([])
   const [isLoadingMore, setLoadingMore] = useState<boolean>(false)

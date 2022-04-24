@@ -107,7 +107,15 @@
           }
 
           &-noti {
+            position: relative;
             margin-right: 2rem;
+
+            &:hover {
+              & .header__notification-modal {
+                display: block;
+              }
+            }
+
             & a {
               display: flex;
               align-items: center;
@@ -219,7 +227,6 @@
           position: relative;
           @include responsive(lg-screen) {
             display: block;
-            margin-right: 2rem;
           }
 
           & .image-container {
@@ -335,6 +342,10 @@
           display: flex;
           align-items: center;
           position: relative;
+
+          @include responsive(lg-screen) {
+            margin-left: 2rem;
+          }
 
           .header__main-cart-absolute {
             @include hidden;

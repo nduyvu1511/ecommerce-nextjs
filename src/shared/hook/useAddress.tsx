@@ -11,6 +11,8 @@ interface UseAddressRes {
   clearDistricts: Function
   clearWards: Function
   clearAddressList: Function
+  setDistricts: Function
+  setWards: Function
 }
 
 export const useAddress = (): UseAddressRes => {
@@ -61,5 +63,7 @@ export const useAddress = (): UseAddressRes => {
     clearDistricts,
     clearWards,
     clearAddressList,
+    setDistricts,
+    setWards,
   }
 }

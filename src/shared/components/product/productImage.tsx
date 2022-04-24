@@ -1,8 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
-import { isArrayHasValue, isObjectHasValue } from "@/helper"
+import { isArrayHasValue } from "@/helper"
 import { DOMAIN_URL } from "@/services"
-import Image from "next/image"
-import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import { Swiper, SwiperSlide } from "swiper/react"
 import ImageShow from "../common/imageShow"
@@ -19,12 +17,16 @@ export const ProductImg = ({ images, type, isStock }: IProductImage) => {
   const [imageShow, setImageShow] = useState<string>()
 
   useEffect(() => {
-    return () => {
-      setActiveIndex(1)
-      if (swiper?.slideTo) {
-        swiper?.slideTo(1)
-      }
-    }
+    // if (swiper?.slideTo) {
+    //   swiper?.slideTo(1)
+    // }
+    // setActiveIndex(1)
+    // return () => {
+    //   setActiveIndex(1)
+    //   if (swiper?.slideTo) {
+    //     swiper?.slideTo(1)
+    //   }
+    // }
   }, [])
 
   return (

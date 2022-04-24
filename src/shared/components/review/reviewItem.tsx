@@ -1,6 +1,6 @@
 import { RootState } from "@/core/store"
 import { Comment } from "@/models"
-import { setCurrentReviewId, toggleModalConfirm } from "@/modules"
+import { setCurrentReviewId, setModalConfirm } from "@/modules"
 import Image from "next/image"
 import { BiTrash } from "react-icons/bi"
 import { useDispatch, useSelector } from "react-redux"
@@ -12,21 +12,15 @@ interface CommentItemProps {
 
 export const ReviewItem = ({ comment }: CommentItemProps) => {
   const dispatch = useDispatch()
-  const {
-    userInfo: { id },
-  } = useSelector((state: RootState) => state.user)
+  const { userInfo: { id = 0 } = { userInfo: undefined } } = useSelector(
+    (state: RootState) => state.user
+  )
 
   return (
     <>
       <li className="comment__list-item">
         <div className="comment__list-item-img image-container">
-          <Image
-            // src={`data:image/jpeg;base64,${rating.partner_avatar}`}
-            src={avatar}
-            alt=""
-            layout="fill"
-            className="image"
-          />
+          <Image src={avatar} alt="" layout="fill" className="image" />
         </div>
         <div className="comment__list-item-content">
           <p className="comment__list-item-content-info">
@@ -46,7 +40,12 @@ export const ReviewItem = ({ comment }: CommentItemProps) => {
         {comment.partner_id === id ? (
           <button
             onClick={() => {
-              dispatch(toggleModalConfirm(true))
+              dispatch(
+                setModalConfirm({
+                  isOpen: true,
+                  title: "Bạn có chắc chắn muốn xóa bình luận này?",
+                })
+              )
               dispatch(setCurrentReviewId(comment.id))
             }}
             className="btn-reset comment__list-item-delete"

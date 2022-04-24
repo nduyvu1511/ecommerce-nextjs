@@ -58,8 +58,6 @@ export const HeaderMobile = ({
             <button onClick={() => router.push("/")} className="btn-reset">
               <BiHomeAlt />
             </button>
-
-            
           ) : null}
 
           {rightChild}

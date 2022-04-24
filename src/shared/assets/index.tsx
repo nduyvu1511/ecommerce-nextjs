@@ -1,12 +1,4 @@
-export const bannerBox2 = require("./images/banner-box2.jpg")
-export const avatar1 = require("./images/avatar-1.jpg")
-export const avatar2 = require("./images/avatar-2.jpg")
-export const avatar3 = require("./images/avatar-3.jpg")
-export const avatar4 = require("./images/avatar-4.jpg")
-export const couponImg = require("./images/coupon.png")
 export const paymentImg = require("./images/payments.jpg")
-export const signinBg = require("./images/login-bg.png")
-export const otpImage = require("./images/otp.png")
 export const popupImg = require("./images/popup.png")
 export const avatar = require("./images/avatar.png")
 export const emptyImg = require("./images/empty.png")
@@ -14,12 +6,12 @@ export const emptyImg = require("./images/empty.png")
 export const logo = require("./icons/logo.png")
 export const googlePlayIcon = require("./icons/google-play.png")
 export const appStoreIcon = require("./icons/app-store.png")
-export const categoryIcon = require("./icons/categoryIcon.png")
 export const companyIcon = require("./icons/company_logo.jpeg")
+export const imageBlur =
+  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8/+F9PQAI8wNPvd7POQAAAABJRU5ErkJggg=="
 
 export const paymentMethodsImage = require("./icons/payment-methods.png")
 export const boCongThuong = require("./icons/bo-cong-thuong.png")
-export const logoTest = require("./images/DALATFARM21.png")
 
 export const filterNotFound = require("./images/filter-not-found.png")
 

@@ -17,20 +17,24 @@ const userSlice = createSlice({
     },
 
     setToken: (state, { payload }: { payload: string }) => {
-      state.token = payload
+      if (payload) {
+        state.token = payload
+      }
     },
 
-    setUserInfo: (state, { payload }: { payload: UserInfo }) => {
+    setUserInfo: (state, { payload }: { payload: UserInfo | undefined }) => {
       state.userInfo = payload
     },
 
     editUserInfo: (state, { payload }: { payload: UserEdit }) => {
-      state.userInfo.name = payload.name
-      state.userInfo.email = payload.email
-      state.userInfo.sex = payload.sex
+      if (state.userInfo) {
+        state.userInfo.name = payload.name
+        state.userInfo.email = payload.email
+        state.userInfo.sex = payload.sex
 
-      if (payload?.image) {
-        state.userInfo.avatar = payload.image
+        if (payload?.image) {
+          state.userInfo.avatar = payload.image
+        }
       }
     },
 

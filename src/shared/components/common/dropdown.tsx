@@ -34,6 +34,7 @@ export const Dropdown = ({
 }: DropdownProps) => {
   const dropdownListRef = useRef<HTMLUListElement>(null)
   const titleRef = useRef<HTMLParagraphElement>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
 
   const [isOpen, setOpen] = useState<boolean>(false)
   const [listFilter, setListFilter] = useState<ItemDropdown[]>(list)
@@ -77,6 +78,18 @@ export const Dropdown = ({
           className={`dropdown-icon ${isOpen ? "dropdown-icon-active" : ""}`}
         />
       </p>
+
+      {/* <input
+        ref={inputRef}
+        onClick={() => setOpen(!isOpen)}
+        type="text"
+        defaultValue={
+          itemActive.id === 0
+            ? titleProp
+            : `${heading ? heading : ""} ${itemActive.title}`
+        }
+        value={searchVal}
+      /> */}
 
       {isOpen ? (
         <ul

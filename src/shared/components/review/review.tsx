@@ -51,9 +51,9 @@ export const ProductReview = () => {
         >
           {language === "vni" ? "Thêm bình luận" : "Add a review"}
           {isOpenReviewForm ? (
-            <MdOutlineKeyboardArrowDown />
-          ) : (
             <MdOutlineKeyboardArrowUp />
+          ) : (
+            <MdOutlineKeyboardArrowDown />
           )}
         </h3>
 
@@ -124,22 +124,8 @@ export const ProductReview = () => {
         </ul>
       ) : null}
 
-      {/* <div className="comment__pagination">
-        {totalPage >= 2 ? (
-          <Pagination
-            currentPage={page}
-            onPaginate={(page: number) => {
-              setPage(page)
-              divRef.current?.scrollIntoView()
-            }}
-            totalPage={totalPage}
-          />
-        ) : null}
-      </div> */}
-
       <ModalConfirm
-        desc="Bạn có chắc chắn muốn xóa bình luận này?"
-        confirmModal={() =>
+        onConfirm={() =>
           handleDeleteReview({
             comment_id: currentReviewId,
             product_id: Number(router.query?.productId) || 0,

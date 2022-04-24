@@ -71,7 +71,7 @@ const ProductDetailPage = ({ product }: ProduductDetailPageProps) => {
   useEffect(() => {
     if (router.query?.productId && product?.category?.id) {
       productApi
-        .getProductList({ category_id: Number(product.category.id), limit: 8 })
+        .getProductList({ category_id: Number(product.category.id), limit: 12 })
         .then((res: any) => {
           const products: Product[] = res.result
           document.title = product?.name || ""
@@ -151,9 +151,9 @@ const ProductDetailPage = ({ product }: ProduductDetailPageProps) => {
       </div>
     )
 
-  const handleChangeVariantAttribute = (att: AttributeWithParentId) => {
-    dispatch(changeAttributeItem(att))
-  }
+  // const handleChangeVariantAttribute = (att: AttributeWithParentId) => {
+  //   dispatch(changeAttributeItem(att))
+  // }
 
   return (
     <>

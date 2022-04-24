@@ -1,4 +1,4 @@
-import { categoryIcon } from "@/assets"
+import { companyIcon } from "@/assets"
 import { isArrayHasValue } from "@/helper"
 import { Category as ICategory } from "@/models"
 import { DOMAIN_URL } from "@/services"
@@ -75,7 +75,7 @@ export const Category = ({
                 >
                   <div className="header__category-list-item-link-img image-container">
                     <Image
-                      src={`${DOMAIN_URL}${car1.icon}` || categoryIcon}
+                      src={`${DOMAIN_URL}${car1.icon}` || companyIcon}
                       alt={car1.name}
                       className="image"
                       layout="fill"
@@ -152,9 +152,7 @@ export const Category = ({
                           >
                             <div className="header__category-child-list-item-link-img image-container">
                               <Image
-                                src={
-                                  `${DOMAIN_URL}${car2.icon}` || categoryIcon
-                                }
+                                src={`${DOMAIN_URL}${car2.icon}` || companyIcon}
                                 alt={car2.name}
                                 className="image"
                                 layout="fill"

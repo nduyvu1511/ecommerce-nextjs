@@ -106,7 +106,7 @@ const useProductRating = ({
       )
 
       callback()
-      dispatch(setMessage({ title: "Xóa đánh giá thành công", isOpen: true }))
+      dispatch(setMessage({ title: "Xóa đánh giá thành công" }))
     }
   }
 
@@ -149,9 +149,7 @@ const useProductRating = ({
           callback()
         }
 
-        dispatch(
-          setMessage({ title: "Thêm đánh giá thành công!", isOpen: true })
-        )
+        dispatch(setMessage({ title: "Thêm đánh giá thành công!" }))
 
         dispatch(toggleOpenScreenLoading(false))
       }

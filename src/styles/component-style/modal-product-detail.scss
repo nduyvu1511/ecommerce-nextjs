@@ -3,8 +3,8 @@
 
   &-btn-close {
     position: absolute;
-    top: 0;
-    right: 0;
+    top: -2rem;
+    right: -2rem;
 
     & svg {
       font-size: 3rem;
@@ -16,7 +16,7 @@
   }
 
   &-header {
-    margin-bottom: 2rem;
+    margin-bottom: 2.6rem;
     border-bottom: 1px solid $border-color-2;
   }
 
@@ -34,6 +34,7 @@
       font-size: 1.6rem;
       line-height: 2.4rem;
       margin-right: 5rem;
+      margin-bottom: 2rem;
     }
 
     @include responsive(lg-screen) {

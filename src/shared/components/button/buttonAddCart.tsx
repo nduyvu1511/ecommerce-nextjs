@@ -29,21 +29,13 @@ export const ButtonAddCard = ({
   const router = useRouter()
   const { listAttribute } = useSelector((state: RootState) => state.product)
 
-  const {
-    token,
-    userInfo: { id: partner_id },
-  } = useSelector((state: RootState) => state.user)
+  const { token, userInfo: { id: partner_id = 0 } = { userInfo: undefined } } =
+    useSelector((state: RootState) => state.user)
 
   const handleAddToCart = () => {
     if (!token) {
-      dispatch(
-        setMessage({
-          isOpen: true,
-          type: "warning",
-          title: "Bạn phải đăng nhập để thêm giỏ hàng",
-        })
-      )
-      return router.push("/login")
+      router.push("/login")
+      return
     }
 
     if (type === "item") {
@@ -52,9 +44,7 @@ export const ButtonAddCard = ({
         dispatch(toggleModalProduct(true))
       } else {
         dispatch(addToCart({ ...product, quantity, partner_id }))
-        dispatch(
-          setMessage({ isOpen: true, title: "Thêm giỏ hàng thành công" })
-        )
+        dispatch(setMessage({ title: "Thêm giỏ hàng thành công" }))
       }
     } else {
       dispatch(
@@ -66,7 +56,7 @@ export const ButtonAddCard = ({
         })
       )
 
-      dispatch(setMessage({ isOpen: true, title: "Thêm giỏ hàng thành công" }))
+      dispatch(setMessage({ title: "Thêm giỏ hàng thành công" }))
     }
   }
 

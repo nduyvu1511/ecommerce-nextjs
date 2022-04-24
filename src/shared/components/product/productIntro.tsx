@@ -3,6 +3,7 @@ import { AttributeWithParentId, Product } from "@/models"
 import {
   addProductCompare,
   changeAttributeItem,
+  setMessage,
   setProductList,
   toggleShowCompareModal,
 } from "@/modules"
@@ -11,16 +12,13 @@ import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import { useRef, useState } from "react"
-import { BiMessage } from "react-icons/bi"
 import { IoClose } from "react-icons/io5"
-import { RiArrowUpDownLine } from "react-icons/ri"
+import { RiArrowUpDownLine, RiMessage2Fill } from "react-icons/ri"
 import { useDispatch } from "react-redux"
-import { useReview } from "shared/hook"
 import { ButtonAddCard } from "../button"
 import ButtonWishlist from "../button/buttonAddWishlist"
 import ButtonShare from "../button/buttonShare"
 import { InputQuantity } from "../inputs"
-import ProductDetailCountdown from "./productDetailCountdown"
 import { ProductVariation } from "./productVariation"
 
 interface IProductIntro {
@@ -30,12 +28,11 @@ interface IProductIntro {
 
 export const ProductIntro = ({ product, type }: IProductIntro) => {
   const dispatch = useDispatch()
-  const language = "vni"
   const divRef = useRef<HTMLDivElement>(null)
   const router = useRouter()
-  const { data: reviewList } = useReview({
-    product_id: product.product_tmpl_id,
-  })
+  // const { data: reviewList } = useReview({
+  //   product_id: product.product_tmpl_id,
+  // })
   const [openVariantModal, setOpenVariantModal] = useState<boolean>(false)
   const [quantity, setQuantity] = useState<number>(1)
 
@@ -51,6 +48,8 @@ export const ProductIntro = ({ product, type }: IProductIntro) => {
   const handleAddToCompareList = () => {
     if (type === "detail" || type === "item") {
       dispatch(toggleShowCompareModal(true))
+    } else {
+      dispatch(setMessage({ title: "Đã thêm vào danh sách so sánh" }))
     }
 
     dispatch(addProductCompare(product))
@@ -178,6 +177,8 @@ export const ProductIntro = ({ product, type }: IProductIntro) => {
               </div>
             ) : null}
 
+            {/* <ButtonWishlist type="detail" product={product} /> */}
+
             <ButtonAddCard
               product={product}
               quantity={quantity}
@@ -186,7 +187,7 @@ export const ProductIntro = ({ product, type }: IProductIntro) => {
 
             {type === "detail" ? (
               <button className="product__intro-shop-chat-btn">
-                <BiMessage />
+                <RiMessage2Fill />
                 <span>Nhắn tin</span>
               </button>
             ) : null}
@@ -282,7 +283,7 @@ export const ProductIntro = ({ product, type }: IProductIntro) => {
                 ) : null}
 
                 <p>
-                  {formatMoneyVND(product.price || 0 * quantity)}
+                  {formatMoneyVND((product.price || 0) * quantity)}
                   <span>/</span>
                   <span>
                     {quantity} {product.uom.name}
@@ -297,17 +298,20 @@ export const ProductIntro = ({ product, type }: IProductIntro) => {
                 <IoClose />
               </button>
             </header>
-            <div className="product__variant-modal-variants">
-              {product.attributes.map((att) => (
-                <ProductVariation
-                  onChangeAttribute={(att: AttributeWithParentId) =>
-                    handleChangeVariantAttribute(att)
-                  }
-                  attribute={att}
-                  key={att.id}
-                />
-              ))}
-            </div>
+
+            {product.attributes?.length > 0 ? (
+              <div className="product__variant-modal-variants">
+                {product.attributes.map((att) => (
+                  <ProductVariation
+                    onChangeAttribute={(att: AttributeWithParentId) =>
+                      handleChangeVariantAttribute(att)
+                    }
+                    attribute={att}
+                    key={att.id}
+                  />
+                ))}
+              </div>
+            ) : null}
 
             <div className="product__variant-modal-quantity">
               <p>Số lượng</p>

@@ -16,10 +16,8 @@ const Wishlist = () => {
   const dispatch = useDispatch()
   const language = "vni"
 
-  const {
-    userInfo: { id: partner_id },
-    token,
-  } = useSelector((state: RootState) => state.user)
+  const { userInfo: { id: partner_id = 0 } = { userInfo: undefined }, token } =
+    useSelector((state: RootState) => state.user)
   const {
     data: wishlists,
     handleToggleWishlist,

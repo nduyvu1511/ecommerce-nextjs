@@ -32,12 +32,17 @@ export type MessageType = "info" | "danger" | "warning" | "success"
 export type MessageDirection = "center" | "top" | "bottom"
 export type MessageSize = "small" | "medium" | "large"
 
+export interface ModalConfirmProps {
+  isOpen: boolean
+  heading?: string
+  title: string
+}
+
 export interface CommonSlice {
   isOpenModalProduct: boolean
   isOpenModalOptionAccount: boolean
   isOpenModalCoupons: boolean
-  isOpenModalPopup: boolean
-  isOpenModalConfirm: boolean
+  modalConfirm: ModalConfirmProps
   isOpenAddressForm: boolean
   isChatboxOpen: boolean
   isExpandChatbox: boolean
@@ -59,12 +64,15 @@ export interface CommonSlice {
   isOpenCategoryModal: boolean
   isOpenCartModal: boolean
   isOpenScreenLoading: boolean
+  isOpenOrderSummary: boolean
+  isOpenOtpLoginModal: boolean
+  isOpenLoginModal: boolean
 }
 
 export interface SetMessageProps {
   payload: {
     title: string
-    isOpen: boolean
+    isOpen?: boolean
     type?: MessageType
     duration?: number
     direction?: MessageDirection

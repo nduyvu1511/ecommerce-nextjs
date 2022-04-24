@@ -8,9 +8,10 @@ import { OrderHistory, OrderHistoryDetail } from "@/models"
 import userApi from "@/services/userApi"
 import { useRef, useState } from "react"
 import { AiFillEye } from "react-icons/ai"
+import { CgSmileNone } from "react-icons/cg"
 import { RiLoader4Line } from "react-icons/ri"
 import { useSelector } from "react-redux"
-import useSWR from "swr"
+import { useOrderHistory } from "shared/hook"
 
 const OrderHistory: any = () => {
   const language = "vni"
@@ -21,20 +22,7 @@ const OrderHistory: any = () => {
   const [orderDetailHistory, setOrderDetailHistory] =
     useState<OrderHistoryDetail>()
 
-  const { data: orderHistoryList = [], isValidating } = useSWR(
-    "order_history_list",
-    token
-      ? () =>
-          userApi
-            .getOrderListHistory({ token })
-            .then((res: any) => res?.result?.data?.list_booking || [])
-      : null,
-    {
-      shouldRetryOnError: false,
-      revalidateOnFocus: false,
-      dedupingInterval: 100,
-    }
-  )
+  const { data: orderHistoryList = [], isValidating } = useOrderHistory()
 
   const handleGetOrderDetail = (sale_order_id: number) => {
     if (!token) return
@@ -59,7 +47,9 @@ const OrderHistory: any = () => {
           <div className="loader-container">
             <RiLoader4Line className="loader" />
           </div>
-        ) : (
+        ) : null}
+
+        {orderHistoryList?.length > 0 ? (
           <table className="order__history-table">
             <thead>
               <tr>
@@ -102,6 +92,11 @@ const OrderHistory: any = () => {
                 ))}
             </tbody>
           </table>
+        ) : (
+          <div className="list--empty">
+            <CgSmileNone />
+            <p>Bạn chưa hoàn thành đơn hàng nào </p>
+          </div>
         )}
 
         {/* Modal */}

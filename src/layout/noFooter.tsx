@@ -7,7 +7,6 @@ export const MainNoFooter = ({ children }: LayoutProps) => {
     <section className="main__layout">
       <Header />
       <main>{children}</main>
-
       <ModalContainer />
     </section>
   )

@@ -309,3 +309,24 @@
     color: $text-color;
   }
 }
+
+.list--empty {
+  @include flex-center;
+  flex-direction: column;
+  padding-block: 3rem;
+  background-color: $white;
+
+  & svg {
+    font-size: 4rem;
+    margin-bottom: 2rem;
+    color: $gray;
+  }
+
+  & p {
+    @include style-text(500, 1.3rem, 1.8rem, $gray);
+    @include responsive(sm-screen) {
+      font-size: 1.4rem;
+      line-height: 2rem;
+    }
+  }
+}

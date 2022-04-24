@@ -1,3 +1,4 @@
+import { imageBlur } from "@/assets"
 import { ProductItemLoading } from "@/components"
 import { RootState } from "@/core/store"
 import {
@@ -36,10 +37,8 @@ interface IProductItem {
 export const ProductItem = ({ product, type, isLoading }: IProductItem) => {
   const dispatch = useDispatch()
   const router = useRouter()
-  const {
-    token,
-    userInfo: { id: partner_id },
-  } = useSelector((state: RootState) => state.user)
+  const { token, userInfo: { id: partner_id = 0 } = { userInfo: undefined } } =
+    useSelector((state: RootState) => state.user)
 
   const handleAddToCompareList = () => {
     dispatch(toggleShowCompareModal(true))
@@ -54,14 +53,7 @@ export const ProductItem = ({ product, type, isLoading }: IProductItem) => {
   const handleAddToCart = () => {
     if (!token || !partner_id) {
       router.push("/login")
-
-      return dispatch(
-        setMessage({
-          isOpen: true,
-          title: "Bạn phải đăng nhập để thêm giỏ hàng",
-          type: "warning",
-        })
-      )
+      return
     }
 
     if (product?.attributes?.length > 0) {
@@ -70,7 +62,6 @@ export const ProductItem = ({ product, type, isLoading }: IProductItem) => {
       dispatch(addToCart({ ...product, quantity: 1, partner_id }))
       dispatch(
         setMessage({
-          isOpen: true,
           title: "Thêm giỏ hàng thành công!",
         })
       )
@@ -104,7 +95,7 @@ export const ProductItem = ({ product, type, isLoading }: IProductItem) => {
                   <span
                     className="tool-tip"
                     style={{
-                      left: `calc(-100% - 40px)`,
+                      left: `calc(-100% - 46px)`,
                     }}
                   >
                     Xem chi tiết
@@ -122,7 +113,7 @@ export const ProductItem = ({ product, type, isLoading }: IProductItem) => {
                 <span
                   className="tool-tip"
                   style={{
-                    left: `calc(-100% - 65px)`,
+                    left: `calc(-100% - 75px)`,
                   }}
                 >
                   Thêm vào so sánh
@@ -142,7 +133,7 @@ export const ProductItem = ({ product, type, isLoading }: IProductItem) => {
                     alt=""
                     layout="fill"
                     placeholder="blur"
-                    blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8/+F9PQAI8wNPvd7POQAAAABJRU5ErkJggg=="
+                    blurDataURL={imageBlur}
                   />
                 </Link>
               </div>
@@ -159,12 +150,12 @@ export const ProductItem = ({ product, type, isLoading }: IProductItem) => {
                       alt=""
                       layout="fill"
                       placeholder="blur"
-                      blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8/+F9PQAI8wNPvd7POQAAAABJRU5ErkJggg=="
+                      blurDataURL={imageBlur}
                     />
                   </Link>
                 </div>
 
-                {product.representative_image?.[1] ? (
+                {imageUrls?.[1] ? (
                   <div
                     onClick={() => dispatch(setProduct(product))}
                     className="image-container product__card__img-top product__card__img-item product__card__img-top-second cursor-pointer"

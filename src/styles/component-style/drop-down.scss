@@ -4,7 +4,7 @@
   &-title {
     padding: 2rem;
     cursor: pointer;
-    @include style-text(500, 1.3rem, 1.3rem, $home-heading-color);
+    @include style-text(500, 1.3rem, 1.3rem, $text-color);
     @include flex(space-between, center);
 
     & .dropdown-icon-active {
@@ -23,14 +23,13 @@
     border: 1px solid $border-color-1;
     top: 100%;
     right: 0;
-    padding: 2rem 0;
     z-index: 100;
     background: white;
     box-shadow: $box-shadow-2;
     list-style: none;
     overflow-y: auto;
     animation: fade-in 0.2s linear;
-    overflow-y: hidden;
+    overflow-x: hidden;
 
     &-limit {
       max-height: 30vh;
@@ -38,20 +37,21 @@
 
     &-item {
       display: block;
-      padding: 1.2rem 5rem 1.2rem 2rem;
+      padding: 0.6rem 5rem 0.6rem 1.2rem;
       @include style-text(500, 1.3rem, 2.3rem, $text-color);
       cursor: pointer;
 
-      &:hover {
-        color: $cyan;
-      }
-
       &-active {
-        color: $cyan;
+        background-color: $gray-color-opacity-active;
       }
 
       &-result {
         pointer-events: none;
+      }
+
+      &:hover {
+        background-color: $primary-color;
+        color: $white;
       }
     }
 
@@ -65,12 +65,13 @@
 
         & .dropdown-search {
           margin-bottom: 1.2rem;
-          padding-inline: 2rem;
+          padding-left: 1.2rem;
           border-radius: 0;
           border: 0;
           border-bottom: 1px solid $border-color-1;
           padding-right: 3.5rem;
           height: 100%;
+          font-size: 1.3rem;
 
           &:focus {
             border: 1px solid $primary-color;

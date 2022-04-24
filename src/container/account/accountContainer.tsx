@@ -57,17 +57,19 @@ export const AccountContainer = (props: AccountContainerProps) => {
           </div>
         </div>
 
-        <Modal
-          direction="right"
-          isShowModal={isOpenModalOptionAccount}
-          handleClickModal={() => dispatch(toggleModalAccountOption(false))}
-        >
-          <ModalHeading
-            title="Account"
-            handleClose={() => dispatch(toggleModalAccountOption(false))}
-          />
-          <AccountOption />
-        </Modal>
+        {isOpenModalOptionAccount ? (
+          <Modal
+            direction="right"
+            isShowModal={isOpenModalOptionAccount}
+            handleClickModal={() => dispatch(toggleModalAccountOption(false))}
+          >
+            <ModalHeading
+              title="Account"
+              handleClose={() => dispatch(toggleModalAccountOption(false))}
+            />
+            <AccountOption />
+          </Modal>
+        ) : null}
       </div>
     </>
   )

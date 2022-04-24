@@ -82,12 +82,9 @@ export const ModalProductDetail = memo(function ModalProductDetailChild() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  if (!isObjectHasValue(product)) return null
-
   return (
     <>
       <Modal
-        preventScrolling
         direction="center"
         isShowModal={isOpenModalProduct}
         handleClickModal={() => dispatch(toggleModalProduct(false))}

@@ -4,7 +4,6 @@ import { DOMAIN_URL } from "@/services"
 import Image from "next/image"
 import Link from "next/link"
 import { HiOutlineTrash } from "react-icons/hi"
-import { RiCloseCircleFill } from "react-icons/ri"
 import { InputCheckbox, InputQuantity } from "../inputs"
 
 interface ICartPageItem {
@@ -51,7 +50,7 @@ export const CartPageItem = ({
               }}
               className="btn-reset cart__item-delete-btn"
             >
-              <RiCloseCircleFill />
+              <HiOutlineTrash />
             </button>
             <Image
               quality={40}
@@ -88,7 +87,9 @@ export const CartPageItem = ({
           <p className="info-price-price">{formatMoneyVND(cart.price)}</p>
 
           <p className="info-price-price-mobile">
-            {formatMoneyVND(cart.quantity * cart.price)}
+            {formatMoneyVND(
+              cart.quantity === 0 ? cart.price : cart.quantity * cart.price
+            )}
           </p>
         </div>
 
@@ -104,7 +105,9 @@ export const CartPageItem = ({
         <div className="cart__item-info-item cart__item-info-subtotal">
           <p className="cart__item-info-item-title">Tổng phụ: </p>
           <p className="info-subtotal-price">
-            {formatMoneyVND(cart.quantity * cart.price)}
+            {formatMoneyVND(
+              cart.quantity === 0 ? cart.price : cart.quantity * cart.price
+            )}
           </p>
         </div>
 

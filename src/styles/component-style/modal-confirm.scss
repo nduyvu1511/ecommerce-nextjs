@@ -1,12 +1,6 @@
 .modal__confirm-container {
   @include fixed(0, 0, 0, 0);
   z-index: 2001;
-  display: none;
-  animation: fade-in 0.2s linear;
-
-  &-active {
-    display: block;
-  }
 
   .modal__confirm {
     padding: 2rem;

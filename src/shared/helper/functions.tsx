@@ -255,6 +255,8 @@ export const getFromLocalStorage: any = (key: string) => {
 }
 
 export function getTotalPrice(productList: CartItem[]) {
+  if (productList?.length === 0) return 0
+
   return productList.reduce(
     (prev, curr) => prev + curr.price * curr.quantity,
     0

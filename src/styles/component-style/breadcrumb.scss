@@ -3,12 +3,12 @@
     display: flex;
     align-items: center;
     list-style: none;
-    padding-block: 0.6rem;
+    padding-block: 0.8rem;
     overflow-y: auto;
     @include hide-scrollbar;
 
     @include responsive(sm-screen) {
-      padding-block: 1rem;
+      padding-block: 1.5rem;
     }
 
     &-item {

@@ -21,6 +21,11 @@ export interface AttributeWithParentId extends Attribute {
   parentId: number
 }
 
+export interface SearchHistory {
+  id: number
+  keyword: string
+}
+
 export interface Product {
   type: "product" | "combo"
   product_tmpl_id: number

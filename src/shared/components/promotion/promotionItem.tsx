@@ -38,15 +38,16 @@ export const PromotionItem = ({
         </p>
         <p className="promotion__modal-expire">
           <span className="expire-from">
-            {language === "vni" ? "From" : "Từ"}: {promotion.date_start}
+            {language === "vni" ? "Từ" : "Từ"}: {promotion.date_start}
           </span>
           <span className="expire-to">
-            {language === "vni" ? "To" : "Đến"}: {promotion.date_end}
+            {language === "vni" ? "Đến" : "Đến"}: {promotion.date_end}
           </span>
         </p>
       </div>
 
       <InputCheckbox
+        type="radio"
         isChecked={isActive}
         onCheck={() => handleClick && handleClick(promotion)}
       />

@@ -21,9 +21,8 @@ interface ProductSWR {
 const useProduct = ({ params, key }: Props): ProductSWR => {
   const dispatch = useDispatch()
 
-  const {
-    userInfo: { id: partner_id = 0 },
-  } = useSelector((state: RootState) => state.user)
+  const { userInfo: { id: partner_id = 0 } = { userInfo: undefined } } =
+    useSelector((state: RootState) => state.user)
   const { data, error, isValidating, mutate } = useSWR(
     key,
     key === "products_search"

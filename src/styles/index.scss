@@ -11,6 +11,7 @@
 @import "./main-style/payment.scss";
 @import "./main-style/contact.scss";
 @import "./main-style/category.scss";
+@import "./main-style/checkout.scss";
 
 @import "./layout-style/shop-filter.scss";
 @import "./layout-style/account.scss";
@@ -20,9 +21,12 @@
 @import "./layout-style/order-status.scss";
 @import "./layout-style/layout.scss";
 @import "./layout-style/product-container.scss";
+@import "./layout-style/modal-container.scss";
+@import "./layout-style/auth-form.scss";
 
 @import "./component-style/footer.scss";
 @import "./component-style/header.scss";
+@import "./component-style/header-login.scss";
 @import "./component-style/header-mobile.scss";
 @import "./component-style/search-container.scss";
 @import "./component-style/product-sale.scss";
@@ -70,3 +74,5 @@
 @import "./component-style/category-slide.scss";
 @import "./component-style/product-variant-modal.scss";
 @import "./component-style/secondary-banner.scss";
+@import "./component-style/address-order-item.scss";
+@import "./component-style/notification.scss";

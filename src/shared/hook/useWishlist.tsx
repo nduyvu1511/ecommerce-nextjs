@@ -55,7 +55,6 @@ const useWishlist = (isFetchData: boolean): WishlistSWR => {
           )
           dispatch(
             setMessage({
-              isOpen: true,
               title: "Đã xóa khỏi danh sách yêu thích",
             })
           )
@@ -84,9 +83,12 @@ const useWishlist = (isFetchData: boolean): WishlistSWR => {
           .then((res: any) => {
             dispatch(setFetchingCurrentWishlistBtn(false))
 
-            if (isObjectHasValue(res?.result)) {
+            if (res?.result?.success) {
               mutate([res.result], false)
             } else {
+              dispatch(
+                setMessage({ title: res?.result?.message, type: "danger" })
+              )
             }
           })
           .catch(() => {
@@ -111,15 +113,21 @@ const useWishlist = (isFetchData: boolean): WishlistSWR => {
         userApi
           .addWishlist({ token, product_id: product.product_tmpl_id })
           .then((res: any) => {
-            if (isObjectHasValue(res.result)) {
+            if (res?.result?.success) {
               dispatch(setFetchingCurrentWishlistBtn(false))
               dispatch(
                 setMessage({
-                  isOpen: true,
                   title: "Đã Thêm vào danh sách yêu thích",
                 })
               )
               mutate([res.result, ...data], false)
+            } else {
+              dispatch(
+                setMessage({
+                  title: res?.result?.message || "",
+                  type: "danger",
+                })
+              )
             }
           })
           .catch(() => {

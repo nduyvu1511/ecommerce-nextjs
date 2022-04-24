@@ -64,7 +64,7 @@ export const OrderStatus = ({ type, order }: OrderStatusProps) => {
                   </li>
                   <li className="order__status-summary-list-item">
                     <h3>Tình trạng vận chuyển</h3>
-                    <p>{order.state_delivery}</p> 
+                    <p>{order.state_delivery}</p>
                   </li>
                   <li className="order__status-summary-list-item">
                     <h3>Tình trạng thanh toán</h3>
@@ -77,7 +77,7 @@ export const OrderStatus = ({ type, order }: OrderStatusProps) => {
             {order.products.length > 0 ? (
               <div className="order__status-detail">
                 <h3 className="order__status-body-heading">
-                  {language === "vni" ? "Order detail" : "Chi tiết đơn hàng"}
+                  Chi tiết đơn hàng
                 </h3>
                 <div className="order__status-detail-wrapper">
                   <div className="order__history-table-detail">

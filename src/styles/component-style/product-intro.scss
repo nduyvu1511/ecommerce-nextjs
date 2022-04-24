@@ -36,7 +36,7 @@
   &-shop {
     display: flex;
     align-items: center;
-    height: 45px;
+    height: 40px;
     margin-bottom: 2rem;
 
     @include responsive(lg-screen) {
@@ -48,9 +48,8 @@
     }
 
     &-btn {
-      @include button($primary-color, $white, 1.5rem, 500, 1.4rem, 1.2rem);
+      @include button($danger, $white, 1.4rem, 500, 1.4rem, 1.2rem);
       max-width: 150px;
-      font-family: $second-font;
       width: 100%;
       margin-left: 0;
       border-radius: 0.2rem;
@@ -118,24 +117,20 @@
 
     &-item {
       @include flex(flex-start, center);
-      font-family: $second-font;
-      @include style-text(600, 1.3rem, 1.8rem, $text-color-opacity);
+      @include style-text(500, 1.3rem, 1.8rem, $text-color-opacity);
       background-color: white;
-      text-transform: uppercase;
-      padding: 0.5rem 2rem;
+      padding: 0.5rem 1rem;
       border: 1px solid $border-color-1;
       border-radius: 0.3rem;
       cursor: pointer;
 
       & svg {
         margin-right: 0.6rem;
-        font-size: 1.8rem;
+        font-size: 1.4rem;
       }
 
       &:last-child {
-        border: none;
         margin-left: 1rem;
-        padding: 0.5rem 1rem;
       }
     }
   }

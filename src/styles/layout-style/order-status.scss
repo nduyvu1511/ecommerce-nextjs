@@ -75,7 +75,7 @@
           }
 
           & h3 {
-            @include style-text(600, 1.3rem, 2.3rem, $text-color);
+            @include style-text(500, 1.3rem, 2.3rem, $gray);
             width: 50%;
             margin-right: 2rem;
             @include responsive(lg-screen) {
@@ -266,6 +266,7 @@
   width: 100%;
   max-width: 1000px;
   margin: 0 auto;
+  margin-bottom: 3rem;
 
   &-link {
     width: fit-content;

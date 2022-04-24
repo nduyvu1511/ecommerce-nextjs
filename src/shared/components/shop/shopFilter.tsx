@@ -3,9 +3,8 @@ import { isObjectHasValue } from "@/helper"
 import { AttributeProduct, Category as ICategory } from "@/models"
 import { toggleOpenModalFilter } from "@/modules"
 import productApi from "@/services/productApi"
-import Link from "next/link"
 import { useRouter } from "next/router"
-import { useRef } from "react"
+import { useCallback, useRef } from "react"
 import { useDispatch } from "react-redux"
 import { useQueryProducts } from "shared/hook"
 import useSWR from "swr"
@@ -18,6 +17,7 @@ import { Attribute } from "./attributes"
 interface ShopFilterProps {
   categories: ICategory[] | undefined
   isCloseModal?: boolean
+  width?: number
 }
 
 export interface Price {
@@ -26,7 +26,7 @@ export interface Price {
 }
 
 export const ShopFilter = (props: ShopFilterProps) => {
-  const { categories, isCloseModal = false } = props
+  const { categories, isCloseModal = false, width } = props
   const router = useRouter()
   const divRef = useRef<HTMLDivElement>(null)
   const prices = useRef<Price>()
@@ -44,6 +44,7 @@ export const ShopFilter = (props: ShopFilterProps) => {
       revalidateOnFocus: false,
     }
   )
+  console.log(width)
 
   const handleFilterPrice = () => {
     if (!prices.current) return
@@ -118,14 +119,16 @@ export const ShopFilter = (props: ShopFilterProps) => {
               className="shop__filter-item shop__filter-price"
             >
               <h3 className="shop__filter-heading">Lọc theo giá</h3>
-              <InputRange
-                min={item.min_value}
-                max={item.max_value}
-                onChange={({ min, max }: { min: number; max: number }) => {
-                  prices.current = { max, min }
-                }}
-                parentWidth={divRef.current?.offsetWidth || 200}
-              />
+              {item.max_value && item.min_value ? (
+                <InputRange
+                  min={item.min_value}
+                  max={item.max_value}
+                  onChange={({ min, max }: { min: number; max: number }) => {
+                    prices.current = { max, min }
+                  }}
+                  parentWidth={width || divRef.current?.offsetWidth || 200}
+                />
+              ) : null}
               <button
                 onClick={handleFilterPrice}
                 className="btn-primary-outline"

@@ -1,23 +1,22 @@
 import { popupImg } from "@/assets"
 import Image from "next/image"
-import { useRouter } from "next/router"
+import { useState } from "react"
 import { RiCloseFill } from "react-icons/ri"
-import { useDispatch, useSelector } from "react-redux"
 import { Modal } from "../modal"
 
 export const Popup = () => {
-  const dispatch = useDispatch()
-  const isOpen = false
-
-  const { pathname } = useRouter()
+  const [isOpen, setOpen] = useState<boolean>(
+    () => !sessionStorage.getItem("is_open_popup")
+  )
 
   const handleClose = () => {
-    // dispatch(toggleModalPopup(false))
+    setOpen(false)
+    sessionStorage.setItem("is_open_popup", "true")
   }
 
   return (
     <>
-      {isOpen && pathname === "/" ? (
+      {isOpen ? (
         <div className="popup-container">
           <Modal
             direction="center"
@@ -31,7 +30,9 @@ export const Popup = () => {
               >
                 <RiCloseFill />
               </button>
-              <Image className="img-fluid" src={popupImg} alt="" />
+              <div className="image-container">
+                <Image className="image" src={popupImg} alt="" layout="fill" />
+              </div>
             </div>
           </Modal>
         </div>

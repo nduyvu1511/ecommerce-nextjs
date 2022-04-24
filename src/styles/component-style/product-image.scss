@@ -47,9 +47,14 @@
       text-transform: uppercase;
       color: #fff;
       position: absolute;
-      right: 1rem;
-      top: 1rem;
+      right: 0.5rem;
+      top: 0.5rem;
       z-index: 2;
+
+      @include responsive(lg-screen) {
+        right: 1rem;
+        top: 1rem;
+      }
 
       &--out-of-stock {
         background-color: $danger;

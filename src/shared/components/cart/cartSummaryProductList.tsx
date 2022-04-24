@@ -1,6 +1,7 @@
 import { formatMoneyVND } from "@/helper"
 import { CartItem, PromotionLine } from "@/models"
 import React from "react"
+import { RiCloseLine } from "react-icons/ri"
 
 interface Props {
   productList?: CartItem[] | undefined
@@ -23,13 +24,10 @@ export const CartSummaryProductList = (props: Props) => {
 
                 <ul className="cart__total-price-list">
                   <li className=" cart__total-price-list-item">
-                    {formatMoneyVND(cart.price)}
+                    {formatMoneyVND(cart.price)} <RiCloseLine /> {cart.quantity}
                   </li>
 
-                  <li className=" cart__total-price-list-item">
-                    Số lượng: {cart.quantity}
-                  </li>
-                  <li className="cart__total-price-list-item-danger cart__total-price-list-item">
+                  <li className="cart__total-price-list-item-total cart__total-price-list-item">
                     Thành tiền: {formatMoneyVND(cart.price * cart.quantity)}
                   </li>
                 </ul>
@@ -61,27 +59,24 @@ export const CartSummaryProductList = (props: Props) => {
 
                   <ul className="cart__total-price-list">
                     <li className=" cart__total-price-list-item">
-                      {formatMoneyVND(cart.price_unit)}
+                      {formatMoneyVND(cart.price_unit)} <RiCloseLine /> {qty}
                     </li>
 
                     {discount_line.type === "percentage" &&
                     discount_line.value ? (
-                      <li className=" cart__total-price-list-item">
+                      <li className="cart__total-price-list-item cart__total-price-list-item-deal">
                         Giảm: {cart.discount_line.value}%
                       </li>
                     ) : null}
 
                     {cart.discount_line.type === "fixed" &&
                     cart.discount_line.value ? (
-                      <li className=" cart__total-price-list-item">
+                      <li className=" cart__total-price-list-item cart__total-price-list-item-deal">
                         Giảm: {formatMoneyVND(cart.discount_line.value)}
                       </li>
                     ) : null}
 
-                    <li className=" cart__total-price-list-item">
-                      Số lượng: {qty}
-                    </li>
-                    <li className="cart__total-price-list-item-danger cart__total-price-list-item">
+                    <li className="cart__total-price-list-item-total cart__total-price-list-item">
                       Thành tiền:{" "}
                       {cart.is_promotion
                         ? `0đ`

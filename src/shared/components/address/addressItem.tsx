@@ -1,4 +1,3 @@
-import { InputCheckbox } from "@/components"
 import { RootState } from "@/core/store"
 import { ShippingAddress } from "@/models"
 import {
@@ -17,16 +16,9 @@ import { useClickOutside, useUserAddress } from "shared/hook"
 interface IAddressItem {
   isActive?: boolean
   address: ShippingAddress
-  type: "account" | "order"
-  onCheck?: (address: ShippingAddress) => void
 }
 
-export const AddressItem = ({
-  isActive,
-  address,
-  onCheck,
-  type,
-}: IAddressItem) => {
+export const AddressItem = ({ isActive, address }: IAddressItem) => {
   const language = "vni"
   const { deleteAddress } = useUserAddress(false)
   const dispatch = useDispatch()
@@ -36,7 +28,7 @@ export const AddressItem = ({
 
   const {
     token,
-    userInfo: { id: partner_id },
+    userInfo: { id: partner_id = 0 } = { userInfo: undefined },
     addressDefault,
   } = useSelector((state: RootState) => state.user)
   const { address: addressOrder } = useSelector(
@@ -54,17 +46,11 @@ export const AddressItem = ({
       }
     } else {
       dispatch(setAddressDefault(address))
-      if (!addressOrder) {
+      if (addressOrder?.id !== address.id) {
         dispatch(setAddress(address))
       }
     }
     setOpenOption(false)
-  }
-
-  const handleCheckAddressItem = () => {
-    if (type === "order") {
-      onCheck && onCheck(address)
-    }
   }
 
   const handleDeleteAddress = () => {
@@ -85,26 +71,14 @@ export const AddressItem = ({
   }
 
   return (
-    <div
-      onClick={handleCheckAddressItem}
-      className={`address__item ${
-        (isActive && type === "account") ||
-        (address.id === addressOrder?.id && type === "order")
-          ? "address__item-active"
-          : ""
-      } ${type === "order" ? "address__item-checkbox" : ""}`}
-    >
-      {isActive && type === "account" ? (
+    <div className={`address__item ${isActive ? "address__item-active" : ""}`}>
+      {isActive ? (
         <span className="address__item-active-label">
           <AiFillStar />
         </span>
       ) : null}
 
-      <div
-        className={`address__item-option-wrapper ${
-          type === "order" ? "address__item-option-wrapper-checkbox" : ""
-        }`}
-      >
+      <div className="address__item-option-wrapper">
         <button
           ref={buttonRef}
           onClick={(e) => {
@@ -118,32 +92,19 @@ export const AddressItem = ({
 
         {openOption ? (
           <div ref={optionRef} className="address__item-option">
-            {type === "account" ? (
-              <>
-                <p onClick={handleDeleteAddress}>
-                  {language === "vni"
-                    ? "Xóa địa chỉ này"
-                    : "Delete this Address"}
-                </p>
-                <p onClick={handleChangeDefault}>
-                  {addressDefault && addressDefault.id === address.id
-                    ? "Xóa khỏi mặc định"
-                    : "Đặt làm mặc định"}
-                </p>
-              </>
-            ) : null}
+            <p onClick={handleDeleteAddress}>
+              {language === "vni" ? "Xóa địa chỉ này" : "Delete this Address"}
+            </p>
+            <p onClick={handleChangeDefault}>
+              {addressDefault && addressDefault.id === address.id
+                ? "Xóa khỏi mặc định"
+                : "Đặt làm mặc định"}
+            </p>
 
             <p onClick={handleUpdateAddress}>
               {language === "vni" ? "Sửa địa chỉ này" : "Edit this Address"}
             </p>
           </div>
-        ) : null}
-
-        {type === "order" ? (
-          <InputCheckbox
-            isChecked={address.id === addressOrder?.id || false}
-            onCheck={() => onCheck && onCheck(address)}
-          />
         ) : null}
       </div>
 
@@ -184,5 +145,3 @@ export const AddressItem = ({
     </div>
   )
 }
-
-export default AddressItem

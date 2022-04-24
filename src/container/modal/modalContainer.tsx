@@ -1,5 +1,6 @@
 import { logo } from "@/assets"
 import {
+  AddressForm,
   CartModal,
   CategoryMobile,
   CompareModal,
@@ -7,23 +8,27 @@ import {
   ModalHeading,
   ModalProductDetail,
   Navigation,
+  OTP,
+  PromotionModal,
   ScreenLoading,
   SearchForm,
   SearchResult,
   Toast,
 } from "@/components"
 import { RootState } from "@/core/store"
-import { isObjectHasValue } from "@/helper"
 import {
+  toggleModalAddressForm,
   toggleOpenCartModal,
   toggleOpenCategoryModal,
   toggleOpenNavLeftModal,
+  toggleOpenOtpLoginModal,
   toggleOpenSearchModal,
 } from "@/modules"
 import Image from "next/image"
 import Link from "next/link"
 import React from "react"
 import { BiArrowBack } from "react-icons/bi"
+import { IoMdCloseCircle } from "react-icons/io"
 import { IoCloseCircleSharp } from "react-icons/io5"
 import { useDispatch, useSelector } from "react-redux"
 
@@ -36,6 +41,10 @@ export const ModalContainer = () => {
     isOpenCategoryModal,
     isOpenNavLeftModal,
     isOpenScreenLoading,
+    isOpenAddressForm,
+    isOpenModalCoupons,
+    isOpenOtpLoginModal,
+    isOpenLoginModal,
   } = useSelector((state: RootState) => state.common)
   const { isShowCompareModal } = useSelector(
     (state: RootState) => state.compare
@@ -43,27 +52,29 @@ export const ModalContainer = () => {
 
   return (
     <section className="modal__container">
-      <div className="modal__container-compare">
-        {isShowCompareModal ? (
+      {isShowCompareModal ? (
+        <div className="modal__container-compare">
           <CompareModal isShowModal={isShowCompareModal} />
-        ) : null}
-      </div>
+        </div>
+      ) : null}
 
       {isOpenModalProduct ? <ModalProductDetail /> : null}
 
-      <Modal
-        isShowModal={isOpenCartModal}
-        handleClickModal={() => dispatch(toggleOpenCartModal(false))}
-        direction="right"
-      >
-        <div className="cart__modal-wrapper">
-          <ModalHeading
-            handleClose={() => dispatch(toggleOpenCartModal(false))}
-            title="Giỏ Hàng"
-          />
-          <CartModal isCloseModal={true} />
-        </div>
-      </Modal>
+      {isOpenCartModal ? (
+        <Modal
+          isShowModal={isOpenCartModal}
+          handleClickModal={() => dispatch(toggleOpenCartModal(false))}
+          direction="right"
+        >
+          <div className="cart__modal-wrapper">
+            <ModalHeading
+              handleClose={() => dispatch(toggleOpenCartModal(false))}
+              title="Giỏ Hàng"
+            />
+            <CartModal isCloseModal={true} />
+          </div>
+        </Modal>
+      ) : null}
 
       {isOpenNavLeftModal ? (
         <Modal
@@ -137,7 +148,65 @@ export const ModalContainer = () => {
         </Modal>
       ) : null}
 
+      {isOpenAddressForm ? (
+        <div className="modal__address">
+          <Modal
+            unsetSize={true}
+            disableOverLay={true}
+            direction="center"
+            isShowModal={true}
+            heading={"Địa chỉ mới"}
+            isShowConfirmModal={true}
+            handleClickModal={() => dispatch(toggleModalAddressForm(false))}
+          >
+            <AddressForm />
+          </Modal>
+        </div>
+      ) : null}
+
       <Toast />
+
+      {isOpenModalCoupons ? (
+        <div className="promotion__modal-container">
+          <PromotionModal />
+        </div>
+      ) : null}
+
+      {isOpenOtpLoginModal ? (
+        <div className="modal__otp-container">
+          <Modal
+            unsetSize
+            isShowModal={isOpenOtpLoginModal}
+            disableOverLay
+            direction="center"
+            handleClickModal={() => dispatch(toggleOpenOtpLoginModal(false))}
+          >
+            <OTP show="modal" type="update" />
+          </Modal>
+        </div>
+      ) : null}
+
+      {isOpenLoginModal ? (
+        <div className="modal__otp-container">
+          <Modal
+            unsetSize
+            isShowModal={isOpenOtpLoginModal}
+            disableOverLay
+            direction="center"
+            handleClickModal={() => dispatch(toggleOpenOtpLoginModal(false))}
+          >
+            <OTP show="modal" type="login" />
+          </Modal>
+        </div>
+      ) : null}
+
+      {/* <Modal
+        unsetSize
+        isShowModal={isOpenOtpLoginModal}
+        disableOverLay
+        direction="center"
+        handleClickModal={() => dispatch(toggleOpenOtpLoginModal(false))}
+      ></Modal> */}
 
       {isOpenScreenLoading ? <ScreenLoading /> : null}
     </section>

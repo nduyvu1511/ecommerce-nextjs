@@ -4,12 +4,14 @@ import { RootState } from "@/core/store"
 import {
   clearOrderData,
   logOut,
+  toggleOpenLoginModal,
   toggleOpenNavLeftModal,
   toggleOpenSearchModal,
 } from "@/modules"
 import { DOMAIN_URL } from "@/services"
 import Image from "next/image"
 import Link from "next/link"
+import { useRouter } from "next/router"
 import { AiOutlineUser } from "react-icons/ai"
 import { BiCart, BiWorld } from "react-icons/bi"
 import { FiMenu } from "react-icons/fi"
@@ -20,16 +22,20 @@ import { useCartOrder } from "shared/hook"
 import { CartModal } from "../cart"
 import { SearchForm, SearchResult } from "../search"
 import { navLinks } from "./data"
+import { avatar as avatarBlank } from "@/assets"
+import { Notification } from "../notification"
 
 export const Header = () => {
   const dispatch = useDispatch()
   const language = "vni"
-  const {
-    token,
-    userInfo: { avatar = "" },
-  } = useSelector((state: RootState) => state.user)
+  const router = useRouter()
+  const { token, userInfo: { avatar = "" } = { userInfo: undefined } } =
+    useSelector((state: RootState) => state.user)
   const { isOpen: isOpenSearchResult, keyword } = useSelector(
     (state: RootState) => state.product.search
+  )
+  const { isOpen: isOpenSearchHistory } = useSelector(
+    (state: RootState) => state.search.history
   )
   const { carts } = useCartOrder()
 
@@ -59,6 +65,9 @@ export const Header = () => {
                       Thông báo
                     </a>
                   </Link>
+                  <div className="header__notification-modal">
+                    <Notification />
+                  </div>
                 </div>
 
                 <div className="header__actions-right-tools-language">
@@ -76,9 +85,18 @@ export const Header = () => {
 
                 {!token ? (
                   <div className="header__actions-right-tools-option">
-                    <Link href="/login">
-                      <a>{language === "vni" ? "Đăng nhập" : "Login"}</a>
-                    </Link>
+                    <div className="show-on-mobile">
+                      <Link href="/login">
+                        <a>{language === "vni" ? "Đăng nhập" : "Login"}</a>
+                      </Link>
+                    </div>
+
+                    <div
+                      onClick={() => dispatch(toggleOpenLoginModal(true))}
+                      className="show-on-desktop cursor-pointer"
+                    >
+                      {language === "vni" ? "Đăng nhập" : "Login"}
+                    </div>
                   </div>
                 ) : null}
               </div>
@@ -110,7 +128,7 @@ export const Header = () => {
               {isOpenSearchResult && keyword ? <SearchResult /> : null}
             </div>
 
-            {isOpenSearchResult && keyword ? (
+            {isOpenSearchHistory || (isOpenSearchResult && keyword) ? (
               <div className="search-overlay"></div>
             ) : null}
 
@@ -123,11 +141,11 @@ export const Header = () => {
 
             <div className="header__main-top-actions">
               <div className="header__main-top-actions-user">
-                <Link passHref href={`${token ? "/account" : ""}`}>
-                  {token && avatar ? (
+                <Link passHref href={`${token ? "/account" : "/login"}`}>
+                  {token ? (
                     <div className="image-container cursor-pointer">
                       <Image
-                        src={`${DOMAIN_URL}${avatar}`}
+                        src={avatar ? `${DOMAIN_URL}${avatar}` : avatarBlank}
                         layout="fill"
                         alt=""
                         className="image"
@@ -165,22 +183,25 @@ export const Header = () => {
               </div>
 
               {/* cart */}
-              <div className="header__main-top-actions-cart">
-                <div className="header__main-top-actions-cart-wrapper">
-                  <Link passHref href="/cart">
-                    <a className="header__main-top-actions-icon header__main-top-actions-icon-danger">
-                      <BiCart />
-                      <span className="header__main-top-actions-icon-absolute">
-                        {carts.length}
-                      </span>
-                    </a>
-                  </Link>
+              {router.pathname === "/checkout" ||
+              router.pathname === "/cart" ? null : (
+                <div className="header__main-top-actions-cart">
+                  <div className="header__main-top-actions-cart-wrapper">
+                    <Link passHref href="/cart">
+                      <a className="header__main-top-actions-icon header__main-top-actions-icon-danger">
+                        <BiCart />
+                        <span className="header__main-top-actions-icon-absolute">
+                          {carts.length}
+                        </span>
+                      </a>
+                    </Link>
 
-                  <div className="header__main-cart-absolute">
-                    <CartModal />
+                    <div className="header__main-cart-absolute">
+                      <CartModal />
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
         </div>

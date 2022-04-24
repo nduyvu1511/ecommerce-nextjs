@@ -15,7 +15,6 @@
     align-items: center;
     justify-content: space-between;
     padding: 1.2rem;
-    border-bottom: 1px solid $border-color-1;
 
     @include responsive(sm-screen) {
       padding: 2rem;
@@ -58,6 +57,7 @@
     max-height: 50vh;
     overflow-y: auto;
     padding: 1.2rem;
+    border-top: 1px solid $border-color-1;
 
     & .product__variation {
       flex-direction: column;
@@ -95,7 +95,7 @@
     }
 
     & .product__intro-shop-btn {
-      display: block !important;
+      display: flex !important;
     }
   }
 }

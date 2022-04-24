@@ -20,7 +20,7 @@
   }
 
   &-body {
-    margin-top: 4rem;
+    margin-top: 2rem;
 
     &-form {
       &-two {
@@ -87,12 +87,6 @@
         margin-left: auto;
       }
     }
-  }
-
-  & .address__form-body-form .form-item-inline .dropdown-title {
-    color: $text-color;
-    font-weight: 500;
-    font-size: 1.4rem;
   }
 }
 

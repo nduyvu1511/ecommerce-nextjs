@@ -1,82 +1,96 @@
 .shipping__detail {
-  &-heading {
-    margin-bottom: 3rem;
-    @include style-text(500, 1.8rem, 2.8rem, $text-color);
-    @include responsive(lg-screen) {
-      font-size: 2rem;
-      line-height: 3rem;
-      margin-bottom: 4rem;
-    }
-  }
-
   &-list {
     list-style: none;
-    grid-gap: 2rem;
+    grid-gap: 1rem;
+
+    @include responsive(lg-screen) {
+      grid-gap: 2rem;
+    }
 
     &-item {
-      border-radius: 4px;
+      border-radius: 2px;
       border: 1px solid $border-color-1;
-      padding: 2rem;
-      overflow: hidden;
-      height: fit-content;
+      padding: 1rem;
+      position: relative;
 
       .shipping__detail-wrapper-child {
+        width: calc(100% + 2px);
+        position: absolute;
+        border: 1px solid $border-color-1;
         max-height: 0;
         transition: all 0.2s;
-      }
-
-      .shipping__detail-wrapper-child-expand {
+        height: auto;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10;
+        top: calc(100% + 1px);
         transition: all 0.2s;
-        max-height: 500px;
-        border-top: 1px solid $border-color-1;
-        padding-top: 2rem;
-        margin-top: 2rem;
 
-        @include style-text(500, 1.4rem, 2.4rem, $text-color);
+        &-expand {
+          max-height: 100vh;
+          padding: 2rem 1rem;
+          background-color: $white;
+          @include style-text(500, 1.3rem, 2rem, $text-color);
 
-        & p:last-child {
-          text-align: right;
+          & p:last-child {
+            text-align: right;
+          }
         }
       }
 
       &-active {
         transition: all 0.2s;
-        border: 1px solid $primary;
+        border: 1px solid $primary-color;
+      }
+
+      &-disabled {
+        opacity: 0.5;
+        pointer-events: none;
       }
 
       .shipping__detail-wrapper {
         display: flex;
         justify-content: space-between;
         cursor: pointer;
+        position: relative;
+
+        &-image {
+          margin-right: 1.4rem;
+          @include flex-center;
+
+          & img {
+            width: 40px;
+            height: auto;
+            object-fit: cover;
+          }
+        }
 
         &-content {
           flex: 1;
-          margin-right: 2rem;
+          margin-right: 1.4rem;
 
           & h3 {
-            @include style-text(500, 1.4rem, 2.4rem, $text-color);
-            margin-bottom: 1rem;
-            @include responsive(lg-screen) {
-              font-size: 1.5rem;
-              line-height: 2.5rem;
-            }
+            @include style-text(500, 1.3rem, 2rem, $text-color);
+            margin-bottom: 0.4rem;
           }
           & p {
-            @include style-text(500, 1.4rem, 2.4rem, $text-color);
+            @include style-text(500, 1.3rem, 2rem, $text-color);
           }
         }
 
         &-option {
-          height: 100%;
-          @include flex(space-between, center);
+          @include flex-center;
           flex-direction: column;
 
           & button {
-            margin-top: 0.5rem;
-            padding: 1rem;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            @include flex-center;
+
             & svg {
-              font-size: 2rem;
-              color: $text-color-opacity;
+              font-size: 1.8rem;
+              color: $gray;
             }
           }
         }
@@ -85,32 +99,24 @@
   }
 
   &-input {
-    margin-top: 4rem;
+    margin-top: 2rem;
+    display: flex;
 
-    @include responsive(md-screen) {
-      margin-top: 4rem;
-    }
-
-    @include responsive(lg-screen) {
-      margin-top: 6rem;
-    }
-
-    & textarea {
+    & input {
+      height: 40px;
       width: 100%;
       border: 1px solid $border-color-1;
-      border-radius: 0.4rem;
-      padding: 1.5rem;
-      @include style-text(500, 1.4rem, 2.4rem, $text-color);
+      border-radius: 0.2rem;
+      padding-inline: 1.2rem;
+      @include style-text(500, 1.3rem, 2.3rem, $text-color);
       background-color: #fff;
-      resize: vertical;
+      margin-left: auto;
+      max-width: 400px;
+      width: 100%;
     }
   }
 
-  &-footer {
-    margin-top: 3rem;
-
-    & button {
-      margin-left: auto;
-    }
+  &-disabled {
+    opacity: 0.5;
   }
 }

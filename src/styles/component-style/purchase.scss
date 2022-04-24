@@ -1,6 +1,18 @@
 .purchase__list {
   margin-top: 1.4rem;
 
+  &-no-purchase {
+    @include flex-center;
+    flex-direction: column;
+    padding-block: 2rem;
+
+    & svg {
+      color: $gray;
+      font-size: 4rem;
+      margin-bottom: 2rem;
+    }
+  }
+
   &-item {
     list-style: none;
     background-color: #fff;

@@ -10,14 +10,16 @@ export const ScreenLoading = () => {
 
     return () => {
       if (htmlTag) {
-        htmlTag.style.overflow = "auto"
+        htmlTag.style.overflow = "unset"
       }
     }
   }, [])
 
   return (
     <div className="screen__loading">
-      <BiLoaderAlt className="loader" />
+      <span>
+        <BiLoaderAlt className="loader" />
+      </span>
     </div>
   )
 }

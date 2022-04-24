@@ -1,17 +1,16 @@
 import { ShippingAddress } from "./address"
 
 export interface Auth {
-  firebase_access_token: string
+  firebase_access_token?: string
   google_access_token?: string
-  account_type?: string
+  type?: string
   facebook_access_token?: string
+  data_in_token?: any
 }
 
-export interface AuthSlice {
-  token: string
-  isAuth: boolean
-  partner_id: number | undefined
-  company_id: number | undefined
+export interface PhoneUpdateProps extends Token {
+  firebase_access_token: string
+  phone: string
 }
 
 export interface UserEdit {
@@ -163,7 +162,7 @@ export interface Comment {
 export interface UserSlice {
   token: string
   addressDefault: undefined | ShippingAddress
-  userInfo: UserInfo
+  userInfo: UserInfo | undefined
 }
 
 export interface WishlistReq extends Token {
@@ -182,4 +181,10 @@ export interface AddComment extends GetComment {
 export interface DeleteComment extends Token {
   comment_id: number
   product_id: number
+}
+
+export interface AuthSlice {
+  currentToken: string | undefined
+  phoneNumber: string | undefined
+  currentUserInfo: UserInfo | undefined
 }

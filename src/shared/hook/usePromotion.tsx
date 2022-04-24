@@ -20,10 +20,8 @@ interface CouponSWR {
 
 const usePromotion = (isFetch = true): CouponSWR => {
   const dispatch = useDispatch()
-  const {
-    token,
-    userInfo: { id: partner_id },
-  } = useSelector((state: RootState) => state.user)
+  const { token, userInfo: { id: partner_id = 0 } = { userInfo: {} } } =
+    useSelector((state: RootState) => state.user)
   const { orderDraft } = useSelector((state: RootState) => state.order)
 
   const { data, error, isValidating, mutate } = useSWR(
@@ -37,7 +35,6 @@ const usePromotion = (isFetch = true): CouponSWR => {
               } else {
                 dispatch(
                   setMessage({
-                    isOpen: true,
                     title: res.error?.message || "",
                     type: "danger",
                   })
@@ -46,7 +43,6 @@ const usePromotion = (isFetch = true): CouponSWR => {
             } else {
               dispatch(
                 setMessage({
-                  isOpen: true,
                   title: res.error?.message || "",
                   type: "danger",
                 })
@@ -80,7 +76,6 @@ const usePromotion = (isFetch = true): CouponSWR => {
       dispatch(
         setMessage({
           title: "Đã áp dụng voucher",
-          isOpen: true,
           direction: "top",
         })
       )
@@ -95,7 +90,6 @@ const usePromotion = (isFetch = true): CouponSWR => {
     } else {
       dispatch(
         setMessage({
-          isOpen: true,
           title: result.message,
           type: "danger",
           direction: "top",
@@ -120,7 +114,6 @@ const usePromotion = (isFetch = true): CouponSWR => {
     } else {
       dispatch(
         setMessage({
-          isOpen: true,
           title: result.message,
           type: "danger",
           direction: "top",

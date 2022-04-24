@@ -31,12 +31,7 @@ export const CartModal = ({ isCloseModal }: CartModalProps) => {
     if (payment) {
       return router.push("/payment")
     }
-    if (delivery) {
-      return router.push("/delivery")
-    }
-    if (address) {
-      return router.push("/address")
-    }
+   
 
     return router.push("/cart")
   }
@@ -91,7 +86,7 @@ export const CartModal = ({ isCloseModal }: CartModalProps) => {
                 {language === "vni" ? "Thanh toán" : " Checkout"}
               </span>
             </div>
-          </div>{" "}
+          </div>
         </>
       )}
     </div>

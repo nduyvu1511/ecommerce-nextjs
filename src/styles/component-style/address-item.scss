@@ -4,10 +4,6 @@
   border-radius: 4px;
   position: relative;
 
-  &-checkbox {
-    cursor: pointer;
-  }
-
   &-active-label {
     display: none;
   }
@@ -33,16 +29,6 @@
     position: absolute;
     top: 0;
     right: 0;
-
-    & .input__checkbox {
-      margin-top: 2rem;
-      position: absolute;
-    }
-
-    &-checkbox {
-      top: 0;
-      right: 0;
-    }
 
     .address__item-btn {
       padding: 1rem;

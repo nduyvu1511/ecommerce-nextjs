@@ -1,12 +1,8 @@
 .input__quantity {
   @include flex-center;
-  height: 28px;
   border-radius: 0.3rem;
   border: 1px solid $black-opacity-02;
-
-  @include responsive(md-screen) {
-    height: 35px;
-  }
+  height: 25px;
 
   &-disabled {
     opacity: 0.4;
@@ -14,10 +10,7 @@
   }
 
   &-btn {
-    width: 30px;
-    @include responsive(md-screen) {
-      height: 40px;
-    }
+    width: 28px;
     height: 100%;
     border: none;
     outline: none;
@@ -37,8 +30,7 @@
     height: 100%;
     background-color: #f4f4f4;
     outline: none;
-    font-family: $second-font;
-    @include style-text(600, 1.5rem, 1.5rem, $text-color);
+    @include style-text(600, 1.2rem, 1.2rem, $text-color);
     background-color: transparent;
     -moz-appearance: textfield;
     &::-webkit-outer-spin-button,

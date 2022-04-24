@@ -88,10 +88,10 @@
           padding-inline: 3rem;
         }
 
-        & .form-item-text-error {
-          left: 1rem;
-          @include responsive(md-screen) {
-            left: 17rem;
+        & .form-item-inline {
+          flex-direction: row;
+          & label {
+            text-align: left;
           }
         }
 
@@ -107,10 +107,10 @@
           margin-bottom: 2rem;
 
           & label:first-child {
-            text-align: right;
+            text-align: left;
             margin-right: 2rem;
             @include responsive(md-screen) {
-              width: 150px;
+              width: 115px;
             }
           }
 
@@ -203,20 +203,16 @@
 
     &-item {
       @include flex(flex-start, center);
-      padding: 1.6rem 2rem;
+      padding: 1.2rem 2rem;
       width: 100%;
       cursor: pointer;
-      border-radius: 0.4rem;
-      transition: all 0.2s ease;
-      margin-bottom: 0.4rem;
-
-      &:last-child {
-        margin-bottom: 0;
-      }
+      border-radius: 0.2rem;
+      transition: all 0.1s ease;
 
       &:hover {
         @include responsive(lg-screen) {
           background-color: $primary-color-opacity;
+          color: $white;
         }
       }
 

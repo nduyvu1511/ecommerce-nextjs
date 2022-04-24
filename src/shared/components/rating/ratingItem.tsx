@@ -1,7 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
-import { avatar } from "@/assets"
+import { avatar, companyIcon } from "@/assets"
 import { CommentRating } from "@/models"
 import { DOMAIN_URL } from "@/services"
+import Image from "next/image"
 import React, { useState } from "react"
 import { Tag } from "../common"
 import ImageShow from "../common/imageShow"
@@ -21,20 +22,23 @@ export const RatingItem = ({ rating, onDelete }: RatingItemProps) => {
   //   setOpen(false)
   // })
 
-  console.log(rating)
-
   return (
     <>
       <div className="rating__item">
         <div className="rating__item-avatar">
-          <img
-            src={
-              rating?.partner_avatar
-                ? `${DOMAIN_URL}${rating?.partner_avatar}`
-                : avatar
-            }
-            alt=""
-          />
+          <div className="image-container">
+            <Image
+              src={
+                rating?.partner_avatar
+                  ? `${DOMAIN_URL}${rating?.partner_avatar}`
+                  : avatar
+              }
+              alt=""
+              layout="fill"
+              quality={20}
+              className="image"
+            />
+          </div>
         </div>
 
         <div className="rating__item-content">
@@ -78,7 +82,15 @@ export const RatingItem = ({ rating, onDelete }: RatingItemProps) => {
                   className="rating__item-content-image-item"
                 >
                   {/* data:image/jpeg;base64, */}
-                  <img src={`${DOMAIN_URL}${item.image_url}`} alt="" />
+                  <div className="image-container">
+                    <Image
+                      src={`${DOMAIN_URL}${item.image_url}`}
+                      alt=""
+                      layout="fill"
+                      quality={20}
+                      className="image"
+                    />
+                  </div>
                 </div>
               ))}
             </div>

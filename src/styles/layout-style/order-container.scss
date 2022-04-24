@@ -1,80 +1,26 @@
 .order__container {
+  background-color: $bg-primary-opacity;
+  padding-block: 1.5rem;
+  margin-bottom: 90px;
+
+  @include responsive(md-screen) {
+    margin-bottom: 110px;
+  }
+
+  @include responsive(xl-screen) {
+    margin-bottom: 0;
+  }
+
+  @include responsive(lg-screen) {
+    padding-block: 3rem;
+  }
+
+  &--no-margin {
+    margin-bottom: 0;
+  }
+
   .order-wrapper {
-    margin-bottom: 4rem;
-
-    .order__header {
-      border-bottom: 1px solid $border-color-1;
-      margin-bottom: 2rem;
-      @include responsive(lg-screen) {
-        margin-bottom: 4rem;
-      }
-
-      &-list {
-        padding-block: 1rem;
-        width: 100%;
-        max-width: 1000px;
-        margin-inline: auto;
-        display: grid;
-        grid-template-columns: repeat(5, 1fr);
-        list-style: none;
-
-        @include responsive(md-screen) {
-          padding-block: 2rem;
-        }
-
-        @include responsive(lg-screen) {
-          padding-block: 3rem;
-        }
-
-        &-item {
-          @include flex(flex-start, center);
-          flex-direction: column;
-          margin-right: 1rem;
-          position: relative;
-          text-align: center;
-
-          &:last-child {
-            margin-right: 0;
-          }
-
-          &-btn {
-            padding: 0.5rem;
-
-            & svg {
-              font-size: 3rem;
-              color: $text-color-opacity;
-            }
-
-            & p {
-              display: none;
-              @include style-text(600, 1.2rem, 2.2rem, $text-color);
-
-              @include responsive(md-screen) {
-                margin-top: 1rem;
-                display: block;
-                font-size: 1.3rem;
-                line-height: 2.3rem;
-              }
-
-              @include responsive(lg-screen) {
-                font-size: 1.5rem;
-                line-height: 2.5rem;
-              }
-            }
-          }
-
-          &-active {
-            & svg {
-              color: $yellow;
-            }
-
-            & p {
-              color: $yellow;
-            }
-          }
-        }
-      }
-    }
+    min-height: 100vh;
 
     .order__body {
       display: grid;
@@ -82,7 +28,7 @@
       @include responsive(xl-screen) {
         grid-template-columns: repeat(7, 1fr);
       }
-      grid-gap: 3rem;
+      grid-gap: 2rem;
 
       &-left {
         @include responsive(xl-screen) {
@@ -97,7 +43,9 @@
       }
 
       &-right {
+        display: none;
         @include responsive(xl-screen) {
+          display: block;
           grid-column: 6 / 8;
         }
       }
@@ -114,5 +62,12 @@
         margin-left: auto;
       }
     }
+  }
+}
+
+.cart__summary-mobile-wrapper {
+  display: block;
+  @include responsive(xl-screen) {
+    display: none;
   }
 }

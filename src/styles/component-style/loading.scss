@@ -243,17 +243,33 @@
   backdrop-filter: blur(3px);
 
   @-moz-document url-prefix() {
-    background-color: rgba(128, 128, 128, 0.5);
+    background-color: rgba(128, 128, 128, 0.4);
   }
 
-  & svg {
+  & span {
     position: absolute;
+    z-index: 10;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 10;
-    font-size: 3rem;
-    fill: $gray;
+    background-color: $white;
+    width: 50px;
+    height: 50px;
+    @include flex-center;
+    border-radius: 0.3rem;
+
+    @include responsive(lg-screen) {
+      width: 80px;
+      height: 80px;
+    }
+  }
+
+  & svg {
+    font-size: 2.5rem;
+    fill: $primary-color;
+    @include responsive(lg-screen) {
+      font-size: 4rem;
+    }
   }
 }
 

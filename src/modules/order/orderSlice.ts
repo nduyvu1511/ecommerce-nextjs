@@ -64,9 +64,7 @@ const OrderSlice = createSlice({
 
     // Payment
     setPayment: (state, { payload }: { payload: Payment | undefined }) => {
-      if (state.payment && payload) {
-        if (payload.acquirer_id === state.payment.acquirer_id) return
-      }
+      if (payload?.acquirer_id === state?.payment?.acquirer_id) return
 
       state.payment = payload
     },

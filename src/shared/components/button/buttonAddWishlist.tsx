@@ -37,7 +37,7 @@ const ButtonWishlist = ({ product, type }: ButtonWishlistProps) => {
         {type === "item" ? (
           <span
             style={{
-              left: `calc(-100% - ${language === "vni" ? "75" : "50"}px)`,
+              left: `calc(-100% - 83px)`,
             }}
             className="tool-tip"
           >
@@ -57,7 +57,7 @@ const ButtonWishlist = ({ product, type }: ButtonWishlistProps) => {
         )}
 
         {type === "detail"
-          ? `${language === "vni" ? "Thêm vào yêu thích" : "Add to wishlist"}`
+          ? `${language === "vni" ? "Yêu thích" : "Add to wishlist"}`
           : ""}
       </button>
     </>

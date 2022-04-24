@@ -1,154 +1,320 @@
-.cart__body-total {
-  border: 1px solid $border-color-1;
-  border-radius: 0.4rem;
-  padding-top: 0;
-  padding-bottom: 2.4rem;
-  height: fit-content;
-  max-height: 90vh;
-  display: flex;
-  flex-direction: column;
-  background-color: white;
+.cart__summary-container {
+  & .cart__body-total {
+    background-color: $white;
+    border-radius: 0.2rem;
+    padding-top: 0;
+    height: fit-content;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
 
-  &-sticky {
-    @include responsive(xl-screen) {
-      position: fixed;
-      top: 2rem;
-      width: calc(($container-width / 7) * 2 - 2rem);
+    &-sticky {
+      @include responsive(xl-screen) {
+        position: fixed;
+        top: 2rem;
+        width: calc(($container-width / 7) * 2 - 2rem);
+      }
     }
-  }
 
-  &-heading {
-    padding-inline: 2rem;
-    padding-top: 3rem;
-    padding-bottom: 2.5rem;
-    @include style-text(600, 1.6rem, 1.6rem, $text-color);
-    font-family: $second-font;
-    text-transform: uppercase;
-  }
-
-  &-product {
-    flex: 1;
-    overflow-y: auto;
-    padding-inline: 2rem;
-
-    &-title {
-      padding-block: 2rem;
-      @include flex(space-between, center);
-      border-top: 1px solid $border-color-1;
+    & .cart__body-total-title {
+      padding: 1.5rem 2rem;
+      display: flex;
+      align-items: baseline;
 
       &-heading {
-        font-family: $second-font;
-        text-transform: uppercase;
-        @include style-text(600, 1.4rem, 2.4rem, $home-heading-color);
+        @include style-text(600, 1.4rem, 1.4rem, $home-heading-color);
       }
 
       &-quantity {
-        border-radius: 50%;
-        width: 2rem;
-        height: 2rem;
-        @include flex-center;
-        @include style-text(600, 1.1rem, 1.1rem, $white);
-        background-color: $primary-color;
+        font-size: 1rem;
+        margin-left: 0.4rem;
+        font-weight: 600;
       }
     }
 
-    & .cart__total-price-list {
-      @include style-text(600, 1.3rem, 2rem, $text-color);
-      list-style: none;
-      flex-wrap: wrap;
-      list-style: none;
-      display: flex;
+    &-product {
+      flex: 1;
+      overflow-y: auto;
+      padding-inline: 2rem;
 
-      &-item {
-        // flex: 1;
-        width: 50%;
-        padding-right: 1rem;
+      & .cart__total-price-list {
+        @include style-text(600, 1.3rem, 2rem, $text-color);
+        list-style: none;
+        flex-wrap: wrap;
+        list-style: none;
+        display: flex;
 
-        &:nth-child(3) {
-          width: 100%;
-          margin-block: 1rem;
-        }
-
-        &:nth-child(4) {
-          width: 100%;
-        }
-
-        & span {
-          text-align: left;
-          width: 40%;
+        &-item {
+          width: 50%;
           padding-right: 1rem;
-        }
 
-        & span:last-child {
-          width: 60%;
-        }
+          & svg {
+            position: relative;
+            top: 2px;
+            margin-inline: 0.2rem;
+          }
 
-        &-danger {
-          color: $danger;
+          &-deal {
+            padding: 0.4rem 0.8rem;
+            background-color: $danger;
+            color: white;
+            width: fit-content;
+            height: fit-content;
+            font-size: 1.2rem;
+            line-height: 1.2rem;
+            font-family: $second-font;
+          }
+
+          & span {
+            text-align: left;
+            width: 40%;
+            padding-right: 1rem;
+          }
+
+          &-total {
+            color: $danger;
+            font-weight: 600;
+            width: 100%;
+            margin-top: 0.6rem;
+          }
         }
       }
-    }
 
-    & .cart__total-product-list {
-      list-style: none;
-      position: relative;
+      & .cart__total-product-list {
+        list-style: none;
+        position: relative;
 
-      &-item {
-        @include style-text(500, 1.4rem, 2.4rem, $text-color);
-        padding-block: 1.4rem;
-        border-bottom: 1px solid $border-color-2;
+        &-item {
+          @include style-text(400, 1.3rem, 2rem, $text-color);
+          padding-block: 1rem;
+          border-bottom: 1px solid $border-color-2;
 
-        &:first-child {
-          border-top: 1px solid $border-color-2;
-        }
+          &:first-child {
+            border-top: 1px solid $border-color-2;
+          }
 
-        &-title {
-          margin-bottom: 1rem;
-          font-weight: 600;
-          font-size: 1.3rem;
-          // @include limit-line-text(2);
-
-          @include responsive(md-screen) {
-            font-size: 1.4rem;
+          &-title {
+            margin-bottom: 1rem;
+            font-weight: 500;
+            @include limit-line-text(2);
           }
         }
       }
     }
-  }
 
-  &-summary {
-    padding-inline: 2rem;
-  }
-
-  &-subtotal {
-    @include flex(space-between, center);
-    padding-block: 2rem;
-    border-bottom: 1px solid $border-color-2;
-    @include style-text(600, 1.4rem, 1.4rem, $home-heading-color);
-    font-family: $second-font;
-
-    &-title {
-      text-transform: uppercase;
+    &-summary {
+      padding-inline: 2rem;
     }
-  }
 
-  &-coupons {
-    display: flex;
-    height: 40px;
-    margin-top: 2rem;
-    padding-inline: 2rem;
+    &-subtotal {
+      @include flex(space-between, center);
+      padding-block: 1.6rem;
+      border-bottom: 1px solid $border-color-2;
+      @include style-text(500, 1.3rem, 1.3rem, $home-heading-color);
 
-    &-btn {
-      margin-left: auto;
-      & svg {
-        margin-right: 0.8rem;
+      & span {
+        font-weight: 600;
+      }
+
+      &:last-child {
+        border-bottom: 0;
+      }
+    }
+
+    & .cart__summary-total {
+      padding-block: 2rem;
+
+      & .cart__body-total-price {
+        @include style-text(500, 2.4rem, 3.2rem, $danger);
+      }
+    }
+
+    &-coupons {
+      padding-block: 1.5rem;
+      margin-inline: 2rem;
+      border-top: 1px solid $border-color-2;
+
+      &-btn {
+        @include style-text(500, 1.3rem, 1.8rem, $primary);
+        background-color: transparent;
+        border: 0;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+
+        & svg {
+          margin-right: 0.8rem;
+        }
       }
     }
   }
+}
 
+.cart__summary-mobile {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: $white;
+  border-top: 1px solid $border-color-2;
+  z-index: 300;
+  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.09);
+
+  &-item {
+    padding: 1rem;
+    @include responsive(sm-screen) {
+      padding-inline: 1.5rem;
+    }
+    @include responsive(md-screen) {
+      padding-block: 1.5rem;
+    }
+    @include responsive(lg-screen) {
+      padding-inline: 3rem;
+    }
+
+    @include flex(space-between, center);
+  }
+
+  &-promotion {
+    border-bottom: 1px solid $border-color-1;
+
+    & button {
+      @include style-text(500, 1.3rem, 1.3rem, $text-color);
+      @include flex(flex-start, center);
+
+      & svg {
+        margin-left: 0.4rem;
+        font-size: 1.8rem;
+      }
+    }
+
+    & button:first-child {
+      margin-right: 1rem;
+      color: $primary;
+
+      & svg {
+        margin-left: 0;
+        margin-right: 0.4rem;
+      }
+    }
+
+    & button:last-child {
+      margin-left: auto;
+      color: $text-color;
+    }
+  }
+
+  &-body {
+    & button {
+      background-color: $danger;
+      padding: 1rem 1.6rem;
+      font-family: $main-font;
+      border-radius: 0.2rem;
+
+      @include responsive(md-screen) {
+        padding: 1.4rem 2.4rem;
+      }
+
+      & span {
+        font-size: 1.2rem;
+        margin-left: 0.4rem;
+      }
+    }
+
+    &-price {
+      margin-right: 1rem;
+      display: flex;
+      flex-direction: column;
+
+      &-title {
+        @include style-text(500, 1.3rem, 2rem, $text-color);
+        margin-bottom: 0.2rem;
+      }
+
+      &-value {
+        @include style-text(500, 2rem, 2.8rem, $danger);
+      }
+    }
+  }
+}
+
+.cart__summary-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  background-color: #fff;
+  animation: grow-up 0.2s linear;
+
+  &-close-btn {
+    display: flex;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    margin-left: 2rem;
+
+    & svg {
+      font-size: 1.6rem;
+      color: $text-color;
+    }
+  }
+
+  & .cart__body-total {
+    height: 100%;
+    max-height: 100vh;
+  }
+}
+
+.promotion__modal-container {
   & .modal {
+    max-width: 600px;
+    width: 100%;
+    max-height: unset;
+    border-radius: 0;
+    width: 100%;
+    height: 100%;
+    padding: 2rem 1rem;
+
+    @include responsive(xs-screen) {
+      padding: 3rem 2rem;
+    }
+
+    @include responsive(md-screen) {
+      max-height: 96vh;
+      height: auto;
+      border-radius: 0.4rem;
+    }
+
     &__header {
-      padding-bottom: 2rem;
+      margin-bottom: 2rem;
+    }
+  }
+}
+
+.cart__summary-footer {
+  padding-top: 2rem;
+  background-color: $primary-color-opacity;
+  display: none;
+  @include responsive(xl-screen) {
+    @include flex(space-between, center);
+  }
+
+  &-btn {
+    height: 100%;
+    background-color: $red;
+    font-weight: 600;
+    margin-left: auto;
+    padding: 1.2rem 2rem;
+    border-radius: 0.2rem;
+    min-width: 150px;
+    font-family: $main-font;
+    font-size: 1.5rem;
+    width: 100%;
+
+    & span {
+      margin-left: 0.4rem;
+      font-size: 1.2rem;
+      font-weight: 500;
     }
   }
 }

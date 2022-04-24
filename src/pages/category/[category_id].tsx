@@ -25,7 +25,6 @@ import {
 import { MainLayout } from "@/layout"
 import {
   AttributeReq,
-  AttributeWithParentId,
   BreadcrumbItem,
   Category as ICategory,
   ParentChildCategoryList,
@@ -34,6 +33,7 @@ import {
 import { toggleOpenModalFilter } from "@/modules"
 import productApi from "@/services/productApi"
 import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from "next"
+import Link from "next/link"
 import { useRouter } from "next/router"
 import React, { useEffect, useRef, useState } from "react"
 import { FiFilter } from "react-icons/fi"
@@ -62,7 +62,6 @@ const ProductList = ({ products, category }: CategoryProps) => {
     setProducts,
     setLimit,
     handleChangePage,
-    handleSortProducts,
     isFetching,
   } = useQueryProducts()
 
@@ -191,6 +190,7 @@ const ProductList = ({ products, category }: CategoryProps) => {
   const ProductList = () => (
     <>
       <ProductFilter
+        showGridView
         gridView={currentListView}
         onSelectGridView={(count) => setCurrentListView(count)}
       />
@@ -228,16 +228,9 @@ const ProductList = ({ products, category }: CategoryProps) => {
           <p>
             Không có sản phẩm nào. Bạn thử tắt điều kiện lọc và tìm lại nhé?
           </p>
-          <button
-            onClick={() =>
-              router.push(
-                `/category/${Number(router.query.category_id)}?offset=0`
-              )
-            }
-            className="btn-primary"
-          >
-            Xóa bộ lọc
-          </button>
+          <Link href={`/category/${Number(router.query.category_id)}?offset=0`}>
+            <a className="btn-primary">Xóa bộ lọc</a>
+          </Link>
         </div>
       ) : null}
 
@@ -278,20 +271,25 @@ const ProductList = ({ products, category }: CategoryProps) => {
       </section>
 
       {/* Modal filter in mobile */}
-      <Modal
-        isShowModal={isOpenModalFilter}
-        handleClickModal={() => dispatch(toggleOpenModalFilter(false))}
-        direction="right"
-      >
-        <ModalHeading
-          handleClose={() => dispatch(toggleOpenModalFilter(false))}
-          title={`${language === "vni" ? "Lọc sản phẩm" : "Filter products"} `}
-        />
-        <ShopFilter
-          isCloseModal={true}
-          categories={category?.child_category || []}
-        />
-      </Modal>
+      {isOpenModalFilter ? (
+        <Modal
+          isShowModal={isOpenModalFilter}
+          handleClickModal={() => dispatch(toggleOpenModalFilter(false))}
+          direction="right"
+        >
+          <ModalHeading
+            handleClose={() => dispatch(toggleOpenModalFilter(false))}
+            title={`${
+              language === "vni" ? "Lọc sản phẩm" : "Filter products"
+            } `}
+          />
+          <ShopFilter
+            width={shopFilterRef.current?.offsetWidth || 300}
+            isCloseModal={true}
+            categories={category?.child_category || []}
+          />
+        </Modal>
+      ) : null}
     </>
   )
 }

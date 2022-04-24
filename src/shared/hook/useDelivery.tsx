@@ -1,9 +1,9 @@
 import { RootState } from "@/core/store"
 import { Delivery } from "@/models"
-import { setMessage } from "@/modules"
+import { setMessage, toggleOpenScreenLoading } from "@/modules"
 import orderApi from "@/services/orderApi"
 import { useDispatch, useSelector } from "react-redux"
-import useSWR from "swr"
+import useSWR, { KeyedMutator } from "swr"
 
 interface GetDeliveryDetailProps {
   carrier_id: number
@@ -24,30 +24,30 @@ interface DeliverySWR {
   isValidating: boolean
   getDeliveryDetail: (props: GetDeliveryDetailProps) => void
   confirmDelivery: (props: ConfirmDeliveryProps) => void
+  mutate: KeyedMutator<any>
 }
 
 const useDelivery = (): DeliverySWR => {
   const dispatch = useDispatch()
   const { token } = useSelector((state: RootState) => state.user)
-  const { orderDraft, address, productList } = useSelector(
+  const { orderDraft, productList } = useSelector(
     (state: RootState) => state.order
   )
 
   const { data, error, isValidating, mutate } = useSWR(
     "delivery",
-    token && productList && orderDraft && address
+    token && productList && orderDraft
       ? () =>
           orderApi
             .getDeliveryList({ sale_id: orderDraft.order_id, token })
             .then((res: any) => {
-              if (res.result.success) {
+              if (res?.result?.success) {
                 return res.result.data
               } else {
                 dispatch(
                   setMessage({
                     title: res.result.message,
                     type: "danger",
-                    isOpen: true,
                   })
                 )
               }
@@ -64,32 +64,38 @@ const useDelivery = (): DeliverySWR => {
   }: ConfirmDeliveryProps) => {
     if (!orderDraft || !token) return
 
-    const res: any = await orderApi.confirmDelivery({
-      sale_carrier: [
-        {
-          carrier_id: delivery.carrier_id,
-          sale_id: orderDraft.order_id,
-        },
-      ],
-      payment_type: "2",
-      required_note: "KHONGCHOXEMHANG",
-      token,
-      delivery_message: delivery.delivery_message || "",
-    })
+    dispatch(toggleOpenScreenLoading(true))
 
-    if (res.error) {
-      dispatch(
-        setMessage({
-          title: res.error?.data?.message || "",
-          isOpen: true,
-          type: "danger",
-        })
-      )
-      return
-    }
+    try {
+      const res: any = await orderApi.confirmDelivery({
+        sale_carrier: [
+          {
+            carrier_id: delivery.carrier_id,
+            sale_id: orderDraft.order_id,
+          },
+        ],
+        payment_type: "2",
+        required_note: "KHONGCHOXEMHANG",
+        token,
+        delivery_message: delivery.delivery_message || "",
+      })
 
-    if (res.result.success) {
-      handleSuccess()
+      dispatch(toggleOpenScreenLoading(false))
+
+      if (res?.result?.success) {
+        handleSuccess()
+      } else {
+        dispatch(
+          setMessage({
+            title:
+              res.error?.data?.message ||
+              "Vui lòng chọn phương thức vận chuyển khác",
+            type: "danger",
+          })
+        )
+      }
+    } catch (error) {
+      dispatch(toggleOpenScreenLoading(false))
     }
   }
 
@@ -104,26 +110,14 @@ const useDelivery = (): DeliverySWR => {
       token,
     })
 
-    if (res.error) {
-      dispatch(
-        setMessage({
-          title: res.error?.data?.message || "",
-          isOpen: true,
-          type: "danger",
-        })
-      )
-      return
-    }
-
     const result = res.result
 
-    if (result.success) {
+    if (result?.success) {
       handleSuccess({ ...result.data, carrier_id })
     } else {
       dispatch(
         setMessage({
-          title: result.message || "",
-          isOpen: true,
+          title: result.message || res.error?.data?.message || "",
           type: "danger",
         })
       )
@@ -136,6 +130,7 @@ const useDelivery = (): DeliverySWR => {
     isValidating,
     getDeliveryDetail,
     confirmDelivery,
+    mutate,
   }
 }
 

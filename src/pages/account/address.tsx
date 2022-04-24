@@ -12,7 +12,7 @@ const UserAddress = () => {
       ]}
       heading="Địa chỉ"
     >
-      <Address type="account" />
+      <Address />
     </AccountContainer>
   )
 }

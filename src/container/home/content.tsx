@@ -17,7 +17,7 @@ export const MainContent = () => {
     <section className="home__content">
       <div className="home__content-right">
         <HomeSlideProduct
-          path="/products&type_get=top_sale"
+          path="/products/top/&type_get=top_sale"
           name="Bán Chạy"
           title="Đừng bỏ lỡ nhưng ưu đãi mới nhất"
           isLoading={isTopLoading && !isArrayHasValue(topProducts)}
@@ -43,7 +43,7 @@ export const MainContent = () => {
         <HomeSlideProduct
           name="Sản phẩm mới"
           title="Những sản phẩm mới nhất đến từ shop"
-          path="/products&type_get=new"
+          path="/products/new&type_get=new"
           isLoading={isNewProductLoading && !isArrayHasValue(newProducts)}
         >
           <div className="home__content-products-grid grid grid-col-2 grid-col-sm-3 grid-col-lg-4 grid-col-1024-5 grid-col-xl-6">

@@ -7,7 +7,7 @@ export interface Payment {
   name: string
   provider: string
   state: string
-  image: string
+  image_url: string
 }
 
 export interface ProductCompany {
@@ -88,6 +88,8 @@ export interface Delivery {
   carrier_name: string
   shipping_fee: number
   shipping_active: boolean
+  shipping_icon: string
+  description: string
 }
 
 export interface DeliveryDetail {
@@ -145,6 +147,7 @@ export interface GetPriceOfDeliveryProps extends GetDeliveryListProps {
 export interface CreateOrderDraftProps {
   handleSuccess?: Function
   handleError?: Function
+  showLoading?: boolean
 }
 
 export interface CancelPromotion extends Token {

@@ -27,7 +27,7 @@ const useUser = (): UserRes => {
       ? () =>
           userApi.getUserInfo({ token }).then((res: any) => {
             const user = res?.result?.data || {}
-            if (user) return user
+            if (res?.result?.success) return user
           })
       : null,
     {
@@ -61,14 +61,12 @@ const useUser = (): UserRes => {
           dispatch(
             setMessage({
               title: "Chỉnh sửa thông tin thành công!",
-              isOpen: true,
             })
           )
         } else {
           dispatch(
             setMessage({
               title: res?.result?.message || "",
-              isOpen: true,
               type: "danger",
             })
           )

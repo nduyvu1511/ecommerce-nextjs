@@ -50,7 +50,6 @@ const useAttachment = (props: UseAttachmentProps): UseAttachmentRes => {
         dispatch(
           setMessage({
             title: `Bạn chỉ được chọn tối đa ${limit} ảnh`,
-            isOpen: true,
             type: "warning",
             direction: "top",
           })
@@ -72,7 +71,6 @@ const useAttachment = (props: UseAttachmentProps): UseAttachmentRes => {
         dispatch(
           setMessage({
             type: "warning",
-            isOpen: true,
             title: "Có lỗi xảy ra, vui lòng chọn lại ảnh",
             direction: "top",
           })

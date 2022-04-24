@@ -1,0 +1,20 @@
+.header__notification-modal {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  background-color: $white;
+  box-shadow: $box-shadow-1;
+  border-radius: 0.4rem;
+  border: 1px solid $border-color-2;
+  padding: 4rem 2rem;
+  z-index: 1000;
+  color: $text-color;
+  display: none;
+  min-width: 300px;
+  animation: fade-in 0.3s linear;
+}
+
+.notification {
+  @include style-text(500, 1.4rem, 2.2rem, $gray);
+  text-align: center;
+}
