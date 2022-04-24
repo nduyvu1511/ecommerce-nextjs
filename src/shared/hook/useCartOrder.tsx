@@ -8,7 +8,7 @@ import {
   setPayment,
   setProductList,
   setPromotionLineList,
-  updateCartQuantity,
+  updateCartQuantity
 } from "@/modules"
 import { deleteCartItem as deleteCartItems } from "@/modules/cart/cartSlice"
 import { useMemo } from "react"
@@ -45,7 +45,7 @@ const useCartOrder = (): UseCartOrderProps => {
     useSelector((state: RootState) => state.user)
 
   const carts = useMemo(() => {
-    if (!token) return []
+    if (!token || !partner_id) return []
 
     return cartList.filter((item) => item.partner_id === partner_id)
   }, [token, cartList])
@@ -158,3 +158,4 @@ const useCartOrder = (): UseCartOrderProps => {
 }
 
 export { useCartOrder }
+

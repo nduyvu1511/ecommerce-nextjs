@@ -145,6 +145,12 @@
       }
     }
   }
+
+  &__category {
+    & .grid {
+      grid-gap: 2rem;
+    }
+  }
 }
 
 .header__mobile {

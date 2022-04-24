@@ -33,7 +33,7 @@ export const ButtonAddCard = ({
     useSelector((state: RootState) => state.user)
 
   const handleAddToCart = () => {
-    if (!token) {
+    if (!token || !partner_id) {
       router.push("/login")
       return
     }

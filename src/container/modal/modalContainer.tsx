@@ -28,7 +28,6 @@ import Image from "next/image"
 import Link from "next/link"
 import React from "react"
 import { BiArrowBack } from "react-icons/bi"
-import { IoMdCloseCircle } from "react-icons/io"
 import { IoCloseCircleSharp } from "react-icons/io5"
 import { useDispatch, useSelector } from "react-redux"
 
@@ -176,7 +175,6 @@ export const ModalContainer = () => {
         <div className="modal__otp-container">
           <Modal
             unsetSize
-            isShowModal={isOpenOtpLoginModal}
             disableOverLay
             direction="center"
             handleClickModal={() => dispatch(toggleOpenOtpLoginModal(false))}
@@ -190,7 +188,6 @@ export const ModalContainer = () => {
         <div className="modal__otp-container">
           <Modal
             unsetSize
-            isShowModal={isOpenOtpLoginModal}
             disableOverLay
             direction="center"
             handleClickModal={() => dispatch(toggleOpenOtpLoginModal(false))}
@@ -199,14 +196,6 @@ export const ModalContainer = () => {
           </Modal>
         </div>
       ) : null}
-
-      {/* <Modal
-        unsetSize
-        isShowModal={isOpenOtpLoginModal}
-        disableOverLay
-        direction="center"
-        handleClickModal={() => dispatch(toggleOpenOtpLoginModal(false))}
-      ></Modal> */}
 
       {isOpenScreenLoading ? <ScreenLoading /> : null}
     </section>

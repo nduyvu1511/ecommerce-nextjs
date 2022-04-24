@@ -117,7 +117,7 @@
 
     &-item {
       @include flex(flex-start, center);
-      @include style-text(500, 1.3rem, 1.8rem, $text-color-opacity);
+      @include style-text(600, 1.2rem, 1.6rem, $text-color-opacity);
       background-color: white;
       padding: 0.5rem 1rem;
       border: 1px solid $border-color-1;

@@ -189,9 +189,9 @@
       }
     }
 
-    & button:first-child {
+    &-btn {
       margin-right: 1rem;
-      color: $primary;
+      color: $primary !important;
 
       & svg {
         margin-left: 0;

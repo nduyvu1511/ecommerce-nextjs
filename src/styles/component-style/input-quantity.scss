@@ -1,8 +1,8 @@
 .input__quantity {
   @include flex-center;
-  border-radius: 0.3rem;
+  border-radius: 0.2rem;
   border: 1px solid $black-opacity-02;
-  height: 25px;
+  height: 30px;
 
   &-disabled {
     opacity: 0.4;
@@ -18,7 +18,7 @@
     background-color: transparent;
     font-weight: 700;
     cursor: pointer;
-    border-radius: 0.3rem;
+    border-radius: 0.2rem;
     color: $text-color;
   }
 

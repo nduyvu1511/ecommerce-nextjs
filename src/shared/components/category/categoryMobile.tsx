@@ -49,6 +49,7 @@ export const CategoryMobile = () => {
                   layout="fill"
                   alt=""
                   className="image"
+                  quality={20}
                 />
               </div>
               <p>{item.name}</p>

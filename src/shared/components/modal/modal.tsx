@@ -3,7 +3,7 @@ import { RiCloseFill } from "react-icons/ri"
 
 export interface IModal {
   children?: ReactNode
-  isShowModal: Boolean
+  isShowModal?: Boolean
   handleClickModal: Function
   direction: "left" | "right" | "center"
   stack?: boolean
@@ -17,7 +17,6 @@ export interface IModal {
 
 export const Modal = ({
   children,
-  isShowModal,
   handleClickModal,
   direction,
   stack,

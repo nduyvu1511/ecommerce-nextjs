@@ -48,10 +48,12 @@ export const AuthContainer = ({
               dispatch(toggleOpenLoginModal(false))
               dispatch(setMessage({ title: "Đăng nhâp thành công" }))
             }
-
             dispatch(setToken(token))
             dispatch(setUserInfo(userInfo))
           } else {
+            if (show === "modal") {
+              dispatch(toggleOpenLoginModal(false))
+            }
             dispatch(setCurrentUserInfo(userInfo))
             dispatch(toggleOpenOtpLoginModal(true))
           }
@@ -76,11 +78,11 @@ export const AuthContainer = ({
         <div className="auth__inner">
           {showLogo ? (
             <div className="auth__inner-left">
-              <div className="image-container">
+              <Link href="/" passHref>
                 <div className="image-container">
                   <Image src={logo} alt="" className="image" layout="fill" />
                 </div>
-              </div>
+              </Link>
             </div>
           ) : null}
           <div className="auth__inner-right">

@@ -3,25 +3,30 @@ import {
   appStoreIcon,
   boCongThuong,
   googlePlayIcon,
-  paymentMethodsImage,
+  paymentMethodsImage
 } from "@/assets"
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import React from "react"
-import { HiOutlineMailOpen } from "react-icons/hi"
 import { IoLocationOutline } from "react-icons/io5"
 import {
   RiFacebookCircleFill,
   RiGlobalLine,
-  RiYoutubeFill,
+  RiYoutubeFill
 } from "react-icons/ri"
 
 export const Footer = () => {
   const router = useRouter()
+
   return (
     <footer
-      style={{ marginBottom: router.pathname === "/" ? 60 : 0 }}
+      style={{
+        marginBottom:
+          router.pathname === "/" || router.pathname === "/product/[productId]"
+            ? 60
+            : 0,
+      }}
       className="footer"
     >
       {/* <div className="footer__top-wrapper">

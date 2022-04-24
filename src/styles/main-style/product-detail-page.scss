@@ -78,7 +78,6 @@
         flex-direction: row-reverse;
         background-color: $white;
         z-index: 200;
-        border-top: 1px solid $border-color-1;
         overflow: hidden;
         flex-direction: row-reverse;
 
@@ -116,6 +115,9 @@
           cursor: pointer;
           display: flex;
           height: 100%;
+          border-radius: 0;
+          background-color: $danger;
+          font-size: 1.4rem;
 
           @include responsive(md-screen) {
             display: none;
@@ -158,6 +160,50 @@
 
           & span {
             @include style-text(500, 1.4rem, 1.4rem, $primary-color);
+          }
+        }
+
+        &-btn-sm {
+          @include flex-center;
+          flex-direction: column;
+          flex: 1;
+          background-color: $primary-color;
+          border: 0;
+          height: 100%;
+          padding: 0.5rem;
+          color: $white;
+
+          & span {
+            margin-top: 0.6rem;
+            @include style-text(400, 1rem, 1.2rem, $white);
+            @include limit-line-text(1);
+          }
+
+          & svg {
+            font-size: 1.5rem;
+          }
+
+          @include responsive(md-screen) {
+            flex: unset;
+            border: 1px solid $primary-color;
+            color: $primary-color;
+            background-color: $white;
+            padding-inline: 1.6rem;
+
+            & span {
+              color: $primary-color;
+            }
+
+            & svg {
+              font-size: 1.8rem;
+            }
+          }
+        }
+
+        &-cart-mobile {
+          border-inline: 1px solid rgba($color: #fff, $alpha: 0.3);
+          @include responsive(md-screen) {
+            display: none;
           }
         }
       }

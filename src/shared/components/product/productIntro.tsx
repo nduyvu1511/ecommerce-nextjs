@@ -1,10 +1,11 @@
+import { RootState } from "@/core/store"
 import { formatMoneyVND, getPriceProduct } from "@/helper"
 import { AttributeWithParentId, Product } from "@/models"
 import {
   addProductCompare,
+  addToCart,
   changeAttributeItem,
   setMessage,
-  setProductList,
   toggleShowCompareModal,
 } from "@/modules"
 import { DOMAIN_URL } from "@/services"
@@ -12,9 +13,10 @@ import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import { useRef, useState } from "react"
+import { FaShoppingBasket } from "react-icons/fa"
 import { IoClose } from "react-icons/io5"
 import { RiArrowUpDownLine, RiMessage2Fill } from "react-icons/ri"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { ButtonAddCard } from "../button"
 import ButtonWishlist from "../button/buttonAddWishlist"
 import ButtonShare from "../button/buttonShare"
@@ -30,19 +32,41 @@ export const ProductIntro = ({ product, type }: IProductIntro) => {
   const dispatch = useDispatch()
   const divRef = useRef<HTMLDivElement>(null)
   const router = useRouter()
-  // const { data: reviewList } = useReview({
-  //   product_id: product.product_tmpl_id,
-  // })
-  const [openVariantModal, setOpenVariantModal] = useState<boolean>(false)
+  const { token, userInfo: { id: partner_id = 0 } = { userInfo: undefined } } =
+    useSelector((state: RootState) => state.user)
+  const { listAttribute } = useSelector((state: RootState) => state.product)
+
+  const [openVariantModal, setOpenVariantModal] = useState<
+    "buy" | "cart" | ""
+  >()
   const [quantity, setQuantity] = useState<number>(1)
 
+  // Functions
   const handleChangeVariantAttribute = (att: AttributeWithParentId) => {
     dispatch(changeAttributeItem(att))
   }
 
-  const handleBuyProduct = () => {
-    dispatch(setProductList([{ ...product, quantity, partner_id: 0 }]))
-    router.push("/address")
+  const handleAddOrBuyProduct = () => {
+    if (!token || !partner_id) {
+      router.push("/login")
+      return
+    }
+
+    dispatch(
+      addToCart({
+        ...product,
+        quantity,
+        partner_id,
+        attribute_names: listAttribute?.map((item) => item.name) || [],
+      })
+    )
+
+    if (openVariantModal === "buy") {
+      setOpenVariantModal("")
+      router.push("/cart")
+    } else {
+      dispatch(setMessage({ title: "Thêm giỏ hàng thành công" }))
+    }
   }
 
   const handleAddToCompareList = () => {
@@ -165,19 +189,13 @@ export const ProductIntro = ({ product, type }: IProductIntro) => {
         {type !== "item" ? (
           <div className="product__intro-shop">
             {type === "detail" ? (
-              <div
-                onClick={() => setOpenVariantModal(true)}
-                className="product__intro-shop-cart-btn"
+              <button
+                onClick={() => setOpenVariantModal("buy")}
+                className="btn-primary product__intro-shop-cart-btn"
               >
-                <ButtonAddCard
-                  product={product}
-                  quantity={quantity}
-                  type="detail"
-                />
-              </div>
+                <span>Mua ngay</span>
+              </button>
             ) : null}
-
-            {/* <ButtonWishlist type="detail" product={product} /> */}
 
             <ButtonAddCard
               product={product}
@@ -186,7 +204,17 @@ export const ProductIntro = ({ product, type }: IProductIntro) => {
             />
 
             {type === "detail" ? (
-              <button className="product__intro-shop-chat-btn">
+              <button
+                onClick={() => setOpenVariantModal("cart")}
+                className="product__intro-shop-btn-sm product__intro-shop-cart-mobile"
+              >
+                <FaShoppingBasket />
+                <span>Thêm giỏ hàng</span>
+              </button>
+            ) : null}
+
+            {type === "detail" ? (
+              <button className="product__intro-shop-btn-sm product__intro-shop-chat-btn">
                 <RiMessage2Fill />
                 <span>Nhắn tin</span>
               </button>
@@ -228,7 +256,7 @@ export const ProductIntro = ({ product, type }: IProductIntro) => {
             className="product__intro-sub-item"
           >
             <RiArrowUpDownLine />
-            Compare
+            So sánh
           </button>
         </div>
         {type === "item" ? (
@@ -292,7 +320,7 @@ export const ProductIntro = ({ product, type }: IProductIntro) => {
               </div>
 
               <button
-                onClick={() => setOpenVariantModal(false)}
+                onClick={() => setOpenVariantModal("")}
                 className="btn-reset"
               >
                 <IoClose />
@@ -322,16 +350,14 @@ export const ProductIntro = ({ product, type }: IProductIntro) => {
             </div>
 
             <div className="product__variant-modal-btn">
-              <ButtonAddCard
-                product={product}
-                quantity={quantity}
-                type="detail"
-              />
+              <button onClick={handleAddOrBuyProduct} className="btn-primary">
+                {openVariantModal === "buy" ? "Mua ngay" : "Thêm giỏ hàng"}
+              </button>
             </div>
           </div>
 
           <div
-            onClick={() => setOpenVariantModal(false)}
+            onClick={() => setOpenVariantModal("")}
             className="product__variant-modal-overlay"
           ></div>
         </>

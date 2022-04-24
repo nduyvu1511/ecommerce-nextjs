@@ -92,6 +92,9 @@
 
     & button {
       width: 100%;
+      padding-block: 1.6rem;
+      background-color: $danger;
+      font-size: 1.4rem;
     }
 
     & .product__intro-shop-btn {
