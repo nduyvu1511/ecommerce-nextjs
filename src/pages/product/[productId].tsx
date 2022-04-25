@@ -87,7 +87,8 @@ const ProductDetailPage = ({ product }: ProduductDetailPageProps) => {
 
   // Get category breadcrumb
   useEffect(() => {
-    const categories: Category[] = product?.categories?.parent_category || []
+    console.log(product)
+    const categories: Category[] = product?.category.relate || []
     if (categories?.length > 0) {
       setBreadcrumbList([
         ...categories.map((item) => ({

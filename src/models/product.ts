@@ -87,9 +87,10 @@ export interface ProductDetailRes {
   seller_price: number
   image_url: Array<string>
   qty_available: number
-  categories: {
-    parent_category: Category[]
-    child_category: Category[]
+  category: {
+    id: number
+    name: string
+    relate: Category[]
   }
   type: "product"
   star_rating: 0.0
