@@ -1,9 +1,9 @@
 import axios from "axios"
 
-export const DOMAIN_URL = "https://erp.womart.vn"
+export const DOMAIN_URL = "https://demo.satavan.com"
 
 const axiosClient = axios.create({
-  baseURL: "https://erp.womart.vn",
+  baseURL: "https://demo.satavan.com",
   method: "POST",
   headers: {
     Accept: "application/json",

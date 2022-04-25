@@ -17,9 +17,7 @@ const userSlice = createSlice({
     },
 
     setToken: (state, { payload }: { payload: string }) => {
-      if (payload) {
-        state.token = payload
-      }
+      state.token = payload
     },
 
     setUserInfo: (state, { payload }: { payload: UserInfo | undefined }) => {

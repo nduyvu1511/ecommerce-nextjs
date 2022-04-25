@@ -89,7 +89,6 @@
         }
 
         & .form-item-inline {
-          flex-direction: row;
           & label {
             text-align: left;
           }
@@ -109,15 +108,18 @@
           & label:first-child {
             text-align: left;
             margin-right: 2rem;
-            @include responsive(md-screen) {
-              width: 115px;
+            @include responsive(sm-screen) {
+              width: 120px;
             }
           }
 
           & .form-item-radio {
+            flex: 1;
             & input[type="radio"] {
-              transform: scale(1.2);
-              margin-right: 0.8rem;
+              margin-right: 0.4rem;
+              @include responsive(sm-screen) {
+                transform: scale(1.2);
+              }
             }
           }
         }

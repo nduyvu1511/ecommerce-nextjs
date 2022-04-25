@@ -1,7 +1,11 @@
 import { BiHomeAlt } from "react-icons/bi"
 import { FiShoppingBag } from "react-icons/fi"
 import { HiOutlineClipboardList } from "react-icons/hi"
-import { MdOutlineInfo, MdOutlineLocationOn } from "react-icons/md"
+import {
+  MdOutlineInfo,
+  MdOutlineLocationOn
+} from "react-icons/md"
+import { RiNotification2Line } from "react-icons/ri"
 
 interface UserInfoField {
   id: "name" | "email" | "sex" | "phone"
@@ -70,6 +74,12 @@ export const accountOptionList = [
     vniTitle: "Hồ sơ",
     engTitle: "Information",
     icon: <MdOutlineInfo />,
+  },
+  {
+    path: "/account/notification",
+    vniTitle: "Thông báo",
+    engTitle: "Notification",
+    icon: <RiNotification2Line />,
   },
   {
     path: "/account/address",

@@ -5,14 +5,22 @@
   margin-bottom: 2rem;
   position: relative;
 
+  &-wrapper {
+    flex: 1;
+  }
+
+  @include responsive(sm-screen) {
+    flex-direction: row;
+  }
+
   & label {
     width: 100%;
     margin-bottom: 0.4rem;
     @include style-text(500, 1.4rem, 2.8rem, $text-color);
 
-    @include responsive(md-screen) {
+    @include responsive(sm-screen) {
       text-align: right;
-      width: 150px;
+      width: 120px;
       margin-bottom: 0;
       margin-right: 2rem;
     }
@@ -20,13 +28,16 @@
 
   & input,
   textarea {
-    width: 100%;
     border: 1px solid rgba($color: #000000, $alpha: 0.2);
     border-radius: 4px;
     height: 40px;
     outline: none;
     @include style-text(500, 1.3rem, 1.3rem, $text-color);
     padding-inline: 1rem;
+
+    @include responsive(sm-screen) {
+      flex: 1;
+    }
   }
 
   & textarea {

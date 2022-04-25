@@ -151,6 +151,15 @@ export const useAuth = (): UseAuthRes => {
           if (res?.result?.success) {
             handleSuccess("")
           } else {
+            // const res: any = await userApi.firebaseAuth({
+            //   firebase_access_token,
+            // })
+
+            // if (res?.result?.success) {
+            //   const token = res?.result?.data?.token
+            //   if (token) handleSuccess(token)
+            // }
+
             const message = res?.result?.message
             dispatch(
               setMessage({

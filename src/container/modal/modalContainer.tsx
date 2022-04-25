@@ -33,6 +33,7 @@ import { useDispatch, useSelector } from "react-redux"
 
 export const ModalContainer = () => {
   const dispatch = useDispatch()
+  const { product } = useSelector((state: RootState) => state.product)
   const {
     isOpenModalProduct,
     isOpenCartModal,
@@ -57,7 +58,7 @@ export const ModalContainer = () => {
         </div>
       ) : null}
 
-      {isOpenModalProduct ? <ModalProductDetail /> : null}
+      {isOpenModalProduct && product ? <ModalProductDetail /> : null}
 
       {isOpenCartModal ? (
         <Modal

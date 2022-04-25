@@ -4,7 +4,10 @@
   &-btn-close {
     position: absolute;
     top: -2rem;
-    right: -2rem;
+    right: -1rem;
+    @include responsive(lg-screen) {
+      right: -2rem;
+    }
 
     & svg {
       font-size: 3rem;

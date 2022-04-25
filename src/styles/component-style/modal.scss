@@ -7,7 +7,6 @@
   }
 
   max-width: 380px;
-  // @include hidden;
   z-index: 1010;
 
   &-left {
@@ -53,7 +52,8 @@
   }
 
   &-center {
-    max-width: 98vw;
+    width: 100%;
+    max-width: unset;
     height: 100%;
     bottom: unset;
     left: 50%;
@@ -61,7 +61,7 @@
     padding: 3rem 2rem;
     animation: modal-show-down 0.3s linear;
     transform: translate(-50%, -50%) !important;
-    max-height: 96vh;
+    max-height: 90vh;
     @include responsive(lg-screen) {
       max-height: 90vh;
     }
@@ -73,21 +73,25 @@
       display: none;
     }
 
-    @include responsive(md-screen) {
-      padding: 4rem;
-      max-width: 94vw;
-    }
-
-    @include responsive(lg-screen) {
+    @include responsive(sm-screen) {
       max-width: 90vw;
     }
 
-    @include responsive(xl-screen) {
+    @include responsive(md-screen) {
+      padding: 4rem;
       max-width: 80vw;
     }
 
-    @media screen and (min-width: 1300px) {
-      max-width: 65vw;
+    @include responsive(lg-screen) {
+      max-width: 800px;
+    }
+
+    @include responsive(screen-1024) {
+      max-width: 900px;
+    }
+
+    @include responsive(xl-screen) {
+      max-width: 1000px;
     }
   }
 
@@ -138,24 +142,24 @@
 }
 
 .modal_container {
-  .modal {
-    max-width: 96vw;
-    @include responsive(md-screen) {
-      max-width: 80vw;
-    }
+  // .modal {
+  //   max-width: 96vw;
+  //   @include responsive(md-screen) {
+  //     max-width: 80vw;
+  //   }
 
-    @include responsive(lg-screen) {
-      max-width: 70vw;
-    }
+  //   @include responsive(lg-screen) {
+  //     max-width: 70vw;
+  //   }
 
-    @include responsive(xl-screen) {
-      max-width: 65vw;
-    }
+  //   @include responsive(xl-screen) {
+  //     max-width: 65vw;
+  //   }
 
-    @media screen and (min-width: 1300px) {
-      max-width: 60vw;
-    }
-  }
+  //   @media screen and (min-width: 1300px) {
+  //     max-width: 60vw;
+  //   }
+  // }
 }
 
 @keyframes modal-show-down {

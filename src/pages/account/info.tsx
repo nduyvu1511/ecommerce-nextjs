@@ -6,7 +6,6 @@ import { isObjectHasValue } from "@/helper"
 import { MainAuthLayout } from "@/layout"
 import { DOMAIN_URL } from "@/services"
 import { Field, Form, Formik } from "formik"
-import _ from "lodash"
 import Image from "next/image"
 import { ChangeEvent } from "react"
 import { useAttachment, useUser } from "shared/hook"
@@ -82,48 +81,54 @@ const UserInfo = () => {
                         {language === "vni" ? input.vniTitle : input.engTitle}
                       </label>
 
-                      {input.type === "text" ? (
-                        <Field
-                          className={`form-item-input ${
-                            errors[input.id] && touched[input.id]
-                              ? "form-item-input-error"
-                              : ""
-                          }`}
-                          id={input.id}
-                          readOnly={userInfo.phone && input.id === "phone"}
-                          type="text"
-                          placeholder={
-                            language === "vni" ? input.vniTitle : input.engTitle
-                          }
-                          name={input.id}
-                        />
-                      ) : (
-                        <div className="form-item-radio">
-                          <label>
-                            <Field type="radio" name={input.id} value="male" />
-                            {language === "vni" ? "Nam" : "Male"}
-                          </label>
-                          <label>
-                            <Field
-                              type="radio"
-                              name={input.id}
-                              value="female"
-                            />
-                            {language === "vni" ? "Nữ" : "Female"}
-                          </label>
-                        </div>
-                      )}
-                      {errors[input.id] && touched[input.id] ? (
-                        <p className="form-item-text-error">
-                          {errors[input.id]}
-                        </p>
-                      ) : null}
+                      <div className="form-item-inline-wrapper">
+                        {input.type === "text" ? (
+                          <Field
+                            className={`form-item-input ${
+                              errors[input.id] && touched[input.id]
+                                ? "form-item-input-error"
+                                : ""
+                            }`}
+                            id={input.id}
+                            readOnly={userInfo.phone && input.id === "phone"}
+                            type="text"
+                            placeholder={
+                              language === "vni"
+                                ? input.vniTitle
+                                : input.engTitle
+                            }
+                            name={input.id}
+                          />
+                        ) : (
+                          <div className="form-item-radio">
+                            <label>
+                              <Field
+                                type="radio"
+                                name={input.id}
+                                value="male"
+                              />
+                              {language === "vni" ? "Nam" : "Male"}
+                            </label>
+                            <label>
+                              <Field
+                                type="radio"
+                                name={input.id}
+                                value="female"
+                              />
+                              {language === "vni" ? "Nữ" : "Female"}
+                            </label>
+                          </div>
+                        )}
+
+                        {errors[input.id] && touched[input.id] ? (
+                          <p className="form-item-text-error">
+                            {errors[input.id]}
+                          </p>
+                        ) : null}
+                      </div>
                     </div>
                   ))}
-                  <button
-                    type="submit"
-                    className={`btn-primary ${!isValid ? "btn-disabled" : ""}`}
-                  >
+                  <button type="submit" className="btn-primary">
                     {language === "vni" ? "Cập nhật" : "Update"}
                   </button>
                 </Form>

@@ -33,6 +33,7 @@ const useProduct = ({ params, key }: Props): ProductSWR => {
             .then((res: any) => res?.result),
     {
       revalidateOnFocus: false,
+      dedupingInterval: 12000,
     }
   )
 

@@ -218,13 +218,13 @@
 
     &-item {
       user-select: none;
-      background-color: $gray-color;
+      background-color: $primary-color-opacity;
       padding: 1rem;
       @include flex-center;
       flex-direction: column;
       border-bottom: 1px solid $border-color-2;
       cursor: pointer;
-      border-right: 1px solid $border-color-1;
+      border-right: 1px solid $border-color-2;
 
       & .image-container {
         margin-bottom: 1rem;

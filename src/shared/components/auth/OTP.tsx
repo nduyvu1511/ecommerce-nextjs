@@ -84,7 +84,13 @@ export const OTP = ({ type, show }: LoginOtpProps) => {
     if (type === "update") {
       updatePhoneNumber({
         otpInput,
-        handleSuccess: () => {
+        handleSuccess: (token) => {
+          // if (token) {
+          //   dispatch(setToken(token))
+          //   getUserInfo(token, (userInfo) => {
+          //     dispatch(setUserInfo(userInfo))
+          //   })
+          // } else {
           if (currentToken) {
             dispatch(setToken(currentToken))
           }
@@ -92,7 +98,9 @@ export const OTP = ({ type, show }: LoginOtpProps) => {
             dispatch(
               setUserInfo({ ...currentUserInfo, phone: phoneNumber || "" })
             )
+            // }
           }
+
           dispatch(toggleOpenOtpLoginModal(false))
           router.push("/")
           dispatch(clearAuthData())

@@ -27,6 +27,10 @@
       tr {
         border-bottom: 1px solid $border-color-2;
       }
+
+      & tr:last-child {
+        border-bottom: 0;
+      }
     }
 
     & tbody {
@@ -73,5 +77,3 @@
     }
   }
 }
-
-
