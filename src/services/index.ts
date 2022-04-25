@@ -1,6 +1,6 @@
 import axios from "axios"
 
-export const DOMAIN_URL = "https://demo.satavan.com/"
+export const DOMAIN_URL = "https://demo.satavan.com"
 
 const axiosClient = axios.create({
   baseURL: DOMAIN_URL,
