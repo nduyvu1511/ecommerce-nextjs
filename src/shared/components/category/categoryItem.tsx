@@ -1,6 +1,6 @@
 import { companyIcon } from "@/assets"
 import { Category } from "@/models"
-import { DOMAIN_URL } from "@/services"
+import { API_URL } from "@/services"
 import Image from "next/image"
 import Link from "next/link"
 
@@ -13,9 +13,7 @@ export const CategoryItem = ({ category }: { category: Category }) => {
             <Image
               layout="fill"
               className="image"
-              src={
-                category.icon ? `${DOMAIN_URL}${category.icon}` : companyIcon
-              }
+              src={category.icon ? `${API_URL}${category.icon}` : companyIcon}
               alt=""
             />
           </div>

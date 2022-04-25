@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { avatar, companyIcon } from "@/assets"
 import { CommentRating } from "@/models"
-import { DOMAIN_URL } from "@/services"
+import { API_URL } from "@/services"
 import Image from "next/image"
 import React, { useState } from "react"
 import { Tag } from "../common"
@@ -30,7 +30,7 @@ export const RatingItem = ({ rating, onDelete }: RatingItemProps) => {
             <Image
               src={
                 rating?.partner_avatar
-                  ? `${DOMAIN_URL}${rating?.partner_avatar}`
+                  ? `${API_URL}${rating?.partner_avatar}`
                   : avatar
               }
               alt=""
@@ -78,13 +78,13 @@ export const RatingItem = ({ rating, onDelete }: RatingItemProps) => {
               {rating.image_urls.map((item, index) => (
                 <div
                   key={index}
-                  onClick={() => setImageUrl(`${DOMAIN_URL}${item.image_url}`)}
+                  onClick={() => setImageUrl(`${API_URL}${item.image_url}`)}
                   className="rating__item-content-image-item"
                 >
                   {/* data:image/jpeg;base64, */}
                   <div className="image-container">
                     <Image
-                      src={`${DOMAIN_URL}${item.image_url}`}
+                      src={`${API_URL}${item.image_url}`}
                       alt=""
                       layout="fill"
                       quality={20}

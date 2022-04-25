@@ -8,7 +8,7 @@ import {
   setMessage,
   toggleShowCompareModal,
 } from "@/modules"
-import { DOMAIN_URL } from "@/services"
+import { API_URL } from "@/services"
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/router"
@@ -287,7 +287,8 @@ export const ProductIntro = ({ product, type }: IProductIntro) => {
         ) : null}
         {type !== "item" ? (
           <ButtonShare
-            imageUrl={`${process.env.REACT_APP_DOMAIN_URL}${product.image_url[0]}`}
+            product_id={product.product_tmpl_id}
+            imageUrl={`${process.env.REACT_APP_API_URL}${product.image_url[0]}`}
             name={product.product_name}
             description={product.description}
           />
@@ -302,7 +303,7 @@ export const ProductIntro = ({ product, type }: IProductIntro) => {
                 {product?.image_url?.[0] ? (
                   <div className="image-container">
                     <Image
-                      src={`${DOMAIN_URL}${product?.image_url?.[0] || ""}`}
+                      src={`${API_URL}${product?.image_url?.[0] || ""}`}
                       alt=""
                       layout="fill"
                       className="image"

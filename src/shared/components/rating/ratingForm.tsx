@@ -9,7 +9,7 @@ import {
   UpdateRatingProps,
 } from "@/models"
 import { setMessage, setModalConfirm } from "@/modules"
-import { DOMAIN_URL } from "@/services"
+import { API_URL } from "@/services"
 import ratingApi from "@/services/ratingApi"
 import Image from "next/image"
 import { useRouter } from "next/router"
@@ -51,7 +51,7 @@ export const RatingForm = memo(function RatingFormChild({
       initRatingImages:
         purchaseForm?.comment_rating?.image_urls?.length > 0
           ? purchaseForm.comment_rating.image_urls.map(
-              (item) => `${DOMAIN_URL}${item.image_url}`
+              (item) => `${API_URL}${item.image_url}`
             )
           : undefined,
     })
@@ -196,9 +196,7 @@ export const RatingForm = memo(function RatingFormChild({
         <header className="rating__form-header">
           <div className="rating__form-header-img">
             <img
-              src={`${DOMAIN_URL}${
-                purchaseForm?.product?.image_url?.[0] || ""
-              }`}
+              src={`${API_URL}${purchaseForm?.product?.image_url?.[0] || ""}`}
               alt=""
             />
           </div>

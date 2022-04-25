@@ -1,5 +1,5 @@
 import { AttributeProductValueItem, DisplayContentAttribute } from "@/models"
-import { DOMAIN_URL } from "@/services"
+import { API_URL } from "@/services"
 import Image from "next/image"
 import { InputCheckbox } from "../inputs"
 
@@ -37,7 +37,7 @@ export const ProductAttributeItem = ({
             <Image
               layout="fill"
               className="image"
-              src={`${DOMAIN_URL}${valueItem.value_icon || ""}`}
+              src={`${API_URL}${valueItem.value_icon || ""}`}
               alt=""
             />
           ) : null}

@@ -2,7 +2,7 @@
 import { RootState } from "@/core/store"
 import { isArrayHasValue } from "@/helper"
 import { toggleOpenSearchModal, toggleSearchResult } from "@/modules"
-import { DOMAIN_URL } from "@/services"
+import { API_URL } from "@/services"
 import Image from "next/image"
 import Link from "next/link"
 import { useRef } from "react"
@@ -105,7 +105,7 @@ export const SearchResult = ({
                     </p>
                     <div className="search__result-list-item-img image-container">
                       <Image
-                        src={`${DOMAIN_URL}${product.image_url[0]}`}
+                        src={`${API_URL}${product.image_url[0]}`}
                         layout="fill"
                         alt=""
                         className="image"

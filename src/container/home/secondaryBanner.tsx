@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { DOMAIN_URL } from "@/services"
+import { API_URL } from "@/services"
 import { useCategory } from "shared/hook"
 import { Autoplay, Navigation, Pagination } from "swiper"
 import "swiper/css"
@@ -36,7 +36,7 @@ export const SecondaryBanner = () => {
           >
             {bannerUrls.map((banner, index) => (
               <SwiperSlide key={index}>
-                <img src={`${DOMAIN_URL}${banner}`} alt="" />
+                <img src={`${API_URL}${banner}`} alt="" />
               </SwiperSlide>
             ))}
           </Swiper>

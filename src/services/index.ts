@@ -1,9 +1,10 @@
 import axios from "axios"
 
-export const DOMAIN_URL = "https://demo.satavan.com"
+export const API_URL =
+  process.env.NEXT_PUBLIC_API_URL || "http://demo.satavan.com"
 
 const axiosClient = axios.create({
-  baseURL: DOMAIN_URL,
+  baseURL: API_URL,
   method: "POST",
   headers: {
     Accept: "application/json",

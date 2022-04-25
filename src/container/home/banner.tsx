@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { DOMAIN_URL } from "@/services"
+import { API_URL } from "@/services"
 import { useCategory } from "shared/hook"
 import { Autoplay, Navigation, Pagination } from "swiper"
 import "swiper/css"
@@ -17,7 +17,7 @@ export const MainBanner = () => {
         <div className="home__banner-left">
           <img
             style={{ height: "100%" }}
-            src={`${DOMAIN_URL}${bannerUrls?.[0] || ""}`}
+            src={`${API_URL}${bannerUrls?.[0] || ""}`}
             alt=""
             className="img-fluid"
           />
@@ -41,7 +41,7 @@ export const MainBanner = () => {
           >
             {bannerUrls.map((banner, index) => (
               <SwiperSlide key={index}>
-                <img src={`${DOMAIN_URL}${banner}`} alt="" />
+                <img src={`${API_URL}${banner}`} alt="" />
               </SwiperSlide>
             ))}
           </Swiper>

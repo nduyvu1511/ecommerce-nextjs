@@ -1,6 +1,6 @@
 import { formatMoneyVND } from "@/helper"
 import { CartItem, ProductIds } from "@/models"
-import { DOMAIN_URL } from "@/services"
+import { API_URL } from "@/services"
 import Image from "next/image"
 import Link from "next/link"
 import { HiOutlineTrash } from "react-icons/hi"
@@ -56,7 +56,7 @@ export const CartPageItem = ({
               quality={40}
               layout="fill"
               className="image"
-              src={`${DOMAIN_URL}${cart.image_url[0]}`}
+              src={`${API_URL}${cart.image_url[0]}`}
               alt=""
             />
           </div>

@@ -4,7 +4,7 @@ import { AccountContainer } from "@/container"
 import { formatMoneyVND } from "@/helper"
 import { MainAuthLayout } from "@/layout"
 import { PurchasedProduct } from "@/models"
-import { DOMAIN_URL } from "@/services"
+import { API_URL } from "@/services"
 import Link from "next/link"
 import React, { useState } from "react"
 import { CgSmileNone } from "react-icons/cg"
@@ -54,7 +54,7 @@ const Purchase = () => {
                       >
                         <img
                           className="cursor-pointer"
-                          src={`${DOMAIN_URL}${
+                          src={`${API_URL}${
                             item?.product.image_url?.[0] || ""
                           }`}
                           alt=""

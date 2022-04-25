@@ -4,28 +4,26 @@ import {
   ProductDetail,
   ProductDetailLoading,
   ProductItem,
-  ProductTabs,
+  ProductTabs
 } from "@/components"
 import {
   getAttributeList,
   getListAttributeId,
   isArrayHasValue,
   isObjectHasValue,
-  mergeProductAndProductDetail,
+  mergeProductAndProductDetail
 } from "@/helper"
 import { MainLayout } from "@/layout"
 import {
-  AttributeWithParentId,
   BreadcrumbItem,
   Category,
   Product,
-  ProductDetail as IProductDetail,
+  ProductDetail as IProductDetail
 } from "@/models"
 import {
-  changeAttributeItem,
   setAttributeList,
   setProduct,
-  toggleOpenCartModal,
+  toggleOpenCartModal
 } from "@/modules"
 import productApi from "@/services/productApi"
 import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from "next"
@@ -37,7 +35,7 @@ import {
   useCartOrder,
   useProductDetail,
   useReview,
-  useWishlist,
+  useWishlist
 } from "shared/hook"
 import { Navigation } from "swiper"
 import { Swiper, SwiperSlide } from "swiper/react"

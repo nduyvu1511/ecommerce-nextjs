@@ -1,5 +1,5 @@
 import { Category } from "@/models"
-import { DOMAIN_URL } from "@/services"
+import { API_URL } from "@/services"
 import Image from "next/image"
 import Link from "next/link"
 import React from "react"
@@ -29,7 +29,7 @@ export const CategoryList = ({
             <div className="category__list-item">
               <div className="image-container">
                 <Image
-                  src={`${DOMAIN_URL}${cate.icon}`}
+                  src={`${API_URL}${cate.icon}`}
                   alt=""
                   className="image"
                   layout="fill"

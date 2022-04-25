@@ -8,7 +8,7 @@ import {
   toggleOpenNavLeftModal,
   toggleOpenSearchModal,
 } from "@/modules"
-import { DOMAIN_URL } from "@/services"
+import { API_URL } from "@/services"
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/router"
@@ -145,7 +145,7 @@ export const Header = () => {
                   {token ? (
                     <div className="image-container cursor-pointer">
                       <Image
-                        src={avatar ? `${DOMAIN_URL}${avatar}` : avatarBlank}
+                        src={avatar ? `${API_URL}${avatar}` : avatarBlank}
                         layout="fill"
                         alt=""
                         className="image"

@@ -2,7 +2,7 @@
 import { avatar } from "@/assets"
 import { RootState } from "@/core/store"
 import { clearOrderData, logOut, toggleModalAccountOption } from "@/modules"
-import { DOMAIN_URL } from "@/services"
+import { API_URL } from "@/services"
 import Image from "next/image"
 import { useRouter } from "next/router"
 import { FiEdit2 } from "react-icons/fi"
@@ -24,9 +24,7 @@ export const AccountOption = () => {
         <div className="account__left-header-avatar image-container">
           <div className="image-container">
             <Image
-              src={
-                userInfo?.avatar ? `${DOMAIN_URL}${userInfo.avatar}` : avatar
-              }
+              src={userInfo?.avatar ? `${API_URL}${userInfo.avatar}` : avatar}
               quality={30}
               layout="fill"
               className="image"

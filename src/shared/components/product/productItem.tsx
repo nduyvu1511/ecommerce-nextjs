@@ -17,7 +17,7 @@ import {
   toggleModalProduct,
   toggleShowCompareModal,
 } from "@/modules"
-import { DOMAIN_URL } from "@/services"
+import { API_URL } from "@/services"
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/router"
@@ -129,7 +129,7 @@ export const ProductItem = ({ product, type, isLoading }: IProductItem) => {
                 <Link passHref href={`/product/${product.product_tmpl_id}`}>
                   <Image
                     className="image img-cover"
-                    src={`${DOMAIN_URL}${imageUrls?.[0] || ""}`}
+                    src={`${API_URL}${imageUrls?.[0] || ""}`}
                     alt=""
                     layout="fill"
                     placeholder="blur"
@@ -146,7 +146,7 @@ export const ProductItem = ({ product, type, isLoading }: IProductItem) => {
                   <Link passHref href={`/product/${product.product_tmpl_id}`}>
                     <Image
                       className="image"
-                      src={`${DOMAIN_URL}${imageUrls?.[0] || ""}`}
+                      src={`${API_URL}${imageUrls?.[0] || ""}`}
                       alt=""
                       layout="fill"
                       placeholder="blur"
@@ -163,7 +163,7 @@ export const ProductItem = ({ product, type, isLoading }: IProductItem) => {
                     <Link passHref href={`/product/${product.product_tmpl_id}`}>
                       <Image
                         className="image"
-                        src={`${DOMAIN_URL}${imageUrls?.[1] || ""}`}
+                        src={`${API_URL}${imageUrls?.[1] || ""}`}
                         alt=""
                         layout="fill"
                       />

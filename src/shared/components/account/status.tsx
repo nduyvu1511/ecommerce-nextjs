@@ -1,7 +1,7 @@
 import { companyIcon } from "@/assets"
 import { formatMoneyVND, isObjectHasValue } from "@/helper"
 import { OrderHistoryDetail } from "@/models"
-import { DOMAIN_URL } from "@/services"
+import { API_URL } from "@/services"
 import Image from "next/image"
 import Link from "next/link"
 import { FiCheckCircle } from "react-icons/fi"
@@ -117,7 +117,7 @@ export const OrderStatus = ({ type, order }: OrderStatusProps) => {
                               <Image
                                 src={
                                   item.image_url?.[0]
-                                    ? `${`${DOMAIN_URL}${
+                                    ? `${`${API_URL}${
                                         item.image_url?.[0] || ""
                                       }`}`
                                     : companyIcon
@@ -135,7 +135,7 @@ export const OrderStatus = ({ type, order }: OrderStatusProps) => {
                               <Image
                                 src={
                                   item.image_url?.[0]
-                                    ? `${`${DOMAIN_URL}${
+                                    ? `${`${API_URL}${
                                         item.image_url?.[0] || ""
                                       }`}`
                                     : companyIcon

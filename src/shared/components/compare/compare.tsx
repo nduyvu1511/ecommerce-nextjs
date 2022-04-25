@@ -9,7 +9,7 @@ import {
   toggleModalProduct,
   toggleShowCompareModal,
 } from "@/modules"
-import { DOMAIN_URL } from "@/services"
+import { API_URL } from "@/services"
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/router"
@@ -161,7 +161,7 @@ export const Compare = ({ type }: { type?: "page" | "modal" }) => {
                           className="image-container"
                         >
                           <Image
-                            src={`${DOMAIN_URL}${item.image_url[0]}`}
+                            src={`${API_URL}${item.image_url[0]}`}
                             alt=""
                             layout="fill"
                             className="image"

@@ -16,7 +16,7 @@ import {
 import { MainLayout } from "@/layout"
 import { LayoutProps } from "@/models"
 import { toggleOpenCartModal } from "@/modules"
-import { DOMAIN_URL } from "@/services"
+import { API_URL } from "@/services"
 import { useTranslation } from "next-i18next"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import Image from "next/image"
@@ -60,7 +60,7 @@ const Home = ({ locale }: LayoutProps) => {
               <Link passHref href="/account">
                 <div className="image-container">
                   <Image
-                    src={avatar ? `${DOMAIN_URL}${avatar}` : avatarBlank}
+                    src={avatar ? `${API_URL}${avatar}` : avatarBlank}
                     alt=""
                     layout="fill"
                     className="image"

@@ -1,5 +1,5 @@
 import { Product } from "@/models"
-import { DOMAIN_URL } from "@/services"
+import { API_URL } from "@/services"
 import Image from "next/image"
 import Link from "next/link"
 import { ProductListLoading } from "../loader"
@@ -34,7 +34,7 @@ export const ProductItemList = ({
                   className={`image product__card__img-top product__card__img-top-first ${
                     !product.image_url[0] ? "product__card__img-top-only" : ""
                   }`}
-                  src={`${DOMAIN_URL}${product.image_url[0]}`}
+                  src={`${API_URL}${product.image_url[0]}`}
                   alt=""
                   layout="fill"
                 />

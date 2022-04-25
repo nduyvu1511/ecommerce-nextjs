@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-sync-scripts */
 import Document, { Html, Head, Main, NextScript } from "next/document"
 
 class MyDocument extends Document {
@@ -17,8 +18,17 @@ class MyDocument extends Document {
 
         <body>
           <div id="fb-root"></div>
-
           <div id="fb-customer-chat" className="fb-customerchat"></div>
+          <div
+            className="zalo-chat-widget"
+            data-oaid="579745863508352884"
+            data-welcome-message="Rất vui khi được hỗ trợ bạn!"
+            data-autopopup="0"
+            data-width=""
+            data-height=""
+          ></div>
+
+          <script src="https://sp.zalo.me/plugins/sdk.js"></script>
 
           <script
             dangerouslySetInnerHTML={{

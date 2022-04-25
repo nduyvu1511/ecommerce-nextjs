@@ -1,7 +1,7 @@
-import { BsTwitter } from 'react-icons/bs';
-import { FaFacebookF, FaLinkedinIn, FaPinterestP } from 'react-icons/fa';
-import { MdOutlineMail } from 'react-icons/md';
-import { RiWhatsappLine } from 'react-icons/ri';
+import { BsTwitter } from "react-icons/bs"
+import { FaFacebookF, FaLinkedinIn, FaPinterestP } from "react-icons/fa"
+import { MdOutlineMail } from "react-icons/md"
+import { RiWhatsappLine } from "react-icons/ri"
 import {
   EmailShareButton,
   FacebookShareButton,
@@ -9,16 +9,22 @@ import {
   PinterestShareButton,
   TwitterShareButton,
   WhatsappShareButton
-} from 'react-share';
+} from "react-share"
 
 interface IButtonShare {
-  name: string;
-  description: string;
-  imageUrl: string;
+  name: string
+  description: string
+  imageUrl: string
+  product_id: number
 }
 
-const ButtonShare = ({ name, description, imageUrl }: IButtonShare) => {
-  const url = `${process.env.REACT_APP_URL}/${window.location.pathname}`;
+const ButtonShare = ({
+  name,
+  description,
+  imageUrl,
+  product_id,
+}: IButtonShare) => {
+  const url = `${process.env.NEXT_PUBLIC_DOMAIN_URL}/product/${product_id}`
 
   return (
     <div className="button-share">
@@ -27,21 +33,24 @@ const ButtonShare = ({ name, description, imageUrl }: IButtonShare) => {
         quote={name}
         title={name}
         hashtag={`#${name}`}
-        url={url}>
+        url={url}
+      >
         <FaFacebookF />
       </FacebookShareButton>
 
       <TwitterShareButton
         className="button-share-twitter"
         title={name}
-        url={url}>
+        url={url}
+      >
         <BsTwitter />
       </TwitterShareButton>
 
       <WhatsappShareButton
         className="button-share-whatsapp"
         title={name}
-        url={url}>
+        url={url}
+      >
         <RiWhatsappLine />
       </WhatsappShareButton>
 
@@ -50,7 +59,8 @@ const ButtonShare = ({ name, description, imageUrl }: IButtonShare) => {
         title={name}
         media={imageUrl}
         description={description}
-        url={url}>
+        url={url}
+      >
         <FaPinterestP />
       </PinterestShareButton>
 
@@ -61,11 +71,12 @@ const ButtonShare = ({ name, description, imageUrl }: IButtonShare) => {
       <LinkedinShareButton
         className="button-share-linkedin"
         title={name}
-        url={url}>
+        url={url}
+      >
         <FaLinkedinIn />
       </LinkedinShareButton>
     </div>
-  );
-};
+  )
+}
 
-export default ButtonShare;
+export default ButtonShare

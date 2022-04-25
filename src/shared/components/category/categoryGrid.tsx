@@ -1,7 +1,7 @@
 import { companyIcon } from "@/assets"
 import { Category } from "@/models"
 import { toggleOpenCategoryModal, toggleOpenModalFilter } from "@/modules"
-import { DOMAIN_URL } from "@/services"
+import { API_URL } from "@/services"
 import Image from "next/image"
 import { useRouter } from "next/router"
 import { useDispatch } from "react-redux"
@@ -36,7 +36,7 @@ export const CategoryGrid = ({ categories, modalType }: CategoryListProps) => {
             >
               <div className="image-container">
                 <Image
-                  src={item?.icon ? `${DOMAIN_URL}${item.icon}` : companyIcon}
+                  src={item?.icon ? `${API_URL}${item.icon}` : companyIcon}
                   layout="fill"
                   alt=""
                   className="image"

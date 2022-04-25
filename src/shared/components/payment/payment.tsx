@@ -4,7 +4,7 @@ import { InputCheckbox } from "@/components"
 import { RootState } from "@/core/store"
 import { Payment as IPayment } from "@/models"
 import { setMessage, setPayment } from "@/modules"
-import { DOMAIN_URL } from "@/services"
+import { API_URL } from "@/services"
 import { useDispatch, useSelector } from "react-redux"
 import { useOrder } from "shared/hook"
 
@@ -67,7 +67,7 @@ export const Payment = ({ paymentList }: PaymentProps) => {
                     <img
                       src={
                         item?.image_url
-                          ? `${DOMAIN_URL}${item?.image_url || ""}`
+                          ? `${API_URL}${item?.image_url || ""}`
                           : companyIcon
                       }
                       alt=""

@@ -1,6 +1,6 @@
 import { formatMoneyVND } from "@/helper"
 import { CartItem as ICartItem, ProductIds } from "@/models"
-import { DOMAIN_URL } from "@/services"
+import { API_URL } from "@/services"
 import Image from "next/image"
 import Link from "next/link"
 import { BiTrash } from "react-icons/bi"
@@ -28,7 +28,7 @@ export const CartItem = ({
             className="image-container cart__item-image-wrapper cursor-pointer"
           >
             <Image
-              src={`${DOMAIN_URL}${cart.image_url[0]}`}
+              src={`${API_URL}${cart.image_url[0]}`}
               alt={cart.product_name}
               className="image"
               layout="fill"

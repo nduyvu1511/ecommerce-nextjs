@@ -2,7 +2,7 @@
 import { companyIcon } from "@/assets"
 import { formatMoneyVND } from "@/helper"
 import { Delivery } from "@/models"
-import { DOMAIN_URL } from "@/services"
+import { API_URL } from "@/services"
 import { InputCheckbox } from "../inputs"
 
 interface DeliveryItemProps {
@@ -28,7 +28,7 @@ const DeliveryItem = (props: DeliveryItemProps) => {
           <img
             src={
               delivery.shipping_icon
-                ? `${DOMAIN_URL}${delivery.shipping_icon}`
+                ? `${API_URL}${delivery.shipping_icon}`
                 : companyIcon
             }
             alt=""

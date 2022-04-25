@@ -1,7 +1,7 @@
 import { companyIcon } from "@/assets"
 import { isArrayHasValue } from "@/helper"
 import { Category as ICategory } from "@/models"
-import { DOMAIN_URL } from "@/services"
+import { API_URL } from "@/services"
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/router"
@@ -75,7 +75,7 @@ export const Category = ({
                 >
                   <div className="header__category-list-item-link-img image-container">
                     <Image
-                      src={`${DOMAIN_URL}${car1.icon}` || companyIcon}
+                      src={`${API_URL}${car1.icon}` || companyIcon}
                       alt={car1.name}
                       className="image"
                       layout="fill"
@@ -152,7 +152,7 @@ export const Category = ({
                           >
                             <div className="header__category-child-list-item-link-img image-container">
                               <Image
-                                src={`${DOMAIN_URL}${car2.icon}` || companyIcon}
+                                src={`${API_URL}${car2.icon}` || companyIcon}
                                 alt={car2.name}
                                 className="image"
                                 layout="fill"

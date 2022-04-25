@@ -4,7 +4,7 @@ import { inputs } from "@/container/account/data"
 import { userInfoSchema } from "@/core/schema"
 import { isObjectHasValue } from "@/helper"
 import { MainAuthLayout } from "@/layout"
-import { DOMAIN_URL } from "@/services"
+import { API_URL } from "@/services"
 import { Field, Form, Formik } from "formik"
 import Image from "next/image"
 import { ChangeEvent } from "react"
@@ -150,9 +150,7 @@ const UserInfo = () => {
               <div className="image-container">
                 <Image
                   src={
-                    userInfo?.avatar
-                      ? `${DOMAIN_URL}${userInfo.avatar}`
-                      : avatar
+                    userInfo?.avatar ? `${API_URL}${userInfo.avatar}` : avatar
                   }
                   quality={10}
                   layout="fill"

@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { isArrayHasValue } from "@/helper"
-import { DOMAIN_URL } from "@/services"
+import { API_URL } from "@/services"
 import { useEffect, useState } from "react"
 import { Swiper, SwiperSlide } from "swiper/react"
 import ImageShow from "../common/imageShow"
@@ -65,11 +65,7 @@ export const ProductImg = ({ images, type, isStock }: IProductImage) => {
                   onClick={() => setImageShow(img)}
                   key={index}
                 >
-                  <img
-                    className="img-fluid"
-                    src={`${DOMAIN_URL}${img}`}
-                    alt=""
-                  />
+                  <img className="img-fluid" src={`${API_URL}${img}`} alt="" />
                 </SwiperSlide>
               ))
             : null}
@@ -89,7 +85,7 @@ export const ProductImg = ({ images, type, isStock }: IProductImage) => {
               >
                 <img
                   className="product__img-show-sub-item"
-                  src={`${DOMAIN_URL}${img}`}
+                  src={`${API_URL}${img}`}
                   alt=""
                 />
               </div>
@@ -102,7 +98,7 @@ export const ProductImg = ({ images, type, isStock }: IProductImage) => {
       {imageShow && type === "detail" ? (
         <ImageShow
           onClose={() => setImageShow("")}
-          url={`${DOMAIN_URL}${imageShow || ""}`}
+          url={`${API_URL}${imageShow || ""}`}
         />
       ) : null}
     </>

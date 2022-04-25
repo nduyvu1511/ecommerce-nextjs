@@ -2,7 +2,7 @@ import { Breadcrumb } from "@/components"
 import { formatMoneyVND, isArrayHasValue, isObjectHasValue } from "@/helper"
 import { MainLayout } from "@/layout"
 import { addToCart, setProduct, toggleModalProduct } from "@/modules"
-import { DOMAIN_URL } from "@/services"
+import { API_URL } from "@/services"
 import productApi from "@/services/productApi"
 import Image from "next/image"
 import Link from "next/link"
@@ -108,7 +108,7 @@ const Wishlist = () => {
                             >
                               <Image
                                 className="image"
-                                src={`${DOMAIN_URL}${item.image_url?.[0]}`}
+                                src={`${API_URL}${item.image_url?.[0]}`}
                                 alt=""
                                 layout="fill"
                               />
