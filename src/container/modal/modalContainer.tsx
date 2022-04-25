@@ -28,6 +28,7 @@ import Image from "next/image"
 import Link from "next/link"
 import React from "react"
 import { BiArrowBack } from "react-icons/bi"
+import { FiPhoneCall } from "react-icons/fi"
 import { IoCloseCircleSharp } from "react-icons/io5"
 import { useDispatch, useSelector } from "react-redux"
 
@@ -199,6 +200,10 @@ export const ModalContainer = () => {
       ) : null}
 
       {isOpenScreenLoading ? <ScreenLoading /> : null}
+
+      <a href="tel:0909099580" className="btn-primary btn-call">
+        <FiPhoneCall />
+      </a>
     </section>
   )
 }

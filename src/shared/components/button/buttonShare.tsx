@@ -1,3 +1,4 @@
+import { DOMAIN_URL } from "@/services"
 import { BsTwitter } from "react-icons/bs"
 import { FaFacebookF, FaLinkedinIn, FaPinterestP } from "react-icons/fa"
 import { MdOutlineMail } from "react-icons/md"
@@ -8,7 +9,7 @@ import {
   LinkedinShareButton,
   PinterestShareButton,
   TwitterShareButton,
-  WhatsappShareButton
+  WhatsappShareButton,
 } from "react-share"
 
 interface IButtonShare {
@@ -24,7 +25,7 @@ const ButtonShare = ({
   imageUrl,
   product_id,
 }: IButtonShare) => {
-  const url = `${process.env.NEXT_PUBLIC_DOMAIN_URL}/product/${product_id}`
+  const url = `${DOMAIN_URL}/product/${product_id}`
 
   return (
     <div className="button-share">
