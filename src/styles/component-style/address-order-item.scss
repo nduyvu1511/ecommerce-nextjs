@@ -31,6 +31,7 @@
     display: flex;
     align-items: flex-start;
     flex-direction: column;
+    flex-wrap: wrap;
     @include style-text(500, 1.3rem, 2rem, $text-color);
 
     @include responsive(md-screen) {

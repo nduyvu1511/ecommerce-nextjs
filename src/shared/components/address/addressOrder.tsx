@@ -28,7 +28,7 @@ export const AddressOrder = ({ addressList }: AddressOrderProps) => {
     delivery,
     payment,
   } = useSelector((state: RootState) => state.order)
-  const [isShowAddress, setShowAddress] = useState<boolean>(false)
+  const [isShowAddress, setShowAddress] = useState<boolean>(() => !addressOrder)
 
   const handleSetOrderAddress = (address: ShippingAddress) => {
     if (addressOrder?.id !== address.id) {
