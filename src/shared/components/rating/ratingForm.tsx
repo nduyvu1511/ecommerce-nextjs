@@ -13,7 +13,7 @@ import { API_URL } from "@/services"
 import ratingApi from "@/services/ratingApi"
 import Image from "next/image"
 import { useRouter } from "next/router"
-import { memo, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { AiOutlineCamera } from "react-icons/ai"
 import { IoMdClose } from "react-icons/io"
 import { RiLoader4Fill } from "react-icons/ri"
@@ -31,13 +31,13 @@ interface RatingFormProps {
   onDeleteRating?: (props: DeleteRatingProps) => void
 }
 
-export const RatingForm = memo(function RatingFormChild({
+export const RatingForm = ({
   onAddRating,
   purchaseForm,
   isShowFooter = true,
   onCloseModal,
   onDeleteRating,
-}: RatingFormProps) {
+}: RatingFormProps) => {
   const dispatch = useDispatch()
   const router = useRouter()
   const { token } = useAuth()
@@ -382,4 +382,4 @@ export const RatingForm = memo(function RatingFormChild({
       <ModalConfirm onConfirm={handleDeleteCommentRating} />
     </>
   )
-})
+}

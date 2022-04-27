@@ -14,6 +14,8 @@ const News = () => {
   )
 }
 
+export async function getStaticProps() {}
+
 News.Layout = MainLayout
 
 export default News

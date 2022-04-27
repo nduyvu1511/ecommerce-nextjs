@@ -42,8 +42,8 @@ export const ProductTabs = ({ product }: { product: Product }) => {
           }`}
         >
           {language === "vni"
-            ? `Hỏi đáp (${product.comment_count})`
-            : `Q&A (${product.comment_count})`}
+            ? `Hỏi đáp (${product?.comment_count || 0})`
+            : `Q&A (${product?.comment_count || 0})`}
         </h5>
 
         <h5
@@ -55,7 +55,7 @@ export const ProductTabs = ({ product }: { product: Product }) => {
           }`}
         >
           {language === "vni"
-            ? `Đánh giá (${product.rating_count})`
+            ? `Đánh giá (${product?.rating_count || 0})`
             : "Product Ratings"}
         </h5>
       </div>
@@ -67,17 +67,17 @@ export const ProductTabs = ({ product }: { product: Product }) => {
               <div
                 style={{ overflow: "hidden" }}
                 className="product__tab-content-desc"
-                dangerouslySetInnerHTML={{ __html: product?.description || "" }}
+                dangerouslySetInnerHTML={{
+                  __html: product?.description_sale || "",
+                }}
               ></div>
 
-              {!product?.description ? (
+              {!product?.description_sale ? (
                 <p>Không có mô tả nào cho sản phẩm này</p>
               ) : null}
             </p>
           </div>
         ) : null}
-
-        {console.log(product.description)}
 
         {tabOpen === "review" ? (
           <div className="product__detail-tabs-content-info">

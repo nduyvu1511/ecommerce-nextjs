@@ -33,6 +33,7 @@ export interface Product {
   product_name: string
   barcode: string | boolean
   product_available: number
+  description_sale: string
   star_rating: number
   uom: Unit
   vat: number

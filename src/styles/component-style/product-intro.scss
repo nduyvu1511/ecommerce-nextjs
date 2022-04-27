@@ -18,12 +18,16 @@
 
   & .modal__product-sub {
     display: flex;
+    align-items: center;
 
     &-item {
-      @include style-text(500, 1.3rem, 1.3rem, $text-color); // & + & {
-      padding-inline: 1rem;
+      @include style-text(500, 1.3rem, 1.3rem, $text-color);
+      padding-inline: 0.6rem;
       border-right: 1px solid $border-color-1;
-      // }
+
+      @media screen and (min-width: 350px) {
+        padding-inline: 1rem;
+      }
 
       &:first-child {
         padding-left: 0;
@@ -31,6 +35,7 @@
 
       &:last-child {
         padding-right: 0;
+        border-right: 0;
       }
     }
   }
@@ -130,11 +135,11 @@
 
     &-item {
       @include flex(flex-start, center);
-      @include style-text(600, 1.2rem, 1.6rem, $text-color-opacity);
+      @include style-text(500, 1.2rem, 1.6rem, $text-color-opacity);
       background-color: white;
       padding: 0.5rem 1rem;
       border: 1px solid $border-color-1;
-      border-radius: 0.3rem;
+      border-radius: 25px;
       cursor: pointer;
 
       & svg {
@@ -145,13 +150,6 @@
       &:last-child {
         margin-left: 1rem;
       }
-    }
-  }
-
-  .product__intro-bottom {
-    margin-bottom: 1.5rem;
-    @include responsive(lg-screen) {
-      margin-bottom: 3rem;
     }
   }
 

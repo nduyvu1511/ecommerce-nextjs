@@ -52,11 +52,6 @@ const useWishlist = (isFetchData: boolean): WishlistSWR => {
             [...data].filter((item) => item.id !== res.result?.[0]),
             true
           )
-          dispatch(
-            setMessage({
-              title: "Đã xóa khỏi danh sách yêu thích",
-            })
-          )
         }
       })
       .catch(() => {

@@ -13,14 +13,15 @@ interface ButtonWishlistProps {
 
 const ButtonWishlist = ({ product, type }: ButtonWishlistProps) => {
   const language = "vni"
-  const { data: wishlists = [], handleToggleWishlist } = useWishlist(false)
+  const { handleToggleWishlist } = useWishlist(false)
 
   const {
     wishlistBtn: { currentProductId, isFetching },
   } = useSelector((state: RootState) => state.product)
 
   const handleAddToWishlist = () => {
-    if (isFetching) return
+    if (isFetching && product.product_tmpl_id === currentProductId) return
+
     handleToggleWishlist(product)
   }
 
@@ -45,12 +46,11 @@ const ButtonWishlist = ({ product, type }: ButtonWishlistProps) => {
           </span>
         ) : null}
 
-        {product.product_tmpl_id === currentProductId && isFetching ? (
+        {/* product.product_tmpl_id === currentProductId && isFetching ? (
           <BiLoaderCircle className="loader" />
-        ) : isArrayHasValue(wishlists) &&
-          wishlists.find(
-            (item) => item.product_id === product.product_tmpl_id
-          ) ? (
+        ) : */}
+
+        {product?.wishlist ? (
           <FaHeart style={{ fill: "#dc3545" }} />
         ) : (
           <FaRegHeart />

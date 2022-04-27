@@ -67,6 +67,20 @@ body {
   }
 }
 
+.show-on-md {
+  display: block !important;
+  @include responsive(md-screen) {
+    display: none !important;
+  }
+}
+
+.hide-on-md {
+  display: none !important;
+  @include responsive(md-screen) {
+    display: block !important;
+  }
+}
+
 .hide-on-mobile {
   z-index: 2000;
   display: none;

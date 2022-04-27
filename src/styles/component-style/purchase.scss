@@ -60,7 +60,7 @@
 
       &-price {
         & p {
-          @include style-text(600, 1.4rem, 2.4rem, $danger);
+          @include style-text(500, 1.5rem, 2.5rem, $danger);
         }
       }
 
@@ -69,14 +69,14 @@
         border-bottom: 1px solid $border-color-2;
 
         & .purchase__item-total-price {
-          @include style-text(600, 1.4rem, 2.4rem, $text-color);
+          @include style-text(500, 1.3rem, 2.3rem, $text-color);
           @include flex(end, center);
 
           & span {
             color: $danger;
             margin-left: 1rem;
-            font-size: 1.8rem;
-            line-height: 2.8rem;
+            font-size: 2rem;
+            line-height: 3rem;
           }
         }
       }

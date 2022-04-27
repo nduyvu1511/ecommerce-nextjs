@@ -47,7 +47,7 @@ export const ProductIntro = ({ product, type }: IProductIntro) => {
     dispatch(changeAttributeItem(att))
   }
 
-  const handleAddOrBuyProduct = () => {
+  const handleAddOrBuyProduct = (type: "buy" | "cart") => {
     if (!token || !partner_id) {
       router.push("/login")
       return
@@ -62,7 +62,7 @@ export const ProductIntro = ({ product, type }: IProductIntro) => {
       })
     )
 
-    if (openVariantModal === "buy") {
+    if (type === "buy") {
       setOpenVariantModal("")
       router.push("/cart")
     } else {
@@ -96,7 +96,7 @@ export const ProductIntro = ({ product, type }: IProductIntro) => {
               <p className="modal__product-sub-item modal__product-sub-item-star">
                 <Star
                   ratingValue={product.star_rating * 20}
-                  size={15}
+                  size={16}
                   readonly
                 />
               </p>
@@ -184,12 +184,21 @@ export const ProductIntro = ({ product, type }: IProductIntro) => {
         {type !== "item" ? (
           <div className="product__intro-shop">
             {type === "detail" ? (
-              <button
-                onClick={() => setOpenVariantModal("buy")}
-                className="btn-primary product__intro-shop-cart-btn"
-              >
-                <span>Mua ngay</span>
-              </button>
+              <>
+                <button
+                  onClick={() => setOpenVariantModal("buy")}
+                  className="btn-primary product__intro-shop-cart-btn show-on-md"
+                >
+                  <span>Mua ngay</span>
+                </button>
+
+                <button
+                  onClick={() => handleAddOrBuyProduct("buy")}
+                  className="btn-primary product__intro-shop-cart-btn hide-on-md"
+                >
+                  <span>Mua ngay</span>
+                </button>
+              </>
             ) : null}
 
             <ButtonAddCard
@@ -264,23 +273,6 @@ export const ProductIntro = ({ product, type }: IProductIntro) => {
         ) : null}
 
         {type !== "item" ? (
-          <div className="product__intro-bottom">
-            <p className="product__intro-item product__intro-category">
-              Category:{" "}
-              <span className="product__intro-item-sub">
-                {product.category.name}
-              </span>
-            </p>
-
-            <p className="product__intro-item product__intro-tags">
-              Tags:{" "}
-              <span className="product__intro-item-sub">
-                {product.category.name}, {product.barcode}
-              </span>
-            </p>
-          </div>
-        ) : null}
-        {type !== "item" ? (
           <ButtonShare
             product_id={product.product_tmpl_id}
             imageUrl={`${process.env.REACT_APP_API_URL}${product.image_url[0]}`}
@@ -346,7 +338,10 @@ export const ProductIntro = ({ product, type }: IProductIntro) => {
             </div>
 
             <div className="product__variant-modal-btn">
-              <button onClick={handleAddOrBuyProduct} className="btn-primary">
+              <button
+                onClick={() => handleAddOrBuyProduct(openVariantModal)}
+                className="btn-primary"
+              >
                 {openVariantModal === "buy" ? "Mua ngay" : "Thêm giỏ hàng"}
               </button>
             </div>

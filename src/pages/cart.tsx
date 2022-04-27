@@ -21,7 +21,6 @@ const Cart = () => {
     findProductFromProductList,
     handleResetOrderField,
   } = useCartOrder()
-
   const { productList } = useSelector((state: RootState) => state.order)
 
   useEffect(() => {

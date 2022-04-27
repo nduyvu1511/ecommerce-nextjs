@@ -54,7 +54,7 @@ export const ProductImg = ({ images, type, isStock }: IProductImage) => {
             ev.init()
             setSwiper(ev)
           }}
-          onSlideChange={(e) => setActiveIndex(e.activeIndex - 1)}
+          onSlideChange={(e) => setActiveIndex(e.activeIndex)}
         >
           {isArrayHasValue(images)
             ? images.map((img, index) => (
@@ -77,8 +77,7 @@ export const ProductImg = ({ images, type, isStock }: IProductImage) => {
               <div
                 key={index}
                 onClick={() => {
-                  console.log(index)
-                  swiper?.slideTo(index + 1)
+                  swiper?.slideTo(index)
                 }}
                 className={`product__img-show-sub-child ${
                   index === activeIndex ? "active" : ""

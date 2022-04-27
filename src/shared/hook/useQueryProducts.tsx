@@ -181,7 +181,7 @@ const useQueryProducts = (): UseQueryProductRes => {
         },
       },
       undefined,
-      { scroll: true, shallow: true }
+      { scroll: false, shallow: true }
     )
   }
 

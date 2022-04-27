@@ -2,12 +2,12 @@
   @include flex(flex-start, center);
 
   & button {
-    width: 35px;
-    height: 35px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     @include flex-center;
     & svg {
-      font-size: 1.8rem;
+      font-size: 1.6rem;
       fill: $white;
     }
     margin-right: 0.8rem;

@@ -18,6 +18,7 @@ interface DeleteReviewHook {
 
 interface Props {
   product_id: number
+  shouldFetch: boolean
 }
 
 interface ReivewSWR {
@@ -29,14 +30,14 @@ interface ReivewSWR {
   clearComments: Function
 }
 
-const useReview = ({ product_id }: Props): ReivewSWR => {
+const useReview = ({ product_id, shouldFetch }: Props): ReivewSWR => {
   const dispatch = useDispatch()
   const router = useRouter()
   const { token } = useSelector((state: RootState) => state.user)
 
   const { data, error, isValidating, mutate } = useSWR(
     `review_product_${product_id}`,
-    product_id && token
+    product_id && token && shouldFetch
       ? () =>
           userApi
             .getReviews({ token, product_id })

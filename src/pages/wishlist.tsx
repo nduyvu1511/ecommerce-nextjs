@@ -25,6 +25,8 @@ const Wishlist = () => {
     handleDeleteWishlist,
   } = useWishlist(true)
 
+  console.log(wishlists)
+
   const handleAddSingleCart = (id: number) => {
     productApi.getProductList({ product_id: id }).then((res: any) => {
       const product = res.result?.[0]
@@ -62,7 +64,7 @@ const Wishlist = () => {
                   ? "Danh sách yêu thích của bạn đang trống!"
                   : "Your wishlist list is empty!"}
               </p>
-              <Link passHref href="/shop">
+              <Link passHref href="/products">
                 <a className="btn-primary">
                   {" "}
                   {language === "vni"
@@ -79,9 +81,9 @@ const Wishlist = () => {
                   <tr className="table-row-heading">
                     <th></th>
                     <th></th>
-                    <th>Product Name</th>
-                    <th>Unit Price</th>
-                    <th>Stock Status</th>
+                    <th>Tên</th>
+                    <th>Đơn giá</th>
+                    <th>Tình trạng</th>
                     <th></th>
                   </tr>
                   {isArrayHasValue(wishlists) &&
@@ -101,7 +103,7 @@ const Wishlist = () => {
                           </button>
                         </td>
                         <td className="wishlist__list-item wishlist__list-item-image">
-                          <Link href={`/product/${item.id}`} passHref>
+                          <Link href={`/product/${item.product_id}`} passHref>
                             <div
                               onClick={() => setProductList(item.product_id)}
                               className="image-container wishlist__list-item-image"
@@ -116,7 +118,7 @@ const Wishlist = () => {
                           </Link>
                         </td>
                         <td className="wishlist__list-item wishlist__list-item-name">
-                          <Link href={`/product/${item.id}`} passHref>
+                          <Link href={`/product/${item.product_id}`} passHref>
                             <a onClick={() => setProductList(item.product_id)}>
                               {item.name}
                             </a>

@@ -25,6 +25,7 @@ export const ProductReview = () => {
     handleAddReview,
     handleDeleteReview,
   } = useReview({
+    shouldFetch: true,
     product_id: Number(router.query.productId) || 0,
   })
 

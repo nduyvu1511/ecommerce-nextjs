@@ -11,12 +11,11 @@
   }
 
   &-container {
-    flex: 1;
     overflow: hidden;
     position: relative;
 
     & .swiper {
-      max-height: 550px;
+      max-height: 500px;
     }
 
     & img {

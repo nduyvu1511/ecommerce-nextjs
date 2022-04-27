@@ -71,4 +71,6 @@ const ResetPasswordPage = () => {
 
 ResetPasswordPage.Layout = LoginLayout
 
+export async function getStaticProps() {}
+
 export default ResetPasswordPage

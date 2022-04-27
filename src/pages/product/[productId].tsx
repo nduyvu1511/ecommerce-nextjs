@@ -45,12 +45,14 @@ const ProductDetailPage = ({ product }: ProduductDetailPageProps) => {
   const dispatch = useDispatch()
   const router = useRouter()
   const { carts } = useCartOrder()
-  useWishlist(false)
+  const { data } = useWishlist(false)
+  console.log(data)
   const language = "vni"
   const { product: productDetail, clearProductDetail } = useProductDetail({
     product,
   })
   const { clearComments } = useReview({
+    shouldFetch: false,
     product_id: Number(router.query.productId) || 0,
   })
   const [breadcrumbList, setBreadcrumbList] = useState<BreadcrumbItem[]>([])
@@ -182,13 +184,16 @@ const ProductDetailPage = ({ product }: ProduductDetailPageProps) => {
               type="detail"
             />
           </section>
-          <div className="product__detail-tabs-wrapper">
-            <ProductTabs product={product} />
-          </div>
+
+          {isObjectHasValue(product) ? (
+            <div className="product__detail-tabs-wrapper">
+              <ProductTabs product={product} />
+            </div>
+          ) : null}
 
           {/* Related Products */}
           {isArrayHasValue(relatedProducts) ? (
-            <div className="product__detail-related">
+            <div className="product__detail-related product__detail-item">
               <h3 className="product__detail-heading">
                 {language === "vni" ? "sản Phẩm liên quan" : "Related products"}
               </h3>
@@ -234,7 +239,7 @@ const ProductDetailPage = ({ product }: ProduductDetailPageProps) => {
           ) : null}
 
           {isArrayHasValue(viewedproducts) ? (
-            <div className="product__detail-recently">
+            <div className="product__detail-recently product__detail-item">
               <h3 className="product__detail-heading">
                 {language === "vni"
                   ? "Sản phẩm đã xem"

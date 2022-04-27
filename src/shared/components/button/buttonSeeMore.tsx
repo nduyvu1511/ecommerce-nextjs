@@ -21,4 +21,3 @@ export const ButtonSeeMore = ({ isLoading, onClick }: ButtonSeeMoreProps) => {
     </>
   )
 }
-

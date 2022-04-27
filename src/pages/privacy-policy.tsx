@@ -62,4 +62,6 @@ const PrivacyPolicy = () => {
 
 PrivacyPolicy.Layout = MainLayout
 
+export async function getStaticProps() {}
+
 export default PrivacyPolicy

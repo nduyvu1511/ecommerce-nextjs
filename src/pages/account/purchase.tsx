@@ -14,7 +14,7 @@ import { useProductRating } from "shared/hook"
 const Purchase = () => {
   const [purchase, setPurchase] = useState<PurchasedProduct | undefined>()
   const {
-    data: { data_count = 0, data: purchaseList = [] } = { data: {} },
+    data: { data: purchaseList = [] } = { data: {} },
     isValidating,
     updateCommentRating,
     deleteCommentRating,

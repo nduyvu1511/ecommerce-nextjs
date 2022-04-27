@@ -2,17 +2,18 @@
   background-color: $white;
   border-radius: 0.4rem;
   border: 1px solid $border-color-2;
-  padding-inline: 1.5rem;
+  padding: 1.5rem 1rem;
+
+  @include responsive(xs-screen) {
+    padding: 1.5rem;
+  }
 
   @include responsive(sm-screen) {
-    padding-inline: 2rem;
+    padding: 2rem;
   }
 
-  @include responsive(md-screen) {
-    padding-inline: 3rem;
-  }
   @include responsive(lg-screen) {
-    padding-inline: 4rem;
+    padding: 2rem 3rem;
   }
 
   &-header {
@@ -21,7 +22,7 @@
 
     &-heading {
       cursor: pointer;
-      padding-block: 1.6rem;
+      padding-bottom: 1rem;
       @include style-text(500, 1.4rem, 2.2rem, $text-color);
 
       @include responsive(sm-screen) {
@@ -60,7 +61,7 @@
   }
 
   &-content {
-    padding-block: 4rem;
+    padding-block: 3rem;
 
     .product__tab-content-text {
       @include style-text(400, 1.5rem, 3rem, $text-color);
