@@ -20,23 +20,32 @@
     grid-gap: 2rem;
 
     &-item {
-      padding: 3rem;
-      background-color: $yellow;
-      border-radius: 4px;
-      @include flex-center;
-      flex-direction: column;
-      color: $white;
+      & > div {
+        cursor: pointer;
+        padding: 3rem;
+        background-color: $yellow;
+        border-radius: 4px;
+        @include flex-center;
+        flex-direction: column;
+        color: $white;
+      }
 
       &:first-child {
-        background-color: #0acf97;
+        & > div {
+          background-color: #0acf97;
+        }
       }
 
       &:nth-child(2) {
-        background-color: #fa5c7c;
+        & > div {
+          background-color: #fa5c7c;
+        }
       }
 
       &:last-child {
-        background-color: #ffbc00;
+        & > div {
+          background-color: #ffbc00;
+        }
       }
 
       & span {

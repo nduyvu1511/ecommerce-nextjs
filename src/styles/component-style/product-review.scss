@@ -1,4 +1,13 @@
 .product__review {
+  & .form-item-inline {
+    flex-direction: column;
+  }
+
+  & .form-item-text-error {
+    font-size: 1.3rem;
+    font-weight: 500;
+  }
+
   .comment__list {
     display: grid;
     grid-template-columns: 1fr;

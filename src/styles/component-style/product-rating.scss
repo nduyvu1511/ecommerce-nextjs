@@ -204,14 +204,15 @@
         &-item {
           margin-right: 1rem;
           margin-bottom: 1rem;
-          width: 70px;
-          height: 70px;
+
           cursor: zoom-in;
 
-          & img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+          & .image-container {
+            & .image {
+              width: 70px !important;
+              height: 70px !important;
+              object-fit: cover;
+            }
           }
         }
       }

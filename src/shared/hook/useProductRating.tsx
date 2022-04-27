@@ -119,6 +119,7 @@ const useProductRating = ({
 
     try {
       const res: any = await ratingApi.updateRatingProduct(commentRating)
+      dispatch(toggleOpenScreenLoading(false))
       if (res?.result?.success) {
         const comment_rating: CommentRating = res.result.data?.data?.[0]
         if (!comment_rating) return
@@ -150,8 +151,6 @@ const useProductRating = ({
         }
 
         dispatch(setMessage({ title: "Thêm đánh giá thành công!" }))
-
-        dispatch(toggleOpenScreenLoading(false))
       }
     } catch (error) {
       dispatch(toggleOpenScreenLoading(false))

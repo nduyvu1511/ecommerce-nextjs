@@ -39,6 +39,7 @@ export const ModalConfirm = ({ onConfirm }: ModalConfirmProps) => {
       dispatch(setModalConfirm())
     } else {
       onConfirm()
+      dispatch(setModalConfirm())
     }
   }
 

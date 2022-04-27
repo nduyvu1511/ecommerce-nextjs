@@ -17,14 +17,15 @@ export const AccountOption = () => {
   const router = useRouter()
   const { userInfo } = useSelector((state: RootState) => state.user)
 
-  if (!userInfo) return null
-
   return (
     <>
       <header className="account__left-header">
         <div className="account__left-header-avatar image-container">
           <Link href="/account/info" passHref>
-            <div className="image-container cursor-pointer">
+            <div
+              onClick={() => dispatch(toggleModalAccountOption(false))}
+              className="image-container cursor-pointer"
+            >
               <Image
                 src={userInfo?.avatar ? `${API_URL}${userInfo.avatar}` : avatar}
                 quality={30}
@@ -35,9 +36,12 @@ export const AccountOption = () => {
             </div>
           </Link>
         </div>
-        <p className="account__left-header-title">{userInfo.name}</p>
+        <p className="account__left-header-title">{userInfo?.name || ""}</p>
         <Link href="/account/info">
-          <a className="account__left-header-edit">
+          <a
+            onClick={() => dispatch(toggleModalAccountOption(false))}
+            className="account__left-header-edit"
+          >
             {language === "vni" ? "Sửa hồ sơ" : "Edit info"} <FiEdit2 />
           </a>
         </Link>

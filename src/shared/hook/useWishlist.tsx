@@ -4,7 +4,7 @@ import { DeleteWishlistHook, Product, Wishlist } from "@/models"
 import {
   setCurrentWishlistBtnProductId,
   setFetchingCurrentWishlistBtn,
-  setMessage
+  setMessage,
 } from "@/modules"
 import userApi from "@/services/userApi"
 import { useRouter } from "next/router"
@@ -26,7 +26,6 @@ interface WishlistSWR {
 const useWishlist = (isFetchData: boolean): WishlistSWR => {
   const dispatch = useDispatch()
   const router = useRouter()
-
   const { token } = useSelector((state: RootState) => state.user)
 
   const { data, error, isValidating, mutate } = useSWR(
@@ -51,7 +50,7 @@ const useWishlist = (isFetchData: boolean): WishlistSWR => {
         if (res.result?.[0]) {
           mutate(
             [...data].filter((item) => item.id !== res.result?.[0]),
-            false
+            true
           )
           dispatch(
             setMessage({
@@ -84,7 +83,7 @@ const useWishlist = (isFetchData: boolean): WishlistSWR => {
             dispatch(setFetchingCurrentWishlistBtn(false))
 
             if (res?.result?.success) {
-              mutate([res.result], false)
+              mutate([res.result], true)
             } else {
               dispatch(
                 setMessage({ title: res?.result?.message, type: "danger" })
@@ -120,7 +119,7 @@ const useWishlist = (isFetchData: boolean): WishlistSWR => {
                   title: "Đã Thêm vào danh sách yêu thích",
                 })
               )
-              mutate([res.result, ...data], false)
+              mutate([res.result, ...data], true)
             } else {
               dispatch(
                 setMessage({
@@ -149,4 +148,3 @@ const useWishlist = (isFetchData: boolean): WishlistSWR => {
 }
 
 export { useWishlist }
-

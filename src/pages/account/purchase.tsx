@@ -19,7 +19,7 @@ const Purchase = () => {
     updateCommentRating,
     deleteCommentRating,
   } = useProductRating({ shouldFetch: true, type: "purchase" })
-  console.log(purchaseList)
+
   return (
     <>
       <AccountContainer
