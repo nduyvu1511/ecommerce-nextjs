@@ -1,6 +1,11 @@
 export const notifications = [{}]
 
-export const passwordFormData = [
+interface PasswordFormDataProps {
+  label: string
+  name: "password" | "newPassword" | "reNewPassword"
+}
+
+export const passwordFormData: PasswordFormDataProps[] = [
   {
     label: "Mật khẩu cũ",
     name: "password",
