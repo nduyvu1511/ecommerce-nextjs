@@ -49,7 +49,7 @@
     .form-control {
       .form-item {
         padding: 2rem 0;
-        margin-bottom: 4rem;
+        margin-bottom: 2rem;
         @include flex-center;
         flex-direction: column;
 
@@ -93,6 +93,31 @@
           height: 45px;
           display: flex;
           justify-content: center;
+        }
+      }
+
+      & .otp__resend {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        @include style-text(500, 1.3rem, 1.8rem, $text-color);
+
+        &-title {
+          margin-bottom: 0.8rem;
+        }
+
+        &-btn {
+          padding: 0;
+          background-color: transparent;
+          color: $primary-color;
+          border: 0;
+          font-size: 1.3rem;
+          font-weight: 500;
+          cursor: pointer;
+        }
+
+        &-countdown {
+          color: $gray;
         }
       }
     }

@@ -7,6 +7,6 @@ module.exports = withImages({
   i18n,
   images: {
     disableStaticImages: true,
-    domains: ["erp.womart.vn", "demo.satavan.com"],
+    domains: ["erp.womart.vn", "demo.satavan.com", "nhavietdental.satavan.com"],
   },
 })

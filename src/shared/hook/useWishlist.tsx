@@ -1,10 +1,10 @@
 import { RootState } from "@/core/store"
-import { isArrayHasValue, isObjectHasValue } from "@/helper"
+import { isArrayHasValue } from "@/helper"
 import { DeleteWishlistHook, Product, Wishlist } from "@/models"
 import {
   setCurrentWishlistBtnProductId,
   setFetchingCurrentWishlistBtn,
-  setMessage,
+  setMessage
 } from "@/modules"
 import userApi from "@/services/userApi"
 import { useRouter } from "next/router"
@@ -149,3 +149,4 @@ const useWishlist = (isFetchData: boolean): WishlistSWR => {
 }
 
 export { useWishlist }
+

@@ -99,9 +99,14 @@
 }
 
 .form-item {
-  position: relative;
   width: 100%;
   margin-bottom: 2rem;
+  position: relative;
+
+  & label {
+    margin-bottom: 0.6rem;
+    display: inline-block;
+  }
 
   &-input {
     width: 100%;
@@ -114,8 +119,8 @@
     @include style-text(500, 1.4rem, 1.4rem, $text-color);
 
     &-error {
-      border: 1px solid $danger;
-      background-color: $danger-opacity;
+      border: 1px solid $danger !important;
+      background-color: $danger-opacity !important;
     }
   }
 }

@@ -1,6 +1,7 @@
 import { authentication, fbProvider, googleProvider } from "@/core/config"
 import { RootState } from "@/core/store"
-import { UserInfo } from "@/models"
+import { isObjectHasValue } from "@/helper"
+import { ILogin, UserInfo } from "@/models"
 import {
   setCurrentToken,
   setMessage,
@@ -32,6 +33,11 @@ interface UseAuthRes {
     handleSuccess: (props: UserInfo) => void,
     handleError?: Function
   ) => void
+  loginWithPassword: (
+    loginForm: ILogin,
+    handleSuccess: (token: string) => void
+  ) => void
+  OTPVerifier: (props: otpProps) => void
 }
 
 export const useAuth = (): UseAuthRes => {
@@ -68,8 +74,8 @@ export const useAuth = (): UseAuthRes => {
         data_in_token: response.user,
         firebase_access_token,
       })
-      dispatch(toggleOpenScreenLoading(false))
 
+      dispatch(toggleOpenScreenLoading(false))
       const token = res?.result?.data?.token
       if (res?.result?.success) {
         dispatch(setCurrentToken(token))
@@ -88,11 +94,8 @@ export const useAuth = (): UseAuthRes => {
     }
   }
 
-  const OTPVerifier = async (
-    otpInput: string,
-    handleSuccess: (token: string) => void,
-    handleError: Function
-  ) => {
+  const OTPVerifier = async (props: otpProps) => {
+    const { otpInput, handleSuccess, handleError } = props
     const confirmationResult = window.confirmationResult
     dispatch(toggleOpenScreenLoading(true))
 
@@ -104,7 +107,7 @@ export const useAuth = (): UseAuthRes => {
       if (firebaseToken) {
         handleSuccess(firebaseToken)
       } else {
-        handleError()
+        handleError && handleError()
         dispatch(
           setMessage({
             title: "Vui lòng nhập đúng mã OTP",
@@ -128,9 +131,9 @@ export const useAuth = (): UseAuthRes => {
     dispatch(toggleOpenScreenLoading(true))
 
     try {
-      OTPVerifier(
+      OTPVerifier({
         otpInput,
-        async (firebase_access_token) => {
+        handleSuccess: async (firebase_access_token) => {
           if (!currentToken || !firebase_access_token || !phoneNumber) {
             dispatch(
               setMessage({
@@ -141,46 +144,49 @@ export const useAuth = (): UseAuthRes => {
             return
           }
 
-          const res: any = await userApi.updatePhoneNumber({
-            firebase_access_token,
-            phone: phoneNumber,
-            token: currentToken,
-          })
-          dispatch(toggleOpenScreenLoading(false))
+          try {
+            const res: any = await userApi.updatePhoneNumber({
+              firebase_access_token,
+              phone: phoneNumber,
+              token: currentToken,
+            })
+            dispatch(toggleOpenScreenLoading(false))
 
-          if (res?.result?.success) {
-            handleSuccess("")
-          } else {
-            // const res: any = await userApi.firebaseAuth({
-            //   firebase_access_token,
-            // })
-
-            // if (res?.result?.success) {
-            //   const token = res?.result?.data?.token
-            //   if (token) handleSuccess(token)
-            // }
-
-            const message = res?.result?.message
-            dispatch(
-              setMessage({
-                title: message || "Số điện thoại đã tồn tại",
-                type: "warning",
-              })
-            )
-            if (message === "Tài khoản chưa được kích hoạt!") {
-              dispatch(toggleOpenOtpLoginModal(false))
+            if (res?.result?.success) {
+              handleSuccess("")
             } else {
-              handleError && handleError()
+              // const res: any = await userApi.firebaseAuth({
+              //   firebase_access_token,
+              // })
+
+              // if (res?.result?.success) {
+              //   const token = res?.result?.data?.token
+              //   if (token) handleSuccess(token)
+              // }
+
+              const message = res?.result?.message
+              dispatch(
+                setMessage({
+                  title: message || "Số điện thoại đã tồn tại",
+                  type: "warning",
+                })
+              )
+              if (message === "Tài khoản chưa được kích hoạt!") {
+                dispatch(toggleOpenOtpLoginModal(false))
+              } else {
+                handleError && handleError()
+              }
             }
+          } catch (error) {
+            handleError && handleError()
           }
         },
-        () => {
+        handleError: () => {
           dispatch(toggleOpenScreenLoading(false))
-        }
-      )
+        },
+      })
     } catch (error) {
       dispatch(toggleOpenScreenLoading(false))
-      console.log(error)
     }
   }
 
@@ -188,29 +194,46 @@ export const useAuth = (): UseAuthRes => {
     const { handleSuccess, handleError, otpInput } = props
     dispatch(toggleOpenScreenLoading(true))
     try {
-      OTPVerifier(
+      OTPVerifier({
         otpInput,
-        async (firebaseToken) => {
+        handleSuccess: async (firebaseToken) => {
           const res: any = await userApi.firebaseAuth({
             firebase_access_token: firebaseToken,
           })
           const token = res?.result?.data?.token
           if (res?.result?.success) {
-            handleSuccess(token)
+            token && handleSuccess(token)
           } else {
-            handleError && handleError()
-            dispatch(
-              setMessage({
-                title: res?.result?.message || "Đăng nhập không thành công",
-                type: "danger",
-              })
-            )
+            handleError && handleError(res)
           }
         },
-        () => handleError && handleError()
-      )
+        handleError: () => handleError && handleError(),
+      })
     } catch (error) {
       console.log(error)
+    }
+  }
+
+  const loginWithPassword = async (
+    loginForm: ILogin,
+    handleSuccess: (token: string) => void
+  ) => {
+    try {
+      dispatch(toggleOpenScreenLoading(true))
+      const res: any = await userApi.login(loginForm)
+      dispatch(toggleOpenScreenLoading(false))
+      if (res?.result?.success) {
+        handleSuccess(res.result.data.token)
+      } else {
+        dispatch(
+          setMessage({
+            title: res?.result?.message || "Đăng nhập không thành công",
+            type: "danger",
+          })
+        )
+      }
+    } catch (error) {
+      dispatch(toggleOpenScreenLoading(false))
     }
   }
 
@@ -224,7 +247,9 @@ export const useAuth = (): UseAuthRes => {
     try {
       const res: any = await userApi.getUserInfo({ token })
       if (res?.result?.success) {
-        handleSuccess(res?.result?.data)
+        if (isObjectHasValue(res?.result?.data)) {
+          handleSuccess(res.result.data)
+        }
       } else {
         handleError && handleError()
       }
@@ -240,5 +265,7 @@ export const useAuth = (): UseAuthRes => {
     getUserInfo,
     loginWithPhoneNumber,
     updatePhoneNumber,
+    loginWithPassword,
+    OTPVerifier,
   }
 }

@@ -8,6 +8,20 @@ export interface Auth {
   data_in_token?: any
 }
 
+export interface ChangePasswordProps {
+  token: string
+  password: string
+  re_password: string
+  old_password: string
+}
+
+export interface ResetPassword {
+  token: string
+  password: string
+  re_password: string
+  phone: string
+}
+
 export interface PhoneUpdateProps extends Token {
   firebase_access_token: string
   phone: string
@@ -187,4 +201,5 @@ export interface AuthSlice {
   currentToken: string | undefined
   phoneNumber: string | undefined
   currentUserInfo: UserInfo | undefined
+  isValidateCreatePasswordOTP: boolean | undefined
 }

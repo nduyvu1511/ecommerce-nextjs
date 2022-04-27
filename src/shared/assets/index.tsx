@@ -14,6 +14,7 @@ export const paymentMethodsImage = require("./icons/payment-methods.png")
 export const boCongThuong = require("./icons/bo-cong-thuong.png")
 
 export const filterNotFound = require("./images/filter-not-found.png")
+export const loginBg = require("./images/login_bg.jpg")
 
 export const cartEmptyIcon = (
   <svg

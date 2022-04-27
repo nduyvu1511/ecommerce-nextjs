@@ -13,6 +13,7 @@ export interface IModal {
   disableOverLay?: boolean
   fullWidth?: boolean
   preventScrolling?: boolean
+  disableAnimation?: boolean
 }
 
 export const Modal = ({
@@ -25,6 +26,7 @@ export const Modal = ({
   isShowConfirmModal,
   fullWidth,
   disableOverLay = false,
+  disableAnimation = false,
 }: IModal) => {
   const modalRef = useRef<HTMLDivElement>(null)
   const overlayRef = useRef<HTMLDivElement>(null)
@@ -61,6 +63,7 @@ export const Modal = ({
   return (
     <>
       <section
+        style={{ transition: disableAnimation ? "unset" : "all 0.2s ease" }}
         ref={modalRef}
         className={`modal modal-${direction} ${stack ? "modal-stack" : ""} ${
           unsetSize ? "modal-size-auto" : ""
@@ -79,6 +82,7 @@ export const Modal = ({
 
       <div
         ref={overlayRef}
+        style={{ transition: disableAnimation ? "unset" : "all 0.2s ease" }}
         onClick={() => !disableOverLay && handleClick()}
         className={`overlay ${stack ? "overlay-stack" : ""} ${
           isShowConfirmModal || disableOverLay ? "overlay-disabled" : ""

@@ -3,5 +3,6 @@ module.exports = {
     locales: ["en", "vi"],
     defaultLocale: "vi",
     defautLanguage: "vi",
+    initialLocale: "vi",
   },
 }

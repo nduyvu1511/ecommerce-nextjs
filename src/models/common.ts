@@ -66,6 +66,7 @@ export interface CommonSlice {
   isOpenScreenLoading: boolean
   isOpenOrderSummary: boolean
   isOpenOtpLoginModal: boolean
+  isOpenLoginSMSModal: boolean
   isOpenLoginModal: boolean
 }
 

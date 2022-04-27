@@ -8,8 +8,8 @@
   & .modal__otp-close-btn {
     position: absolute;
     z-index: 10;
-    right: 1rem;
-    top: 1rem;
+    right: 1.2rem;
+    top: 1.2rem;
 
     & svg {
       font-size: 2.4rem;
@@ -25,6 +25,17 @@
     padding: 3rem 2rem;
     @include responsive(md-screen) {
       padding: 5rem 4rem;
+    }
+
+    & .modal__login-close-btn {
+      position: absolute;
+      right: 1.3rem;
+      top: 1.3rem;
+
+      & svg {
+        font-size: 2.4rem;
+        color: $text-color;
+      }
     }
 
     & .auth-container {
@@ -45,12 +56,12 @@
           max-width: unset;
 
           & .form-item-input {
-            font-size: 2.4rem;
+            font-size: 1.8rem;
             height: 50px;
           }
 
           & .form-item-text-error {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
           }
         }
       }
@@ -80,7 +91,7 @@
     & form {
       padding-top: 3rem;
 
-      & button {
+      & button[type="submit"] {
         width: 100%;
         background-color: $danger;
       }
@@ -93,6 +104,17 @@
     border: 0;
 
     & .form-control {
+    }
+  }
+
+  & .modal__otp-back-btn {
+    position: absolute;
+    left: 1.4rem;
+    top: 1.2rem;
+
+    & svg {
+      font-size: 2.4rem;
+      color: $text-color;
     }
   }
 

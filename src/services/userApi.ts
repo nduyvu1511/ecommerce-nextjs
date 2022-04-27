@@ -14,12 +14,26 @@ import {
   TokenAndSaleOrderId,
   UpdateUserProps,
   PhoneUpdateProps,
+  ChangePasswordProps,
+  ResetPassword,
 } from "@/models"
 import axiosClient from "."
 
 const userApi = {
   login: (data: ILogin) => {
     return axiosClient.post("/api/v2.0/user/login", { params: data })
+  },
+
+  checkPassword: (params: Token) => {
+    return axiosClient.post("/api/v2.0/user/check-password", { params })
+  },
+
+  changePassword: (data: ChangePasswordProps) => {
+    return axiosClient.post("/api/v2.0/user/change-password", { params: data })
+  },
+
+  resetPassword: (data: ResetPassword) => {
+    return axiosClient.post("/api/v2.0/user/reset-password", { params: data })
   },
 
   getUserInfo: (data: Token) => {

@@ -1,4 +1,4 @@
-import { logo } from "@/assets"
+import { avatar as avatarBlank, logo } from "@/assets"
 import { accountHeaderOptionList } from "@/container"
 import { RootState } from "@/core/store"
 import {
@@ -20,10 +20,9 @@ import { IoChevronDownOutline } from "react-icons/io5"
 import { useDispatch, useSelector } from "react-redux"
 import { useCartOrder } from "shared/hook"
 import { CartModal } from "../cart"
+import { Notification } from "../notification"
 import { SearchForm, SearchResult } from "../search"
 import { navLinks } from "./data"
-import { avatar as avatarBlank } from "@/assets"
-import { Notification } from "../notification"
 
 export const Header = () => {
   const dispatch = useDispatch()

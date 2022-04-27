@@ -6,7 +6,7 @@ import {
   PurchasedProduct,
   RatingRangePost,
   TagRating,
-  UpdateRatingProps,
+  UpdateRatingProps
 } from "@/models"
 import { setMessage, setModalConfirm } from "@/modules"
 import { API_URL } from "@/services"
@@ -45,16 +45,15 @@ export const RatingForm = memo(function RatingFormChild({
     modalConfirm: { isOpen },
   } = useSelector((state: RootState) => state.common)
 
-  const { deleteImage, ratingImages, getBase64Images, setRatingImages } =
-    useAttachment({
-      limit: 5,
-      initRatingImages:
-        purchaseForm?.comment_rating?.image_urls?.length > 0
-          ? purchaseForm.comment_rating.image_urls.map(
-              (item) => `${API_URL}${item.image_url}`
-            )
-          : undefined,
-    })
+  const { deleteImage, images, getBase64Images, setImages } = useAttachment({
+    limit: 5,
+    initImages:
+      purchaseForm?.comment_rating?.image_urls?.length > 0
+        ? purchaseForm.comment_rating.image_urls.map(
+            (item) => `${API_URL}${item.image_url}`
+          )
+        : undefined,
+  })
 
   // Rating input field
   const commentRating = purchaseForm?.comment_rating?.content || ""
@@ -104,7 +103,7 @@ export const RatingForm = memo(function RatingFormChild({
   }
 
   const handleClearRatingForm = () => {
-    setRatingImages(undefined)
+    setImages(undefined)
     setRatingVal(undefined)
     setAttachmentIds(undefined)
     setRatingTagId(undefined)
@@ -281,7 +280,7 @@ export const RatingForm = memo(function RatingFormChild({
                 <label
                   htmlFor="rating-attachment"
                   className={`btn-primary-outline ${
-                    ratingImages?.length === 5 ||
+                    images?.length === 5 ||
                     (purchaseForm?.comment_rating?.attachment_ids?.length > 0 &&
                       purchaseForm?.comment_rating?.editable)
                       ? "btn-disabled"
@@ -291,13 +290,13 @@ export const RatingForm = memo(function RatingFormChild({
                   <AiOutlineCamera />
                   Thêm hình ảnh
                   <span style={{ marginLeft: "8px" }}>{`${
-                    ratingImages?.length || 0
+                    images?.length || 0
                   } / 5`}</span>
                 </label>
 
-                {ratingImages ? (
+                {images ? (
                   <div className="rating__form-attachment-image">
-                    {ratingImages.map((url, index) => (
+                    {images.map((url, index) => (
                       <div
                         key={index}
                         className="rating__form-attachment-image-item"

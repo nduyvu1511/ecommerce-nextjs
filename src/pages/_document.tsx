@@ -17,19 +17,21 @@ class MyDocument extends Document {
         </Head>
 
         <body>
-          <div id="fb-root"></div>
-          <div id="fb-customer-chat" className="fb-customerchat"></div>
+          {/* <div className="embed-container">
+            <div id="fb-root"></div>
+            <div id="fb-customer-chat" className="fb-customerchat"></div>
 
-          <div
-            className="zalo-chat-widget"
-            data-oaid="579745863508352884"
-            data-welcome-message="Rất vui khi được hỗ trợ bạn!"
-            data-autopopup="0"
-            data-width=""
-            data-height=""
-          ></div>
+            <div
+              className="zalo-chat-widget"
+              data-oaid="579745863508352884"
+              data-welcome-message="Rất vui khi được hỗ trợ bạn!"
+              data-autopopup="0"
+              data-width=""
+              data-height=""
+            ></div>
+          </div> */}
 
-          <script src="https://sp.zalo.me/plugins/sdk.js"></script>
+          {/* <script src="https://sp.zalo.me/plugins/sdk.js"></script>
 
           <script
             dangerouslySetInnerHTML={{
@@ -54,7 +56,7 @@ class MyDocument extends Document {
                   }(document, 'script', 'facebook-jssdk'));
                 `,
             }}
-          ></script>
+          ></script> */}
           <Main />
           <NextScript />
         </body>

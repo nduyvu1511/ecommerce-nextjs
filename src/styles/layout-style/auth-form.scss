@@ -105,7 +105,7 @@
       &-wrapper {
         position: relative;
 
-        & button {
+        & .form-item-input-pw-icon {
           position: absolute;
           right: 1rem;
           top: 50%;
@@ -114,6 +114,15 @@
             font-size: 1.8rem;
             color: $gray;
           }
+        }
+      }
+
+      &-forgot-pw {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 1rem;
+        & a {
+          @include style-text(500, 1.3rem, 1.3rem, $text-color);
         }
       }
     }

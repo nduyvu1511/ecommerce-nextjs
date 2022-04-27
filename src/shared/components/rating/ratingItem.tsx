@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { avatar, companyIcon } from "@/assets"
+import { avatar } from "@/assets"
 import { CommentRating } from "@/models"
 import { API_URL } from "@/services"
 import Image from "next/image"
@@ -14,13 +14,7 @@ interface RatingItemProps {
 }
 
 export const RatingItem = ({ rating, onDelete }: RatingItemProps) => {
-  // const divRef = useRef<HTMLDivElement>(null)
   const [imageUrl, setImageUrl] = useState<string>()
-  // const [open, setOpen] = useState<boolean>(false)
-
-  // useClickOutside([divRef], () => {
-  //   setOpen(false)
-  // })
 
   return (
     <>
@@ -81,7 +75,6 @@ export const RatingItem = ({ rating, onDelete }: RatingItemProps) => {
                   onClick={() => setImageUrl(`${API_URL}${item.image_url}`)}
                   className="rating__item-content-image-item"
                 >
-                  {/* data:image/jpeg;base64, */}
                   <div className="image-container">
                     <Image
                       src={`${API_URL}${item.image_url}`}
@@ -96,34 +89,6 @@ export const RatingItem = ({ rating, onDelete }: RatingItemProps) => {
             </div>
           ) : null}
         </div>
-
-        {/* <div className="rating__item-options">
-          <button onClick={() => setOpen(true)} className="btn-reset">
-            <HiDotsVertical />
-          </button>
-
-          {open ? (
-            <div ref={divRef} className="rating__item-options-child">
-              <p
-                onClick={() => {
-                  onDelete && onDelete(rating.product_id?.id || 0)
-                  setOpen(false)
-                }}
-              >
-                <BiTrash />
-                Xóa đánh giá
-              </p>
-              <p
-                onClick={() => {
-                  setOpen(false)
-                }}
-              >
-                <FiEdit2 />
-                Sửa đánh giá
-              </p>
-            </div>
-          ) : null}
-        </div> */}
       </div>
 
       {imageUrl ? (

@@ -59,7 +59,7 @@
     left: 50%;
     top: 50%;
     padding: 3rem 2rem;
-    animation: modal-show-down 0.3s linear;
+    // animation: modal-show-down 0.3s linear;
     transform: translate(-50%, -50%) !important;
     max-height: 90vh;
     @include responsive(lg-screen) {
@@ -92,6 +92,9 @@
 
     @include responsive(xl-screen) {
       max-width: 1000px;
+    }
+
+    &-active {
     }
   }
 

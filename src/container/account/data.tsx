@@ -1,11 +1,8 @@
 import { BiHomeAlt } from "react-icons/bi"
 import { FiShoppingBag } from "react-icons/fi"
 import { HiOutlineClipboardList } from "react-icons/hi"
-import {
-  MdOutlineInfo,
-  MdOutlineLocationOn
-} from "react-icons/md"
-import { RiNotification2Line } from "react-icons/ri"
+import { MdOutlineInfo, MdOutlineLocationOn } from "react-icons/md"
+import { RiNotification2Line, RiLockPasswordLine } from "react-icons/ri"
 
 interface UserInfoField {
   id: "name" | "email" | "sex" | "phone"
@@ -68,12 +65,17 @@ export const accountOptionList = [
     engTitle: "General",
     icon: <BiHomeAlt />,
   },
-
   {
     path: "/account/info",
     vniTitle: "Hồ sơ",
     engTitle: "Information",
     icon: <MdOutlineInfo />,
+  },
+  {
+    path: "/account/password",
+    vniTitle: "Đổi mật khẩu",
+    engTitle: "Change password",
+    icon: <RiLockPasswordLine />,
   },
   {
     path: "/account/notification",
@@ -93,7 +95,6 @@ export const accountOptionList = [
     engTitle: "My Order",
     icon: <FiShoppingBag />,
   },
-
   {
     path: "/account/purchase",
     vniTitle: "Sản phẩm mua",

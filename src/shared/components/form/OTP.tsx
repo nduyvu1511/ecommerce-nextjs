@@ -4,11 +4,13 @@ import { authentication } from "@/core/config"
 import { RootState } from "@/core/store"
 import {
   clearAuthData,
+  setCurrentToken,
   setMessage,
-  setPhoneNumber,
   setToken,
   setUserInfo,
+  setValidateCreatePasswordOTP,
   toggleOpenLoginModal,
+  toggleOpenLoginSMSModal,
   toggleOpenOtpLoginModal,
   toggleOpenScreenLoading,
 } from "@/modules"
@@ -16,7 +18,7 @@ import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth"
 import { useRouter } from "next/router"
 import { useRef, useState } from "react"
 import { HiOutlineArrowSmLeft } from "react-icons/hi"
-import { IoClose } from "react-icons/io5"
+import { IoArrowBack, IoClose } from "react-icons/io5"
 import { useDispatch, useSelector } from "react-redux"
 import { useAuth } from "shared/hook"
 
@@ -28,18 +30,20 @@ declare global {
 }
 
 interface LoginOtpProps {
-  type: "update" | "login"
-  show: "page" | "modal"
+  type: "updatePhoneNumber" | "login" | "createNewPassword"
+  view: "page" | "modal"
 }
 
-export const OTP = ({ type, show }: LoginOtpProps) => {
+export const OTP = ({ type, view }: LoginOtpProps) => {
   const router = useRouter()
   const dispatch = useDispatch()
   const phoneNumberRef = useRef<string>()
-  const { loginWithPhoneNumber, updatePhoneNumber, getUserInfo } = useAuth()
+  const { loginWithPhoneNumber, updatePhoneNumber, getUserInfo, OTPVerifier } =
+    useAuth()
   const { currentUserInfo, phoneNumber, currentToken } = useSelector(
     (state: RootState) => state.auth
   )
+  const { token } = useSelector((state: RootState) => state.user)
   const [expandForm, setExpandForm] = useState<boolean>(false)
 
   const generateRecaptcha = () => {
@@ -56,23 +60,19 @@ export const OTP = ({ type, show }: LoginOtpProps) => {
   const generateOtpCode = async (phoneNumber: string) => {
     dispatch(toggleOpenScreenLoading(true))
     const verify = generateRecaptcha()
-
+    if (!phoneNumber) return
     try {
       const confirmationResult = await signInWithPhoneNumber(
         authentication,
         `+84${phoneNumber.slice(1)}`,
         verify
       )
+      console.log("confirmationResult")
       dispatch(toggleOpenScreenLoading(false))
       phoneNumberRef.current = phoneNumber
       window.confirmationResult = confirmationResult
 
       setExpandForm(true)
-
-      sessionStorage.setItem("phoneNumberInput", phoneNumber)
-      if (type === "update") {
-        dispatch(setPhoneNumber(phoneNumber))
-      }
     } catch (error) {
       dispatch(toggleOpenScreenLoading(false))
       generateRecaptcha()
@@ -81,16 +81,10 @@ export const OTP = ({ type, show }: LoginOtpProps) => {
 
   // Validate OTP
   const handleVerifyOTP = async (otpInput: string) => {
-    if (type === "update") {
+    if (type === "updatePhoneNumber") {
       updatePhoneNumber({
         otpInput,
-        handleSuccess: (token) => {
-          // if (token) {
-          //   dispatch(setToken(token))
-          //   getUserInfo(token, (userInfo) => {
-          //     dispatch(setUserInfo(userInfo))
-          //   })
-          // } else {
+        handleSuccess: () => {
           if (currentToken) {
             dispatch(setToken(currentToken))
           }
@@ -98,10 +92,11 @@ export const OTP = ({ type, show }: LoginOtpProps) => {
             dispatch(
               setUserInfo({ ...currentUserInfo, phone: phoneNumber || "" })
             )
-            // }
           }
 
-          dispatch(toggleOpenOtpLoginModal(false))
+          if (view === "modal") {
+            dispatch(toggleOpenOtpLoginModal(false))
+          }
           router.push("/")
           dispatch(clearAuthData())
         },
@@ -109,14 +104,14 @@ export const OTP = ({ type, show }: LoginOtpProps) => {
           setExpandForm(false)
         },
       })
-    } else {
+    } else if (type === "login") {
       loginWithPhoneNumber({
         otpInput,
         handleSuccess: (token) => {
-          if (show === "page") {
+          if (view === "page") {
             router.push("/")
           } else {
-            dispatch(toggleOpenLoginModal(false))
+            dispatch(toggleOpenLoginSMSModal(false))
             dispatch(setMessage({ title: "Đăng nhập thành công" }))
           }
           dispatch(setToken(token))
@@ -124,60 +119,85 @@ export const OTP = ({ type, show }: LoginOtpProps) => {
             dispatch(setUserInfo(userInfo))
           })
         },
-        handleError: () => {},
+        handleError: (res: any) => {
+          dispatch(
+            setMessage({
+              title: res?.result?.message || "Đăng nhập không thành công",
+              type: "danger",
+            })
+          )
+        },
       })
+    } else if (type === "createNewPassword") {
+      if (token) {
+        OTPVerifier({
+          otpInput,
+          handleSuccess: () => {
+            dispatch(setValidateCreatePasswordOTP(true))
+          },
+        })
+      } else {
+        loginWithPhoneNumber({
+          otpInput,
+          handleSuccess: (currentToken) => {
+            dispatch(setCurrentToken(currentToken))
+            dispatch(setValidateCreatePasswordOTP(true))
+          },
+        })
+      }
+    }
+  }
+
+  const heading =
+    type === "login"
+      ? "Đăng nhập bằng SMS"
+      : type === "createNewPassword"
+      ? "Đặt lại mật khẩu"
+      : "Vui lòng cập nhật số điện thoại"
+
+  const handleClose = () => {
+    if (type === "login") {
+      dispatch(toggleOpenLoginSMSModal(false))
+    } else if (type === "updatePhoneNumber") {
+      dispatch(toggleOpenOtpLoginModal(false))
+      dispatch(clearAuthData())
     }
   }
 
   return (
     <>
       {!expandForm ? (
-        type === "update" ? (
-          <>
-            <AuthContainer
-              show={show}
-              showLogo={false}
-              heading="Vui lòng cập nhật số điện thoại"
-              type="otp"
-            >
+        <AuthContainer view={view} heading={heading} type={type}>
+          {view === "modal" ? (
+            <>
               <button
-                onClick={() => {
-                  dispatch(toggleOpenOtpLoginModal(false))
-                  dispatch(clearAuthData())
-                }}
+                onClick={handleClose}
                 className="btn-reset modal__otp-close-btn"
               >
                 <IoClose />
               </button>
-              <PhoneForm
-                type="login"
-                onSubmit={(phone) => generateOtpCode(phone)}
-              />
-            </AuthContainer>
-          </>
-        ) : (
-          <AuthContainer show={show} heading="Đăng nhập bằng SMS" type="login">
-            <button
-              onClick={() => {
-                dispatch(toggleOpenLoginModal(false))
-              }}
-              className="btn-reset modal__otp-close-btn"
-            >
-              <IoClose />
-            </button>
-            <PhoneForm
-              type="login"
-              onSubmit={(phone) => generateOtpCode(phone)}
-            />
-          </AuthContainer>
-        )
+
+              <button
+                onClick={() => {
+                  dispatch(toggleOpenLoginSMSModal(false))
+                  dispatch(toggleOpenLoginModal(true))
+                }}
+                className="btn-reset modal__otp-back-btn"
+              >
+                <IoArrowBack />
+              </button>
+            </>
+          ) : null}
+
+          <PhoneForm
+            type="login"
+            onSubmit={(phone) => generateOtpCode(phone)}
+          />
+        </AuthContainer>
       ) : (
-        <AuthContainer show={show} showLogo={type !== "update"} type="otp">
+        <AuthContainer view={view} type="otp">
           <button
-            onClick={() => {
-              dispatch(toggleOpenOtpLoginModal(false))
-              dispatch(clearAuthData())
-            }}
+            onClick={handleClose}
             className="btn-reset modal__otp-close-btn"
           >
             <IoClose />
@@ -195,6 +215,7 @@ export const OTP = ({ type, show }: LoginOtpProps) => {
             </header>
             <div className="otp__form">
               <OtpForm
+                reGenerateRecaptcha={() => generateOtpCode(phoneNumber || "")}
                 phoneNumber={phoneNumberRef.current || ""}
                 onSubmit={(val) => handleVerifyOTP(val)}
                 type={type}
@@ -203,6 +224,8 @@ export const OTP = ({ type, show }: LoginOtpProps) => {
           </div>
         </AuthContainer>
       )}
+
+      <div id="recaptcha-container"></div>
     </>
   )
 }

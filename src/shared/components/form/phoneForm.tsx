@@ -1,25 +1,37 @@
 import { phoneNumberSchema } from "@/core/schema"
-import React from "react"
-
-import { Field, Form, Formik } from "formik"
+import { RootState } from "@/core/store"
 import { getFromSessionStorage } from "@/helper"
+import { setPhoneNumber } from "@/modules"
+import { Field, Form, Formik } from "formik"
+import { useDispatch, useSelector } from "react-redux"
 
 interface OtpFormProps {
   onSubmit: (phoneNumber: string) => void
-  type: "login" | "update"
+  type: "login" | "update" | "otpValidate"
 }
 
 export const PhoneForm = ({ onSubmit, type }: OtpFormProps) => {
+  const dispatch = useDispatch()
+  const { userInfo: { phone = "" } = { userInfo: undefined } } = useSelector(
+    (state: RootState) => state.user
+  )
+
   return (
     <Formik
       initialValues={{
         phoneNumber:
           type === "login"
             ? getFromSessionStorage("phoneNumberInput") || ""
+            : type === "otpValidate"
+            ? phone || ""
             : "",
       }}
       validationSchema={phoneNumberSchema}
-      onSubmit={({ phoneNumber }) => onSubmit(phoneNumber)}
+      onSubmit={({ phoneNumber }) => {
+        sessionStorage.setItem("phoneNumberInput", phoneNumber)
+        onSubmit(phoneNumber)
+        dispatch(setPhoneNumber(phoneNumber))
+      }}
     >
       {({ errors, touched, isValid }) => (
         <Form className="form-control form-control-auth">
@@ -39,8 +51,6 @@ export const PhoneForm = ({ onSubmit, type }: OtpFormProps) => {
               <p className="form-item-text-error">{errors.phoneNumber}</p>
             ) : null}
           </div>
-
-          <div id="recaptcha-container"></div>
 
           <button
             type="submit"

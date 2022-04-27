@@ -1,10 +1,11 @@
-import { AuthSlice, UserInfo } from "@/models"
+import { AuthSlice, BooleanType, PayloadBoolean, UserInfo } from "@/models"
 import { createSlice } from "@reduxjs/toolkit"
 
 const initialState: AuthSlice = {
   currentToken: undefined,
   phoneNumber: undefined,
   currentUserInfo: undefined,
+  isValidateCreatePasswordOTP: undefined,
 }
 
 const authSlice = createSlice({
@@ -30,6 +31,13 @@ const authSlice = createSlice({
       state.currentToken = undefined
       state.phoneNumber = undefined
     },
+
+    setValidateCreatePasswordOTP: (
+      state,
+      { payload }: { payload: boolean | undefined }
+    ) => {
+      state.isValidateCreatePasswordOTP = payload
+    },
   },
 })
 
@@ -38,6 +46,7 @@ export const {
   clearAuthData,
   setPhoneNumber,
   setCurrentUserInfo,
+  setValidateCreatePasswordOTP,
 } = authSlice.actions
 
 export default authSlice.reducer

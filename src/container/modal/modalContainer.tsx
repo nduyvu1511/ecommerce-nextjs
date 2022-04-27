@@ -4,6 +4,7 @@ import {
   CartModal,
   CategoryMobile,
   CompareModal,
+  LoginForm,
   Modal,
   ModalHeading,
   ModalProductDetail,
@@ -13,22 +14,22 @@ import {
   ScreenLoading,
   SearchForm,
   SearchResult,
-  Toast,
+  Toast
 } from "@/components"
 import { RootState } from "@/core/store"
 import {
   toggleModalAddressForm,
   toggleOpenCartModal,
   toggleOpenCategoryModal,
+  toggleOpenLoginModal,
   toggleOpenNavLeftModal,
   toggleOpenOtpLoginModal,
-  toggleOpenSearchModal,
+  toggleOpenSearchModal
 } from "@/modules"
 import Image from "next/image"
 import Link from "next/link"
 import React from "react"
 import { BiArrowBack } from "react-icons/bi"
-import { FiPhoneCall } from "react-icons/fi"
 import { IoCloseCircleSharp } from "react-icons/io5"
 import { useDispatch, useSelector } from "react-redux"
 
@@ -45,6 +46,7 @@ export const ModalContainer = () => {
     isOpenAddressForm,
     isOpenModalCoupons,
     isOpenOtpLoginModal,
+    isOpenLoginSMSModal,
     isOpenLoginModal,
   } = useSelector((state: RootState) => state.common)
   const { isShowCompareModal } = useSelector(
@@ -128,6 +130,7 @@ export const ModalContainer = () => {
         <Modal
           fullWidth
           direction="right"
+          disableAnimation
           isShowModal={true}
           handleClickModal={() => dispatch(toggleOpenSearchModal(false))}
         >
@@ -176,12 +179,27 @@ export const ModalContainer = () => {
       {isOpenOtpLoginModal ? (
         <div className="modal__otp-container">
           <Modal
+            disableAnimation
             unsetSize
             disableOverLay
             direction="center"
             handleClickModal={() => dispatch(toggleOpenOtpLoginModal(false))}
           >
-            <OTP show="modal" type="update" />
+            <OTP view="modal" type="updatePhoneNumber" />
+          </Modal>
+        </div>
+      ) : null}
+
+      {isOpenLoginSMSModal ? (
+        <div className="modal__otp-container">
+          <Modal
+            disableAnimation
+            unsetSize
+            disableOverLay
+            direction="center"
+            handleClickModal={() => dispatch(toggleOpenOtpLoginModal(false))}
+          >
+            <OTP view="modal" type="login" />
           </Modal>
         </div>
       ) : null}
@@ -190,20 +208,17 @@ export const ModalContainer = () => {
         <div className="modal__otp-container">
           <Modal
             unsetSize
+            disableAnimation
             disableOverLay
             direction="center"
-            handleClickModal={() => dispatch(toggleOpenOtpLoginModal(false))}
+            handleClickModal={() => dispatch(toggleOpenLoginModal(false))}
           >
-            <OTP show="modal" type="login" />
+            <LoginForm view="modal" />
           </Modal>
         </div>
       ) : null}
 
       {isOpenScreenLoading ? <ScreenLoading /> : null}
-
-      <a href="tel:0909099580" className="btn-primary btn-call">
-        <FiPhoneCall />
-      </a>
     </section>
   )
 }

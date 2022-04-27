@@ -10,24 +10,22 @@ interface UseAttachmentRes {
     callback: (props: Array<string>) => void
   ) => void
   deleteImage: (props: string) => void
-  ratingImages: Array<string> | undefined
-  setRatingImages: (props: Array<string> | undefined) => void
+  images: Array<string> | undefined
+  setImages: (props: Array<string> | undefined) => void
   deleteImages: (props: Array<string>) => void
 }
 
 interface UseAttachmentProps {
   limit: number
-  initRatingImages?: Array<string>
+  initImages?: Array<string>
 }
 
 const useAttachment = (props: UseAttachmentProps): UseAttachmentRes => {
-  const { limit, initRatingImages } = props
+  const { limit, initImages } = props
   const dispatch = useDispatch()
 
-  const [ratingImages, setRatingImages] = useState<Array<string> | undefined>(
-    initRatingImages && initRatingImages?.length > 0
-      ? initRatingImages
-      : undefined
+  const [images, setImages] = useState<Array<string> | undefined>(
+    initImages && initImages?.length > 0 ? initImages : undefined
   )
 
   const getBase64Images = async (
@@ -45,7 +43,7 @@ const useAttachment = (props: UseAttachmentProps): UseAttachmentRes => {
       if (
         limit > 1 &&
         (files?.length > limit ||
-          (files?.length || 0) + (ratingImages?.length || 0) > limit)
+          (files?.length || 0) + (images?.length || 0) > limit)
       ) {
         dispatch(
           setMessage({
@@ -58,12 +56,12 @@ const useAttachment = (props: UseAttachmentProps): UseAttachmentRes => {
       }
 
       if (urls) {
-        if (!ratingImages) {
-          setRatingImages(urls)
+        if (!images) {
+          setImages(urls)
           callback(urls)
         } else {
-          const newUrls = _.uniq([...urls, ...ratingImages])
-          setRatingImages(newUrls)
+          const newUrls = _.uniq([...urls, ...images])
+          setImages(newUrls)
           callback(newUrls)
         }
       } else {
@@ -83,29 +81,29 @@ const useAttachment = (props: UseAttachmentProps): UseAttachmentRes => {
   }
 
   const deleteImages = (urls: Array<string>) => {
-    if (ratingImages) {
+    if (images) {
       const newImages = [...urls].filter((item) =>
-        ratingImages?.some((x) => x === item)
+        images?.some((x) => x === item)
       )
 
-      setRatingImages(newImages?.length > 0 ? newImages : undefined)
+      setImages(newImages?.length > 0 ? newImages : undefined)
     } else {
-      setRatingImages(undefined)
+      setImages(undefined)
     }
   }
 
   const deleteImage = (url: string) => {
-    if (ratingImages) {
-      const newImages = [...ratingImages].filter((item) => item !== url)
-      setRatingImages(newImages?.length > 0 ? newImages : undefined)
+    if (images) {
+      const newImages = [...images].filter((item) => item !== url)
+      setImages(newImages?.length > 0 ? newImages : undefined)
     }
   }
 
   return {
     deleteImage,
     getBase64Images,
-    ratingImages,
-    setRatingImages,
+    images,
+    setImages,
     deleteImages,
   }
 }

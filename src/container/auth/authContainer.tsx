@@ -1,4 +1,4 @@
-import { logo } from "@/assets"
+import { loginBg, logo } from "@/assets"
 import { PHONE_SCHEMA } from "@/helper"
 import {
   setCurrentUserInfo,
@@ -6,6 +6,7 @@ import {
   setToken,
   setUserInfo,
   toggleOpenLoginModal,
+  toggleOpenLoginSMSModal,
   toggleOpenOtpLoginModal,
 } from "@/modules"
 import Image from "next/image"
@@ -19,18 +20,17 @@ import { useAuth } from "shared/hook"
 
 interface IAuthLayout {
   children: React.ReactNode
-  type: "login" | "register" | "otp"
+  type: "register" | "updatePhoneNumber" | "login" | "createNewPassword" | "otp"
   heading?: string
   showLogo?: boolean
-  show: "modal" | "page"
+  view: "modal" | "page"
 }
 
 export const AuthContainer = ({
   children,
   type,
   heading,
-  showLogo = true,
-  show,
+  view,
 }: IAuthLayout) => {
   const language = "vni"
   const router = useRouter()
@@ -42,16 +42,17 @@ export const AuthContainer = ({
       loginWithGoogle(async (token: string) => {
         getUserInfo(token, (userInfo) => {
           if (PHONE_SCHEMA.test(userInfo?.phone || "")) {
-            if (show === "page") {
+            if (view === "page") {
               router.push("/")
             } else {
-              dispatch(toggleOpenLoginModal(false))
+              dispatch(toggleOpenLoginSMSModal(false))
               dispatch(setMessage({ title: "Đăng nhâp thành công" }))
             }
             dispatch(setToken(token))
             dispatch(setUserInfo(userInfo))
           } else {
-            if (show === "modal") {
+            if (view === "modal") {
+              dispatch(toggleOpenLoginSMSModal(false))
               dispatch(toggleOpenLoginModal(false))
             }
             dispatch(setCurrentUserInfo(userInfo))
@@ -76,11 +77,11 @@ export const AuthContainer = ({
     <div className="auth-container">
       <div className="container">
         <div className="auth__inner">
-          {showLogo ? (
+          {view === "page" ? (
             <div className="auth__inner-left">
               <Link href="/" passHref>
                 <div className="image-container">
-                  <Image src={logo} alt="" className="image" layout="fill" />
+                  <Image src={loginBg} alt="" className="image" layout="fill" />
                 </div>
               </Link>
             </div>
@@ -91,7 +92,8 @@ export const AuthContainer = ({
 
               <div className="form-body">
                 {children}
-                {type !== "otp" ? (
+
+                {type === "login" || type === "register" ? (
                   <footer className="form-footer">
                     <div className="recaptcha-container"></div>
 
@@ -125,18 +127,34 @@ export const AuthContainer = ({
                         </span>
                       </button>
 
-                      {router.pathname === "/login/otp" ||
-                      show === "modal" ? null : (
-                        <Link href="/login/otp" passHref>
-                          <button className="btn-primary-outline">
-                            <FaPhoneAlt />
-                            <span className="show-on-desktop">SMS</span>
-                            <span className="hide-on-desktop">
-                              Tiếp tục với SMS
-                            </span>
-                          </button>
-                        </Link>
+                      {view === "page" ? (
+                        router.pathname !== "/login/otp" ? (
+                          <Link href="/login/otp" passHref>
+                            <button className="btn-primary-outline">
+                              <FaPhoneAlt />
+                              <span className="show-on-desktop">SMS</span>
+                              <span className="hide-on-desktop">
+                                Tiếp tục với SMS
+                              </span>
+                            </button>
+                          </Link>
+                        ) : null
+                      ) : (
+                        <button
+                          onClick={() => {
+                            dispatch(toggleOpenLoginModal(false))
+                            dispatch(toggleOpenLoginSMSModal(true))
+                          }}
+                          className="btn-primary-outline"
+                        >
+                          <FaPhoneAlt />
+                          <span className="show-on-desktop">SMS</span>
+                          <span className="hide-on-desktop">
+                            Tiếp tục với SMS
+                          </span>
+                        </button>
                       )}
+                      {/* )} */}
                     </div>
                   </footer>
                 ) : null}

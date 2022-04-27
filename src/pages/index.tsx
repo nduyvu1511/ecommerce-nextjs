@@ -5,13 +5,13 @@ import {
   HeaderMobile,
   HomeCategory,
   navMobileLinks,
-  Popup,
+  Popup
 } from "@/components"
 import {
   MainBanner,
   MainContent,
   ProductSaleContainer,
-  SecondaryBanner,
+  SecondaryBanner
 } from "@/container"
 import { MainLayout } from "@/layout"
 import { LayoutProps } from "@/models"
@@ -24,6 +24,7 @@ import Link from "next/link"
 import { useRouter } from "next/router"
 import { AiOutlineUser } from "react-icons/ai"
 import { BiCart } from "react-icons/bi"
+import { FiPhoneCall } from "react-icons/fi"
 import { useDispatch, useSelector } from "react-redux"
 import { useCartOrder, useCategory, useWishlist } from "shared/hook"
 import "swiper/css"
@@ -36,6 +37,7 @@ export async function getStaticProps({ locale }: { locale: string }) {
     props: {
       ...(await serverSideTranslations(locale, ["home"])),
     },
+    revalidate: 10,
   }
 }
 
@@ -145,6 +147,10 @@ const Home = ({ locale }: LayoutProps) => {
       </div>
 
       <Popup />
+
+      <a href="tel:0909099580" className="btn-primary btn-call">
+        <FiPhoneCall />
+      </a>
     </>
   )
 }

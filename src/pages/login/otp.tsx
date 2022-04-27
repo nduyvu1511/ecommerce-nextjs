@@ -1,12 +1,13 @@
-import { HeaderMobile, OTP } from "@/components"
+import { HeaderLogin, HeaderMobile, OTP } from "@/components"
 import { LoginLayout } from "@/layout/login"
 
 const LoginWithOTP = () => {
   return (
     <>
       <HeaderMobile centerChild={<p>Đăng nhập</p>} />
+      <HeaderLogin title="Đăng nhập" />
 
-      <OTP show="page" type="login" />
+      <OTP view="page" type="login" />
     </>
   )
 }

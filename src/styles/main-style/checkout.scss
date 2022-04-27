@@ -27,9 +27,14 @@
     background-color: $white;
     padding: 2rem;
     margin-bottom: 2rem;
+
     &-top {
       & .checkout__address-selected {
         margin-top: 1rem;
+
+        & .address__order__item {
+          margin-right: 7rem;
+        }
       }
     }
 
@@ -102,10 +107,11 @@
     &-back-btn {
       margin-top: 2rem;
       border-radius: 0.2rem;
+      padding: 0.4rem 1rem;
     }
 
     &--no-address {
-      @include style-text(500, 1.4rem, 2.2rem, $text-color);
+      @include style-text(500, 1.4rem, 2.2rem, $danger);
     }
   }
 

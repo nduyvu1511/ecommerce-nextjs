@@ -41,6 +41,7 @@ const initialState: CommonSlice = {
   isOpenScreenLoading: false,
   isOpenOrderSummary: false,
   isOpenOtpLoginModal: false,
+  isOpenLoginSMSModal: false,
   isOpenLoginModal: false,
 }
 
@@ -160,6 +161,10 @@ const ModalSlice = createSlice({
       state.isOpenOtpLoginModal = payload
     },
 
+    toggleOpenLoginSMSModal: (state, { payload }: { payload: boolean }) => {
+      state.isOpenLoginSMSModal = payload
+    },
+
     toggleOpenLoginModal: (state, { payload }: { payload: boolean }) => {
       state.isOpenLoginModal = payload
     },
@@ -191,5 +196,6 @@ export const {
   toggleOpenScreenLoading,
   toggleOpenOrderSummaryModal,
   toggleOpenOtpLoginModal,
+  toggleOpenLoginSMSModal,
   toggleOpenLoginModal,
 } = ModalSlice.actions

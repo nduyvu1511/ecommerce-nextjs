@@ -49,7 +49,7 @@ export const ProductImg = ({ images, type, isStock }: IProductImage) => {
 
         <Swiper
           slidesPerView={1}
-          loop={true}
+          loop={false}
           onInit={(ev) => {
             ev.init()
             setSwiper(ev)
