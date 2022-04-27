@@ -10,7 +10,6 @@ import { useRef, useState } from "react"
 import { AiFillStar } from "react-icons/ai"
 import { HiOutlineDotsVertical } from "react-icons/hi"
 import { useDispatch, useSelector } from "react-redux"
-import { toast } from "react-toastify"
 import { useClickOutside, useUserAddress } from "shared/hook"
 
 interface IAddressItem {
@@ -54,10 +53,7 @@ export const AddressItem = ({ isActive, address }: IAddressItem) => {
   }
 
   const handleDeleteAddress = () => {
-    if (!token || !partner_id) {
-      toast.error("Token is invalid")
-      return
-    }
+    if (!token || !partner_id) return
 
     deleteAddress({ partner_id, token, adress_id: address.id }).then(() => {
       setOpenOption(false)

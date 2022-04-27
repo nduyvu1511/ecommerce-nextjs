@@ -7,7 +7,7 @@ import {
   setModalConfirm,
   setProduct,
   toggleModalProduct,
-  toggleShowCompareModal,
+  toggleShowCompareModal
 } from "@/modules"
 import { API_URL } from "@/services"
 import Image from "next/image"
@@ -16,7 +16,6 @@ import { useRouter } from "next/router"
 import { HiTrash } from "react-icons/hi"
 import { TiArrowShuffle } from "react-icons/ti"
 import { useDispatch, useSelector } from "react-redux"
-import { toast } from "react-toastify"
 import { Navigation } from "swiper"
 import "swiper/css"
 import "swiper/css/navigation"

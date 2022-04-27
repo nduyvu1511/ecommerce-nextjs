@@ -7,7 +7,6 @@ import {
   ShippingAddress,
 } from "@/models"
 import { createSlice } from "@reduxjs/toolkit"
-import "react-toastify"
 
 const initialState: CommonSlice = {
   isOpenModalProduct: false,
