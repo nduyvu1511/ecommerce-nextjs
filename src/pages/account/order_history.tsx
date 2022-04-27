@@ -73,7 +73,14 @@ const OrderHistory: any = () => {
               {orderHistoryList &&
                 orderHistoryList.map((item: OrderHistory) => (
                   <tr key={item.order_id}>
-                    <td>{item.name}</td>
+                    <td>
+                      <span
+                        className="cursor-pointer"
+                        onClick={() => handleGetOrderDetail(item.order_id)}
+                      >
+                        {item.name}
+                      </span>
+                    </td>
                     <td className="hide-on-md-table">{item.create_date}</td>
                     <td>{formatMoneyVND(item.amount_total)}</td>
                     <td className="hide-on-xl-table">{item.state_name}</td>

@@ -2,8 +2,9 @@
 import { RootState } from "@/core/store"
 import { CommentRating } from "@/models"
 import { useRouter } from "next/router"
-import React, { useCallback } from "react"
+import React from "react"
 import { CgSmile } from "react-icons/cg"
+import { RiLoader4Line } from "react-icons/ri"
 import { useSelector } from "react-redux"
 import { useProductRating } from "shared/hook"
 import { Pagination } from "../button"
@@ -12,18 +13,15 @@ import RatingItem from "./ratingItem"
 
 export const Rating = () => {
   const router = useRouter()
-  const { data: { data: ratingList = [], data_count = 0 } = { data: [] } } =
-    useProductRating({
-      product_id: Number(router.query?.productId) || 0,
-      shouldFetch: true,
-      type: "product",
-    })
+  const {
+    data: { data: ratingList = [], data_count = 0 } = { data: [] },
+    isValidating,
+  } = useProductRating({
+    product_id: Number(router.query?.productId) || 0,
+    shouldFetch: true,
+    type: "product",
+  })
   const { product } = useSelector((state: RootState) => state.product)
-
-  // Functions
-  const handleAddRating = useCallback(() => {}, [])
-
-  const handleDeleteRating = (product_id: number) => {}
 
   return (
     <div className="product__rating">
@@ -38,19 +36,20 @@ export const Rating = () => {
         <p className="product__rating-header-count">
           {data_count || 0} nhận xét
         </p>
-
-        {/* Rating form */}
-        {/* <div className="product__rating-header-add">
-          <RatingForm onAddRating={handleAddRating} />
-        </div> */}
       </header>
+
+      {isValidating ? (
+        <div className="loader-container">
+          <RiLoader4Line className="loader" />
+        </div>
+      ) : null}
 
       {/* Raging list */}
       {ratingList?.length > 0 ? (
         <div className="product__rating-body">
           {ratingList.map((rating: CommentRating) => (
             <RatingItem
-              onDelete={(id: number) => handleDeleteRating(id)}
+              onDelete={(id: number) => {}}
               rating={rating}
               key={rating.comment_id}
             />

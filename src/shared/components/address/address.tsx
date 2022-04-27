@@ -1,6 +1,5 @@
 import { RootState } from "@/core/store"
 import { toggleModalAddressForm } from "@/modules"
-import { CgSmileNone } from "react-icons/cg"
 import { RiLoader4Line, RiMapPinAddLine } from "react-icons/ri"
 import { useDispatch, useSelector } from "react-redux"
 import { useUserAddress } from "shared/hook"

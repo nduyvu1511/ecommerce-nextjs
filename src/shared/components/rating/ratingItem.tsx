@@ -58,7 +58,7 @@ export const RatingItem = ({ rating, onDelete }: RatingItemProps) => {
               {rating.rating_tag.map((item, index) => (
                 <Tag
                   key={index}
-                  size="sm"
+                  size="md"
                   disabled={true}
                   name={item.tag_content}
                   id={index}
