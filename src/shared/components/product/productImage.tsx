@@ -13,7 +13,7 @@ interface IProductImage {
 
 export const ProductImg = ({ images, type, isStock }: IProductImage) => {
   const [swiper, setSwiper] = useState<any>({})
-  const [activeIndex, setActiveIndex] = useState<number>(1)
+  const [activeIndex, setActiveIndex] = useState<number>(0)
   const [imageShow, setImageShow] = useState<string>()
 
   useEffect(() => {
@@ -54,7 +54,7 @@ export const ProductImg = ({ images, type, isStock }: IProductImage) => {
             ev.init()
             setSwiper(ev)
           }}
-          onSlideChange={(e) => setActiveIndex(e.activeIndex)}
+          onSlideChange={(e) => setActiveIndex(e.activeIndex - 1)}
         >
           {isArrayHasValue(images)
             ? images.map((img, index) => (
@@ -77,10 +77,10 @@ export const ProductImg = ({ images, type, isStock }: IProductImage) => {
               <div
                 key={index}
                 onClick={() => {
-                  swiper?.slideTo(index + 1)
+                  swiper?.slideTo(index)
                 }}
                 className={`product__img-show-sub-child ${
-                  index === activeIndex - 1 || 0 ? "active" : ""
+                  index === activeIndex ? "active" : ""
                 }`}
               >
                 <img

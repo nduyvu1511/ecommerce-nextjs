@@ -45,14 +45,10 @@ export const Rating = () => {
       ) : null}
 
       {/* Raging list */}
-      {ratingList?.length > 0 ? (
+      {!isValidating && ratingList?.length > 0 ? (
         <div className="product__rating-body">
           {ratingList.map((rating: CommentRating) => (
-            <RatingItem
-              onDelete={(id: number) => {}}
-              rating={rating}
-              key={rating.comment_id}
-            />
+            <RatingItem rating={rating} key={rating.comment_id} />
           ))}
         </div>
       ) : (

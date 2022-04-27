@@ -21,6 +21,7 @@ import { ButtonAddCard } from "../button"
 import ButtonWishlist from "../button/buttonAddWishlist"
 import ButtonShare from "../button/buttonShare"
 import { InputQuantity } from "../inputs"
+import { Star } from "../star"
 import { ProductVariation } from "./productVariation"
 
 interface IProductIntro {
@@ -90,30 +91,24 @@ export const ProductIntro = ({ product, type }: IProductIntro) => {
         {type === "detail" ? (
           <div className="modal__product-header">
             <p className="modal__product-title">{product.product_name}</p>
-            {/* <div className="modal__product-sub">
-              <p className="modal__product-sub-brand">
-                Brands:{" "}
-                <small className="modal__product-sub-brand-title">
-                  {product.company.company_name || "Unknown"}
-                </small>
-              </p>
 
-              <div className="modal__product-sub-rating">
+            <div className="modal__product-sub">
+              <p className="modal__product-sub-item modal__product-sub-item-star">
                 <Star
                   ratingValue={product.star_rating * 20}
                   size={15}
                   readonly
                 />
-                <small className="modal__product-sub-rating-review">
-                  {reviewList?.length || 0}{" "}
-                  {language === "vni" ? "Đánh giá" : "REVIEWS"}`
-                </small>
-              </div>
-
-              <p className="modal__product-sub-sku">
-                Unit: <small>{product.barcode}</small>
               </p>
-            </div> */}
+
+              <p className="modal__product-sub-item modal__product-sub-item-rating">
+                {product.rating_count} đánh giá
+              </p>
+
+              <p className="modal__product-sub-item modal__product-sub-item-comment">
+                {product.comment_count} bình luận
+              </p>
+            </div>
           </div>
         ) : null}
         {type === "item" ? (

@@ -163,7 +163,6 @@ export const AddressForm = () => {
 
     addAddress({ address: newAddress, addressForm: addressRes }).then(() => {
       dispatch(toggleModalAddressForm(false))
-
       clearAddressList()
       setAddressForm(undefined)
     })

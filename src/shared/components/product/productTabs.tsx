@@ -1,15 +1,12 @@
+import { Product } from "@/models"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
-import { useReview } from "shared/hook"
 import { Rating } from "../rating"
 import { ProductReview } from "../review"
 
-export const ProductTabs = ({ description }: { description: string }) => {
+export const ProductTabs = ({ product }: { product: Product }) => {
   const language = "vni"
   const router = useRouter()
-  const { data: reviews } = useReview({
-    product_id: Number(router.query.productId),
-  })
 
   const [tabOpen, setTabOpen] = useState<"description" | "review" | "rating">(
     "description"
@@ -45,8 +42,8 @@ export const ProductTabs = ({ description }: { description: string }) => {
           }`}
         >
           {language === "vni"
-            ? `Hỏi đáp (${reviews?.length || 0})`
-            : `Q&A (${reviews?.length || 0})`}
+            ? `Hỏi đáp (${product.comment_count})`
+            : `Q&A (${product.comment_count})`}
         </h5>
 
         <h5
@@ -57,7 +54,9 @@ export const ProductTabs = ({ description }: { description: string }) => {
               : ""
           }`}
         >
-          {language === "vni" ? `Đánh giá` : "Product Ratings"}
+          {language === "vni"
+            ? `Đánh giá (${product.rating_count})`
+            : "Product Ratings"}
         </h5>
       </div>
 
@@ -68,11 +67,17 @@ export const ProductTabs = ({ description }: { description: string }) => {
               <div
                 style={{ overflow: "hidden" }}
                 className="product__tab-content-desc"
-                dangerouslySetInnerHTML={{ __html: description }}
+                dangerouslySetInnerHTML={{ __html: product?.description || "" }}
               ></div>
+
+              {!product?.description ? (
+                <p>Không có mô tả nào cho sản phẩm này</p>
+              ) : null}
             </p>
           </div>
         ) : null}
+
+        {console.log(product.description)}
 
         {tabOpen === "review" ? (
           <div className="product__detail-tabs-content-info">

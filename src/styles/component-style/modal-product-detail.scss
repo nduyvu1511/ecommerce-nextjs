@@ -65,6 +65,7 @@
   }
 
   & .modal__product-sub {
+    margin-bottom: 1rem;
     @include responsive(lg-screen) {
       padding-bottom: 2rem;
       margin-bottom: 2rem;

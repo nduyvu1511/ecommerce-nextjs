@@ -71,6 +71,10 @@ export interface Product {
     fixed_price: number
     percent_price: number
   }
+  rating_count: number
+  comment_count: number
+  wishlist: false
+  price_words: string
 }
 
 export interface ProductDetailRes {

@@ -77,6 +77,7 @@ export const useAuth = (): UseAuthRes => {
 
       dispatch(toggleOpenScreenLoading(false))
       const token = res?.result?.data?.token
+      
       if (res?.result?.success) {
         dispatch(setCurrentToken(token))
         handleSuccess(token)

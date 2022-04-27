@@ -4,27 +4,24 @@ import {
   ProductDetail,
   ProductDetailLoading,
   ProductItem,
-  ProductTabs
+  ProductTabs,
 } from "@/components"
 import {
   getAttributeList,
+  getFromLocalStorage,
   getListAttributeId,
   isArrayHasValue,
   isObjectHasValue,
-  mergeProductAndProductDetail
+  mergeProductAndProductDetail,
 } from "@/helper"
 import { MainLayout } from "@/layout"
 import {
   BreadcrumbItem,
   Category,
   Product,
-  ProductDetail as IProductDetail
+  ProductDetail as IProductDetail,
 } from "@/models"
-import {
-  setAttributeList,
-  setProduct,
-  toggleOpenCartModal
-} from "@/modules"
+import { setAttributeList, setProduct, toggleOpenCartModal } from "@/modules"
 import productApi from "@/services/productApi"
 import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from "next"
 import { useRouter } from "next/router"
@@ -35,7 +32,7 @@ import {
   useCartOrder,
   useProductDetail,
   useReview,
-  useWishlist
+  useWishlist,
 } from "shared/hook"
 import { Navigation } from "swiper"
 import { Swiper, SwiperSlide } from "swiper/react"
@@ -85,7 +82,6 @@ const ProductDetailPage = ({ product }: ProduductDetailPageProps) => {
 
   // Get category breadcrumb
   useEffect(() => {
-    console.log(product)
     const categories: Category[] = product?.category.relate || []
     if (categories?.length > 0) {
       setBreadcrumbList([
@@ -187,7 +183,7 @@ const ProductDetailPage = ({ product }: ProduductDetailPageProps) => {
             />
           </section>
           <div className="product__detail-tabs-wrapper">
-            <ProductTabs description={product?.description || ""} />
+            <ProductTabs product={product} />
           </div>
 
           {/* Related Products */}
@@ -322,6 +318,7 @@ export const getStaticProps: GetStaticProps = async (
       data: { detail: productDetail },
     },
   }: any = await productApi.getProductDetail({
+    partner_id: getFromLocalStorage("partner_id") || 1,
     product_id: product.product_prod_id,
     list_products: [getListAttributeId(product)],
   })

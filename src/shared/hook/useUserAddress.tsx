@@ -106,6 +106,7 @@ export const useUserAddress = (shouldFetch = true): AccountSWR => {
               })
             )
           }
+
           dispatch(setMessage({ title: "Thêm địa chỉ thành công" }))
         }
       } else {

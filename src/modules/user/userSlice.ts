@@ -1,3 +1,4 @@
+import { setToLocalStorage } from "@/helper"
 import { ShippingAddress, UserEdit, UserInfo, UserSlice } from "@/models"
 import { createSlice } from "@reduxjs/toolkit"
 
@@ -22,6 +23,7 @@ const userSlice = createSlice({
 
     setUserInfo: (state, { payload }: { payload: UserInfo | undefined }) => {
       state.userInfo = payload
+      setToLocalStorage("partner_id", payload?.id + "")
     },
 
     editUserInfo: (state, { payload }: { payload: UserEdit }) => {

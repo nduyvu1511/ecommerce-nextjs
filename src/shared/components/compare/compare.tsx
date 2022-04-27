@@ -161,7 +161,7 @@ export const Compare = ({ type }: { type?: "page" | "modal" }) => {
                           className="image-container"
                         >
                           <Image
-                            src={`${API_URL}${item.image_url[0]}`}
+                            src={`${API_URL}${item.image_url?.[0] || ""}`}
                             alt=""
                             layout="fill"
                             className="image"
@@ -181,7 +181,6 @@ export const Compare = ({ type }: { type?: "page" | "modal" }) => {
                         passHref
                       >
                         <a className="compare__table-item-name">
-                          {" "}
                           {item.product_name}
                         </a>
                       </Link>

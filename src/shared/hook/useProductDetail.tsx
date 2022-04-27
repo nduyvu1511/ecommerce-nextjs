@@ -17,7 +17,9 @@ interface UseProductDetailProps {
 const useProductDetail = ({ product }: Props): UseProductDetailProps => {
   const firstRef = useRef<boolean>(false)
   const { listAttribute } = useSelector((state: RootState) => state.product)
-  
+  const { userInfo: { id: partner_id = 1 } = { userInfo: undefined } } =
+    useSelector((state: RootState) => state.user)
+
   const [productDetail, setProductDetail] = useState<ProductDetail | null>(() =>
     product?.product_tmpl_id ? product : null
   )
@@ -34,6 +36,7 @@ const useProductDetail = ({ product }: Props): UseProductDetailProps => {
       productApi
         .getProductDetail({
           product_id: product.product_prod_id,
+          partner_id,
           list_products: [
             {
               id: product.product_tmpl_id,
