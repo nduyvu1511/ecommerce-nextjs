@@ -190,7 +190,7 @@
   }
 
   &-edit {
-    @include style-text(400, 1.3rem, 1.3rem, $text-color);
+    @include style-text(500, 1.3rem, 1.3rem, $text-color);
 
     & svg {
       margin-left: 0.4rem;

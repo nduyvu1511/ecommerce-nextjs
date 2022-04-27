@@ -4,6 +4,7 @@ import { RootState } from "@/core/store"
 import { clearOrderData, logOut, toggleModalAccountOption } from "@/modules"
 import { API_URL } from "@/services"
 import Image from "next/image"
+import Link from "next/link"
 import { useRouter } from "next/router"
 import { FiEdit2 } from "react-icons/fi"
 import { IoLogOutOutline } from "react-icons/io5"
@@ -22,20 +23,24 @@ export const AccountOption = () => {
     <>
       <header className="account__left-header">
         <div className="account__left-header-avatar image-container">
-          <div className="image-container">
-            <Image
-              src={userInfo?.avatar ? `${API_URL}${userInfo.avatar}` : avatar}
-              quality={30}
-              layout="fill"
-              className="image"
-              alt=""
-            />
-          </div>
+          <Link href="/account/info" passHref>
+            <div className="image-container cursor-pointer">
+              <Image
+                src={userInfo?.avatar ? `${API_URL}${userInfo.avatar}` : avatar}
+                quality={30}
+                layout="fill"
+                className="image"
+                alt=""
+              />
+            </div>
+          </Link>
         </div>
         <p className="account__left-header-title">{userInfo.name}</p>
-        <p className="account__left-header-edit">
-          {language === "vni" ? "Sửa hồ sơ" : "Edit info"} <FiEdit2 />
-        </p>
+        <Link href="/account/info">
+          <a className="account__left-header-edit">
+            {language === "vni" ? "Sửa hồ sơ" : "Edit info"} <FiEdit2 />
+          </a>
+        </Link>
       </header>
 
       <div className="account__left-body">
