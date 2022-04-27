@@ -77,7 +77,8 @@ export const ProductImg = ({ images, type, isStock }: IProductImage) => {
               <div
                 key={index}
                 onClick={() => {
-                  swiper?.slideTo(index)
+                  console.log(index)
+                  swiper?.slideTo(index + 1)
                 }}
                 className={`product__img-show-sub-child ${
                   index === activeIndex ? "active" : ""
