@@ -45,6 +45,4 @@ const ReturnPolicy = () => {
 
 ReturnPolicy.Layout = MainLayout
 
-export async function getStaticProps() {}
-
 export default ReturnPolicy

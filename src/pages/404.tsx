@@ -18,8 +18,6 @@ const NotFound = () => {
   )
 }
 
-export async function getStaticProps() {}
-
 NotFound.Layout = MainLayout
 
 export default NotFound
