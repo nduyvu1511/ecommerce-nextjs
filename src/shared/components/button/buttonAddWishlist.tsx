@@ -1,4 +1,5 @@
 import { RootState } from "@/core/store"
+import { isArrayHasValue } from "@/helper"
 import { Product } from "@/models"
 import { BiLoaderCircle } from "react-icons/bi"
 import { FaHeart, FaRegHeart } from "react-icons/fa"
@@ -37,7 +38,8 @@ const ButtonWishlist = ({ product, type }: ButtonWishlistProps) => {
       >
         {product.product_tmpl_id === currentProductId && isFetching ? (
           <BiLoaderCircle className="loader" />
-        ) : wishlists?.find(
+        ) : isArrayHasValue(wishlists) &&
+          wishlists?.find(
             (item) => item.product_id === product.product_tmpl_id
           ) ? (
           <FaHeart style={{ fill: "#dc3545" }} />
