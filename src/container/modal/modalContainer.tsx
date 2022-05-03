@@ -14,7 +14,7 @@ import {
   ScreenLoading,
   SearchForm,
   SearchResult,
-  Toast
+  Toast,
 } from "@/components"
 import { RootState } from "@/core/store"
 import {
@@ -24,7 +24,7 @@ import {
   toggleOpenLoginModal,
   toggleOpenNavLeftModal,
   toggleOpenOtpLoginModal,
-  toggleOpenSearchModal
+  toggleOpenSearchModal,
 } from "@/modules"
 import Image from "next/image"
 import Link from "next/link"
@@ -74,7 +74,7 @@ export const ModalContainer = () => {
               handleClose={() => dispatch(toggleOpenCartModal(false))}
               title="Giỏ Hàng"
             />
-            <CartModal isCloseModal={true} />
+            <CartModal />
           </div>
         </Modal>
       ) : null}
