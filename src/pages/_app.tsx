@@ -1,6 +1,5 @@
 import { EmptyLayout } from "@/layout"
 import { persistor, store } from "core"
-import { appWithTranslation } from "next-i18next"
 import Head from "next/head"
 import { Provider } from "react-redux"
 import { PersistGate } from "redux-persist/integration/react"
@@ -29,4 +28,4 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   )
 }
 
-export default appWithTranslation(MyApp)
+export default MyApp

@@ -61,11 +61,7 @@
     display: flex;
     align-items: center;
     height: 40px;
-    margin-bottom: 2rem;
-
-    @include responsive(lg-screen) {
-      margin-bottom: 3rem;
-    }
+    margin-bottom: 3rem;
 
     @media screen and(min-width: 400px) {
       flex-direction: row;
@@ -105,10 +101,7 @@
   &-quantity {
     display: flex;
     align-items: center;
-    margin-bottom: 2rem;
-    @include responsive(lg-screen) {
-      margin-bottom: 3rem;
-    }
+    margin-bottom: 3rem;
 
     & .input__quantity {
       width: fit-content;
@@ -126,25 +119,22 @@
   }
 
   &-sub {
-    margin-bottom: 1.5rem;
-    @include responsive(lg-screen) {
-      margin-bottom: 3rem;
-    }
+    margin-bottom: 3rem;
     display: flex;
     align-items: center;
 
     &-item {
       @include flex(flex-start, center);
-      @include style-text(500, 1.2rem, 1.6rem, $text-color-opacity);
+      @include style-text(500, 1.3rem, 1.6rem, $text-color-opacity);
       background-color: white;
-      padding: 0.5rem 1rem;
+      padding: 0.4rem 1rem;
       border: 1px solid $border-color-1;
-      border-radius: 25px;
+      border-radius: 2px;
       cursor: pointer;
 
       & svg {
         margin-right: 0.6rem;
-        font-size: 1.4rem;
+        font-size: 1.8rem;
       }
 
       &:last-child {

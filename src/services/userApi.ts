@@ -46,6 +46,14 @@ const userApi = {
     })
   },
 
+  checkPhoneExist: (phone: string) => {
+    return axiosClient.post("/api/v2.0/user/check_phone", {
+      params: {
+        phone,
+      },
+    })
+  },
+
   getAddress: (data: StateId | DistrictId | {}) => {
     return axiosClient.post("/api/v2.0/user/adress", {
       params: data,

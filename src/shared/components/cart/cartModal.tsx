@@ -1,69 +1,41 @@
 import { cartEmptyIcon } from "@/assets"
-import { RootState } from "@/core/store"
 import { formatMoneyVND } from "@/helper"
-import { ProductIds } from "@/models"
 import { toggleOpenCartModal } from "@/modules"
 import Link from "next/link"
-import { useRouter } from "next/router"
-import { useDispatch, useSelector } from "react-redux"
+import { RiLoader4Line } from "react-icons/ri"
+import { useDispatch } from "react-redux"
 import { useCartOrder } from "shared/hook"
 import { CartItem } from "./cartItem"
 
-interface CartModalProps {
-  isCloseModal?: boolean
-}
-
-export const CartModal = ({ isCloseModal }: CartModalProps) => {
+export const CartModal = () => {
   const dispatch = useDispatch()
   const language = "vni"
-  const { deleteCartItem, carts, totalMoney } = useCartOrder()
-  const router = useRouter()
-  const { address, delivery, payment } = useSelector(
-    (state: RootState) => state.order
-  )
+  const { deleteCartItem, carts, totalMoney, isValidating } =
+    useCartOrder(false)
 
   const handleCloseModal = () => {
     dispatch(toggleOpenCartModal(false))
   }
 
-  const handleRedirect = () => {
-    isCloseModal && handleCloseModal()
-    if (payment) {
-      return router.push("/payment")
-    }
-   
-
-    return router.push("/cart")
-  }
-
-  const handleDeleteCartItem = (productIds: ProductIds) => {
-    deleteCartItem(productIds)
-  }
-
   return (
     <div className="cart__modal">
-      {carts.length === 0 ? (
-        <div className="cart__modal-empty">
-          {cartEmptyIcon}
-          <p className="cart__modal-empty-title">
-            {language === "vni"
-              ? "Không có sản phẩm nào trong giỏ hàng"
-              : "No products in cart"}
-          </p>
+      {isValidating ? (
+        <div className="loader-container">
+          <RiLoader4Line className="loader" />
         </div>
-      ) : (
+      ) : null}
+
+      {!isValidating && carts?.length > 0 ? (
         <>
           <div className="cart__modal-list">
-            {carts.length > 0
-              ? carts.map((cart, index) => (
-                  <CartItem
-                    onDelete={handleDeleteCartItem}
-                    handleClose={handleCloseModal}
-                    key={index}
-                    cart={cart}
-                  />
-                ))
-              : null}
+            {carts.map((cart, index) => (
+              <CartItem
+                onDelete={(cart) => deleteCartItem([cart])}
+                handleClose={handleCloseModal}
+                key={index}
+                cart={cart}
+              />
+            ))}
           </div>
           <div className="cart__modal-bottom">
             <div className="cart__modal-bottom-price">
@@ -76,19 +48,33 @@ export const CartModal = ({ isCloseModal }: CartModalProps) => {
                   onClick={() => handleCloseModal && handleCloseModal()}
                   className="cart__modal-bottom-actions-item cursor-pointer"
                 >
-                  {language === "vni" ? "Xem giỏ hàng" : "View cart"}
+                  Xem giỏ hàng
                 </a>
               </Link>
-              <span
-                onClick={handleRedirect}
-                className="cart__modal-bottom-actions-item"
-              >
-                {language === "vni" ? "Thanh toán" : " Checkout"}
-              </span>
+
+              <Link href="/cart">
+                <a
+                  onClick={() => handleCloseModal && handleCloseModal()}
+                  className="cart__modal-bottom-actions-item cursor-pointer"
+                >
+                  Thanh toán
+                </a>
+              </Link>
             </div>
           </div>
         </>
-      )}
+      ) : null}
+
+      {!isValidating && carts.length === 0 ? (
+        <div className="cart__modal-empty">
+          {cartEmptyIcon}
+          <p className="cart__modal-empty-title">
+            {language === "vni"
+              ? "Không có sản phẩm nào trong giỏ hàng"
+              : "No products in cart"}
+          </p>
+        </div>
+      ) : null}
     </div>
   )
 }

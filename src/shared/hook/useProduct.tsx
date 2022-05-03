@@ -1,4 +1,5 @@
 import { RootState } from "@/core/store"
+import { isArrayHasValue } from "@/helper"
 import { Product, ProductParams } from "@/models"
 import { setSearchingStatus } from "@/modules"
 import productApi from "@/services/productApi"
@@ -8,6 +9,7 @@ import useSWR from "swr"
 interface Props {
   params?: ProductParams
   key: string
+  shouldFetch?: boolean
 }
 
 interface ProductSWR {
@@ -16,16 +18,17 @@ interface ProductSWR {
   isValidating: boolean
   handleSearchProduct: Function
   clearSearchResult: Function
+  toggleWishlistStatus: (id: number) => void
 }
 
-const useProduct = ({ params, key }: Props): ProductSWR => {
+const useProduct = ({ params, key, shouldFetch = true }: Props): ProductSWR => {
   const dispatch = useDispatch()
 
   const { userInfo: { id: partner_id = 0 } = { userInfo: undefined } } =
     useSelector((state: RootState) => state.user)
   const { data, error, isValidating, mutate } = useSWR(
     key,
-    key === "products_search"
+    key === "products_search" || !shouldFetch
       ? null
       : () =>
           productApi
@@ -36,6 +39,19 @@ const useProduct = ({ params, key }: Props): ProductSWR => {
       dedupingInterval: 12000,
     }
   )
+
+  const toggleWishlistStatus = (product_id: number) => {
+    if (isArrayHasValue(data)) {
+      mutate(
+        [...data].map((item: Product) =>
+          item.product_prod_id === product_id
+            ? { ...item, wishlist: !item.wishlist }
+            : item
+        ),
+        false
+      )
+    }
+  }
 
   const handleSearchProduct = async (value: string) => {
     dispatch(setSearchingStatus(true))
@@ -57,7 +73,9 @@ const useProduct = ({ params, key }: Props): ProductSWR => {
     isValidating,
     handleSearchProduct,
     clearSearchResult,
+    toggleWishlistStatus,
   }
 }
 
 export { useProduct }
+

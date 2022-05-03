@@ -44,7 +44,6 @@ export const ShopFilter = (props: ShopFilterProps) => {
       revalidateOnFocus: false,
     }
   )
-  console.log(width)
 
   const handleFilterPrice = () => {
     if (!prices.current) return

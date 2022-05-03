@@ -1,5 +1,4 @@
 import { RootState } from "@/core/store"
-import { isArrayHasValue } from "@/helper"
 import { Product } from "@/models"
 import { BiLoaderCircle } from "react-icons/bi"
 import { FaHeart, FaRegHeart } from "react-icons/fa"
@@ -14,6 +13,7 @@ interface ButtonWishlistProps {
 const ButtonWishlist = ({ product, type }: ButtonWishlistProps) => {
   const language = "vni"
   const { handleToggleWishlist } = useWishlist(false)
+  const { data: wishlists = [] } = useWishlist(false)
 
   const {
     wishlistBtn: { currentProductId, isFetching },
@@ -35,22 +35,11 @@ const ButtonWishlist = ({ product, type }: ButtonWishlistProps) => {
             : "product__intro-sub-item"
         }`}
       >
-        {type === "item" ? (
-          <span
-            style={{
-              left: `calc(-100% - 83px)`,
-            }}
-            className="tool-tip"
-          >
-            {language === "vni" ? "Thêm vào yêu thích" : "Add to wishlist"}
-          </span>
-        ) : null}
-
-        {/* product.product_tmpl_id === currentProductId && isFetching ? (
+        {product.product_tmpl_id === currentProductId && isFetching ? (
           <BiLoaderCircle className="loader" />
-        ) : */}
-
-        {product?.wishlist ? (
+        ) : wishlists?.find(
+            (item) => item.product_id === product.product_tmpl_id
+          ) ? (
           <FaHeart style={{ fill: "#dc3545" }} />
         ) : (
           <FaRegHeart />

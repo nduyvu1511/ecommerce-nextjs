@@ -3,9 +3,9 @@ import { formatMoneyVND, getPriceProduct } from "@/helper"
 import { AttributeWithParentId, Product } from "@/models"
 import {
   addProductCompare,
-  addToCart,
   changeAttributeItem,
   setMessage,
+  toggleOpenScreenLoading,
   toggleShowCompareModal,
 } from "@/modules"
 import { API_URL } from "@/services"
@@ -15,9 +15,13 @@ import { useRouter } from "next/router"
 import { useRef, useState } from "react"
 import { FaShoppingBasket } from "react-icons/fa"
 import { IoClose } from "react-icons/io5"
-import { RiArrowUpDownLine, RiMessage2Fill } from "react-icons/ri"
+import {
+  RiArrowUpDownLine,
+  RiLoader2Line,
+  RiMessage2Fill,
+} from "react-icons/ri"
 import { useDispatch, useSelector } from "react-redux"
-import { ButtonAddCard } from "../button"
+import { useCartOrder } from "shared/hook"
 import ButtonWishlist from "../button/buttonAddWishlist"
 import ButtonShare from "../button/buttonShare"
 import { InputQuantity } from "../inputs"
@@ -33,10 +37,10 @@ export const ProductIntro = ({ product, type }: IProductIntro) => {
   const dispatch = useDispatch()
   const divRef = useRef<HTMLDivElement>(null)
   const router = useRouter()
-  const { token, userInfo: { id: partner_id = 0 } = { userInfo: undefined } } =
-    useSelector((state: RootState) => state.user)
-  const { listAttribute } = useSelector((state: RootState) => state.product)
+  const { token = "" } = useSelector((state: RootState) => state.user)
+  const { addToCart } = useCartOrder(false)
 
+  const [isAddLoading, setAddLoading] = useState<boolean>(false)
   const [openVariantModal, setOpenVariantModal] = useState<
     "buy" | "cart" | ""
   >()
@@ -48,26 +52,42 @@ export const ProductIntro = ({ product, type }: IProductIntro) => {
   }
 
   const handleAddOrBuyProduct = (type: "buy" | "cart") => {
-    if (!token || !partner_id) {
+    if (!token) {
       router.push("/login")
       return
     }
 
-    dispatch(
-      addToCart({
-        ...product,
-        quantity,
-        partner_id,
-        attribute_names: listAttribute?.map((item) => item.name) || [],
-      })
-    )
+    if (isAddLoading) return
 
-    if (type === "buy") {
-      setOpenVariantModal("")
-      router.push("/cart")
-    } else {
-      dispatch(setMessage({ title: "Thêm giỏ hàng thành công" }))
-    }
+    type === "buy"
+      ? dispatch(toggleOpenScreenLoading(true))
+      : setAddLoading(true)
+
+    addToCart(
+      {
+        product_id: product.product_prod_id,
+        product_qty: quantity,
+        token,
+        uom_id: product.uom.id,
+        offer_pricelist: false,
+      },
+      type !== "buy",
+      () => {
+        type === "buy"
+          ? dispatch(toggleOpenScreenLoading(false))
+          : setAddLoading(false)
+
+        if (type === "buy") {
+          setOpenVariantModal("")
+          router.push("/cart")
+        }
+      },
+      () => {
+        type === "buy"
+          ? dispatch(toggleOpenScreenLoading(false))
+          : setAddLoading(false)
+      }
+    )
   }
 
   const handleAddToCompareList = () => {
@@ -76,7 +96,6 @@ export const ProductIntro = ({ product, type }: IProductIntro) => {
     } else {
       dispatch(setMessage({ title: "Đã thêm vào danh sách so sánh" }))
     }
-
     dispatch(addProductCompare(product))
   }
 
@@ -112,14 +131,7 @@ export const ProductIntro = ({ product, type }: IProductIntro) => {
           </div>
         ) : null}
         {type === "item" ? (
-          <Link
-            href={`/product/${
-              product.attributes.length > 0
-                ? product.product_tmpl_id
-                : product.product_prod_id
-            }`}
-            passHref
-          >
+          <Link href={`/product/${product.product_tmpl_id}`} passHref>
             <a className="product__intro-title">{product.product_name}</a>
           </Link>
         ) : null}
@@ -150,8 +162,6 @@ export const ProductIntro = ({ product, type }: IProductIntro) => {
                 / {quantity > 1 ? quantity : ""} {product?.uom?.name}
               </span>
             </div>
-
-            {/* <ProductDetailCountdown targetDate="" /> */}
           </div>
         ) : null}
 
@@ -201,11 +211,19 @@ export const ProductIntro = ({ product, type }: IProductIntro) => {
               </>
             ) : null}
 
-            <ButtonAddCard
-              product={product}
-              quantity={quantity}
-              type="detail"
-            />
+            <button
+              onClick={() => handleAddOrBuyProduct("cart")}
+              className="product__intro-shop-btn"
+            >
+              {isAddLoading ? (
+                <RiLoader2Line className="loader" />
+              ) : (
+                <>
+                  <FaShoppingBasket />
+                  <span>Thêm giỏ hàng</span>
+                </>
+              )}
+            </button>
 
             {type === "detail" ? (
               <button
@@ -225,6 +243,7 @@ export const ProductIntro = ({ product, type }: IProductIntro) => {
             ) : null}
           </div>
         ) : null}
+
         {type === "item" ? (
           <div className="product__intro-price product__intro-price-sm">
             <p
@@ -252,6 +271,7 @@ export const ProductIntro = ({ product, type }: IProductIntro) => {
             </span>
           </div>
         ) : null}
+
         <div className="product__intro-sub">
           <ButtonWishlist product={product} type="detail" />
 
@@ -263,14 +283,6 @@ export const ProductIntro = ({ product, type }: IProductIntro) => {
             So sánh
           </button>
         </div>
-        {type === "item" ? (
-          <ButtonAddCard
-            className="product__intro-shop-btn-sm"
-            product={product}
-            quantity={quantity}
-            type="detail"
-          />
-        ) : null}
 
         {type !== "item" ? (
           <ButtonShare
@@ -342,7 +354,13 @@ export const ProductIntro = ({ product, type }: IProductIntro) => {
                 onClick={() => handleAddOrBuyProduct(openVariantModal)}
                 className="btn-primary"
               >
-                {openVariantModal === "buy" ? "Mua ngay" : "Thêm giỏ hàng"}
+                {isAddLoading ? (
+                  <RiLoader2Line className="loader" />
+                ) : (
+                  <span>
+                    {openVariantModal === "buy" ? "Mua ngay" : "Thêm giỏ hàng"}
+                  </span>
+                )}
               </button>
             </div>
           </div>

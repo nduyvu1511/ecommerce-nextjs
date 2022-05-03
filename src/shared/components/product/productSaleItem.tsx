@@ -95,11 +95,7 @@ export const ProductSaleItem = ({
             {productSale?.product_promotion?.length > 0 &&
               productSale.product_promotion.map((product: Product, index) => (
                 <SwiperSlide key={index}>
-                  <ProductItem
-                    isLoading={isLoading}
-                    product={product}
-                    type="sale"
-                  />
+                  <ProductItem isLoading={isLoading} product={product} />
                 </SwiperSlide>
               ))}
           </Swiper>

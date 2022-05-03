@@ -9,9 +9,9 @@ import { InputCheckbox, InputQuantity } from "../inputs"
 interface ICartPageItem {
   cart: CartItem
   isChecked?: boolean
-  isDisabled?: boolean
+  disabled?: boolean
   onCheck?: (cart: CartItem) => void
-  onDeleteItem?: ({ product_prod_id, product_tmpl_id }: ProductIds) => void
+  onDeleteItem?: (cart: CartItem) => void
   onUpdateQuantity?: (cart: CartItem) => void
 }
 
@@ -21,10 +21,10 @@ export const CartPageItem = ({
   onCheck,
   onDeleteItem,
   onUpdateQuantity,
-  isDisabled,
+  disabled,
 }: ICartPageItem) => {
   const handleUpdateQuantity = (quantity: number) => {
-    onUpdateQuantity && onUpdateQuantity({ ...cart, quantity })
+    onUpdateQuantity && onUpdateQuantity({ ...cart, product_qty: quantity })
   }
 
   return (
@@ -42,11 +42,7 @@ export const CartPageItem = ({
             <button
               onClick={(e) => {
                 e.stopPropagation()
-                onDeleteItem &&
-                  onDeleteItem({
-                    product_tmpl_id: cart.product_tmpl_id,
-                    product_prod_id: cart.product_prod_id,
-                  })
+                onDeleteItem && onDeleteItem(cart)
               }}
               className="btn-reset cart__item-delete-btn"
             >
@@ -56,8 +52,8 @@ export const CartPageItem = ({
               quality={40}
               layout="fill"
               className="image"
-              src={`${API_URL}${cart.image_url[0]}`}
-              alt=""
+              src={`${API_URL}${cart.product.representative_image}`}
+              alt={cart.product.product_name}
             />
           </div>
         </Link>
@@ -67,12 +63,14 @@ export const CartPageItem = ({
         <div className="cart__item-info-name">
           <div className="cart__item-info-name-wrapper">
             <Link href={`/product/${cart.product_tmpl_id}`}>
-              <a className="cart__item-info-name-title">{cart.product_name}</a>
+              <a className="cart__item-info-name-title">
+                {cart.product.product_name}
+              </a>
             </Link>
-            {(cart?.attribute_names?.length || 0) > 0 ? (
+
+            {cart.attribute?.attribute_str?.length > 0 ? (
               <p className="cart__item-info-name-type">
-                <span>Phân loại:</span>
-                <span>{cart.attribute_names?.join(", ") || ""}</span>
+                {cart.attribute.attribute_str?.join(", ") || ""}
               </p>
             ) : null}
           </div>
@@ -84,11 +82,13 @@ export const CartPageItem = ({
         </div>
         <div className="cart__item-info-item cart__item-info-price">
           <p className="cart__item-info-item-title">Giá: </p>
-          <p className="info-price-price">{formatMoneyVND(cart.price)}</p>
+          <p className="info-price-price">{formatMoneyVND(cart.price_unit)}</p>
 
           <p className="info-price-price-mobile">
             {formatMoneyVND(
-              cart.quantity === 0 ? cart.price : cart.quantity * cart.price
+              cart.product_qty === 0
+                ? cart.price_unit
+                : cart.product_qty * cart.price_unit
             )}
           </p>
         </div>
@@ -96,9 +96,9 @@ export const CartPageItem = ({
         <div className="cart__item-info-item cart__item-info-quantity">
           <p className="cart__item-info-item-title">Số lượng</p>
           <InputQuantity
-            isDisabled={isDisabled}
+            disabled={disabled}
             onChangeQuantity={(q: number) => handleUpdateQuantity(q)}
-            quantity={cart.quantity}
+            quantity={cart.product_qty}
           />
         </div>
 
@@ -106,20 +106,16 @@ export const CartPageItem = ({
           <p className="cart__item-info-item-title">Tổng phụ: </p>
           <p className="info-subtotal-price">
             {formatMoneyVND(
-              cart.quantity === 0 ? cart.price : cart.quantity * cart.price
+              cart.product_qty === 0
+                ? cart.price_unit
+                : cart.product_qty * cart.price_unit
             )}
           </p>
         </div>
 
         <div className="cart__item-info-item cart__item-info-btn">
           <button
-            onClick={() =>
-              onDeleteItem &&
-              onDeleteItem({
-                product_tmpl_id: cart.product_tmpl_id,
-                product_prod_id: cart.product_prod_id,
-              })
-            }
+            onClick={() => onDeleteItem && onDeleteItem(cart)}
             className="btn-reset"
           >
             <HiOutlineTrash />

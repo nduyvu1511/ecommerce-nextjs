@@ -26,6 +26,12 @@ export interface SearchHistory {
   keyword: string
 }
 
+export interface PriceTable {
+  uom_id: number
+  name: string
+  price_unit: number
+}
+
 export interface Product {
   type: "product" | "combo"
   product_tmpl_id: number
@@ -46,11 +52,7 @@ export interface Product {
     value: number
   }[]
   seller_price: number
-  price_table: {
-    uom_id: number
-    name: string
-    price_unit: number
-  }[]
+  price_table: PriceTable[]
   attributes: ProductAttribute[]
   image_url: Array<string>
   representative_image: Array<string>

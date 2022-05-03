@@ -17,7 +17,7 @@ class MyDocument extends Document {
         </Head>
 
         <body>
-          <div className="embed-container">
+          {/* <div className="embed-container">
             <div id="fb-root"></div>
             <div id="fb-customer-chat" className="fb-customerchat"></div>
 
@@ -29,9 +29,9 @@ class MyDocument extends Document {
               data-width=""
               data-height=""
             ></div>
-          </div>
+          </div> */}
 
-          <script src="https://sp.zalo.me/plugins/sdk.js"></script>
+          {/* <script src="https://sp.zalo.me/plugins/sdk.js"></script>
 
           <script
             dangerouslySetInnerHTML={{
@@ -56,7 +56,7 @@ class MyDocument extends Document {
                   }(document, 'script', 'facebook-jssdk'));
                 `,
             }}
-          ></script>
+          ></script> */}
           <Main />
           <NextScript />
         </body>

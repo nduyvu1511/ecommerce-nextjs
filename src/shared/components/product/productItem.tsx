@@ -1,6 +1,5 @@
 import { imageBlur } from "@/assets"
 import { ProductItemLoading } from "@/components"
-import { RootState } from "@/core/store"
 import {
   formatMoneyVND,
   getPercentageProductDeal,
@@ -11,8 +10,6 @@ import {
 import { Product } from "@/models"
 import {
   addProductCompare,
-  addToCart,
-  setMessage,
   setProduct,
   toggleModalProduct,
   toggleShowCompareModal,
@@ -21,24 +18,20 @@ import { API_URL } from "@/services"
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/router"
-import { FaShoppingBasket } from "react-icons/fa"
 import { IoExpandOutline } from "react-icons/io5"
 import { RiBarChartFill } from "react-icons/ri"
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 import ButtonWishlist from "../button/buttonAddWishlist"
 import { Star } from "../star"
 
 interface IProductItem {
   product: Product
-  type?: "shop" | "sale"
   isLoading?: boolean
 }
 
-export const ProductItem = ({ product, type, isLoading }: IProductItem) => {
+export const ProductItem = ({ product, isLoading }: IProductItem) => {
   const dispatch = useDispatch()
   const router = useRouter()
-  const { token, userInfo: { id: partner_id = 0 } = { userInfo: undefined } } =
-    useSelector((state: RootState) => state.user)
 
   const handleAddToCompareList = () => {
     dispatch(toggleShowCompareModal(true))
@@ -48,24 +41,6 @@ export const ProductItem = ({ product, type, isLoading }: IProductItem) => {
   const handleOpenModalProduct = () => {
     dispatch(toggleModalProduct(true))
     dispatch(setProduct(product))
-  }
-
-  const handleAddToCart = () => {
-    if (!token || !partner_id) {
-      router.push("/login")
-      return
-    }
-
-    if (product?.attributes?.length > 0) {
-      handleOpenModalProduct()
-    } else {
-      dispatch(addToCart({ ...product, quantity: 1, partner_id }))
-      dispatch(
-        setMessage({
-          title: "Thêm giỏ hàng thành công!",
-        })
-      )
-    }
   }
 
   const imageUrls: Array<string> = isArrayHasValue(product.representative_image)
@@ -103,7 +78,7 @@ export const ProductItem = ({ product, type, isLoading }: IProductItem) => {
                 </button>
               ) : null}
 
-              <ButtonWishlist type="item" product={product} />
+              {/* <ButtonWishlist type="item" product={product} /> */}
 
               <button
                 onClick={handleAddToCompareList}
@@ -220,16 +195,6 @@ export const ProductItem = ({ product, type, isLoading }: IProductItem) => {
                 ) : null}
               </p>
             </div>
-            {type === "shop" ? (
-              <div className="product__card__bottom-hover">
-                <button
-                  onClick={handleAddToCart}
-                  className="product__card__bottom-btn"
-                >
-                  <FaShoppingBasket /> Thêm giỏ hàng
-                </button>
-              </div>
-            ) : null}
           </div>
         </div>
       ) : (

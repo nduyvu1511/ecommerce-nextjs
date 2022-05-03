@@ -5,13 +5,13 @@ import { useClickOutside, useDebounce } from "shared/hook"
 interface QuantityInput {
   quantity: number
   onChangeQuantity?: Function
-  isDisabled?: boolean
+  disabled?: boolean
 }
 
 export const InputQuantity = ({
   quantity,
   onChangeQuantity,
-  isDisabled,
+  disabled,
 }: QuantityInput) => {
   const inputRef = useRef<HTMLInputElement>(null)
   const [inputQuantity, setInputQuantity] = useState<number>(quantity)
@@ -32,8 +32,12 @@ export const InputQuantity = ({
     }
   }, [qty])
 
+  useEffect(() => {
+    setInputQuantity(quantity)
+  }, [quantity])
+
   useClickOutside([inputRef], () => {
-    if (inputQuantity === 0) {
+    if (inputQuantity <= 0) {
       setInputQuantity(1)
       onChangeQuantity && onChangeQuantity(1)
     }
@@ -69,7 +73,7 @@ export const InputQuantity = ({
   return (
     <div
       className={`input__quantity ${
-        isDisabled ? "input__quantity-disabled" : ""
+        disabled ? "input__quantity-disabled" : ""
       }`}
     >
       <button

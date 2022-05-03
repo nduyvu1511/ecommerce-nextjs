@@ -5,26 +5,22 @@ import {
   HeaderMobile,
   HomeCategory,
   navMobileLinks,
-  Popup
+  Popup,
 } from "@/components"
 import {
   MainBanner,
   MainContent,
   ProductSaleContainer,
-  SecondaryBanner
+  SecondaryBanner,
 } from "@/container"
 import { MainLayout } from "@/layout"
-import { LayoutProps } from "@/models"
 import { toggleOpenCartModal } from "@/modules"
 import { API_URL } from "@/services"
-import { useTranslation } from "next-i18next"
-import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import { AiOutlineUser } from "react-icons/ai"
 import { BiCart } from "react-icons/bi"
-import { FiPhoneCall } from "react-icons/fi"
 import { useDispatch, useSelector } from "react-redux"
 import { useCartOrder, useCategory, useWishlist } from "shared/hook"
 import "swiper/css"
@@ -32,17 +28,13 @@ import "swiper/css/navigation"
 import "swiper/css/pagination"
 import { RootState } from "../core"
 
-export async function getStaticProps({ locale }: { locale: string }) {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ["home"])),
-    },
-    revalidate: 10,
-  }
-}
+// export async function getStaticProps() {
+//   return {
+//     revalidate: 10,
+//   }
+// }
 
-const Home = ({ locale }: LayoutProps) => {
-  const { t } = useTranslation()
+const Home = () => {
   useWishlist(true)
   const { data: categories } = useCategory(true)
   const { carts } = useCartOrder()
@@ -50,7 +42,6 @@ const Home = ({ locale }: LayoutProps) => {
   const dispatch = useDispatch()
   const { token, userInfo: { avatar = "" } = { userInfo: undefined } } =
     useSelector((state: RootState) => state.user)
-  // to use translation, just use:
 
   return (
     <>
@@ -90,9 +81,10 @@ const Home = ({ locale }: LayoutProps) => {
       />
 
       <section className="home">
-        <div className="container">
+        {/* <div className="container">
           <CategorySlide categories={categories} />
-        </div>
+        </div> */}
+        <div className="category__slide"></div>
 
         <div className="container">
           <MainBanner />
@@ -148,9 +140,9 @@ const Home = ({ locale }: LayoutProps) => {
 
       <Popup />
 
-      <a href="tel:0909099580" className="btn-primary btn-call">
+      {/* <a href="tel:0909099580" className="btn-primary btn-call">
         <FiPhoneCall />
-      </a>
+      </a> */}
     </>
   )
 }

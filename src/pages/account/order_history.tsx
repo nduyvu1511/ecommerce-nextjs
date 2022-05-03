@@ -49,7 +49,7 @@ const OrderHistory: any = () => {
           </div>
         ) : null}
 
-        {orderHistoryList?.length > 0 ? (
+        {!isValidating && orderHistoryList?.length > 0 ? (
           <table className="order__history-table">
             <thead>
               <tr>
@@ -99,12 +99,14 @@ const OrderHistory: any = () => {
                 ))}
             </tbody>
           </table>
-        ) : (
+        ) : null}
+
+        {!isValidating && orderHistoryList?.length === 0 ? (
           <div className="list--empty">
             <CgSmileNone />
             <p>Bạn chưa hoàn thành đơn hàng nào </p>
           </div>
-        )}
+        ) : null}
 
         {/* Modal */}
         {isOpen && orderDetailHistory ? (

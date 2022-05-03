@@ -183,7 +183,7 @@ export const AddressForm = () => {
           {({ errors, touched, isValid }) => (
             <Form className="address__form-body-form">
               <div className="address__form-body-form-two">
-                <div className="form-item-inline">
+                <div className="form-item">
                   <Field
                     className={`form-item-input ${
                       errors.name && touched.name ? "form-item-input-error" : ""
@@ -198,7 +198,7 @@ export const AddressForm = () => {
                   ) : null}
                 </div>
 
-                <div className="form-item-inline">
+                <div className="form-item">
                   <Field
                     className={`form-item-input ${
                       errors.phone && touched.phone
@@ -274,7 +274,7 @@ export const AddressForm = () => {
                 />
               </div>
 
-              <div className="form-item-inline">
+              <div className="form-item">
                 <Field
                   className={`form-item-input ${
                     errors.street && touched.street
@@ -284,7 +284,7 @@ export const AddressForm = () => {
                   as="textarea"
                   rows={3}
                   id="detailAddress"
-                  type="area"
+                  type="text"
                   placeholder={
                     language === "vni"
                       ? "Ví dụ: 52, đường Trần Hưng Đạo"

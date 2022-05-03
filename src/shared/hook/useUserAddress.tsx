@@ -139,7 +139,6 @@ export const useUserAddress = (shouldFetch = true): AccountSWR => {
           },
           false
         )
-        dispatch(setMessage({ title: "Xóa địa chỉ thành công" }))
 
         if (addressDefault?.id === address.adress_id) {
           dispatch(setAddressDefault(undefined))

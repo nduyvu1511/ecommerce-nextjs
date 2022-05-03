@@ -1,23 +1,28 @@
-import { Breadcrumb } from "@/components"
+/* eslint-disable @next/next/no-img-element */
+import { cartEmptyIcon } from "@/assets"
+import { Breadcrumb, HeaderMobile } from "@/components"
 import { formatMoneyVND, isArrayHasValue, isObjectHasValue } from "@/helper"
 import { MainLayout } from "@/layout"
-import { addToCart, setProduct, toggleModalProduct } from "@/modules"
+import { Product } from "@/models"
+import { setProduct, toggleModalProduct } from "@/modules"
 import { API_URL } from "@/services"
 import productApi from "@/services/productApi"
 import Image from "next/image"
 import Link from "next/link"
+import { useRouter } from "next/router"
+import { BiTrash } from "react-icons/bi"
 import { BsCheck } from "react-icons/bs"
-import { RiCloseLine } from "react-icons/ri"
+import { RiCloseLine, RiLoader4Line } from "react-icons/ri"
 import { useDispatch, useSelector } from "react-redux"
-import { useWishlist } from "shared/hook"
+import { useCartOrder, useWishlist } from "shared/hook"
 import { RootState } from "../core"
 
 const Wishlist = () => {
   const dispatch = useDispatch()
   const language = "vni"
-
-  const { userInfo: { id: partner_id = 0 } = { userInfo: undefined }, token } =
-    useSelector((state: RootState) => state.user)
+  const router = useRouter()
+  const { addToCart } = useCartOrder(false)
+  const { token } = useSelector((state: RootState) => state.user)
   const {
     data: wishlists,
     handleToggleWishlist,
@@ -25,19 +30,32 @@ const Wishlist = () => {
     handleDeleteWishlist,
   } = useWishlist(true)
 
-  console.log(wishlists)
-
   const handleAddSingleCart = (id: number) => {
+    if (!token) {
+      router.push("/login")
+      return
+    }
+
     productApi.getProductList({ product_id: id }).then((res: any) => {
-      const product = res.result?.[0]
+      const product: Product = res.result?.[0]
       if (isObjectHasValue(product)) {
         if (product.attributes.length > 0) {
           dispatch(setProduct(product))
           dispatch(toggleModalProduct(true))
         } else {
-          dispatch(addToCart({ ...product, quantity: 1, partner_id }))
-
-          handleToggleWishlist(product)
+          addToCart(
+            {
+              product_id: product.product_prod_id,
+              product_qty: 1,
+              uom_id: product.uom.id,
+              token,
+              offer_pricelist: false,
+            },
+            false,
+            () => {
+              handleToggleWishlist(product)
+            }
+          )
         }
       }
     })
@@ -51,30 +69,40 @@ const Wishlist = () => {
   }
 
   return (
-    <section className="wishlist-container">
-      <div className="container">
-        <Breadcrumb breadcrumbList={[{ name: "Yêu thích", path: "" }]} />
+    <>
+      <HeaderMobile centerChild={<p>Yêu thích</p>} />
 
-        <div className="wishlist-wrapper">
-          <h2 className="wishlist-heading">Danh sách yêu thích</h2>
-          {!token || !isArrayHasValue(wishlists) ? (
+      <section className="wishlist-container">
+        <div className="container">
+          <Breadcrumb breadcrumbList={[{ name: "Yêu thích", path: "" }]} />
+
+          {isValidating ? (
+            <div className="loader-container">
+              <RiLoader4Line className="loader" />
+            </div>
+          ) : null}
+
+          {!token || (!isArrayHasValue(wishlists) && !isValidating) ? (
             <div className="wishlist__empty">
               <p className="wishlist__empty-text">
                 {language === "vni"
                   ? "Danh sách yêu thích của bạn đang trống!"
                   : "Your wishlist list is empty!"}
               </p>
+
+              {cartEmptyIcon}
               <Link passHref href="/products">
                 <a className="btn-primary">
-                  {" "}
                   {language === "vni"
                     ? "Tiếp tục mua sắm"
                     : "Continue Shopping"}
                 </a>
               </Link>
             </div>
-          ) : (
-            <>
+          ) : null}
+
+          {!isValidating && isArrayHasValue(wishlists) ? (
+            <div className="wishlist-wrapper">
               <table className="wishlist-table">
                 <tbody>
                   <tr className="table-input-check-all-sm"></tr>
@@ -99,7 +127,7 @@ const Wishlist = () => {
                             }
                             className="btn-reset btn-delete-wishlist"
                           >
-                            <RiCloseLine />
+                            <BiTrash />
                           </button>
                         </td>
                         <td className="wishlist__list-item wishlist__list-item-image">
@@ -159,11 +187,11 @@ const Wishlist = () => {
                     ))}
                 </tbody>
               </table>
-            </>
-          )}
+            </div>
+          ) : null}
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   )
 }
 

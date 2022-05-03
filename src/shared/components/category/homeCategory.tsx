@@ -3,6 +3,7 @@ import { HomeSlideProduct } from "@/container"
 import { isArrayHasValue } from "@/helper"
 import { Category as ICategory } from "@/models"
 import { useCategory } from "shared/hook"
+import useLocale from "shared/hook/useLocale"
 import { Navigation } from "swiper"
 import "swiper/css"
 import "swiper/css/navigation"
@@ -12,11 +13,12 @@ import { CategoryItemLoading } from "../loader"
 
 export const HomeCategory = () => {
   const { data: parentCategories = [], isValidating } = useCategory(false)
+  const locale = useLocale()
 
   return (
     <HomeSlideProduct
       path="/category"
-      name="Danh mục sản phẩm"
+      name={locale.home.categoryHeading}
       isLoading={isValidating && !isArrayHasValue(parentCategories)}
     >
       <Swiper
@@ -60,13 +62,17 @@ export const HomeCategory = () => {
                 <CategoryItemLoading />
               </SwiperSlide>
             ))
-          : parentCategories.map((cate: ICategory, index) => (
+          : null}
+
+        {!isValidating && isArrayHasValue(parentCategories)
+          ? parentCategories.map((cate: ICategory, index) => (
               <>
                 <SwiperSlide key={index}>
                   <CategoryItem category={cate} />
                 </SwiperSlide>
               </>
-            ))}
+            ))
+          : null}
       </Swiper>
     </HomeSlideProduct>
   )

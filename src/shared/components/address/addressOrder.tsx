@@ -5,7 +5,7 @@ import {
   setAddress,
   setDelivery,
   setPayment,
-  toggleModalAddressForm,
+  toggleModalAddressForm
 } from "@/modules"
 import Link from "next/link"
 import React, { useState } from "react"

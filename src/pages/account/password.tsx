@@ -20,8 +20,6 @@ const Password = () => {
   const handleChangePassword = (data: PasswordFormProps) => {
     const { password, newPassword, reNewPassword } = data
 
-    console.log(data)
-
     if (hasPassword) {
       changePassword({
         old_password: password,
@@ -53,18 +51,18 @@ const Password = () => {
     >
       <div className="account__password-container">
         <div className="container">
-          <div className="account__password">
-            {isValidating ? (
-              <div className="loader-container">
-                <RiLoader4Line className="loader" />
-              </div>
-            ) : (
+          {isValidating ? (
+            <div className="loader-container">
+              <RiLoader4Line className="loader" />
+            </div>
+          ) : (
+            <div className="account__password">
               <PasswordForm
                 onSubmit={(data) => handleChangePassword(data)}
                 type={hasPassword ? "changePassword" : "createPassword"}
               />
-            )}
-          </div>
+            </div>
+          )}
         </div>
       </div>
     </AccountContainer>

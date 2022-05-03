@@ -9,7 +9,6 @@ export interface HasChildren {
 
 export interface LayoutProps {
   children: ReactNode
-  locale?: string
 }
 
 export type NextPageWithLayout = NextPage & {

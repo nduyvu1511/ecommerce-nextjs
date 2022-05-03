@@ -19,16 +19,18 @@ export const CartSummaryProductList = (props: Props) => {
             productList.map((cart, index) => (
               <li key={index} className="cart__total-product-list-item">
                 <p className="cart__total-product-list-item-title">
-                  {cart?.product_name || ""}
+                  {cart?.product?.product_name || ""}
                 </p>
 
                 <ul className="cart__total-price-list">
                   <li className=" cart__total-price-list-item">
-                    {formatMoneyVND(cart.price)} <RiCloseLine /> {cart.quantity}
+                    {formatMoneyVND(cart.price_unit)} <RiCloseLine />{" "}
+                    {cart.product_qty}
                   </li>
 
                   <li className="cart__total-price-list-item-total cart__total-price-list-item">
-                    Thành tiền: {formatMoneyVND(cart.price * cart.quantity)}
+                    Thành tiền:{" "}
+                    {formatMoneyVND(cart.price_unit * cart.product_qty)}
                   </li>
                 </ul>
               </li>

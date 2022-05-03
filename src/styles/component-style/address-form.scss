@@ -43,7 +43,7 @@
         .dropdown {
           flex: 1;
           border: 1px solid $black-opacity-02;
-          border-radius: 0.4rem;
+          border-radius: 0.2rem;
           height: 40px;
 
           &-title {
@@ -85,6 +85,11 @@
 
       .btn-save {
         margin-left: auto;
+      }
+
+      & textarea {
+        height: unset;
+        padding: 1.2rem;
       }
     }
   }

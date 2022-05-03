@@ -147,6 +147,7 @@
 
         & svg {
           margin-right: 0.8rem;
+          font-size: 1.8rem;
         }
       }
     }
@@ -212,7 +213,7 @@
       background-color: $danger;
       padding: 1rem 1.6rem;
       font-family: $main-font;
-      border-radius: 0.2rem;
+      border-radius: 0.4rem;
 
       @include responsive(md-screen) {
         padding: 1.4rem 2.4rem;
@@ -269,8 +270,6 @@
 
 .promotion__modal-container {
   & .modal {
-    max-width: 600px;
-    width: 100%;
     max-height: unset;
     border-radius: 0;
     width: 100%;
@@ -278,13 +277,18 @@
     padding: 2rem 1rem;
 
     @include responsive(xs-screen) {
-      padding: 3rem 2rem;
+      padding: 2rem;
+    }
+
+    @include responsive(sm-screen) {
+      max-height: 90vh;
+      border-radius: 0.4rem;
+      max-width: 500px;
     }
 
     @include responsive(md-screen) {
       max-height: 96vh;
       height: auto;
-      border-radius: 0.4rem;
     }
 
     &__header {
@@ -294,7 +298,7 @@
 }
 
 .cart__summary-footer {
-  padding-top: 2rem;
+  padding-top: 1rem;
   background-color: $primary-color-opacity;
   display: none;
   @include responsive(xl-screen) {

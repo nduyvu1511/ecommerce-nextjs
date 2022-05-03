@@ -81,7 +81,7 @@ export const AuthContainer = ({
             <div className="auth__inner-left">
               <Link href="/" passHref>
                 <div className="image-container">
-                  <Image src={loginBg} alt="" className="image" layout="fill" />
+                  <Image src={logo} alt="" className="image" layout="fill" />
                 </div>
               </Link>
             </div>

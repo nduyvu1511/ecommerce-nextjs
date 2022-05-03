@@ -118,13 +118,6 @@ export const navs = [
     vniName: "So sánh",
     path: "/compare",
   },
-  {
-    id: 8,
-    icon: <MdOutlineLanguage />,
-    engName: "Language",
-    vniName: "Ngôn ngữ",
-    path: "/",
-  },
 ]
 
 export const languages = [

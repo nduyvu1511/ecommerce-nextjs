@@ -28,21 +28,21 @@ const ResetPasswordPage = () => {
     newPassword: string
     reNewPassword: string
   }) => {
-    if (!phoneNumber || !currentToken) return
-
-    createPassword({
-      password: newPassword,
-      re_password: reNewPassword,
-      phone: phoneNumber,
-      token: token || currentToken,
-      handleSuccess: () => {
-        if (token) {
-          router.push("/account/password")
-        } else {
-          router.push("/login")
-        }
-      },
-    })
+    if (phoneNumber && (token || currentToken)) {
+      createPassword({
+        password: newPassword,
+        re_password: reNewPassword,
+        phone: phoneNumber,
+        token: token || currentToken || "",
+        handleSuccess: () => {
+          if (token) {
+            router.push("/account/password")
+          } else {
+            router.push("/login")
+          }
+        },
+      })
+    }
   }
 
   return (

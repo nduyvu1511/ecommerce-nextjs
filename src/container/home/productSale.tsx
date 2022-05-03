@@ -1,13 +1,16 @@
 import { ProductSaleItem } from "@/components"
+import { RootState } from "@/core/store"
 import { isArrayHasValue } from "@/helper"
 import { ProductSale } from "@/models"
 import productApi from "@/services/productApi"
+import { useSelector } from "react-redux"
 import "swiper/css"
 import "swiper/css/navigation"
 import "swiper/css/pagination"
 import useSWR from "swr"
 
 export const ProductSaleContainer = () => {
+  const { token } = useSelector((state: RootState) => state.user)
   const {
     data: productSales,
     isValidating,
@@ -15,7 +18,7 @@ export const ProductSaleContainer = () => {
   } = useSWR(
     "product_deals",
     () =>
-      productApi.getSaleProductList().then((res: any) => {
+      productApi.getSaleProductList(token).then((res: any) => {
         if (isArrayHasValue(res?.result?.data)) {
           return res?.result?.data
         }

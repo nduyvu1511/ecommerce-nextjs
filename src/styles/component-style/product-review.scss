@@ -135,9 +135,6 @@
 
       & .form-item-inline {
         margin-bottom: 1rem;
-        @include responsive(lg-screen) {
-          margin-bottom: 2rem;
-        }
       }
     }
 
@@ -151,8 +148,9 @@
 
     & button {
       padding-block: 0.8rem;
-      padding-inline: 1.2rem;
+      padding-inline: 1.6rem;
       border-radius: 0.2rem;
+      text-transform: uppercase;
     }
   }
 }

@@ -209,7 +209,7 @@ const ProductList = ({ products, category }: CategoryProps) => {
                   <ProductItemList key={index} product={product} />
                 ))
               : productList.map((product, index) => (
-                  <ProductItem key={index} type="shop" product={product} />
+                  <ProductItem key={index} product={product} />
                 ))}
           </>
         ) : null}

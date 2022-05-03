@@ -14,6 +14,7 @@ import {
   toggleOpenOtpLoginModal,
   toggleOpenScreenLoading,
 } from "@/modules"
+import userApi from "@/services/userApi"
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth"
 import { useRouter } from "next/router"
 import { useRef, useState } from "react"
@@ -59,15 +60,30 @@ export const OTP = ({ type, view }: LoginOtpProps) => {
   // Generate OTP input
   const generateOtpCode = async (phoneNumber: string) => {
     dispatch(toggleOpenScreenLoading(true))
+
+    if (type === "updatePhoneNumber") {
+      const res: any = await userApi.checkPhoneExist(phoneNumber || "")
+      if (!res?.result?.success || res?.result?.data?.phone_already_exists) {
+        dispatch(
+          setMessage({
+            title: res?.result?.data?.message || "Số điện thoại đã tồn tại",
+            type: "warning",
+          })
+        )
+        dispatch(toggleOpenScreenLoading(false))
+        return
+      }
+    }
+
     const verify = generateRecaptcha()
     if (!phoneNumber) return
+
     try {
       const confirmationResult = await signInWithPhoneNumber(
         authentication,
         `+84${phoneNumber.slice(1)}`,
         verify
       )
-      console.log("confirmationResult")
       dispatch(toggleOpenScreenLoading(false))
       phoneNumberRef.current = phoneNumber
       window.confirmationResult = confirmationResult

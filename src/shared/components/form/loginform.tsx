@@ -7,6 +7,7 @@ import {
   setToken,
   setUserInfo,
   toggleOpenLoginModal,
+  toggleOpenOtpLoginModal,
 } from "@/modules"
 import { Field, Form, Formik } from "formik"
 import Link from "next/link"
@@ -45,12 +46,16 @@ export const LoginForm = ({ view }: LoginFormProps) => {
     <AuthContainer view={view} heading="Đăng nhập" type="login">
       {view === "modal" ? (
         <button
-          onClick={() => dispatch(toggleOpenLoginModal(false))}
+          onClick={() => {
+            dispatch(toggleOpenLoginModal(false))
+            dispatch(toggleOpenOtpLoginModal(false))
+          }}
           className="btn-reset modal__login-close-btn"
         >
           <IoClose />
         </button>
       ) : null}
+
       <Formik
         initialValues={{
           phone: (getFromSessionStorage("phoneNumberInput") as string) || "",

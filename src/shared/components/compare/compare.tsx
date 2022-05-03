@@ -1,13 +1,12 @@
 import { RootState } from "@/core/store"
 import { Product } from "@/models"
 import {
-  addToCart,
   clearProductCompare,
   deleteProductCompare,
   setModalConfirm,
   setProduct,
   toggleModalProduct,
-  toggleShowCompareModal
+  toggleShowCompareModal,
 } from "@/modules"
 import { API_URL } from "@/services"
 import Image from "next/image"
@@ -16,6 +15,7 @@ import { useRouter } from "next/router"
 import { HiTrash } from "react-icons/hi"
 import { TiArrowShuffle } from "react-icons/ti"
 import { useDispatch, useSelector } from "react-redux"
+import { useCartOrder } from "shared/hook"
 import { Navigation } from "swiper"
 import "swiper/css"
 import "swiper/css/navigation"
@@ -29,11 +29,9 @@ export const Compare = ({ type }: { type?: "page" | "modal" }) => {
   const dispatch = useDispatch()
   const router = useRouter()
 
-  const { token, userInfo: { id: partner_id = 0 } = { userInfo: undefined } } =
-    useSelector((state: RootState) => state.user)
-  const { productsCompare, isShowCompareModal } = useSelector(
-    (state: RootState) => state.compare
-  )
+  const { token = "" } = useSelector((state: RootState) => state.user)
+  const { productsCompare } = useSelector((state: RootState) => state.compare)
+  const { addToCart } = useCartOrder(false)
 
   const handleAddToCart = (product: Product) => {
     if (!token) {
@@ -45,7 +43,13 @@ export const Compare = ({ type }: { type?: "page" | "modal" }) => {
       dispatch(toggleModalProduct(true))
       dispatch(setProduct(product))
     } else {
-      dispatch(addToCart({ ...product, quantity: 1, partner_id }))
+      addToCart({
+        product_id: product.product_prod_id,
+        product_qty: product.qty_available,
+        token,
+        uom_id: product.uom.id,
+        offer_pricelist: false,
+      })
     }
   }
 
@@ -58,9 +62,6 @@ export const Compare = ({ type }: { type?: "page" | "modal" }) => {
       <ModalConfirm onConfirm={handleResetCompareList} />
       {type === "page" ? (
         <div className="compare__header">
-          <h3 className="compare__header-heading">
-            {language === "vni" ? "So Sánh" : "Compare"}
-          </h3>
           {productsCompare.length > 0 ? (
             <button
               onClick={() =>
@@ -84,11 +85,9 @@ export const Compare = ({ type }: { type?: "page" | "modal" }) => {
       {productsCompare.length === 0 ? (
         <div className="compare__empty">
           <p className="compare__empty-text">
-            {language === "vni"
-              ? "Danh sách so sánh của bạn đang trống!"
-              : "Your comparison list is empty!"}
+            Danh sách so sánh của bạn đang trống
           </p>
-          <Link href="/shop" passHref>
+          <Link href="/" passHref>
             <a className="btn-primary">
               {language === "vni" ? "Tiếp tục mua sắm" : "Continue Shopping"}
             </a>
@@ -99,17 +98,11 @@ export const Compare = ({ type }: { type?: "page" | "modal" }) => {
           <div className="compare__table-header">
             <div className="compare__table-item-img"></div>
             <div className="compare__table-item compare__table-item-name-wrapper">
-              {language === "vni" ? "Name" : "Tên"}
+              Tên
             </div>
-            <div className="compare__table-item">
-              {language === "vni" ? "Category" : "Danh mục"}
-            </div>
-            <div className="compare__table-item">
-              {language === "vni" ? "Price" : "Giá"}
-            </div>
-            <div className="compare__table-item">
-              {language === "vni" ? "Unit" : "Đơn vị"}
-            </div>
+            <div className="compare__table-item">Danh mục</div>
+            <div className="compare__table-item">Giá</div>
+            <div className="compare__table-item">Đơn vị</div>
             <div className="compare__table-item"></div>
           </div>
           <div className="compare__table-body">
@@ -118,7 +111,7 @@ export const Compare = ({ type }: { type?: "page" | "modal" }) => {
               slidesPerView={1}
               navigation
               breakpoints={{
-                450: {
+                350: {
                   slidesPerView: 2,
                 },
                 576: {
@@ -145,14 +138,7 @@ export const Compare = ({ type }: { type?: "page" | "modal" }) => {
                         <HiTrash />
                       </button>
 
-                      <Link
-                        href={`/product/${
-                          item.attributes?.length > 0
-                            ? item.product_tmpl_id
-                            : item.product_prod_id
-                        }`}
-                        passHref
-                      >
+                      <Link href={`/product/${item.product_tmpl_id}`} passHref>
                         <div
                           onClick={() =>
                             dispatch(toggleShowCompareModal(false))
@@ -165,20 +151,14 @@ export const Compare = ({ type }: { type?: "page" | "modal" }) => {
                             layout="fill"
                             className="image"
                             placeholder="blur"
+                            objectFit="contain"
                             blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mN8/+F9PQAI8wNPvd7POQAAAABJRU5ErkJggg=="
                           />
                         </div>
                       </Link>
                     </div>
                     <div className="compare__table-item compare__table-item-name-wrapper">
-                      <Link
-                        href={`/product/${
-                          item.attributes.length > 0
-                            ? item.product_tmpl_id
-                            : item.product_prod_id
-                        }`}
-                        passHref
-                      >
+                      <Link href={`/product/${item.product_tmpl_id}`} passHref>
                         <a className="compare__table-item-name">
                           {item.product_name}
                         </a>

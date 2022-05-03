@@ -66,17 +66,16 @@ export const PasswordForm = ({ onSubmit, type }: ForgotPasswordProps) => {
                       name={input.name}
                     />
 
-                    <button
-                      type="button"
+                    <span
                       onClick={() => handleToggleInputType(input.name)}
-                      className="btn-reset form-item-toggle-pw-btn"
+                      className="form-item-toggle-pw-btn"
                     >
                       {inputs?.includes(input.name) ? (
                         <RiEyeCloseLine />
                       ) : (
                         <RiEyeFill />
                       )}
-                    </button>
+                    </span>
                   </div>
 
                   {errors[input.name] && touched[input.name] ? (

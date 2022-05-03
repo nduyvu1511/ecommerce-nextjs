@@ -174,27 +174,29 @@ export function productListToObjectIdQuantity(
   return productList.reduce(
     (obj, item) =>
       Object.assign(obj, {
-        [item.product_prod_id]:
+        [item.product.product_id]:
           item.price_table?.length > 0
             ? item.price_table.map((y) => ({
                 id: y.uom_id,
-                qty: item.quantity,
+                qty: item.product_qty,
               }))
-            : item.quantity,
+            : item.product_qty,
       }),
     {}
   )
 }
 
-export function isExistCart(
-  obj1: CartItem | ProductIds,
-  obj2: CartItem | ProductIds
-) {
+export function isExistCart(obj1: ProductIds, obj2: ProductIds) {
   return (
     obj1.product_tmpl_id === obj2.product_tmpl_id &&
     obj1.product_prod_id === obj2.product_prod_id
   )
 }
+
+export const getProductIds = (cart: CartItem): ProductIds => ({
+  product_prod_id: cart.product.product_id,
+  product_tmpl_id: cart.product_tmpl_id,
+})
 
 export function isObjectHasValue(obj: any): boolean {
   return obj && _.isObject(obj) && Object.keys(obj).length > 0
@@ -258,7 +260,7 @@ export function getTotalPrice(productList: CartItem[]) {
   if (productList?.length === 0) return 0
 
   return productList.reduce(
-    (prev, curr) => prev + curr.price * curr.quantity,
+    (prev, curr) => prev + curr.price_unit * curr.product_qty,
     0
   )
 }
@@ -383,12 +385,12 @@ export const sortList: SortList[] = [
   {
     id: 1,
     title: "Giá Thấp",
-    value: "price_reduction",
+    value: "price_increase",
   },
   {
     id: 2,
     title: "Giá Cao",
-    value: "price_increase",
+    value: "price_reduction",
   },
 ]
 

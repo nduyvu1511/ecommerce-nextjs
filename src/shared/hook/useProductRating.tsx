@@ -7,6 +7,7 @@ import {
   UpdateRatingPropsWithLineId,
 } from "@/models"
 import { setMessage, toggleOpenScreenLoading } from "@/modules"
+import { API_URL } from "@/services"
 import ratingApi from "@/services/ratingApi"
 import { useDispatch, useSelector } from "react-redux"
 import useSWR from "swr"
@@ -139,12 +140,18 @@ const useProductRating = ({
                         ...comment_rating,
                         content: comment_rating.message,
                         editable: true,
+                        image_urls:
+                          item?.comment_rating?.image_urls?.length > 0
+                            ? item?.comment_rating?.image_urls?.map(
+                                (item) => `${API_URL}${item.image_url}`
+                              )
+                            : [],
                       },
                     }
                   : item
               ),
             },
-            false
+            true
           )
 
           callback()

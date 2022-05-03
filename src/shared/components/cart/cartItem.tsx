@@ -9,7 +9,7 @@ import { MdOutlineClose } from "react-icons/md"
 interface InterfaceCartItem {
   cart: ICartItem
   handleClose?: Function
-  onDelete: (props: ProductIds) => void
+  onDelete: (props: ICartItem) => void
 }
 
 export const CartItem = ({
@@ -28,8 +28,8 @@ export const CartItem = ({
             className="image-container cart__item-image-wrapper cursor-pointer"
           >
             <Image
-              src={`${API_URL}${cart.image_url[0]}`}
-              alt={cart.product_name}
+              src={`${API_URL}${cart.product.representative_image || ""}`}
+              alt={cart.product.product_name}
               className="image"
               layout="fill"
             />
@@ -45,32 +45,30 @@ export const CartItem = ({
             }}
             className="cart__item-info-name"
           >
-            {cart.product_name}
+            {cart.product.product_name}
           </a>
         </Link>
 
-        {(cart?.attribute_names?.length || 0) > 0 ? (
+        {/* {(cart?.attribute_names?.length || 0) > 0 ? (
           <span className="cart__item-info-type">
             ({cart.attribute_names?.join(", ") || ""})
           </span>
-        ) : null}
+        ) : null} */}
 
         <div className="cart__item-info-bottom">
           <div className="cart__item-info-bottom-content">
-            <p className="cart__item-info-bottom-quantity">{cart.quantity}</p>
+            <p className="cart__item-info-bottom-quantity">
+              {cart.product_qty}
+            </p>
             <MdOutlineClose />
             <p className="cart__item-info-bottom-price">
-              {formatMoneyVND(cart.price)}
+              {formatMoneyVND(cart.price_unit)}
             </p>
           </div>
           <button
             onClick={(e) => {
               e.stopPropagation()
-              onDelete &&
-                onDelete({
-                  product_prod_id: cart.product_prod_id,
-                  product_tmpl_id: cart.product_tmpl_id,
-                })
+              onDelete && onDelete(cart)
             }}
             className="btn-reset cart__item-btn-delete"
           >

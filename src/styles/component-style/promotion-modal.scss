@@ -82,13 +82,10 @@
         @include flex(flex-start, center);
         padding: 1.2rem;
         border: 1px solid $border-color-1;
-        margin-bottom: 2rem;
+        margin-bottom: 1.2rem;
         border-radius: 0.4rem;
         overflow: hidden;
         cursor: pointer;
-        @include responsive(lg-screen) {
-          padding: 2rem;
-        }
 
         &-active {
           border: 1px solid $primary;
@@ -104,30 +101,22 @@
           border-right: 2px dashed rgba($color: #000000, $alpha: 0.1);
 
           & img {
-            margin-right: 1rem;
+            margin-right: 1.2rem;
             width: 8rem;
             height: 8rem;
-            @include responsive(sm-screen) {
-              margin-right: 2rem;
-              width: 10rem;
-              height: 10rem;
-            }
             object-fit: cover;
           }
         }
 
         &-info {
-          padding-inline: 1rem;
-          @include responsive(sm-screen) {
-            padding-inline: 2rem;
-          }
+          padding-inline: 1.2rem;
           flex: 1;
           flex-direction: column;
           @include flex(center, flex-start);
 
           .promotion__modal-code {
             margin-bottom: 0.5rem;
-            @include style-text(600, 1.2rem, 1.8rem, $text-color);
+            @include style-text(500, 1.2rem, 1.8rem, $text-color);
             @include responsive(sm-screen) {
               font-size: 1.4rem;
               line-height: 2rem;
@@ -167,7 +156,7 @@
   }
 
   &-footer {
-    margin-top: 3rem;
+    margin-top: 2rem;
     @include flex(flex-end, center);
 
     & .btn-secondary {

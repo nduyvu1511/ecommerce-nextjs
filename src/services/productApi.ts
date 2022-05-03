@@ -41,9 +41,11 @@ const productApi = {
     )
   },
 
-  getSaleProductList: () => {
+  getSaleProductList: (token?: string) => {
     return axiosClient.post("/daily_deal_controller/get_daily_deal", {
-      params: {},
+      params: {
+        token: token || false,
+      },
     })
   },
 

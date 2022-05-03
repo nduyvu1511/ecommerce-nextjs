@@ -34,7 +34,7 @@ const Navigation = ({ handleClickModal }: IHandleClickModal) => {
           <Link href={nav.path} passHref>
             <a onClick={() => handleItemClick(nav.id)}>
               {nav.icon}
-              {nav.engName}
+              {nav.vniName}
               {nav.id === 8 && (
                 <>
                   <span style={{ marginLeft: "3px" }}>Tiếng Việt</span>

@@ -1,10 +1,10 @@
 import { RootState } from "@/core/store"
-import { isArrayHasValue } from "@/helper"
+import { isArrayHasValue, isObjectHasValue } from "@/helper"
 import { DeleteWishlistHook, Product, Wishlist } from "@/models"
 import {
   setCurrentWishlistBtnProductId,
   setFetchingCurrentWishlistBtn,
-  setMessage,
+  setMessage
 } from "@/modules"
 import userApi from "@/services/userApi"
 import { useRouter } from "next/router"
@@ -33,7 +33,7 @@ const useWishlist = (isFetchData: boolean): WishlistSWR => {
     isFetchData && token
       ? () => userApi.getWishlists({ token }).then((res: any) => res?.result)
       : null,
-    { revalidateOnFocus: false, dedupingInterval: 3600000 }
+    { revalidateOnFocus: false, dedupingInterval: 10 }
   )
 
   const handleDeleteWishlist = ({
@@ -50,7 +50,7 @@ const useWishlist = (isFetchData: boolean): WishlistSWR => {
         if (res.result?.[0]) {
           mutate(
             [...data].filter((item) => item.id !== res.result?.[0]),
-            true
+            false
           )
         }
       })
@@ -77,11 +77,15 @@ const useWishlist = (isFetchData: boolean): WishlistSWR => {
           .then((res: any) => {
             dispatch(setFetchingCurrentWishlistBtn(false))
 
-            if (res?.result?.success) {
-              mutate([res.result], true)
+            if (isObjectHasValue(res.result)) {
+              mutate([res.result], false)
             } else {
               dispatch(
-                setMessage({ title: res?.result?.message, type: "danger" })
+                setMessage({
+                  title:
+                    res?.result?.message || "Có lỗi khi thêm vào yêu thích",
+                  type: "danger",
+                })
               )
             }
           })
@@ -107,14 +111,14 @@ const useWishlist = (isFetchData: boolean): WishlistSWR => {
         userApi
           .addWishlist({ token, product_id: product.product_tmpl_id })
           .then((res: any) => {
-            if (res?.result?.success) {
+            if (isObjectHasValue(res.result)) {
               dispatch(setFetchingCurrentWishlistBtn(false))
               dispatch(
                 setMessage({
                   title: "Đã Thêm vào danh sách yêu thích",
                 })
               )
-              mutate([res.result, ...data], true)
+              mutate([res.result, ...data], false)
             } else {
               dispatch(
                 setMessage({
@@ -143,3 +147,4 @@ const useWishlist = (isFetchData: boolean): WishlistSWR => {
 }
 
 export { useWishlist }
+

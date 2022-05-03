@@ -328,52 +328,52 @@
     }
   }
 
-  .product__card__bottom-hover {
-    @include responsive(lg-screen) {
-      position: absolute;
-      width: calc(100% + 1px);
-      left: 50%;
-      transform: translateX(-50%);
+  // .product__card__bottom-hover {
+  //   @include responsive(lg-screen) {
+  //     position: absolute;
+  //     width: calc(100% + 1px);
+  //     left: 50%;
+  //     transform: translateX(-50%);
 
-      height: 60px;
-      display: block;
-      bottom: calc(0% - 60px);
-      border: 1px solid $border-color-1;
-      border-top: 0;
-      background-color: white;
-      padding: 0 1rem;
-      transition: all 0.5s ease;
-      z-index: 10;
-      border-radius: 0 0 4px 4px;
-      @include hidden;
-    }
+  //     height: 60px;
+  //     display: block;
+  //     bottom: calc(0% - 60px);
+  //     border: 1px solid $border-color-1;
+  //     border-top: 0;
+  //     background-color: white;
+  //     padding: 0 1rem;
+  //     transition: all 0.5s ease;
+  //     z-index: 10;
+  //     border-radius: 0 0 4px 4px;
+  //     @include hidden;
+  //   }
 
-    & .product__card__bottom-btn {
-      display: none;
-      font-family: $second-font;
-      background-color: $primary-color;
-      color: $white;
-      border: none;
-      margin-top: 1.5rem;
-      @include responsive(lg-screen) {
-        display: flex;
-      }
-      @include responsive(lg-screen) {
-        margin-top: 1rem;
-      }
+  //   & .product__card__bottom-btn {
+  //     display: none;
+  //     font-family: $second-font;
+  //     background-color: $primary-color;
+  //     color: $white;
+  //     border: none;
+  //     margin-top: 1.5rem;
+  //     @include responsive(lg-screen) {
+  //       display: flex;
+  //     }
+  //     @include responsive(lg-screen) {
+  //       margin-top: 1rem;
+  //     }
 
-      & svg {
-        font-size: 1.6rem;
-        margin-right: 0.6rem;
-      }
-    }
-  }
+  //     & svg {
+  //       font-size: 1.6rem;
+  //       margin-right: 0.6rem;
+  //     }
+  //   }
+  // }
 
-  &:hover .product__card__bottom-hover {
-    @include responsive(lg-screen) {
-      @include show;
-    }
-  }
+  // &:hover .product__card__bottom-hover {
+  //   @include responsive(lg-screen) {
+  //     @include show;
+  //   }
+  // }
 
   & &:hover {
     // border: 1px solid $border-product-hover;

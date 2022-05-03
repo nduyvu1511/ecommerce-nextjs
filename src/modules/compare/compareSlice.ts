@@ -11,7 +11,7 @@ const initialState: ProductCompare = {
   isShowCompareModal: false,
 }
 
-export const compareSlice = createSlice({
+const compareSlice = createSlice({
   name: "compare",
   initialState,
   reducers: {

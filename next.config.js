@@ -1,12 +1,12 @@
 /** @type {import('next').NextConfig} */
-const { i18n } = require("./next-i18next.config")
 const withImages = require("next-images")
+const { i18n } = require("./i18n.config")
 
 module.exports = withImages({
   reactStrictMode: true,
-  i18n,
   images: {
     disableStaticImages: true,
     domains: ["erp.womart.vn", "demo.satavan.com", "nhavietdental.satavan.com"],
   },
+  i18n,
 })

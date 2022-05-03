@@ -24,6 +24,11 @@ const useProductDetail = ({ product }: Props): UseProductDetailProps => {
     product?.product_tmpl_id ? product : null
   )
 
+  const toggelWishlistStatus = () => {
+    if (productDetail) {
+    }
+  }
+
   useEffect(() => {
     if (firstRef.current) {
       if (

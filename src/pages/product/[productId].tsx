@@ -45,9 +45,8 @@ const ProductDetailPage = ({ product }: ProduductDetailPageProps) => {
   const dispatch = useDispatch()
   const router = useRouter()
   const { carts } = useCartOrder()
-  const { data } = useWishlist(false)
-  console.log(data)
   const language = "vni"
+  useWishlist(true)
   const { product: productDetail, clearProductDetail } = useProductDetail({
     product,
   })
@@ -323,7 +322,6 @@ export const getStaticProps: GetStaticProps = async (
       data: { detail: productDetail },
     },
   }: any = await productApi.getProductDetail({
-    partner_id: getFromLocalStorage("partner_id") || 1,
     product_id: product.product_prod_id,
     list_products: [getListAttributeId(product)],
   })

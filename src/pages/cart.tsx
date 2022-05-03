@@ -2,9 +2,10 @@ import { cartEmptyIcon } from "@/assets"
 import { CartPageItem, InputCheckbox } from "@/components"
 import { OrderContainer } from "@/container"
 import { MainNoFooter } from "@/layout"
+import { CartItem } from "@/models"
 import { setProductList } from "@/modules"
 import Link from "next/link"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useCartOrder } from "shared/hook"
 import { RootState } from "../core"
@@ -20,8 +21,9 @@ const Cart = () => {
     deleteCartItem,
     findProductFromProductList,
     handleResetOrderField,
-  } = useCartOrder()
+  } = useCartOrder(true)
   const { productList } = useSelector((state: RootState) => state.order)
+  const [currentCartItemLoading, setCurrentCartItemLoading] = useState<number>()
 
   useEffect(() => {
     if (carts?.length > 0) {
@@ -33,6 +35,21 @@ const Cart = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch])
+
+  const handleUpdateCartQuantity = (cart: CartItem) => {
+    if (cart.stored_product_id === currentCartItemLoading) return
+    setCurrentCartItemLoading(cart.stored_product_id)
+
+    updateQuantity(
+      cart,
+      () => {
+        setCurrentCartItemLoading(0)
+      },
+      () => {
+        setCurrentCartItemLoading(0)
+      }
+    )
+  }
 
   return (
     <OrderContainer
@@ -89,15 +106,21 @@ const Cart = () => {
                     onCheck={toggleCheckAllCart}
                   />
                 </div>
+
                 <ul className="cart__body-cart-list">
                   {carts.map((cart, index) => (
                     <CartPageItem
                       key={index}
-                      isChecked={!!findProductFromProductList(cart)}
-                      onDeleteItem={(productIds) => deleteCartItem(productIds)}
-                      onUpdateQuantity={(data: any) => updateQuantity(data)}
+                      isChecked={
+                        !!findProductFromProductList(cart.stored_product_id)
+                      }
+                      onDeleteItem={(cart) => deleteCartItem([cart])}
+                      onUpdateQuantity={handleUpdateCartQuantity}
                       onCheck={(productIds) => toggleEachInput(productIds)}
                       cart={cart}
+                      disabled={
+                        currentCartItemLoading === cart.stored_product_id
+                      }
                     />
                   ))}
                 </ul>

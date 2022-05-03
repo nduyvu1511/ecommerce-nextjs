@@ -115,12 +115,10 @@
 
         & .cart__item-info-name-type {
           pointer-events: none;
-          margin-top: 0.5rem;
-          @include style-text(500, 1.2rem, 2rem, #4e5261);
+          @include style-text(500, 1.1rem, 2rem, $gray);
 
-          & span:first-child {
-            margin-right: 0.6rem;
-            display: inline-block;
+          @include responsive(sm-screen) {
+            font-size: 1.2rem;
           }
         }
 

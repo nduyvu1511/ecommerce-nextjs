@@ -1,21 +1,21 @@
 import { RootState } from "@/core/store"
-import { Product, ProductDetail as IProductDetail } from "@/models"
-import {
-  setAttributeList,
-  setProduct as setProductStore,
-  toggleModalProduct,
-} from "@/modules"
-import productApi from "@/services/productApi"
-import { memo, useEffect, useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { useProductDetail } from "shared/hook"
 import {
   getAttributeList,
   getListAttributeId,
   isArrayHasValue,
   isObjectHasValue,
-  mergeProductAndProductDetail,
+  mergeProductAndProductDetail
 } from "@/helper"
+import { Product, ProductDetail as IProductDetail } from "@/models"
+import {
+  setAttributeList,
+  setProduct as setProductStore,
+  toggleModalProduct
+} from "@/modules"
+import productApi from "@/services/productApi"
+import { memo, useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { useProductDetail } from "shared/hook"
 import { ProductDetailLoading } from "../loader"
 import { Modal } from "../modal"
 import { ProductDetail } from "./productDetail"
@@ -26,6 +26,8 @@ export const ModalProductDetail = memo(function ModalProductDetailChild() {
   const { product: productProps } = useSelector(
     (state: RootState) => state.product
   )
+  const { userInfo: { id: partner_id = 0 } = { userInfo: undefined } } =
+    useSelector((state: RootState) => state.user)
 
   const [product, setProduct] = useState<IProductDetail | null>(null)
   const [isLoading, setLoading] = useState<boolean>(false)
@@ -41,6 +43,7 @@ export const ModalProductDetail = memo(function ModalProductDetailChild() {
 
     productApi
       .getProductDetail({
+        partner_id,
         product_id: productProps.product_prod_id,
         list_products: [getListAttributeId(productProps)],
       })

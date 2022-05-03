@@ -2,7 +2,6 @@ import { RootState } from "@/core/store"
 import { productListToObjectIdQuantity } from "@/helper"
 import { CreateOrderDraftProps } from "@/models"
 import {
-  deleteManyItems,
   setMessage,
   setOrderDone,
   setOrderDraft,
@@ -11,6 +10,7 @@ import {
 import orderApi from "@/services/orderApi"
 import userApi from "@/services/userApi"
 import { useDispatch, useSelector } from "react-redux"
+import { useCartOrder } from "./useCartOrder"
 
 interface UpdateOrderHook {
   partner_shipping_id?: number | null
@@ -32,16 +32,7 @@ const useOrder = (): ProductSWR => {
   const { orderDraft, productList, payment, note, delivery } = useSelector(
     (state: RootState) => state.order
   )
-
-  // const { data, error, isValidating } = useSWR(
-  //   "order_draft",
-  //   orderDraft === undefined && productList && shouldFetch
-  //     ? () => createOrderDraft()
-  //     : null,
-  //   {
-  //     revalidateOnFocus: false,
-  //   }
-  // )
+  const { deleteCartItem } = useCartOrder(false)
 
   const createOrderDraft = async (orderDraftProps?: CreateOrderDraftProps) => {
     const {
@@ -59,11 +50,8 @@ const useOrder = (): ProductSWR => {
         customer_id,
         token,
         note,
-        // partner_shipping_id: address?.id || null,
         list_products: [
           {
-            // payment_term_id: payment?.acquirer_id || null,
-            // coupon_code: promotion?.coupon_code || null,
             products: productListToObjectIdQuantity(productList),
           },
         ],
@@ -114,14 +102,7 @@ const useOrder = (): ProductSWR => {
           })
           if (res?.result?.success) {
             dispatch(setOrderDone(res.result?.data?.info_booking))
-            dispatch(
-              deleteManyItems(
-                productList.map((item) => ({
-                  product_prod_id: item.product_prod_id,
-                  product_tmpl_id: item.product_tmpl_id,
-                }))
-              )
-            )
+            deleteCartItem(productList)
             handleSuccess()
           }
         }

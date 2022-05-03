@@ -1,9 +1,12 @@
 import { ProductItem, ProductItemLoading } from "@/components"
 import { isArrayHasValue } from "@/helper"
 import { useProduct } from "shared/hook"
+import useLocale from "shared/hook/useLocale"
 import { HomeSlideProduct } from "./homeSlide"
 
 export const MainContent = () => {
+  const locale = useLocale()
+
   const { data: topProducts, isValidating: isTopLoading } = useProduct({
     key: "top_products",
     params: { type_get: "top_sale", limit: 12, offset: 2 },
@@ -29,7 +32,6 @@ export const MainContent = () => {
                   .map((product, index) => (
                     <ProductItem
                       isLoading={isTopLoading}
-                      type="shop"
                       key={index}
                       product={product}
                     />
@@ -53,7 +55,6 @@ export const MainContent = () => {
                   .map((product, index) => (
                     <ProductItem
                       isLoading={isTopLoading}
-                      type="shop"
                       key={index}
                       product={product}
                     />

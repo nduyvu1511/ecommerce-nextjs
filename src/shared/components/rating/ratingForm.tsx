@@ -1,12 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
-import { RootState } from "@/core/store"
 import {
   AttachmentRes,
   DeleteRatingProps,
   PurchasedProduct,
   RatingRangePost,
   TagRating,
-  UpdateRatingProps
+  UpdateRatingProps,
 } from "@/models"
 import { setMessage, setModalConfirm } from "@/modules"
 import { API_URL } from "@/services"
@@ -17,7 +16,7 @@ import { useEffect, useState } from "react"
 import { AiOutlineCamera } from "react-icons/ai"
 import { IoMdClose } from "react-icons/io"
 import { RiLoader4Fill } from "react-icons/ri"
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 import { useAttachment, useAuth, useInputText } from "shared/hook"
 import { Tag } from "../common"
 import { ModalConfirm } from "../modal/modalConfirm"
@@ -41,9 +40,6 @@ export const RatingForm = ({
   const dispatch = useDispatch()
   const router = useRouter()
   const { token } = useAuth()
-  const {
-    modalConfirm: { isOpen },
-  } = useSelector((state: RootState) => state.common)
 
   const { deleteImage, images, getBase64Images, setImages } = useAttachment({
     limit: 5,
@@ -301,32 +297,32 @@ export const RatingForm = ({
                         key={index}
                         className="rating__form-attachment-image-item"
                       >
-                        {purchaseForm?.comment_rating?.attachment_ids
-                          ?.length === 0 ? (
-                          <span
-                            onClick={(e) => {
-                              e.stopPropagation()
-                              deleteImage(url)
-                            }}
-                            className="btn-reset rating__form-attachment-image-item-delete"
-                          >
-                            <IoMdClose />
-                          </span>
-                        ) : null}
+                        {/* {purchaseForm?.comment_rating?.attachment_ids
+                          ?.length === 0 ? ( */}
+                        <span
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            deleteImage(url)
+                          }}
+                          className="btn-reset rating__form-attachment-image-item-delete"
+                        >
+                          <IoMdClose />
+                        </span>
+                        {/* ) : null} */}
 
-                        {ratingImageIdsLoading &&
+                        {/* {ratingImageIdsLoading &&
                         !ratingImageIdsLoading?.includes(url) ? (
                           <span className="rating__form-attachment-image-item-loading">
                             <RiLoader4Fill className="loader" />
                           </span>
-                        ) : null}
+                        ) : null} */}
 
                         <div className="image-container">
                           <Image
                             src={url}
                             alt=""
                             layout="fill"
-                            quality={25}
+                            quality={20}
                             className="image"
                           />
                         </div>

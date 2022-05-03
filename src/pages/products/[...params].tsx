@@ -72,7 +72,7 @@ const ProductList = () => {
               {!isFetching &&
                 products?.length > 0 &&
                 products.map((product, index) => (
-                  <ProductItem type="shop" key={index} product={product} />
+                  <ProductItem key={index} product={product} />
                 ))}
             </div>
 

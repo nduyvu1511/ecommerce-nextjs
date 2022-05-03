@@ -1,8 +1,7 @@
 import { RootState } from "@/core/store"
 import { setModalConfirm } from "@/modules"
 import { useEffect } from "react"
-import { RiCloseFill } from "react-icons/ri"
-import { VscChromeClose } from "react-icons/vsc"
+import { TiWarning } from "react-icons/ti"
 import { useDispatch, useSelector } from "react-redux"
 
 interface ModalConfirmProps {
@@ -50,20 +49,14 @@ export const ModalConfirm = ({ onConfirm }: ModalConfirmProps) => {
           <section className="modal__confirm-container">
             <div className="modal__confirm">
               <header className="modal__confirm-header">
-                <button
-                  onClick={handleCloseModal}
-                  className="btn-reset modal__confirm-header-close-btn"
-                >
-                  <RiCloseFill />
-                </button>
-              </header>
-              <div className="modal__confirm-body">
-                <span className="modal__confirm-body-icon">
-                  <VscChromeClose />
+                <span className="modal__confirm-header-icon">
+                  <TiWarning />
                 </span>
-                <h3 className="modal__confirm-body-heading">
+                <h3 className="modal__confirm-header-heading">
                   {language === "vni" ? "Bạn có chắc chắn?" : "Are you sure?"}
                 </h3>
+              </header>
+              <div className="modal__confirm-body">
                 <p className="modal__confirm-body-desc">{title}</p>
               </div>
               <footer className="modal__confirm-footer">
