@@ -1,7 +1,6 @@
 import { avatar as avatarBlank } from "@/assets"
 import {
   CategoryItem,
-  CategorySlide,
   HeaderMobile,
   HomeCategory,
   navMobileLinks,
@@ -21,6 +20,7 @@ import Link from "next/link"
 import { useRouter } from "next/router"
 import { AiOutlineUser } from "react-icons/ai"
 import { BiCart } from "react-icons/bi"
+import { FiPhoneCall } from "react-icons/fi"
 import { useDispatch, useSelector } from "react-redux"
 import { useCartOrder, useCategory, useWishlist } from "shared/hook"
 import "swiper/css"
@@ -140,9 +140,9 @@ const Home = () => {
 
       <Popup />
 
-      {/* <a href="tel:0909099580" className="btn-primary btn-call">
+      <a href="tel:0909099580" className="btn-primary btn-call">
         <FiPhoneCall />
-      </a> */}
+      </a>
     </>
   )
 }

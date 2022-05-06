@@ -1,4 +1,4 @@
-import { loginBg, logo } from "@/assets"
+import { logo } from "@/assets"
 import { PHONE_SCHEMA } from "@/helper"
 import {
   setCurrentUserInfo,
@@ -37,28 +37,31 @@ export const AuthContainer = ({
   const dispatch = useDispatch()
   const { loginWithGoogle, loginWithFacebook, getUserInfo } = useAuth()
 
+  const handleUpdatePhoneNumber = async (token: string) => {
+    getUserInfo(token, (userInfo) => {
+      if (PHONE_SCHEMA.test(userInfo?.phone || "")) {
+        if (view === "page") {
+          router.push("/")
+        } else {
+          dispatch(toggleOpenLoginSMSModal(false))
+          dispatch(setMessage({ title: "Đăng nhập thành công" }))
+        }
+        dispatch(setToken(token))
+        dispatch(setUserInfo(userInfo))
+      } else {
+        if (view === "modal") {
+          dispatch(toggleOpenLoginSMSModal(false))
+          dispatch(toggleOpenLoginModal(false))
+        }
+        dispatch(setCurrentUserInfo(userInfo))
+      }
+    })
+  }
+
   const handleLoginWithGoogle = async () => {
     try {
-      loginWithGoogle(async (token: string) => {
-        getUserInfo(token, (userInfo) => {
-          if (PHONE_SCHEMA.test(userInfo?.phone || "")) {
-            if (view === "page") {
-              router.push("/")
-            } else {
-              dispatch(toggleOpenLoginSMSModal(false))
-              dispatch(setMessage({ title: "Đăng nhâp thành công" }))
-            }
-            dispatch(setToken(token))
-            dispatch(setUserInfo(userInfo))
-          } else {
-            if (view === "modal") {
-              dispatch(toggleOpenLoginSMSModal(false))
-              dispatch(toggleOpenLoginModal(false))
-            }
-            dispatch(setCurrentUserInfo(userInfo))
-            dispatch(toggleOpenOtpLoginModal(true))
-          }
-        })
+      loginWithGoogle((token: string) => {
+        handleUpdatePhoneNumber(token)
       })
     } catch (error) {
       console.log(error)
@@ -66,11 +69,13 @@ export const AuthContainer = ({
   }
 
   const handleLoginWithFacebook = async () => {
-    loginWithFacebook((token) => {
-      dispatch(setToken(token))
-      router.push("/")
-      dispatch(setMessage({ title: "Đăng nhâp thành công" }))
-    })
+    try {
+      loginWithFacebook((token) => {
+        handleUpdatePhoneNumber(token)
+      })
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (

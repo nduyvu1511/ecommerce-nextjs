@@ -1,8 +1,7 @@
 import axios from "axios"
 
-export const API_URL =
-  process.env.NEXT_PUBLIC_API_URL || "https://demo.satavan.com"
-export const DOMAIN_URL = "https://ecommerce-nextjs-liart.vercel.app"
+export const API_URL = process.env.NEXT_PUBLIC_API_URL
+export const DOMAIN_URL = process.env.NEXT_PUBLIC_DOMAIN_URL
 
 const axiosClient = axios.create({
   baseURL: API_URL,

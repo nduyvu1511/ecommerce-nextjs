@@ -98,7 +98,7 @@
 
 .zalo-chat-widget {
   z-index: 1000 !important;
-  right: 28px !important;
+  left: 28px !important;
   bottom: 95px !important;
   display: none;
   @include responsive(lg-screen) {
@@ -151,10 +151,9 @@
 }
 
 .btn-call {
-  display: none !important;
   position: fixed;
   bottom: 160px;
-  right: 34px;
+  left: 32px;
   z-index: 1000;
   width: 50px;
   height: 50px;
@@ -162,7 +161,7 @@
   background-color: $green;
   @include flex-center;
   padding: 0.4rem;
-  box-shadow: $box-shadow-1;
+  box-shadow: $box-shadow-2;
 
   & svg {
     font-size: 2rem;
@@ -180,10 +179,6 @@
     align-items: center;
     justify-content: center;
   }
-}
-
-.embed-container {
-  // display: none;
 }
 
 .grecaptcha-badge {

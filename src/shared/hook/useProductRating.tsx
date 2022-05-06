@@ -40,7 +40,7 @@ const useProductRating = ({
   const { token } = useSelector((state: RootState) => state.user)
 
   const fetcher = async () => {
-    if (!shouldFetch || !token) return
+    if (!shouldFetch) return
 
     if (type === "purchase") {
       const res: any = await ratingApi.getProductsPurchased(token)

@@ -6,7 +6,12 @@ module.exports = withImages({
   reactStrictMode: true,
   images: {
     disableStaticImages: true,
-    domains: ["erp.womart.vn", "demo.satavan.com", "nhavietdental.satavan.com"],
+    domains: [
+      "erp.womart.vn",
+      "demo.satavan.com",
+      "nhavietdental.satavan.com",
+      "cf.shopee.vn",
+    ],
   },
   i18n,
 })

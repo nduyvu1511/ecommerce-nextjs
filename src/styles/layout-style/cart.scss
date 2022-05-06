@@ -2,22 +2,6 @@
   .cart__wrapper {
     margin-bottom: 2rem;
 
-    .cart__page-empty {
-      @include flex-center;
-      flex-direction: column;
-      padding-block: 5rem;
-
-      & svg {
-        margin-bottom: 2rem;
-      }
-
-      &-title {
-        margin-bottom: 3rem;
-        text-align: center;
-        @include style-text(600, 1.8rem, 2.8rem, $danger);
-      }
-    }
-
     .cart__body {
       &-cart {
         &-header-sm {
@@ -105,5 +89,25 @@
         }
       }
     }
+  }
+}
+
+.cart__page-empty {
+  @include flex-center;
+  flex-direction: column;
+  padding-block: 5rem;
+
+  & svg {
+    margin-bottom: 2rem;
+  }
+
+  &-title {
+    margin-bottom: 3rem;
+    text-align: center;
+    @include style-text(500, 1.6rem, 2.6rem, $text-color);
+  }
+
+  & .btn-primary {
+    padding-inline: 3rem;
   }
 }

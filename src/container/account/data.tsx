@@ -78,7 +78,7 @@ export const accountOptionList = [
     icon: <RiLockPasswordLine />,
   },
   {
-    path: "/account/notification",
+    path: "/account/notifications",
     vniTitle: "Thông báo",
     engTitle: "Notification",
     icon: <RiNotification2Line />,

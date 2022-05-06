@@ -41,6 +41,7 @@ export const Header = () => {
   const { carts } = useCartOrder(true)
   const { asPath, pathname } = useRouter()
   const [openCartModal, setOpenCartModal] = useState<boolean>(false)
+  const [openNotiModal, setOpenNotiModal] = useState<boolean>(false)
 
   const changeLanguage = (locale: string) => {
     router.push(pathname, asPath, { locale })
@@ -66,14 +67,32 @@ export const Header = () => {
             <div className="header__actions-right">
               <div className="header__actions-right-tools">
                 <div className="header__actions-right-tools-noti">
-                  <Link href="/account/notifications">
-                    <a>
-                      <IoMdNotificationsOutline />
-                      Thông báo
-                    </a>
-                  </Link>
-                  <div className="header__notification-modal">
-                    <Notification />
+                  <div
+                    onMouseMove={() => setOpenNotiModal(true)}
+                    onMouseLeave={() => setOpenNotiModal(false)}
+                  >
+                    <Link href="/account/notifications">
+                      <a>
+                        <IoMdNotificationsOutline />
+                        Thông báo
+                      </a>
+                    </Link>
+                  </div>
+
+                  <div
+                    onMouseEnter={() => setOpenNotiModal(true)}
+                    onMouseLeave={() => setOpenNotiModal(false)}
+                    className="header__notification-modal"
+                  >
+                    {openNotiModal ? (
+                      <div className="header__notification-modal-wrapper">
+                        <p className="notification-title">Thông báo mới nhận</p>
+                        <Notification />
+                        <Link passHref href="/account/nofifications">
+                          <p className="notification__see-btn">Xem tất cả</p>
+                        </Link>
+                      </div>
+                    ) : null}
                   </div>
                 </div>
 
@@ -96,16 +115,14 @@ export const Header = () => {
                 {!token ? (
                   <div className="header__actions-right-tools-option">
                     <div className="show-on-mobile">
-                      <Link href="/login">
-                        <a>{router.locale === "vni" ? "Đăng nhập" : "Login"}</a>
-                      </Link>
+                      <Link href="/login">Đăng nhập</Link>
                     </div>
 
                     <div
                       onClick={() => dispatch(toggleOpenLoginModal(true))}
                       className="show-on-desktop cursor-pointer"
                     >
-                      {router.locale === "vni" ? "Đăng nhập" : "Login"}
+                      Đăng nhập
                     </div>
                   </div>
                 ) : null}

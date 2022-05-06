@@ -1,11 +1,9 @@
 import { ProductItem, ProductItemLoading } from "@/components"
 import { isArrayHasValue } from "@/helper"
 import { useProduct } from "shared/hook"
-import useLocale from "shared/hook/useLocale"
 import { HomeSlideProduct } from "./homeSlide"
 
 export const MainContent = () => {
-  const locale = useLocale()
 
   const { data: topProducts, isValidating: isTopLoading } = useProduct({
     key: "top_products",

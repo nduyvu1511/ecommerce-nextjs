@@ -5,6 +5,10 @@
     display: block;
   }
 
+  @include responsive(screeen-1024) {
+    height: $header-height;
+  }
+
   .header__actions-wrapper {
     display: none;
     @include responsive(screen-1024) {
@@ -109,12 +113,6 @@
           &-noti {
             position: relative;
             margin-right: 2rem;
-
-            &:hover {
-              & .header__notification-modal {
-                display: block;
-              }
-            }
 
             & a {
               display: flex;
@@ -355,7 +353,7 @@
             right: 0;
             top: calc(100% + 8px);
             transition: all 0.2s;
-            border-radius: 5px;
+            border-radius: 0.4rem;
             font-family: $second-font;
             font-weight: 700;
 
@@ -368,14 +366,11 @@
               top: -10px;
               left: 0;
             }
-          }
 
-          // .header__main-top-actions-cart-wrapper:hover
-          //   .header__main-cart-absolute {
-          //   @include responsive(lg-screen) {
-          //     @include show;
-          //   }
-          // }
+            & .cart__modal {
+              border-radius: 0.4rem;
+            }
+          }
         }
       }
     }

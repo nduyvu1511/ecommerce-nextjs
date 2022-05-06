@@ -4,7 +4,7 @@ import { DeleteWishlistHook, Product, Wishlist } from "@/models"
 import {
   setCurrentWishlistBtnProductId,
   setFetchingCurrentWishlistBtn,
-  setMessage
+  setMessage,
 } from "@/modules"
 import userApi from "@/services/userApi"
 import { useRouter } from "next/router"
@@ -77,9 +77,7 @@ const useWishlist = (isFetchData: boolean): WishlistSWR => {
           .then((res: any) => {
             dispatch(setFetchingCurrentWishlistBtn(false))
 
-            if (isObjectHasValue(res.result)) {
-              mutate([res.result], false)
-            } else {
+            if (!res?.result?.success) {
               dispatch(
                 setMessage({
                   title:
@@ -87,7 +85,10 @@ const useWishlist = (isFetchData: boolean): WishlistSWR => {
                   type: "danger",
                 })
               )
+              return
             }
+
+            mutate([res.result], false)
           })
           .catch(() => {
             dispatch(setFetchingCurrentWishlistBtn(false))
@@ -111,22 +112,23 @@ const useWishlist = (isFetchData: boolean): WishlistSWR => {
         userApi
           .addWishlist({ token, product_id: product.product_tmpl_id })
           .then((res: any) => {
-            if (isObjectHasValue(res.result)) {
-              dispatch(setFetchingCurrentWishlistBtn(false))
-              dispatch(
-                setMessage({
-                  title: "Đã Thêm vào danh sách yêu thích",
-                })
-              )
-              mutate([res.result, ...data], false)
-            } else {
+            dispatch(setFetchingCurrentWishlistBtn(false))
+            if (!res?.result?.success) {
               dispatch(
                 setMessage({
                   title: res?.result?.message || "",
                   type: "danger",
                 })
               )
+              return
             }
+
+            dispatch(
+              setMessage({
+                title: "Đã Thêm vào danh sách yêu thích",
+              })
+            )
+            mutate([res.result, ...data], false)
           })
           .catch(() => {
             dispatch(setFetchingCurrentWishlistBtn(false))
@@ -147,4 +149,3 @@ const useWishlist = (isFetchData: boolean): WishlistSWR => {
 }
 
 export { useWishlist }
-

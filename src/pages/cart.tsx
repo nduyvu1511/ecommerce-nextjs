@@ -13,6 +13,7 @@ import { RootState } from "../core"
 const Cart = () => {
   const language = "vni"
   const dispatch = useDispatch()
+  const { token } = useSelector((state: RootState) => state.user)
   const {
     carts,
     toggleEachInput,
@@ -50,6 +51,20 @@ const Cart = () => {
       }
     )
   }
+
+  if (!token)
+    return (
+      <div className="cart__page-empty">
+        {cartEmptyIcon}
+        <p className="cart__page-empty-title">
+          Vui lòng đăng nhập để tiếp tục mua hàng
+        </p>
+
+        <Link href="/login" passHref>
+          <p className="btn-primary">Đăng nhập</p>
+        </Link>
+      </div>
+    )
 
   return (
     <OrderContainer

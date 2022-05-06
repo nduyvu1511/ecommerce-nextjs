@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/no-sync-scripts */
-import Document, { Html, Head, Main, NextScript } from "next/document"
-
+import Document, { Head, Html, Main, NextScript } from "next/document"
 class MyDocument extends Document {
   render() {
     return (
@@ -17,6 +16,7 @@ class MyDocument extends Document {
         </Head>
 
         <body>
+          <Main />
           <div className="embed-container">
             <div id="fb-root"></div>
             <div id="fb-customer-chat" className="fb-customerchat"></div>
@@ -32,32 +32,31 @@ class MyDocument extends Document {
           </div>
 
           <script src="https://sp.zalo.me/plugins/sdk.js"></script>
-
           <script
             dangerouslySetInnerHTML={{
               __html: `
-                  var chatbox = document.getElementById('fb-customer-chat');
-                  chatbox.setAttribute("page_id", "100797585961540");
-                  chatbox.setAttribute("attribution", "biz_inbox");
+            var chatbox = document.getElementById('fb-customer-chat');
+            chatbox.setAttribute("page_id", "100797585961540");
+            chatbox.setAttribute("attribution", "biz_inbox");
 
-                  window.fbAsyncInit = function() {
-                    FB.init({
-                      xfbml            : true,
-                      version          : 'v13.0'
-                    });
-                  };
+            window.fbAsyncInit = function() {
+              FB.init({
+                xfbml            : true,
+                version          : 'v13.0'
+              });
+            };
 
-                  (function(d, s, id) {
-                    var js, fjs = d.getElementsByTagName(s)[0];
-                    if (d.getElementById(id)) return;
-                    js = d.createElement(s); js.id = id;
-                    js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
-                    fjs.parentNode.insertBefore(js, fjs);
-                  }(document, 'script', 'facebook-jssdk'));
-                `,
+            (function(d, s, id) {
+              var js, fjs = d.getElementsByTagName(s)[0];
+              if (d.getElementById(id)) return;
+              js = d.createElement(s); js.id = id;
+              js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
+              fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+          `,
             }}
           ></script>
-          <Main />
+
           <NextScript />
         </body>
       </Html>

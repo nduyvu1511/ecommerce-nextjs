@@ -8,8 +8,7 @@ import { useCartOrder, useOrderHistory, useWishlist } from "shared/hook"
 
 const AccountGeneral = () => {
   const language = "vni"
-
-  const { carts } = useCartOrder()
+  const { carts } = useCartOrder(true)
   const { data: wishlists } = useWishlist(false)
   const { data: orderHistoryList = [] } = useOrderHistory()
 

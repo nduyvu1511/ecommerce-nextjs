@@ -24,7 +24,10 @@ interface otpProps {
 
 interface UseAuthRes {
   token: string
-  loginWithFacebook: (handleSuccess: (token: string) => void) => void
+  loginWithFacebook: (
+    handleSuccess: (token: string) => void,
+    handleError?: Function
+  ) => void
   loginWithGoogle: (handleSuccess: (token: string) => void) => void
   loginWithPhoneNumber: (props: otpProps) => void
   updatePhoneNumber: (props: otpProps) => void
@@ -47,14 +50,38 @@ export const useAuth = (): UseAuthRes => {
   )
   const dispatch = useDispatch()
 
-  const loginWithFacebook = async (handleSuccess: (token: string) => void) => {
+  const loginWithFacebook = async (
+    handleSuccess: (token: string) => void,
+    handleError?: Function
+  ) => {
     try {
-      const result = await signInWithPopup(authentication, fbProvider)
+      const result: any = await signInWithPopup(authentication, fbProvider)
       const credential: any = FacebookAuthProvider.credentialFromResult(result)
       const facebook_access_token = credential.accessToken
-      const firebase_access_token = credential.accessToken
+      dispatch(toggleOpenScreenLoading(true))
+      const res: any = await userApi.firebaseAuth({
+        type: "facebook",
+        facebook_access_token,
+      })
+      dispatch(toggleOpenScreenLoading(false))
+
+      const token = res?.result?.data?.token
+      if (res?.result?.success) {
+        dispatch(setCurrentToken(token))
+        handleSuccess(token)
+      } else {
+        handleError && handleError()
+        dispatch(
+          setMessage({
+            type: "danger",
+            title: res?.result?.message || "",
+          })
+        )
+      }
     } catch (error: any) {
+      handleError && handleError()
       console.log("error: ", error.message)
+      dispatch(toggleOpenScreenLoading(false))
     }
   }
 
