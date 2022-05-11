@@ -33,8 +33,6 @@ export const MainLayout = ({ children }: LayoutProps) => {
     })
   }, [])
 
-  console.log(messaging)
-
   return (
     <section className="main__layout">
       <Header />
