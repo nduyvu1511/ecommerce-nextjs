@@ -26,12 +26,12 @@ export const MainLayout = ({ children }: LayoutProps) => {
       .catch((err) => {
         console.log("An error occurred while retrieving token. ", err)
       })
-  }, [])
 
-  onMessage(messaging, (payload) => {
-    console.log("receive message.........................................")
-    console.log(messaging, payload)
-  })
+    onMessage(messaging, (payload) => {
+      console.log("receive message.........................................")
+      console.log(messaging, payload)
+    })
+  }, [])
 
   console.log(messaging)
 
