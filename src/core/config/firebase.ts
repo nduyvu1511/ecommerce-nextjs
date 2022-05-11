@@ -2,9 +2,8 @@ import { initializeApp } from "firebase/app"
 import {
   FacebookAuthProvider,
   getAuth,
-  GoogleAuthProvider
+  GoogleAuthProvider,
 } from "firebase/auth"
-import { getMessaging } from "firebase/messaging"
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_API_KEY,
@@ -18,11 +17,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig)
 
-const messaging = getMessaging(app)
-
 export const authentication = getAuth(app)
 authentication.useDeviceLanguage()
-
 export const googleProvider = new GoogleAuthProvider()
 export const fbProvider = new FacebookAuthProvider()
-export default app

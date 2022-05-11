@@ -58,14 +58,12 @@ export const ProductSaleItem = ({
                   : productSale?.deals_title || `Don't miss the latest offers`}
               </p>
             </div>
-            <div className="home__heading-btn cursor-pointer">
-              <Link passHref href={`/shop?type_get=sale`}>
-                <>
-                  <p>{language === "vni" ? "Xem tất cả" : "View All"} </p>
-                  <CgArrowLongRight />
-                </>
-              </Link>
-            </div>
+            <Link passHref href={`/shop?type_get=sale`}>
+              <div className="home__heading-btn cursor-pointer">
+                <p>{language === "vni" ? "Xem tất cả" : "View All"} </p>
+                <CgArrowLongRight />
+              </div>
+            </Link>
           </div>
           <Swiper
             modules={[Navigation]}

@@ -64,11 +64,9 @@ export const HomeCategory = () => {
 
         {!isValidating && isArrayHasValue(parentCategories)
           ? parentCategories.map((cate: ICategory, index) => (
-              <>
-                <SwiperSlide key={index}>
-                  <CategoryItem category={cate} />
-                </SwiperSlide>
-              </>
+              <SwiperSlide key={index}>
+                <CategoryItem category={cate} />
+              </SwiperSlide>
             ))
           : null}
       </Swiper>

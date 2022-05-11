@@ -21,7 +21,6 @@ import { useRouter } from "next/router"
 import { IoExpandOutline } from "react-icons/io5"
 import { RiBarChartFill } from "react-icons/ri"
 import { useDispatch } from "react-redux"
-import ButtonWishlist from "../button/buttonAddWishlist"
 import { Star } from "../star"
 
 interface IProductItem {
@@ -97,11 +96,11 @@ export const ProductItem = ({ product, isLoading }: IProductItem) => {
             </div>
 
             {imageUrls.length === 1 ? (
-              <div
-                onClick={() => dispatch(setProduct(product))}
-                className="image-container cursor-pointer product__card__img-item cursor-pointer"
-              >
-                <Link passHref href={`/product/${product.product_tmpl_id}`}>
+              <Link passHref href={`/product/${product.product_tmpl_id}`}>
+                <div
+                  onClick={() => dispatch(setProduct(product))}
+                  className="image-container cursor-pointer product__card__img-item cursor-pointer"
+                >
                   <Image
                     className="image img-cover"
                     src={`${API_URL}${imageUrls?.[0] || ""}`}
@@ -110,15 +109,15 @@ export const ProductItem = ({ product, isLoading }: IProductItem) => {
                     placeholder="blur"
                     blurDataURL={imageBlur}
                   />
-                </Link>
-              </div>
+                </div>
+              </Link>
             ) : (
               <>
-                <div
-                  onClick={() => dispatch(setProduct(product))}
-                  className="image-container cursor-pointer product__card__img-item product__card__img-top product__card__img-top-first"
-                >
-                  <Link passHref href={`/product/${product.product_tmpl_id}`}>
+                <Link passHref href={`/product/${product.product_tmpl_id}`}>
+                  <div
+                    onClick={() => dispatch(setProduct(product))}
+                    className="image-container cursor-pointer product__card__img-item product__card__img-top product__card__img-top-first"
+                  >
                     <Image
                       className="image"
                       src={`${API_URL}${imageUrls?.[0] || ""}`}
@@ -127,23 +126,23 @@ export const ProductItem = ({ product, isLoading }: IProductItem) => {
                       placeholder="blur"
                       blurDataURL={imageBlur}
                     />
-                  </Link>
-                </div>
+                  </div>
+                </Link>
 
                 {imageUrls?.[1] ? (
-                  <div
-                    onClick={() => dispatch(setProduct(product))}
-                    className="image-container product__card__img-top product__card__img-item product__card__img-top-second cursor-pointer"
-                  >
-                    <Link passHref href={`/product/${product.product_tmpl_id}`}>
+                  <Link passHref href={`/product/${product.product_tmpl_id}`}>
+                    <div
+                      onClick={() => dispatch(setProduct(product))}
+                      className="image-container product__card__img-top product__card__img-item product__card__img-top-second cursor-pointer"
+                    >
                       <Image
                         className="image"
                         src={`${API_URL}${imageUrls?.[1] || ""}`}
                         alt=""
                         layout="fill"
                       />
-                    </Link>
-                  </div>
+                    </div>
+                  </Link>
                 ) : null}
               </>
             )}
