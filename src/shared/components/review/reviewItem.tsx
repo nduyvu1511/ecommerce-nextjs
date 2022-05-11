@@ -1,6 +1,7 @@
 import { RootState } from "@/core/store"
 import { Comment } from "@/models"
 import { setCurrentReviewId, setModalConfirm } from "@/modules"
+import { API_URL } from "@/services"
 import Image from "next/image"
 import { BiTrash } from "react-icons/bi"
 import { useDispatch, useSelector } from "react-redux"
@@ -20,7 +21,12 @@ export const ReviewItem = ({ comment }: CommentItemProps) => {
     <>
       <li className="comment__list-item">
         <div className="comment__list-item-img image-container">
-          <Image src={avatar} alt="" layout="fill" className="image" />
+          <Image
+            src={comment?.avatar ? `${API_URL}${comment.avatar}` : avatar}
+            alt=""
+            layout="fill"
+            className="image"
+          />
         </div>
         <div className="comment__list-item-content">
           <p className="comment__list-item-content-info">

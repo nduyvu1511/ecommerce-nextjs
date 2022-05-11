@@ -1,12 +1,10 @@
 import { DOMAIN_URL } from "@/services"
-import { BsTwitter } from "react-icons/bs"
-import { FaFacebookF, FaLinkedinIn, FaPinterestP } from "react-icons/fa"
-import { MdOutlineMail } from "react-icons/md"
+import { BsMessenger, BsTwitter } from "react-icons/bs"
+import { FaFacebookF, FaPinterestP } from "react-icons/fa"
 import { RiWhatsappLine } from "react-icons/ri"
 import {
-  EmailShareButton,
+  FacebookMessengerShareButton,
   FacebookShareButton,
-  LinkedinShareButton,
   PinterestShareButton,
   TwitterShareButton,
   WhatsappShareButton,
@@ -39,6 +37,15 @@ const ButtonShare = ({
         <FaFacebookF />
       </FacebookShareButton>
 
+      <FacebookMessengerShareButton
+        appId={process.env.NEXT_PUBLIC_FACEBOOK_APP_ID || ""}
+        className="button-share-messenger"
+        title={name}
+        url={url}
+      >
+        <BsMessenger />
+      </FacebookMessengerShareButton>
+
       <TwitterShareButton
         className="button-share-twitter"
         title={name}
@@ -64,18 +71,6 @@ const ButtonShare = ({
       >
         <FaPinterestP />
       </PinterestShareButton>
-
-      <EmailShareButton className="button-share-email" title={name} url={url}>
-        <MdOutlineMail />
-      </EmailShareButton>
-
-      <LinkedinShareButton
-        className="button-share-linkedin"
-        title={name}
-        url={url}
-      >
-        <FaLinkedinIn />
-      </LinkedinShareButton>
     </div>
   )
 }

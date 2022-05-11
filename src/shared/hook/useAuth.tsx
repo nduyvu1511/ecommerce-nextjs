@@ -59,6 +59,7 @@ export const useAuth = (): UseAuthRes => {
       const credential: any = FacebookAuthProvider.credentialFromResult(result)
       const facebook_access_token = credential.accessToken
       dispatch(toggleOpenScreenLoading(true))
+      console.log(credential)
       const res: any = await userApi.firebaseAuth({
         type: "facebook",
         facebook_access_token,

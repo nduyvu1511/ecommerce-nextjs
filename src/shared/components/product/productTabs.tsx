@@ -42,7 +42,7 @@ export const ProductTabs = ({ product }: { product: Product }) => {
           }`}
         >
           {language === "vni"
-            ? `Hỏi đáp (${product?.comment_count || 0})`
+            ? `Bình luận (${product?.comment_count || 0})`
             : `Q&A (${product?.comment_count || 0})`}
         </h5>
 

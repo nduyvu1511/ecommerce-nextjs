@@ -6,7 +6,7 @@ import {
   changeAttributeItem,
   setMessage,
   toggleOpenScreenLoading,
-  toggleShowCompareModal,
+  toggleShowCompareModal
 } from "@/modules"
 import { API_URL } from "@/services"
 import Image from "next/image"
@@ -18,7 +18,7 @@ import { IoClose } from "react-icons/io5"
 import {
   RiArrowUpDownLine,
   RiLoader2Line,
-  RiMessage2Fill,
+  RiMessage2Fill
 } from "react-icons/ri"
 import { useDispatch, useSelector } from "react-redux"
 import { useCartOrder } from "shared/hook"
@@ -272,26 +272,29 @@ export const ProductIntro = ({ product, type }: IProductIntro) => {
           </div>
         ) : null}
 
-        <div className="product__intro-sub">
-          <ButtonWishlist product={product} type="detail" />
+        <div className="product__intro-bottom">
+          <div className="product__intro-sub">
+            <ButtonWishlist product={product} />
 
-          <button
-            onClick={handleAddToCompareList}
-            className="product__intro-sub-item"
-          >
-            <RiArrowUpDownLine />
-            So sánh
-          </button>
+            <button
+              onClick={handleAddToCompareList}
+              className="product__intro-sub-item"
+            >
+              <RiArrowUpDownLine />
+            </button>
+          </div>
+
+          <div className="product__intro-bottom-separate"></div>
+
+          {type !== "item" ? (
+            <ButtonShare
+              product_id={product.product_tmpl_id}
+              imageUrl={`${process.env.REACT_APP_API_URL}${product.image_url[0]}`}
+              name={product.product_name}
+              description={product.description}
+            />
+          ) : null}
         </div>
-
-        {type !== "item" ? (
-          <ButtonShare
-            product_id={product.product_tmpl_id}
-            imageUrl={`${process.env.REACT_APP_API_URL}${product.image_url[0]}`}
-            name={product.product_name}
-            description={product.description}
-          />
-        ) : null}
       </div>
 
       {openVariantModal && type === "detail" ? (

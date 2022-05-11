@@ -1,55 +1,48 @@
-import { RootState } from "@/core/store"
-import { isArrayHasValue } from "@/helper"
 import { Product } from "@/models"
+import { useState } from "react"
 import { BiLoaderCircle } from "react-icons/bi"
-import { FaHeart, FaRegHeart } from "react-icons/fa"
-import { useSelector } from "react-redux"
+import { BsFillHeartFill } from "react-icons/bs"
 import { useWishlist } from "shared/hook"
 
 interface ButtonWishlistProps {
   product: Product
-  type: "item" | "detail"
 }
 
-const ButtonWishlist = ({ product, type }: ButtonWishlistProps) => {
-  const language = "vni"
-  const { handleToggleWishlist } = useWishlist(false)
+const ButtonWishlist = ({ product }: ButtonWishlistProps) => {
+  const { toggleWishlist } = useWishlist(false)
   const { data: wishlists = [] } = useWishlist(false)
-
-  const {
-    wishlistBtn: { currentProductId, isFetching },
-  } = useSelector((state: RootState) => state.product)
+  const [currentId, setCurrentId] = useState<number>()
 
   const handleAddToWishlist = () => {
-    if (isFetching && product.product_tmpl_id === currentProductId) return
-
-    handleToggleWishlist(product)
+    if (currentId) return
+    setCurrentId(product.product_tmpl_id)
+    toggleWishlist(
+      product,
+      () => {
+        setCurrentId(0)
+      },
+      () => {
+        setCurrentId(0)
+      }
+    )
   }
 
   return (
     <>
-      <button
-        onClick={handleAddToWishlist}
-        className={`${
-          type === "item"
-            ? "product__card__sub-item"
-            : "product__intro-sub-item"
-        }`}
-      >
-        {product.product_tmpl_id === currentProductId && isFetching ? (
+      <button onClick={handleAddToWishlist} className="product__intro-sub-item">
+        {currentId === product.product_tmpl_id ? (
           <BiLoaderCircle className="loader" />
-        ) : isArrayHasValue(wishlists) &&
-          wishlists?.find(
-            (item) => item.product_id === product.product_tmpl_id
-          ) ? (
-          <FaHeart style={{ fill: "#dc3545" }} />
         ) : (
-          <FaRegHeart />
+          <BsFillHeartFill
+            style={{
+              fill: wishlists?.some(
+                (item) => item.product_id === product.product_tmpl_id
+              )
+                ? "#dc3545"
+                : "#cacaca",
+            }}
+          />
         )}
-
-        {type === "detail"
-          ? `${language === "vni" ? "Yêu thích" : "Add to wishlist"}`
-          : ""}
       </button>
     </>
   )

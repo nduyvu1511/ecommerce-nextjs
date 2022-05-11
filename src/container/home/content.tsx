@@ -4,7 +4,6 @@ import { useProduct } from "shared/hook"
 import { HomeSlideProduct } from "./homeSlide"
 
 export const MainContent = () => {
-
   const { data: topProducts, isValidating: isTopLoading } = useProduct({
     key: "top_products",
     params: { type_get: "top_sale", limit: 12, offset: 2 },

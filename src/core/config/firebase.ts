@@ -1,10 +1,10 @@
 import { initializeApp } from "firebase/app"
-import { getMessaging, getToken } from "firebase/messaging"
 import {
-  getAuth,
-  GoogleAuthProvider,
   FacebookAuthProvider,
+  getAuth,
+  GoogleAuthProvider
 } from "firebase/auth"
+import { getMessaging } from "firebase/messaging"
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_API_KEY,
@@ -18,32 +18,11 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig)
 
+const messaging = getMessaging(app)
+
 export const authentication = getAuth(app)
 authentication.useDeviceLanguage()
 
-// const messaging = getMessaging()
-// getToken(messaging, {
-//   vapidKey:
-//     "BIsfJkI7Y8ArRwtd11nBqNSFvVQ9KRLC-LLBP7gh8s3rPz5EbBWcENioTJkehcl0bsR0wTiH_6FWDuo1ACynzrk",
-// })
-//   .then((currentToken) => {
-//     if (currentToken) {
-//       // Send the token to your server and update the UI if necessary
-//       // ...
-
-//       console.log("current token: ", currentToken)
-//     } else {
-//       // Show permission request UI
-//       console.log(
-//         "No registration token available. Request permission to generate one."
-//       )
-//       // ...
-//     }
-//   })
-//   .catch((err) => {
-//     console.log("An error occurred while retrieving token. ", err)
-//     // ...
-//   })
-
 export const googleProvider = new GoogleAuthProvider()
 export const fbProvider = new FacebookAuthProvider()
+export default app

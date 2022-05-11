@@ -2,15 +2,11 @@ import {
   AttributeWithParentId,
   BooleanType,
   Product,
-  ProductSlice,
+  ProductSlice
 } from "@/models"
 import { createSlice } from "@reduxjs/toolkit"
 
 const initialState: ProductSlice = {
-  wishlistBtn: {
-    currentProductId: 0,
-    isFetching: false,
-  },
   product: null,
   listAttribute: undefined,
   search: {
@@ -26,17 +22,6 @@ const productSlice = createSlice({
   reducers: {
     setProduct: (state, { payload }: { payload: Product | null }) => {
       state.product = payload
-    },
-
-    setCurrentWishlistBtnProductId: (
-      state,
-      { payload }: { payload: number }
-    ) => {
-      state.wishlistBtn.currentProductId = payload
-    },
-
-    setFetchingCurrentWishlistBtn: (state, { payload }: BooleanType) => {
-      state.wishlistBtn.isFetching = payload
     },
 
     setAttributeList: (
@@ -73,8 +58,6 @@ export default productSlice.reducer
 
 export const {
   setProduct,
-  setCurrentWishlistBtnProductId,
-  setFetchingCurrentWishlistBtn,
   changeAttributeItem,
   setAttributeList,
   setKeyword,

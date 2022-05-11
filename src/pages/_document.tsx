@@ -17,7 +17,7 @@ class MyDocument extends Document {
 
         <body>
           <Main />
-          <div className="embed-container">
+          {/* <div className="embed-container">
             <div id="fb-root"></div>
             <div id="fb-customer-chat" className="fb-customerchat"></div>
 
@@ -55,7 +55,7 @@ class MyDocument extends Document {
             }(document, 'script', 'facebook-jssdk'));
           `,
             }}
-          ></script>
+          ></script> */}
 
           <NextScript />
         </body>

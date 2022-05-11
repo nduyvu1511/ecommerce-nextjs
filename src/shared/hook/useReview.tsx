@@ -37,7 +37,7 @@ const useReview = ({ product_id, shouldFetch }: Props): ReivewSWR => {
 
   const { data, error, isValidating, mutate } = useSWR(
     `review_product_${product_id}`,
-    product_id && token && shouldFetch
+    product_id && shouldFetch
       ? () =>
           userApi
             .getReviews({ token, product_id })
@@ -51,7 +51,7 @@ const useReview = ({ product_id, shouldFetch }: Props): ReivewSWR => {
     if (!token) {
       router.push("/login")
     }
-    if (!token || !content || !product_id) return
+    if (content || !product_id) return
 
     const res: any = await userApi.addReview({ content, product_id, token })
     if (res?.result?.id) {
@@ -76,7 +76,7 @@ const useReview = ({ product_id, shouldFetch }: Props): ReivewSWR => {
   }: DeleteReviewHook) => {
     if (!token || !comment_id || !product_id) return
 
-    const res: any = await userApi.deleteReview({
+    await userApi.deleteReview({
       comment_id,
       product_id,
       token,

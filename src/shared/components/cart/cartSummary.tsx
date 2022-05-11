@@ -101,7 +101,7 @@ export const CartSummary = ({ isShowPromotion, type }: CartTotalProps) => {
     }
 
     createOrderDone(() => {
-      router.push("order-confirmed")
+      router.push("/order-confirmed")
     })
   }
 

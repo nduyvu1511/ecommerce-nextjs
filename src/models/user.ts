@@ -171,6 +171,7 @@ export interface Comment {
   star_rating: number
   product_id: number
   date: string
+  avatar: string
 }
 
 export interface UserSlice {

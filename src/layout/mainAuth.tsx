@@ -1,5 +1,5 @@
 import { LayoutProps } from "@/models"
-import { setToken, setUserInfo } from "@/modules"
+import { clearOrderData, logOut, setToken, setUserInfo } from "@/modules"
 import { useRouter } from "next/router"
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
@@ -21,8 +21,8 @@ export const MainAuthLayout = ({ children }: LayoutProps) => {
         token,
         () => {},
         () => {
-          dispatch(setToken(""))
-          dispatch(setUserInfo(undefined))
+          dispatch(logOut())
+          dispatch(clearOrderData())
           router.push("/login")
         }
       )

@@ -234,6 +234,8 @@ const ProductDetailPage = ({ product }: ProduductDetailPageProps) => {
                     </SwiperSlide>
                   ))}
               </Swiper>
+              <br />
+              <br />
             </div>
           ) : null}
 
@@ -278,6 +280,8 @@ const ProductDetailPage = ({ product }: ProduductDetailPageProps) => {
                   </SwiperSlide>
                 ))}
               </Swiper>
+              <br />
+              <br />
             </div>
           ) : null}
         </div>

@@ -140,9 +140,9 @@ const Home = () => {
 
       <Popup />
 
-      <a href="tel:0909099580" className="btn-primary btn-call">
+      {/* <a href="tel:0909099580" className="btn-primary btn-call">
         <FiPhoneCall />
-      </a>
+      </a> */}
     </>
   )
 }

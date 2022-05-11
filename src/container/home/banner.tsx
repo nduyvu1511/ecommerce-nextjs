@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import { bannerLeft } from "@/assets"
 import { API_URL } from "@/services"
 import { useCategory } from "shared/hook"
 import { Autoplay, Navigation, Pagination } from "swiper"
@@ -17,7 +18,8 @@ export const MainBanner = () => {
         <div className="home__banner-left">
           <img
             style={{ height: "100%" }}
-            src={`${API_URL}${bannerUrls?.[0] || ""}`}
+            src={bannerLeft}
+            // src={`${API_URL}${bannerUrls?.[0] || ""}`}
             alt=""
             className="img-fluid"
           />

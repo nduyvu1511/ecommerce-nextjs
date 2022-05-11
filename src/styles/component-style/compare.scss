@@ -45,13 +45,14 @@
     line-height: 2.4rem;
   }
   &-item-wrapper {
-    border-right: 1px solid $border-color-1;
+    border: 1px solid $border-color-1;
+    border-left: 0;
   }
 
   &-item {
     height: 60px;
     padding: 1rem;
-    border-top: 1px solid $border-color-1;
+    border-bottom: 1px solid $border-color-1;
 
     &-img {
       height: 150px;
@@ -100,10 +101,14 @@
 
   &-header {
     width: 20%;
+    border: 1px solid $border-color-1;
     @include responsive(md-screen) {
       width: 10%;
     }
-    border: 1px solid $border-color-1;
+
+    & .compare__table-item:last-child {
+      border-bottom: 0;
+    }
   }
 
   &-body {
@@ -111,7 +116,6 @@
     @include responsive(md-screen) {
       width: 90%;
     }
-    border-block: 1px solid $border-color-1;
   }
 
   & .swiper-button-prev,

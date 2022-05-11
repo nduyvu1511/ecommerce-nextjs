@@ -324,4 +324,5 @@
   @include responsive(lg-screen) {
     padding: 3rem;
   }
+  padding-bottom: 0 !important;
 }

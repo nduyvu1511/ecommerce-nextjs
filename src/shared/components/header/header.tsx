@@ -86,11 +86,17 @@ export const Header = () => {
                   >
                     {openNotiModal ? (
                       <div className="header__notification-modal-wrapper">
-                        <p className="notification-title">Thông báo mới nhận</p>
+                        {token ? (
+                          <p className="notification-title">
+                            Thông báo mới nhận
+                          </p>
+                        ) : null}
                         <Notification />
-                        <Link passHref href="/account/nofifications">
-                          <p className="notification__see-btn">Xem tất cả</p>
-                        </Link>
+                        {token ? (
+                          <Link passHref href="/account/notifications">
+                            <p className="notification__see-btn">Xem tất cả</p>
+                          </Link>
+                        ) : null}
                       </div>
                     ) : null}
                   </div>

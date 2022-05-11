@@ -32,6 +32,7 @@ export const CartItem = ({
               alt={cart.product.product_name}
               className="image"
               layout="fill"
+              quality={30}
             />
           </div>
         </Link>

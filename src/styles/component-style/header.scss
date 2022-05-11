@@ -5,7 +5,7 @@
     display: block;
   }
 
-  @include responsive(screeen-1024) {
+  @include responsive(screen-1024) {
     height: $header-height;
   }
 

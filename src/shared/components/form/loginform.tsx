@@ -7,6 +7,7 @@ import {
   setToken,
   setUserInfo,
   toggleOpenLoginModal,
+  toggleOpenLoginSMSModal,
   toggleOpenOtpLoginModal,
 } from "@/modules"
 import { Field, Form, Formik } from "formik"
@@ -34,6 +35,8 @@ export const LoginForm = ({ view }: LoginFormProps) => {
       if (view === "modal") {
         dispatch(setMessage({ title: "Đăng nhập thành công" }))
         dispatch(toggleOpenLoginModal(false))
+        dispatch(toggleOpenOtpLoginModal(false))
+        dispatch(toggleOpenLoginSMSModal(false))
       } else {
         router.push("/")
       }

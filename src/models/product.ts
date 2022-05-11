@@ -278,10 +278,6 @@ export interface CartQuantity {
 }
 
 export interface ProductSlice {
-  wishlistBtn: {
-    currentProductId: number
-    isFetching: boolean
-  }
   product: Product | null
   listAttribute: AttributeWithParentId[] | undefined
   search: {

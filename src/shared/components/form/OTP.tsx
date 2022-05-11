@@ -166,7 +166,7 @@ export const OTP = ({ type, view }: LoginOtpProps) => {
 
   const heading =
     type === "login"
-      ? "Đăng nhập bằng SMS"
+      ? "Đăng nhập bằng số điện thoại"
       : type === "createNewPassword"
       ? "Đặt lại mật khẩu"
       : "Vui lòng cập nhật số điện thoại"
@@ -193,15 +193,17 @@ export const OTP = ({ type, view }: LoginOtpProps) => {
                 <IoClose />
               </button>
 
-              <button
-                onClick={() => {
-                  dispatch(toggleOpenLoginSMSModal(false))
-                  dispatch(toggleOpenLoginModal(true))
-                }}
-                className="btn-reset modal__otp-back-btn"
-              >
-                <IoArrowBack />
-              </button>
+              {router.pathname !== "/login" ? (
+                <button
+                  onClick={() => {
+                    dispatch(toggleOpenLoginSMSModal(false))
+                    dispatch(toggleOpenLoginModal(true))
+                  }}
+                  className="btn-reset modal__otp-back-btn"
+                >
+                  <IoArrowBack />
+                </button>
+              ) : null}
             </>
           ) : null}
 

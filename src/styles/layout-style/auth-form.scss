@@ -160,7 +160,7 @@
 
       & .btn-primary-outline {
         border-radius: 0.2rem;
-        border: 1px solid $gray;
+        border: 1px solid $border-color-1;
         color: $text-color;
         height: 100%;
         flex: 1;
@@ -178,7 +178,7 @@
         }
 
         & svg {
-          margin-right: 0.6rem;
+          margin-right: 1rem;
           font-size: 2rem;
         }
 

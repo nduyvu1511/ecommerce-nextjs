@@ -43,6 +43,7 @@ export const AuthContainer = ({
         if (view === "page") {
           router.push("/")
         } else {
+          dispatch(toggleOpenLoginModal(false))
           dispatch(toggleOpenLoginSMSModal(false))
           dispatch(setMessage({ title: "Đăng nhập thành công" }))
         }
@@ -50,9 +51,9 @@ export const AuthContainer = ({
         dispatch(setUserInfo(userInfo))
       } else {
         if (view === "modal") {
-          dispatch(toggleOpenLoginSMSModal(false))
           dispatch(toggleOpenLoginModal(false))
         }
+        dispatch(toggleOpenOtpLoginModal(true))
         dispatch(setCurrentUserInfo(userInfo))
       }
     })

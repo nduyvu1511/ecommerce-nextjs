@@ -11,7 +11,7 @@
   .comment__list {
     display: grid;
     grid-template-columns: 1fr;
-    grid-gap: 3rem;
+    grid-gap: 1.2rem;
 
     &-item {
       display: flex;
@@ -42,7 +42,7 @@
         &-info {
           display: flex;
           align-items: baseline;
-          margin-bottom: 1rem;
+          margin-bottom: 0.6rem;
           flex-direction: column;
           @include responsive(sm-screen) {
             flex-direction: row;
@@ -56,12 +56,12 @@
           }
 
           & span:last-child {
-            @include style-text(400, 1.2rem, 1.6rem, $text-color);
+            @include style-text(500, 1.2rem, 1.6rem, $gray);
           }
 
           &-author {
             @include style-text(600, 1.5rem, 1.5rem, $text-color);
-            padding-right: 0.3rem;
+            padding-right: 0.5rem;
           }
 
           & svg {

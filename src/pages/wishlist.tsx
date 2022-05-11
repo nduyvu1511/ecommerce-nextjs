@@ -25,7 +25,7 @@ const Wishlist = () => {
   const { token } = useSelector((state: RootState) => state.user)
   const {
     data: wishlists,
-    handleToggleWishlist,
+    toggleWishlist,
     isValidating,
     handleDeleteWishlist,
   } = useWishlist(true)
@@ -53,7 +53,11 @@ const Wishlist = () => {
             },
             false,
             () => {
-              handleToggleWishlist(product)
+              toggleWishlist(
+                product,
+                () => {},
+                () => {}
+              )
             }
           )
         }

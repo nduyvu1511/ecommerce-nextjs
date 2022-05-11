@@ -1,4 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
+import { convertViToEn } from "@/helper"
 import React, { ReactElement, useRef, useState } from "react"
 import { BiChevronDown } from "react-icons/bi"
 import { IoClose } from "react-icons/io5"
@@ -34,7 +35,7 @@ export const Dropdown = ({
 }: DropdownProps) => {
   const dropdownListRef = useRef<HTMLUListElement>(null)
   const titleRef = useRef<HTMLParagraphElement>(null)
-  const inputRef = useRef<HTMLInputElement>(null)
+  // const inputRef = useRef<HTMLInputElement>(null)
 
   const [isOpen, setOpen] = useState<boolean>(false)
   const [listFilter, setListFilter] = useState<ItemDropdown[]>(list)
@@ -58,7 +59,9 @@ export const Dropdown = ({
     setSearchVal(value)
 
     const newList = [...list].filter((item) =>
-      item.name?.toLowerCase().includes(value.trim())
+      convertViToEn(item.name?.toLowerCase() || "").includes(
+        convertViToEn(value.trim())
+      )
     )
 
     setListFilter(newList)

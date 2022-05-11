@@ -1,3 +1,5 @@
+import { messageIcon } from "@/assets"
+import { clearMessageInChannel } from "@/modules"
 import { useEffect, useState } from "react"
 import { IoClose } from "react-icons/io5"
 import {
@@ -14,16 +16,15 @@ import Message from "./message"
 
 export const Chat = () => {
   const dispatch = useDispatch()
-
   const token = localStorage.getItem("access_token")
   const [isClearMessage, setClearMessage] = useState<boolean>()
 
   // useEffect(() => {
-  //   socket.on('receive_message', (data: any) => {
-  //     console.log(data);
-  //   });
+  //   socket.on("receive_message", (data: any) => {
+  //     console.log(data)
+  //   })
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [socket]);
+  // }, [socket])
 
   // const {
   //   messageInChannel: { data: message },
@@ -42,14 +43,14 @@ export const Chat = () => {
   // const handleSendMessage = async (messageValue: string) => {
   //   if (!messageValue || !isObjectHasValue(message)) return
 
-    // const messageData = {
-    //   channel_id: message.channel_id,
-    //   message: messageValue,
-    //   time: new Date(Date.now()),
-    //   token,
-    // };
+  //   const messageData = {
+  //     channel_id: message.channel_id,
+  //     message: messageValue,
+  //     time: new Date(Date.now()),
+  //     token,
+  //   }
 
-    // await socket.emit('send_message', messageData);
+  //   await socket.emit("send_message", messageData)
 
   //   chatApi
   //     .sendMessage({
@@ -97,114 +98,97 @@ export const Chat = () => {
   //   }
   // }
 
-  // if (!token) return null
+  if (!token) return null
 
-  return (
-    <>
-      {/* Button open Chat */}
-      
-    </>
-  )
+  return <>{/* Button open Chat */}</>
 }
 
-
-// {!chatboxOpen ? (
-//   <>
-//     <button
-//       onClick={handleOpenChatBox}
-//       className="chat__btn chat__btn-lg btn-reset"
-//     >
-//       <span className="chat__btn-count">{channelList.length}</span>
-//       {messageIcon}
-//       Chat
-//     </button>
-
-//     <button
-//       onClick={handleOpenChatBox}
-//       className="chat__btn chat__btn-sm btn-reset"
-//     >
-//       <span className="chat__btn-count">{channelList.length}</span>
-//       {messageIcon}
-//     </button>
-//   </>
-// ) : null}
-
-// <div
-//   className={`chat__container ${
-//     chatboxOpen ? "chat__container-active" : ""
-//   }`}
-// >
-//   {chatboxOpen ? (
-//     <div className={`chat ${expandChatbox ? "chat-expanded" : ""}`}>
-//       <header className="chat__header">
-//         <p className="chat__header-title">
-//           Chat
-//           <span>({channelList.length})</span>
-//         </p>
-//         <div className="chat__header-buttons">
-//           {/* Show on Mobile */}
-//           <button
-//             onClick={() =>
-//               dispatch(toggleOpenChannelGroup(!channelGroupOpen))
-//             }
-//             className="btn-reset show-on-mobile"
-//           >
-//             <MdOutlineKeyboardArrowLeft />
-//           </button>
-
-//           <button
-//             onClick={() => dispatch(toggleChatboxOpen(false))}
-//             className="btn-reset show-on-mobile"
-//           >
-//             <IoClose />
-//           </button>
-
-//           {/* Show on desktop */}
-
-//           <button
-//             style={{ marginRight: "1rem" }}
-//             onClick={() => dispatch(toggleExpandChatbox(!expandChatbox))}
-//             className="btn-reset show-on-desktop"
-//           >
-//             {expandChatbox ? (
-//               <MdOutlineKeyboardArrowRight />
-//             ) : (
-//               <MdOutlineKeyboardArrowLeft />
-//             )}
-//           </button>
-
-//           <button
-//             onClick={() => dispatch(toggleChatboxOpen(false))}
-//             className="btn-reset show-on-desktop"
-//           >
-//             <MdOutlineKeyboardArrowDown />
-//           </button>
-//         </div>
-//       </header>
-
-//       <div className="chat__body">
-//         <div
-//           className={`chat__body-left ${
-//             expandChatbox ? "chat__body-left-active" : ""
-//           }`}
-//         >
-//           <Message
-//             clearMessage={() => setClearMessage(false)}
-//             isClearMessage={isClearMessage}
-//             handleSubmit={(str: string) => handleSendMessage(str)}
-//           />
-//         </div>
-
-//         <div
-//           className={`chat__body-right ${
-//             channelGroupOpen ? "chat__body-right-open" : ""
-//           }`}
-//         >
-//           <Channel
-//             handleClick={(id: number) => handleClickChannelItem(id)}
-//           />
-//         </div>
-//       </div>
-//     </div>
-//   ) : null}
-// </div>
+{
+  //   !chatboxOpen ? (
+  //     <>
+  //       <button
+  //         onClick={handleOpenChatBox}
+  //         className="chat__btn chat__btn-lg btn-reset"
+  //       >
+  //         <span className="chat__btn-count">{channelList.length}</span>
+  //         {messageIcon}
+  //         Chat
+  //       </button>
+  //       <button
+  //         onClick={handleOpenChatBox}
+  //         className="chat__btn chat__btn-sm btn-reset"
+  //       >
+  //         <span className="chat__btn-count">{channelList.length}</span>
+  //         {messageIcon}
+  //       </button>
+  //     </>
+  //   ) : null
+  // }
+  // ;<div
+  //   className={`chat__container ${chatboxOpen ? "chat__container-active" : ""}`}
+  // >
+  //   {chatboxOpen ? (
+  //     <div className={`chat ${expandChatbox ? "chat-expanded" : ""}`}>
+  //       <header className="chat__header">
+  //         <p className="chat__header-title">
+  //           Chat
+  //           <span>({channelList.length})</span>
+  //         </p>
+  //         <div className="chat__header-buttons">
+  //           {/* Show on Mobile */}
+  //           <button
+  //             onClick={() => dispatch(toggleOpenChannelGroup(!channelGroupOpen))}
+  //             className="btn-reset show-on-mobile"
+  //           >
+  //             <MdOutlineKeyboardArrowLeft />
+  //           </button>
+  //           <button
+  //             onClick={() => dispatch(toggleChatboxOpen(false))}
+  //             className="btn-reset show-on-mobile"
+  //           >
+  //             <IoClose />
+  //           </button>
+  //           {/* Show on desktop */}
+  //           <button
+  //             style={{ marginRight: "1rem" }}
+  //             onClick={() => dispatch(toggleExpandChatbox(!expandChatbox))}
+  //             className="btn-reset show-on-desktop"
+  //           >
+  //             {expandChatbox ? (
+  //               <MdOutlineKeyboardArrowRight />
+  //             ) : (
+  //               <MdOutlineKeyboardArrowLeft />
+  //             )}
+  //           </button>
+  //           <button
+  //             onClick={() => dispatch(toggleChatboxOpen(false))}
+  //             className="btn-reset show-on-desktop"
+  //           >
+  //             <MdOutlineKeyboardArrowDown />
+  //           </button>
+  //         </div>
+  //       </header>
+  //       <div className="chat__body">
+  //         <div
+  //           className={`chat__body-left ${
+  //             expandChatbox ? "chat__body-left-active" : ""
+  //           }`}
+  //         >
+  //           <Message
+  //             clearMessage={() => setClearMessage(false)}
+  //             isClearMessage={isClearMessage}
+  //             handleSubmit={(str: string) => handleSendMessage(str)}
+  //           />
+  //         </div>
+  //         <div
+  //           className={`chat__body-right ${
+  //             channelGroupOpen ? "chat__body-right-open" : ""
+  //           }`}
+  //         >
+  //           <Channel handleClick={(id: number) => handleClickChannelItem(id)} />
+  //         </div>
+  //       </div>
+  //     </div>
+  //   ) : null}
+  // </div>
+}

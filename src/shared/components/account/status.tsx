@@ -3,7 +3,6 @@ import { formatMoneyVND, isObjectHasValue } from "@/helper"
 import { OrderHistoryDetail } from "@/models"
 import { API_URL } from "@/services"
 import Image from "next/image"
-import Link from "next/link"
 import { FiCheckCircle } from "react-icons/fi"
 
 interface OrderStatusProps {
@@ -152,11 +151,9 @@ export const OrderStatus = ({ type, order }: OrderStatusProps) => {
                             <p className="order__history-table-detail-item-heading">
                               Tên:
                             </p>
-                            <Link href={`/product/${item.product_id}`}>
-                              <a className="order__history-table-detail-item-title">
-                                {item.name}
-                              </a>
-                            </Link>
+                            <p className="order__history-table-detail-item-title">
+                              {item.name}
+                            </p>
                           </div>
 
                           <div className="order__history-table-detail-qty order__history-table-detail-item">

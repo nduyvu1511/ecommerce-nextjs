@@ -5,7 +5,7 @@ import { OrderContainer } from "@/container"
 import { MainAuthLayoutNoFooter } from "@/layout"
 import { setAddress, setPayment } from "@/modules"
 import { useRouter } from "next/router"
-import React, { useEffect } from "react"
+import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useDelivery, useOrder, usePayment, useUserAddress } from "shared/hook"
 import { RootState } from "../core"
@@ -21,6 +21,7 @@ const Checkout = () => {
     productList,
     address: addressOrder,
     orderDraft,
+    orderDone,
   } = useSelector((state: RootState) => state.order)
   const { addressDefault } = useSelector((state: RootState) => state.user)
   const { updateOrderDraft } = useOrder()
@@ -45,7 +46,7 @@ const Checkout = () => {
   }, [])
 
   useEffect(() => {
-    if (!productList || !orderDraft) {
+    if (!productList || (!orderDraft && !orderDone)) {
       router.push("/cart")
     }
   }, [productList, orderDraft])
