@@ -1,5 +1,5 @@
 import { formatMoneyVND } from "@/helper"
-import { CartItem as ICartItem, ProductIds } from "@/models"
+import { CartItem as ICartItem } from "@/models"
 import { API_URL } from "@/services"
 import Image from "next/image"
 import Link from "next/link"

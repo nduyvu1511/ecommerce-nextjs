@@ -60,11 +60,11 @@ export const InputRange: FC<MultiRangeSliderProps> = memo(
     useEffect(() => {
       onChange({ min: minVal, max: maxVal })
     }, [minVal, maxVal, onChange])
-
+    console.log(parentWidth)
     return (
       <div className="input__range-container">
         <input
-          style={{ width: `${parentWidth - 10}px` }}
+          style={{ width: `${parentWidth - 30}px` }}
           type="range"
           min={min}
           max={max}
@@ -80,7 +80,7 @@ export const InputRange: FC<MultiRangeSliderProps> = memo(
           })}
         />
         <input
-          style={{ width: `${parentWidth - 10}px` }}
+          style={{ width: `${parentWidth - 30}px` }}
           type="range"
           min={min}
           max={max}
@@ -94,7 +94,7 @@ export const InputRange: FC<MultiRangeSliderProps> = memo(
           className="thumb thumb--zindex-4"
         />
 
-        <div style={{ width: `${parentWidth - 10}px` }} className="slider">
+        <div style={{ width: `${parentWidth - 30}px` }} className="slider">
           <div className="slider__track"></div>
           <div ref={range} className="slider__range"></div>
           <div className="slider__left-value">{formatMoneyVND(minVal)}</div>

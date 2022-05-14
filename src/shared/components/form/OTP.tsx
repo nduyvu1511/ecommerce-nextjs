@@ -12,7 +12,7 @@ import {
   toggleOpenLoginModal,
   toggleOpenLoginSMSModal,
   toggleOpenOtpLoginModal,
-  toggleOpenScreenLoading,
+  toggleOpenScreenLoading
 } from "@/modules"
 import userApi from "@/services/userApi"
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth"
@@ -111,7 +111,8 @@ export const OTP = ({ type, view }: LoginOtpProps) => {
           }
 
           if (view === "modal") {
-            dispatch(toggleOpenOtpLoginModal(false))
+            // dispatch(toggleOpenOtpLoginModal(false))
+            router.reload()
           }
           router.push("/")
           dispatch(clearAuthData())
@@ -124,15 +125,14 @@ export const OTP = ({ type, view }: LoginOtpProps) => {
       loginWithPhoneNumber({
         otpInput,
         handleSuccess: (token) => {
-          if (view === "page") {
-            router.push("/")
-          } else {
-            dispatch(toggleOpenLoginSMSModal(false))
-            dispatch(setMessage({ title: "Đăng nhập thành công" }))
-          }
           dispatch(setToken(token))
           getUserInfo(token, (userInfo) => {
             dispatch(setUserInfo(userInfo))
+            if (view === "page") {
+              router.push("/")
+            } else {
+              router.reload()
+            }
           })
         },
         handleError: (res: any) => {

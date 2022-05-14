@@ -3,12 +3,10 @@ import { loginSchema } from "@/core/schema"
 import { getFromSessionStorage } from "@/helper"
 import { ILogin } from "@/models"
 import {
-  setMessage,
   setToken,
   setUserInfo,
   toggleOpenLoginModal,
-  toggleOpenLoginSMSModal,
-  toggleOpenOtpLoginModal,
+  toggleOpenOtpLoginModal
 } from "@/modules"
 import { Field, Form, Formik } from "formik"
 import Link from "next/link"
@@ -32,16 +30,16 @@ export const LoginForm = ({ view }: LoginFormProps) => {
   const handleLogin = (data: ILogin) => {
     loginWithPassword(data, (token) => {
       dispatch(setToken(token))
-      if (view === "modal") {
-        dispatch(setMessage({ title: "Đăng nhập thành công" }))
-        dispatch(toggleOpenLoginModal(false))
-        dispatch(toggleOpenOtpLoginModal(false))
-        dispatch(toggleOpenLoginSMSModal(false))
-      } else {
-        router.push("/")
-      }
+      // dispatch(toggleOpenLoginModal(false))
+      // dispatch(toggleOpenOtpLoginModal(false))
+      // dispatch(toggleOpenLoginSMSModal(false))
       getUserInfo(token, (userInfo) => {
         dispatch(setUserInfo(userInfo))
+        if (view === "modal") {
+          router.reload()
+        } else {
+          router.push("/")
+        }
       })
     })
   }

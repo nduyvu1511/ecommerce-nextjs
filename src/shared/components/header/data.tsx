@@ -1,8 +1,7 @@
-import { toggleOpenCategoryModal, toggleOpenSearchModal } from "@/modules"
+import { toggleOpenCategoryModal, toggleOpenChatMobile } from "@/modules"
 import { AiOutlineUser } from "react-icons/ai"
 import { BiCategory, BiMessage } from "react-icons/bi"
 import { BsBarChart, BsHeart } from "react-icons/bs"
-import { MdOutlineLanguage } from "react-icons/md"
 import {
   RiBarChartBoxLine,
   RiContactsBook2Line,
@@ -164,7 +163,7 @@ export const navMobileLinks = [
     icon: <BiMessage />,
     engName: "Chat",
     name: "Tin nhắn",
-    onClick: toggleOpenSearchModal,
+    onClick: toggleOpenChatMobile,
   },
   {
     id: "/account",
@@ -173,7 +172,7 @@ export const navMobileLinks = [
     onClick: null,
   },
   {
-    id: "notification",
+    id: "/account/notifications",
     icon: <RiNotification3Line />,
     name: "Thông báo",
     onClick: null,

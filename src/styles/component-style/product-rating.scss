@@ -152,11 +152,10 @@
       margin-right: 2rem;
 
       & .image-container {
-        & .image {
-          width: 40px !important;
-          height: 40px !important;
-          border-radius: 50%;
-        }
+        width: 40px !important;
+        height: 40px !important;
+        border-radius: 50%;
+        overflow: hidden;
       }
     }
 
@@ -208,11 +207,8 @@
           cursor: zoom-in;
 
           & .image-container {
-            & .image {
-              width: 70px !important;
-              height: 70px !important;
-              object-fit: cover;
-            }
+            width: 70px;
+            height: 70px;
           }
         }
       }

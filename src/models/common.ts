@@ -43,8 +43,6 @@ export interface CommonSlice {
   isOpenModalCoupons: boolean
   modalConfirm: ModalConfirmProps
   isOpenAddressForm: boolean
-  isChatboxOpen: boolean
-  isExpandChatbox: boolean
   isChannelGroupOpen: boolean
   isOpenModalFilter: boolean
   isOpenNavLeftModal: boolean

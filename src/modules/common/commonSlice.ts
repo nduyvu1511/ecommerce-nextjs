@@ -18,8 +18,6 @@ const initialState: CommonSlice = {
     heading: "",
   },
   isOpenAddressForm: false,
-  isChatboxOpen: false,
-  isExpandChatbox: false,
   isChannelGroupOpen: false,
   isOpenModalFilter: false,
   isOpenNavLeftModal: false,
@@ -75,14 +73,6 @@ const ModalSlice = createSlice({
 
     toggleModalAddressForm: (state, { payload }: BooleanType) => {
       state.isOpenAddressForm = payload
-    },
-
-    toggleChatboxOpen: (state, { payload }: BooleanType) => {
-      state.isChatboxOpen = payload
-    },
-
-    toggleExpandChatbox: (state, { payload }: BooleanType) => {
-      state.isExpandChatbox = payload
     },
 
     toggleOpenChannelGroup: (state, { payload }: BooleanType) => {
@@ -173,8 +163,6 @@ const ModalSlice = createSlice({
 export default ModalSlice.reducer
 
 export const {
-  toggleChatboxOpen,
-  toggleExpandChatbox,
   toggleModalAccountOption,
   toggleModalAddressForm,
   setModalConfirm,

@@ -18,17 +18,15 @@
       padding-block: 0.5rem;
       position: relative;
 
-      & .image {
-        width: 4rem !important;
-        height: 4rem !important;
-        border-radius: 50%;
-      }
-
-      &-img {
+      & .image-container {
+        width: 4rem;
+        height: 4rem;
         margin-right: 1rem;
-
         @include responsive(sm-screen) {
           margin-right: 2rem;
+        }
+        & .image {
+          border-radius: 50%;
         }
       }
 

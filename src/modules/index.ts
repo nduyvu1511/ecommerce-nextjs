@@ -1,5 +1,6 @@
 import { combineReducers } from "@reduxjs/toolkit"
 import authSlice from "./auth/authSlice"
+import chatSlice from "./chat/chatSlice"
 import commonSlice from "./common/commonSlice"
 import compareSlice from "./compare/compareSlice"
 import localeSlice from "./locale/localeSlice"
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   auth: authSlice,
   search: searchSlice,
   locale: localeSlice,
+  chat: chatSlice,
 })
 
 export default rootReducer
@@ -30,4 +32,4 @@ export * from "./order/orderSlice"
 export * from "./product/productSlice"
 export * from "./search/searchSlice"
 export * from "./user/userSlice"
-
+export * from "./chat/chatSlice"

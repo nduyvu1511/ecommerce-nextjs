@@ -1,5 +1,6 @@
 import { Footer, Header } from "@/components"
 import { ModalContainer } from "@/container"
+import ChatContainer from "@/container/chat/chatContainer"
 import { LayoutProps } from "@/models"
 import { getMessaging, getToken, onMessage } from "firebase/messaging"
 import { useEffect } from "react"
@@ -26,9 +27,10 @@ export const MainLayout = ({ children }: LayoutProps) => {
       .catch((err) => {
         console.log("An error occurred while retrieving token. ", err)
       })
+  }, [])
 
+  useEffect(() => {
     onMessage(messaging, (payload) => {
-      console.log("receive message.........................................")
       console.log(messaging, payload)
     })
   }, [])
@@ -39,6 +41,7 @@ export const MainLayout = ({ children }: LayoutProps) => {
       <main>{children}</main>
       <Footer />
       <ModalContainer />
+      <ChatContainer />
     </section>
   )
 }

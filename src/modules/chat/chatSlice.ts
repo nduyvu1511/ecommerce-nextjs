@@ -1,94 +1,88 @@
-import { ChatSliceProps, Message, MessagesInChannel } from "@/models"
 import { createSlice } from "@reduxjs/toolkit"
-import { isArrayHasValue } from "../../shared/helper/functions"
-import {
-  fetchGetChannels,
-  fetchGetMessagesInChannel,
-  fetchSearchChannel
-} from "./chatThunk"
+import { Channel, Message } from "models"
 
-const initialState: ChatSliceProps = {
-  channel: {
-    data: [],
-    isLoading: false,
-  },
-  search: {
-    data: [],
-    isLoading: false,
-    initData: [],
-  },
-  currentChannelIdActive: 0,
-  messageInChannel: {
-    data: {} as MessagesInChannel,
-    isLoading: false,
-  },
+interface ChatSliceParams {
+  isOpenChatDesktop: boolean
+  isOpenChatMobile: boolean
+  isExpandChatModal: boolean
+  currentChannel: Channel | undefined
+  messages: Message[] | undefined
+  isMessageLoading: boolean
+}
+
+const initialState: ChatSliceParams = {
+  isOpenChatDesktop: false,
+  isOpenChatMobile: false,
+  isExpandChatModal: false,
+  currentChannel: undefined,
+  messages: undefined,
+  isMessageLoading: false,
 }
 
 const chatSlice = createSlice({
   name: "chat",
   initialState,
   reducers: {
-    setSearchChannel: (state) => {
-      state.search.data = [...state.search.initData]
+    toggleOpenChatDesktop: (state, { payload }: { payload: boolean }) => {
+      state.isOpenChatDesktop = payload
+      const htmlTag = document.querySelector("html")
+      if (htmlTag) {
+        htmlTag.style.overflow = payload ? "hidden" : "unset"
+      }
+      if (state.isExpandChatModal) {
+        state.isExpandChatModal = false
+      }
+    },
+
+    toggleOpenChatMobile: (state, { payload }: { payload: boolean }) => {
+      state.isOpenChatMobile = payload
+      const htmlTag = document.querySelector("html")
+      if (htmlTag) {
+        htmlTag.style.overflow = payload ? "hidden" : "unset"
+      }
+      // if (state.isExpandChatModal) {
+      //   state.isExpandChatModal = false
+      // }
+    },
+
+    toggleExpandChatModal: (state, { payload }: { payload: boolean }) => {
+      state.isExpandChatModal = payload
+    },
+
+    setCurrentChannel: (
+      state,
+      { payload }: { payload: Channel | undefined }
+    ) => {
+      state.currentChannel = payload
+    },
+
+    setMessages: (state, { payload }: { payload: undefined | Message[] }) => {
+      state.messages = payload
+
+      if (payload) {
+        state.messages = payload.reverse()
+      }
     },
 
     addMessage: (state, { payload }: { payload: Message }) => {
-      if (state.messageInChannel.data?.channel_messages?.length > 0) {
-        state.messageInChannel.data.channel_messages.push(payload)
-      }
+      if (!state.messages) return
+      state.messages.push(payload)
     },
 
-    clearMessageInChannel: (state) => {
-      state.messageInChannel.data = {} as MessagesInChannel
+    setMessageLoading: (state, { payload }: { payload: boolean }) => {
+      state.isMessageLoading = payload
     },
-  },
-  extraReducers: (builder) => {
-    //   Get channel
-    builder.addCase(fetchGetChannels.fulfilled, (state, { payload }) => {
-      state.channel.isLoading = false
-      const result = payload?.data.result
-      if (result.success) {
-        state.channel.data = result.data
-      }
-    })
-    builder.addCase(fetchGetChannels.pending, (state) => {
-      state.channel.isLoading = true
-    })
-
-    //   Search channel
-    builder.addCase(fetchSearchChannel.fulfilled, (state, { payload }) => {
-      state.search.isLoading = false
-      const result = payload?.data.result
-      if (result.success) {
-        if (!isArrayHasValue(state.search.initData)) {
-          state.search.initData = result.data
-        }
-        state.search.data = result.data
-      }
-    })
-    builder.addCase(fetchSearchChannel.pending, (state) => {
-      state.search.isLoading = true
-    })
-
-    //   Get Messages
-    builder.addCase(
-      fetchGetMessagesInChannel.fulfilled,
-      (state, { payload }) => {
-        state.messageInChannel.isLoading = false
-        const result = payload?.data.result
-        if (result.success) {
-          result.data?.channel_messages?.reverse()
-          state.messageInChannel.data = result.data
-        }
-      }
-    )
-    builder.addCase(fetchGetMessagesInChannel.pending, (state) => {
-      state.messageInChannel.isLoading = true
-    })
   },
 })
 
-export default chatSlice.reducer
+export const {
+  toggleExpandChatModal,
+  toggleOpenChatDesktop,
+  setCurrentChannel,
+  setMessages,
+  addMessage,
+  setMessageLoading,
+  toggleOpenChatMobile,
+} = chatSlice.actions
 
-export const { setSearchChannel, addMessage, clearMessageInChannel } =
-  chatSlice.actions
+export default chatSlice.reducer

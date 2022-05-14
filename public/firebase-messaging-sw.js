@@ -1,6 +1,9 @@
 importScripts("https://www.gstatic.com/firebasejs/9.8.1/firebase-app.js")
 importScripts("https://www.gstatic.com/firebasejs/9.8.1/firebase-messaging.js")
 
+import { getMessaging, onBackgroundMessage } from "firebase/messaging/sw"
+import { initializeApp } from "firebase/app"
+
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_API_KEY,
   authDomain: process.env.NEXT_PUBLIC_AUTH_DOMAIN,
@@ -10,29 +13,19 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_APP_ID,
   measurementId: process.env.NEXT_PUBLIC_MEASUREMENT_ID,
 }
+initializeApp(firebaseConfig)
+const messaging = getMessaging()
 
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker
-    .register("../firebase-messaging-sw.js")
-    .then(function (registration) {
-      console.log("Registration successful, scope is:", registration.scope)
-    })
-    .catch(function (err) {
-      console.log("Service worker registration failed, error:", err)
-    })
-}
-
-firebase.initializeApp(firebaseConfig)
-
-const messaging = firebase.messaging()
-// Retrieve firebase messaging
-
-messaging.onBackgroundMessage(function (payload) {
-  console.log("Received background message ", payload)
-
-  const notificationTitle = payload.notification.title
+onBackgroundMessage(messaging, (payload) => {
+  console.log(
+    "[firebase-messaging-sw.js] Received background message ",
+    payload
+  )
+  // Customize notification here
+  const notificationTitle = "Background Message Title"
   const notificationOptions = {
-    body: payload.notification.body,
+    body: "Background Message body.",
+    icon: "/firebase-logo.png",
   }
 
   self.registration.showNotification(notificationTitle, notificationOptions)

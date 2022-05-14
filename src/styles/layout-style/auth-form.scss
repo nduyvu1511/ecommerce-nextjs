@@ -10,7 +10,6 @@
   }
 
   @include responsive(lg-screen) {
-    background-color: $primary-color-opacity;
     min-height: calc(100vh - $header-login-height);
     max-height: calc(100vh - $header-login-height);
   }
@@ -20,8 +19,6 @@
     height: 100%;
     max-width: 1040px;
     width: 100%;
-    @include flex(end, center);
-    flex-direction: column;
     margin-top: 3rem;
     @include responsive(xs-screen) {
       padding-inline: 1rem;
@@ -34,21 +31,25 @@
       margin-top: 0;
       padding-inline: 4rem;
     }
-
-    @include responsive(lg-screen) {
-      flex-direction: row;
-    }
   }
 
   & .auth__inner-left {
     margin-bottom: 4rem;
-
     & .image-container {
-      & .image {
-        width: 120px !important;
+      position: static;
 
+      & > span {
+        position: static !important;
+      }
+
+      & .image {
+        position: static !important;
+        width: 100px !important;
+        min-width: unset !important;
+        height: auto !important;
         @include responsive(md-screen) {
           width: 150px !important;
+          height: auto !important;
         }
       }
     }
@@ -63,14 +64,15 @@
     padding-bottom: 6rem;
     width: 100%;
     border-radius: 0.4rem;
+    margin: 0 auto;
+
     @include responsive(sm-screen) {
       max-width: 450px;
-      margin: 0 auto;
     }
+
     @include responsive(lg-screen) {
       max-width: 400px;
       padding: 3rem;
-      margin: unset;
       border: 1px solid $border-color-1;
     }
 
@@ -80,10 +82,12 @@
   }
 
   & .form-heading {
+    display: none;
     @include style-text(500, 1.6rem, 2.6rem, $text-color);
     margin-bottom: 3rem;
     @include responsive(lg-screen) {
       @include style-text(500, 1.8rem, 2.8rem, $text-color);
+      display: block;
     }
   }
 

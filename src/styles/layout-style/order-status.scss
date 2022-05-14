@@ -236,6 +236,7 @@
   &-body {
     margin-bottom: -2rem;
     @include style-text(500, 1.3rem, 2.3rem, $text-color);
+    width: 100%;
     @include responsive(md-screen) {
       border-bottom: 1px solid $border-color-1;
       font-size: 1.4rem;

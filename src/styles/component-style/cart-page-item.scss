@@ -20,10 +20,9 @@
 
     & .image-container {
       position: relative;
-
-      & .image {
-        aspect-ratio: 1;
-      }
+      aspect-ratio: 1;
+      width: 80px;
+      height: 80px;
 
       .cart__item-delete-btn {
         position: absolute;

@@ -5,7 +5,7 @@
     display: block;
   }
 
-  @include responsive(screen-1024) {
+  @include responsive(xl-screen) {
     height: $header-height;
   }
 
@@ -181,9 +181,18 @@
       }
 
       &-logo {
-        width: 160px;
-        height: auto;
-        object-fit: cover;
+        position: static !important;
+
+        & > span {
+          position: relative !important;
+        }
+
+        & .image {
+          position: relative !important;
+          width: 160px !important;
+          object-fit: cover !important;
+          height: auto !important;
+        }
       }
 
       &-search {
@@ -228,17 +237,10 @@
           }
 
           & .image-container {
-            & .image {
-              border-radius: 50%;
-              height: 3rem !important;
-              width: 3rem !important;
-              object-fit: cover;
-
-              @include responsive(md-screen) {
-                height: 3.5rem;
-                width: 3.5rem;
-              }
-            }
+            height: 3rem;
+            width: 3rem;
+            border-radius: 50%;
+            overflow: hidden;
           }
 
           &:hover {
@@ -469,7 +471,17 @@
     padding: 2rem;
 
     &-img {
-      width: 120px;
+      position: static;
+
+      & > span {
+        position: static !important;
+      }
+
+      & .image {
+        width: 120px !important;
+        height: auto !important;
+        position: static !important;
+      }
     }
 
     & button {

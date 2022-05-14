@@ -5,6 +5,7 @@ interface UseInputTextRes {
   onChange: (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void
+  clearValue: Function
 }
 
 const useInputText = (defaultValue = ""): UseInputTextRes => {
@@ -16,9 +17,14 @@ const useInputText = (defaultValue = ""): UseInputTextRes => {
     setValue(e.target.value)
   }
 
+  const clearValue = () => {
+    setValue("")
+  }
+
   return {
     value,
     onChange,
+    clearValue,
   }
 }
 

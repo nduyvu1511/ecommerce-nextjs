@@ -2,7 +2,6 @@ import { logo } from "@/assets"
 import { PHONE_SCHEMA } from "@/helper"
 import {
   setCurrentUserInfo,
-  setMessage,
   setToken,
   setUserInfo,
   toggleOpenLoginModal,
@@ -40,15 +39,13 @@ export const AuthContainer = ({
   const handleUpdatePhoneNumber = async (token: string) => {
     getUserInfo(token, (userInfo) => {
       if (PHONE_SCHEMA.test(userInfo?.phone || "")) {
+        dispatch(setToken(token))
+        dispatch(setUserInfo(userInfo))
         if (view === "page") {
           router.push("/")
         } else {
-          dispatch(toggleOpenLoginModal(false))
-          dispatch(toggleOpenLoginSMSModal(false))
-          dispatch(setMessage({ title: "Đăng nhập thành công" }))
+          router.reload()
         }
-        dispatch(setToken(token))
-        dispatch(setUserInfo(userInfo))
       } else {
         if (view === "modal") {
           dispatch(toggleOpenLoginModal(false))

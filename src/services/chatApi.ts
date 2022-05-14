@@ -1,4 +1,3 @@
-import axios from "axios"
 import {
   CreateChannelProps,
   GetMessageProps,
@@ -6,34 +5,35 @@ import {
   SendMessageProps,
   Token,
 } from "@/models"
+import axiosClient from "."
 
 const chatApi = {
   getChannels: (token: Token) => {
-    return axios.post("/information_channel/get_channel", {
+    return axiosClient.post("/information_channel/get_channel", {
       params: token,
     })
   },
 
   searchChannel: (params: SearchChannelProps) => {
-    return axios.post("/information_channel/search_channel", {
+    return axiosClient.post("/information_channel/search_channel", {
       params: params,
     })
   },
 
   createChannel: (params: CreateChannelProps) => {
-    return axios.post("/information_channel/create_group_channel", {
+    return axiosClient.post("/information_channel/create_group_channel", {
       params: params,
     })
   },
 
   sendMessage: (params: SendMessageProps) => {
-    return axios.post("/message/send_message", {
+    return axiosClient.post("/message/send_message", {
       params: params,
     })
   },
 
   getMessagesInChannel: (params: GetMessageProps) => {
-    return axios.post("/message/get_message_in_channel", {
+    return axiosClient.post("/message/get_message_in_channel", {
       params: params,
     })
   },

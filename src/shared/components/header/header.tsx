@@ -20,7 +20,6 @@ import { IoMdNotificationsOutline } from "react-icons/io"
 import { IoChevronDownOutline } from "react-icons/io5"
 import { useDispatch, useSelector } from "react-redux"
 import { useCartOrder } from "shared/hook"
-import useLocale from "shared/hook/useLocale"
 import { CartModal } from "../cart"
 import { Notification } from "../notification"
 import { SearchForm, SearchResult } from "../search"
@@ -28,7 +27,6 @@ import { navLinks } from "./data"
 
 export const Header = () => {
   const dispatch = useDispatch()
-  const language = useLocale()
   const router = useRouter()
   const { token, userInfo: { avatar = "" } = { userInfo: undefined } } =
     useSelector((state: RootState) => state.user)
@@ -151,7 +149,13 @@ export const Header = () => {
             <div className="header__main-top-logo-wrapper">
               <Link passHref href="/">
                 <div className="header__main-top-logo image-container cursor-pointer">
-                  <Image className="image" src={logo} alt="" layout="fill" />
+                  <Image
+                    className="image"
+                    src={logo}
+                    alt=""
+                    quality={50}
+                    layout="fill"
+                  />
                 </div>
               </Link>
             </div>

@@ -15,6 +15,7 @@ const userSlice = createSlice({
     logOut: (state) => {
       state.token = ""
       state.userInfo = {} as UserInfo
+      location.reload()
     },
 
     setToken: (state, { payload }: { payload: string }) => {

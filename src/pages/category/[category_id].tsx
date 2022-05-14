@@ -244,7 +244,7 @@ const ProductList = ({ products, category }: CategoryProps) => {
   )
 
   return (
-    <>
+    <section className="product__wrapper">
       <HeaderMobile
         showSearchInput
         rightChild={
@@ -290,7 +290,7 @@ const ProductList = ({ products, category }: CategoryProps) => {
           />
         </Modal>
       ) : null}
-    </>
+    </section>
   )
 }
 

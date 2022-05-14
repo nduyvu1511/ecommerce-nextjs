@@ -79,17 +79,12 @@
             }
           }
 
-          &-image {
-            @include flex-center;
-            height: 100%;
-
-            & img {
-              width: 80px !important;
-              height: 80px !important;
-              @include responsive(lg-screen) {
-                width: 70px !important;
-                height: 70px !important;
-              }
+          & .image-container {
+            width: 80px;
+            height: 80px;
+            @include responsive(lg-screen) {
+              width: 70px;
+              height: 70px;
             }
           }
 

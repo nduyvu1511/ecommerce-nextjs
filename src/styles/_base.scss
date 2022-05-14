@@ -470,15 +470,9 @@ textarea {
 }
 
 .image-container {
-  & > span {
-    position: unset !important;
-  }
+  position: relative;
 
   .image {
-    display: none;
-    width: 100% !important;
-    height: 100% !important;
-    position: relative !important;
     object-fit: cover;
   }
 }

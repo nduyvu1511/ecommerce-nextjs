@@ -12,8 +12,14 @@
     height: 100%;
 
     & .image-container {
-      width: 150px;
+      & > span {
+        position: static !important;
+      }
+
       & .image {
+        position: static !important;
+        width: 160px !important;
+        height: auto !important;
       }
     }
 

@@ -45,7 +45,7 @@
       display: flex;
       margin-bottom: 1rem;
 
-      @include responsive(xl-screen) {
+      @include responsive(lg-screen) {
         margin-bottom: 0;
         display: block;
       }
@@ -53,13 +53,13 @@
       &-item {
         cursor: pointer;
         @include flex(center, center);
-        padding: 1rem;
+        padding: 0.8rem 1.6rem;
         border: 1px solid $border-color-1;
         border-radius: 0.4rem;
         width: calc(33.333% - 1rem);
         margin-right: 1rem;
 
-        @include responsive(xl-screen) {
+        @include responsive(lg-screen) {
           align-items: flex-start;
           justify-content: flex-start;
           width: 100%;
@@ -77,7 +77,7 @@
         & .react-simple-star-rating {
           display: none !important;
 
-          @include responsive(xl-screen) {
+          @include responsive(lg-screen) {
             display: block !important;
           }
         }
@@ -85,7 +85,7 @@
         &-active {
           border: 1px solid $primary-color;
 
-          @include responsive(xl-screen) {
+          @include responsive(lg-screen) {
             border: 0;
           }
 
@@ -105,12 +105,12 @@
     }
     &:first-child {
       margin-top: 0.6rem;
-      @include responsive(xl-screen) {
+      @include responsive(lg-screen) {
         margin-top: 0;
       }
     }
 
-    @include responsive(xl-screen) {
+    @include responsive(lg-screen) {
       padding-block: 1rem;
       border-bottom: 0;
     }
@@ -167,12 +167,11 @@
     margin-bottom: 3rem;
 
     & button {
-      margin-top: 2rem;
+      margin-top: 1rem;
       padding: 0.4rem 1.2rem;
-      margin-left: auto;
       border-radius: 0.3rem;
 
-      @include responsive(xl-screen) {
+      @include responsive(lg-screen) {
         margin-left: 0;
       }
     }
@@ -181,7 +180,7 @@
   .product__attribute-list {
     display: flex;
     flex-wrap: wrap;
-    @include responsive(xl-screen) {
+    @include responsive(lg-screen) {
       flex-direction: column;
     }
 
@@ -190,11 +189,11 @@
       cursor: pointer;
       margin-bottom: 1rem;
       margin-right: 1rem;
-      padding: 1rem 2rem;
+      padding: 0.8rem 1.6rem;
       border: 1px solid $border-color-2;
       border-radius: 0.4rem;
 
-      @include responsive(xl-screen) {
+      @include responsive(lg-screen) {
         margin-right: 0;
         padding: 0;
         border: 0;
@@ -207,7 +206,7 @@
       & .input__checkbox {
         display: none;
 
-        @include responsive(xl-screen) {
+        @include responsive(lg-screen) {
           display: block;
           margin-right: 1rem;
           width: 1.8rem;
@@ -223,12 +222,9 @@
       & .image-container {
         width: 2rem;
         height: 2rem;
-        margin-right: 1rem !important;
+        margin-right: 1rem;
         border-radius: 50%;
-
-        & .image {
-          border-radius: 50%;
-        }
+        overflow: hidden;
       }
 
       & .product__attribute-no-image {
@@ -241,7 +237,7 @@
           color: $primary-color;
         }
 
-        @include responsive(xl-screen) {
+        @include responsive(lg-screen) {
           border: 0;
         }
       }
@@ -251,7 +247,7 @@
   & .category__grid-list {
     display: grid;
 
-    @include responsive(xl-screen) {
+    @include responsive(lg-screen) {
       display: none;
     }
   }
@@ -259,7 +255,7 @@
   & .category__list {
     display: none;
 
-    @include responsive(xl-screen) {
+    @include responsive(lg-screen) {
       display: block;
     }
   }

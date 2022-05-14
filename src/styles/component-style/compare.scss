@@ -56,7 +56,6 @@
 
     &-img {
       height: 150px;
-      position: relative;
 
       @include responsive(sm-screen) {
         height: 200px;
@@ -64,10 +63,6 @@
 
       & .image-container {
         height: 100%;
-
-        & .image {
-          position: absolute !important;
-        }
       }
 
       & .compare__table-item-delete-btn {

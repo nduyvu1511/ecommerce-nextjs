@@ -63,7 +63,7 @@ export const ProductTabs = ({ product }: { product: Product }) => {
       <div className="product__detail-tabs-content">
         {tabOpen === "description" ? (
           <div className="product__detail-tabs-content-desc">
-            <p className="product__tab-content-text">
+            <div className="product__tab-content-text">
               <div
                 style={{ overflow: "hidden" }}
                 className="product__tab-content-desc"
@@ -75,7 +75,7 @@ export const ProductTabs = ({ product }: { product: Product }) => {
               {!product?.description_sale ? (
                 <p>Không có mô tả nào cho sản phẩm này</p>
               ) : null}
-            </p>
+            </div>
           </div>
         ) : null}
 

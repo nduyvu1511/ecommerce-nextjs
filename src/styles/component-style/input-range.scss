@@ -3,11 +3,9 @@
   padding-top: 1rem;
   width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   position: relative;
-  @include responsive(lg-screen) {
-    justify-content: flex-start;
-  }
+
   .slider {
     position: relative;
   }

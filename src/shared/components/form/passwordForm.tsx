@@ -2,7 +2,7 @@ import { changePasswordSchema, createPasswordSchema } from "@/core/schema"
 import { passwordFormData } from "@/helper"
 import { Field, Form, Formik } from "formik"
 import Link from "next/link"
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { RiEyeCloseLine, RiEyeFill } from "react-icons/ri"
 
 export type PasswordFormProps = {

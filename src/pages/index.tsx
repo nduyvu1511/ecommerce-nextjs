@@ -105,6 +105,8 @@ const Home = () => {
           <MainContent />
         </div>
 
+        <br />
+
         {/* Category */}
         <div className="container">
           <div className="home__category">
