@@ -4,7 +4,7 @@ import {
   DeleteRatingProps,
   DeleteRatingRes,
   PurchasedProduct,
-  UpdateRatingPropsWithLineId,
+  UpdateRatingPropsWithLineId
 } from "@/models"
 import { setMessage, toggleOpenScreenLoading } from "@/modules"
 import { API_URL } from "@/services"
@@ -21,6 +21,11 @@ interface RatingSWR {
     props: UpdateRatingPropsWithLineId,
     callback: Function
   ) => void
+  changePage: (
+    offset: number,
+    handleSuccess: Function,
+    handleError?: Function
+  ) => void
 }
 
 type Type = "purchase" | "product"
@@ -28,6 +33,7 @@ type Type = "purchase" | "product"
 interface UseRatingProps {
   shouldFetch: boolean
   product_id?: number
+  limit?: number
   type: Type
 }
 
@@ -35,21 +41,26 @@ const useProductRating = ({
   shouldFetch,
   product_id,
   type,
+  limit = 12,
 }: UseRatingProps): RatingSWR => {
   const dispatch = useDispatch()
   const { token } = useSelector((state: RootState) => state.user)
 
-  const fetcher = async () => {
-    if (!shouldFetch) return
-
+  const fetcher = async (offset: number) => {
     if (type === "purchase") {
-      const res: any = await ratingApi.getProductsPurchased(token)
+      const res: any = await ratingApi.getProductsPurchased({
+        token,
+        limit,
+        offset,
+      })
       return res?.result?.data || []
     }
 
     const res: any = await ratingApi.getRatingsByProduct({
       comment_type: ["rating"],
       product_id: product_id || 0,
+      limit,
+      offset,
     })
 
     return res?.result?.data?.rating || []
@@ -57,9 +68,23 @@ const useProductRating = ({
 
   const { data, error, isValidating, mutate } = useSWR(
     "product_ratings",
-    fetcher,
+    shouldFetch ? () => fetcher(0) : null,
     { revalidateOnFocus: false }
   )
+
+  const changePage = async (
+    offset: number,
+    cb: Function,
+    onError?: Function
+  ) => {
+    try {
+      const rating = await fetcher(offset * limit)
+      mutate(rating, false)
+      cb()
+    } catch (error) {
+      onError && onError()
+    }
+  }
 
   const deleteCommentRating = async (
     deleteRating: DeleteRatingProps,
@@ -170,7 +195,9 @@ const useProductRating = ({
     isValidating,
     deleteCommentRating,
     updateCommentRating,
+    changePage,
   }
 }
 
 export { useProductRating }
+

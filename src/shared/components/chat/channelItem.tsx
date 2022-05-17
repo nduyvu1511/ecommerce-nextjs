@@ -56,12 +56,14 @@ export const ChannelItem = ({
         </p>
         {type === "channel" ? (
           <div className="chat__channel-item-info-bottom">
-            <p className="chat__channel-item-info-msg">
-              {channel?.last_message?.content || ""}
-            </p>
+            <p
+              className="chat__channel-item-info-msg"
+              dangerouslySetInnerHTML={{
+                __html: channel?.last_message?.content || "",
+              }}
+            ></p>
             <p className="chat__channel-item-info-date">
               {channel?.last_message?.time_duration}
-              {/* {moment(channel?.last_message?.time_duration).fromNow()} */}
             </p>
           </div>
         ) : null}

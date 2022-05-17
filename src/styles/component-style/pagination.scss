@@ -4,19 +4,20 @@
   margin-top: 3rem;
 
   &-btn {
-    width: 30px;
-    height: 30px;
+    width: 28px;
+    height: 28px;
     @include flex-center;
     border-radius: 50%;
-    @include style-text(500, 1.4rem, 1.4rem, $primary-color);
+    @include style-text(600, 1.3rem, 1.3rem, $text-color);
     margin-right: 1rem;
-    border: 2px solid $primary-color;
-    font-family: $second-font;
-    transition: all 0.2s linear;
     user-select: none;
 
+    &:hover {
+      color: $primary-color;
+    }
+
     & svg {
-      font-size: 1.5rem;
+      font-size: 2rem;
     }
 
     &-disable {
@@ -26,6 +27,12 @@
     &-active {
       background-color: $primary-color;
       color: white;
+      pointer-events: none;
     }
+  }
+
+  &-dots {
+    font-size: 1.8rem;
+    margin-right: 1rem;
   }
 }

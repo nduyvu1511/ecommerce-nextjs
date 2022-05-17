@@ -7,11 +7,13 @@ import {
 import axiosClient from "."
 
 const ratingApi = {
-  getRatingTags: (product_id?: number) => {
+  getRatingTags: (params: {
+    product_id: number
+    offset?: number
+    limit?: number
+  }) => {
     return axiosClient.post("/comment_controller/get_rating_tag", {
-      params: {
-        product_id: product_id || null,
-      },
+      params: params,
     })
   },
 
@@ -21,13 +23,15 @@ const ratingApi = {
     })
   },
 
-  getProductsPurchased: (token: string) => {
+  getProductsPurchased: (params: {
+    token: string
+    offset?: number
+    limit?: number
+  }) => {
     return axiosClient.post(
       "/comment_controller/get_purchase_product_history",
       {
-        params: {
-          token,
-        },
+        params: params,
       }
     )
   },

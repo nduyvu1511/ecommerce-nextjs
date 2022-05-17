@@ -1,24 +1,57 @@
+// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app"
 import {
   FacebookAuthProvider,
   getAuth,
   GoogleAuthProvider,
 } from "firebase/auth"
-import { getMessaging, getToken } from "firebase/messaging"
+import { getMessaging, getToken, onMessage } from "firebase/messaging"
 
 const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_AUTH_DOMAIN,
-  projectId: process.env.NEXT_PUBLIC_PROJECT_ID,
-  storageBucket: process.env.NEXT_PUBLIC_STORAGE_BUCKET,
-  messagingSenderId: process.env.NEXT_PUBLIC_MESSAGING_SENDER_ID,
-  appId: process.env.NEXT_PUBLIC_APP_ID,
-  measurementId: process.env.NEXT_PUBLIC_MEASUREMENT_ID,
+  apiKey: "AIzaSyBFTcgvxkTVzziiIlEOhvoAbP1bLpTpwsg",
+  authDomain: "womart-3a686.firebaseapp.com",
+  databaseURL:
+    "https://womart-3a686-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "womart-3a686",
+  storageBucket: "womart-3a686.appspot.com",
+  messagingSenderId: "761325889031",
+  appId: "1:761325889031:web:a95b7a85155033038eeca2",
+  measurementId: "G-Y65TNJYHSL",
 }
-
 const app = initializeApp(firebaseConfig)
+const messaging = getMessaging(app)
 export const authentication = getAuth(app)
-
 authentication.useDeviceLanguage()
 export const googleProvider = new GoogleAuthProvider()
 export const fbProvider = new FacebookAuthProvider()
+
+export const getFCMToken = (setTokenFound: (token: string) => void) => {
+  return getToken(messaging, {
+    vapidKey:
+      "BIsfJkI7Y8ArRwtd11nBqNSFvVQ9KRLC-LLBP7gh8s3rPz5EbBWcENioTJkehcl0bsR0wTiH_6FWDuo1ACynzrk",
+  })
+    .then((currentToken) => {
+      if (currentToken) {
+        console.log("current token for client: ", currentToken)
+        setTokenFound(currentToken)
+        // Track the token -> client mapping, by sending to backend server
+        // show on the UI that permission is secured
+      } else {
+        console.log(
+          "No registration token available. Request permission to generate one."
+        )
+        // shows on the UI that permission is required
+      }
+    })
+    .catch((err) => {
+      console.log("An error occurred while retrieving token. ", err)
+      // catch error while creating client token
+    })
+}
+
+export const onMessageListener = () =>
+  new Promise((resolve) => {
+    onMessage(messaging, (payload) => {
+      resolve(payload)
+    })
+  })

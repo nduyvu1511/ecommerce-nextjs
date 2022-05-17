@@ -2,7 +2,7 @@ import { RootState } from "@/core/store"
 import { toggleExpandChatModal, toggleOpenChatDesktop } from "@/modules"
 import { API_URL } from "@/services"
 import Image from "next/image"
-import { CgArrowsExpandRight, CgClose } from "react-icons/cg"
+import { CgArrowsExpandRight, CgClose, CgCompressRight } from "react-icons/cg"
 import { useDispatch, useSelector } from "react-redux"
 import { ChatChannel } from "./chatChannel"
 import { ChatMessage } from "./chatMessage"
@@ -38,7 +38,11 @@ export const ChatDesktop = () => {
               onClick={() => handleExpandChatModal()}
               className="btn-reset chat__header-actions-expand-btn"
             >
-              <CgArrowsExpandRight />
+              {isExpandChatModal ? (
+                <CgCompressRight />
+              ) : (
+                <CgArrowsExpandRight />
+              )}
             </button>
           ) : null}
 

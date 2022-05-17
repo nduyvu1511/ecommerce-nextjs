@@ -8,6 +8,7 @@ interface ChatSliceParams {
   currentChannel: Channel | undefined
   messages: Message[] | undefined
   isMessageLoading: boolean
+  messageUnreadCount: number | undefined
 }
 
 const initialState: ChatSliceParams = {
@@ -17,6 +18,7 @@ const initialState: ChatSliceParams = {
   currentChannel: undefined,
   messages: undefined,
   isMessageLoading: false,
+  messageUnreadCount: undefined,
 }
 
 const chatSlice = createSlice({
@@ -72,6 +74,10 @@ const chatSlice = createSlice({
     setMessageLoading: (state, { payload }: { payload: boolean }) => {
       state.isMessageLoading = payload
     },
+
+    setMessageUnreadCount: (state, { payload }: { payload: number }) => {
+      state.messageUnreadCount = payload
+    },
   },
 })
 
@@ -83,6 +89,7 @@ export const {
   addMessage,
   setMessageLoading,
   toggleOpenChatMobile,
+  setMessageUnreadCount,
 } = chatSlice.actions
 
 export default chatSlice.reducer

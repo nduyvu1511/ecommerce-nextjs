@@ -4,6 +4,7 @@ import { RootState } from "@/core/store"
 import { toggleOpenChatDesktop } from "@/modules"
 import React from "react"
 import { useDispatch, useSelector } from "react-redux"
+import { useCountUnreadMessageChannel } from "shared/hook"
 
 const ChatContainer = () => {
   const dispatch = useDispatch()
@@ -13,7 +14,9 @@ const ChatContainer = () => {
     currentChannel,
     isOpenChatMobile,
   } = useSelector((state: RootState) => state.chat)
-  console.log(isOpenChatMobile)
+
+  const { data: messageUnreadCount = 0 } = useCountUnreadMessageChannel(true)
+
   return (
     <section className="chat-container">
       <button
@@ -21,7 +24,7 @@ const ChatContainer = () => {
         className="chat-btn"
       >
         {messageIcon}Chat
-        <span className="chat-btn-count">2</span>
+        <span className="chat-btn-count">{messageUnreadCount}</span>
       </button>
 
       {isOpenChatDesktop ? (

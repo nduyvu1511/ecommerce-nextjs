@@ -37,6 +37,15 @@ const chatApi = {
       params: params,
     })
   },
+
+  getCountUnreadMessageChannel: (token: string) => {
+    return axiosClient.post(
+      "/information_channel/count_unread_message_channel",
+      {
+        params: { token },
+      }
+    )
+  },
 }
 
 export default chatApi

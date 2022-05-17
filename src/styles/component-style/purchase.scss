@@ -16,7 +16,7 @@
   &-item {
     list-style: none;
     background-color: #fff;
-    padding: 2rem 1.5rem;
+    padding: 1rem 1.5rem;
 
     @include responsive(lg-screen) {
       padding-inline: 3rem;
@@ -46,31 +46,52 @@
 
       &-content {
         flex: 1;
-        margin-right: 2rem;
+        @include responsive(sm-screen) {
+          margin-right: 2rem;
+        }
 
         &-name {
-          @include style-text(500, 1.5rem, 2.5rem, $text-color);
+          @include style-text(500, 1.5rem, 2.2rem, $text-color);
           margin-bottom: 0.6rem;
+          display: block;
+          @include limit-line-text(3);
         }
 
         &-qty {
+          display: flex;
+          align-items: center;
           @include style-text(500, 1.3rem, 2.3rem, $gray);
+
+          & span {
+            margin-left: 0.3rem;
+          }
+
+          & p {
+            margin-left: 1rem;
+            @include style-text(500, 1.3rem, 2.3rem, $danger);
+            display: block;
+            @include responsive(sm-screen) {
+              display: none;
+            }
+          }
         }
       }
 
       &-price {
-        & p {
-          @include style-text(500, 1.5rem, 2.5rem, $danger);
+        @include style-text(500, 1.5rem, 2.5rem, $danger);
+        display: none;
+        @include responsive(sm-screen) {
+          display: block;
         }
       }
 
       &-middle {
-        padding-block: 1rem;
+        padding-block: 0.4rem;
         border-bottom: 1px solid $border-color-2;
 
         & .purchase__item-total-price {
           @include style-text(500, 1.3rem, 2.3rem, $text-color);
-          @include flex(end, center);
+          @include flex(end, baseline);
 
           & span {
             color: $danger;
@@ -83,7 +104,7 @@
 
       &-actions {
         @include flex(end, center);
-        padding-top: 2rem;
+        padding-block: 1rem;
 
         & button {
           padding: 0.8rem 1.6rem;
@@ -151,6 +172,22 @@
           border: 1px solid $border-color-1;
         }
       }
+    }
+  }
+}
+
+.account__option-layout-body {
+  & .product__rating-pagination {
+    background-color: $white;
+    padding: 1.2rem;
+    margin-top: 1.5rem;
+
+    @include responsive(lg-screen) {
+      margin-top: 2rem;
+    }
+
+    & .pagination {
+      margin-top: 0;
     }
   }
 }

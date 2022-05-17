@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { Modal, RatingForm } from "@/components"
+import { Modal, Pagination, RatingForm } from "@/components"
 import { AccountContainer } from "@/container"
 import { formatMoneyVND } from "@/helper"
 import { MainAuthLayout } from "@/layout"
@@ -11,14 +11,26 @@ import { CgSmileNone } from "react-icons/cg"
 import { RiLoader4Line } from "react-icons/ri"
 import { useProductRating } from "shared/hook"
 
+const LIMIT = 12
+
 const Purchase = () => {
   const [purchase, setPurchase] = useState<PurchasedProduct | undefined>()
   const {
-    data: { data: purchaseList = [] } = { data: {} },
+    data: { data: purchaseList = [], data_count } = { data: {} },
     isValidating,
     updateCommentRating,
     deleteCommentRating,
-  } = useProductRating({ shouldFetch: true, type: "purchase" })
+    changePage,
+  } = useProductRating({ shouldFetch: true, type: "purchase", limit: LIMIT })
+
+  const [offset, setOffset] = useState<number>(0)
+
+  const handleChangePage = (_offset: number) => {
+    if (_offset === offset) return
+    changePage(_offset, () => {
+      setOffset(_offset)
+    })
+  }
 
   return (
     <>
@@ -68,9 +80,10 @@ const Purchase = () => {
                           {item.product.product_name}
                         </a>
                       </Link>
-                      <p className="purchase__item-content-qty">
+                      <div className="purchase__item-content-qty">
                         Số lượng: <span>{item.product.qty_product}</span>
-                      </p>
+                        <p>x {formatMoneyVND(item.product.price_unit)}</p>
+                      </div>
                     </div>
 
                     <div className="purchase__item-price">
@@ -102,6 +115,16 @@ const Purchase = () => {
               </li>
             ))}
           </ul>
+        ) : null}
+
+        {data_count > LIMIT ? (
+          <div className="product__rating-pagination">
+            <Pagination
+              totalPage={Math.ceil(data_count / LIMIT)}
+              currentOffset={offset}
+              onPaginate={(_offset: number) => handleChangePage(_offset)}
+            />
+          </div>
         ) : null}
       </AccountContainer>
 

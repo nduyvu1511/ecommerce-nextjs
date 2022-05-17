@@ -47,7 +47,7 @@ export const ChatChannel = () => {
       createChannel({
         channel: {
           channel_name: channel.channel_name,
-          partner_ids: [channel.partner_id],
+          partner_ids: [channel.channel_id],
           channel_image: channel.channel_image,
         },
         handleSuccess: (channel: Channel) => {

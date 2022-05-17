@@ -5,8 +5,9 @@ import {
   addProductCompare,
   changeAttributeItem,
   setMessage,
+  toggleOpenChatMobile,
   toggleOpenScreenLoading,
-  toggleShowCompareModal
+  toggleShowCompareModal,
 } from "@/modules"
 import { API_URL } from "@/services"
 import Image from "next/image"
@@ -18,7 +19,7 @@ import { IoClose } from "react-icons/io5"
 import {
   RiArrowUpDownLine,
   RiLoader2Line,
-  RiMessage2Fill
+  RiMessage2Fill,
 } from "react-icons/ri"
 import { useDispatch, useSelector } from "react-redux"
 import { useCartOrder } from "shared/hook"
@@ -236,7 +237,10 @@ export const ProductIntro = ({ product, type }: IProductIntro) => {
             ) : null}
 
             {type === "detail" ? (
-              <button className="product__intro-shop-btn-sm product__intro-shop-chat-btn">
+              <button
+                onClick={() => dispatch(toggleOpenChatMobile(true))}
+                className="product__intro-shop-btn-sm product__intro-shop-chat-btn"
+              >
                 <RiMessage2Fill />
                 <span>Nhắn tin</span>
               </button>

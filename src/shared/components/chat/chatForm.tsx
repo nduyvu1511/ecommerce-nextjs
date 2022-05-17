@@ -19,6 +19,10 @@ export const ChatForm = ({ onSubmit, isSending }: ChatFormProps) => {
     inputRef.current?.focus()
   }, [currentChannel?.channel_id])
 
+  const chooseImages = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.files)
+  }
+
   return (
     <form
       onSubmit={(e) => {
@@ -29,7 +33,14 @@ export const ChatForm = ({ onSubmit, isSending }: ChatFormProps) => {
       }}
       className="chat__form"
     >
-      <input type="file" hidden name="" id="input-file" />
+      <input
+        onChange={(e) => chooseImages(e)}
+        type="file"
+        multiple
+        hidden
+        name=""
+        id="input-file"
+      />
       <label htmlFor="input-file" className="btn-reset chat__form-image-button">
         <MdOutlineInsertPhoto />
       </label>

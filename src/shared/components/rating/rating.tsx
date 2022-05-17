@@ -2,7 +2,7 @@
 import { RootState } from "@/core/store"
 import { CommentRating } from "@/models"
 import { useRouter } from "next/router"
-import React from "react"
+import React, { useState } from "react"
 import { CgSmile } from "react-icons/cg"
 import { RiLoader4Line } from "react-icons/ri"
 import { useSelector } from "react-redux"
@@ -11,17 +11,29 @@ import { Pagination } from "../button"
 import { Star } from "../star"
 import RatingItem from "./ratingItem"
 
+const LIMIT_RATING = 12
+
 export const Rating = () => {
   const router = useRouter()
   const {
     data: { data: ratingList = [], data_count = 0 } = { data: [] },
     isValidating,
+    changePage,
   } = useProductRating({
     product_id: Number(router.query?.productId) || 0,
     shouldFetch: true,
     type: "product",
+    limit: LIMIT_RATING,
   })
   const { product } = useSelector((state: RootState) => state.product)
+  const [offset, setOffset] = useState<number>(0)
+
+  const handleChangePage = (_offset: number) => {
+    if (_offset === offset) return
+    changePage(_offset, () => {
+      setOffset(_offset)
+    })
+  }
 
   return (
     <div className="product__rating">
@@ -44,6 +56,13 @@ export const Rating = () => {
         </div>
       ) : null}
 
+      {!isValidating && ratingList?.length === 0 ? (
+        <div className="rating-no-rating">
+          <CgSmile />
+          <p>Chưa có đánh giá nào cho sản phẩm này</p>
+        </div>
+      ) : null}
+
       {/* Raging list */}
       {!isValidating && ratingList?.length > 0 ? (
         <div className="product__rating-body">
@@ -51,20 +70,15 @@ export const Rating = () => {
             <RatingItem rating={rating} key={rating.comment_id} />
           ))}
         </div>
-      ) : (
-        <div className="rating-no-rating">
-          <CgSmile />
-          <p>Chưa có đánh giá nào cho sản phẩm này</p>
-        </div>
-      )}
+      ) : null}
 
       {/* Pagination */}
-      {ratingList?.length > 10 ? (
+      {data_count > LIMIT_RATING ? (
         <div className="product__rating-pagination">
           <Pagination
-            totalPage={6}
-            currentPage={1}
-            onPaginate={() => console.log()}
+            totalPage={Math.ceil(data_count / LIMIT_RATING)}
+            currentOffset={offset}
+            onPaginate={(_offset: number) => handleChangePage(_offset)}
           />
         </div>
       ) : null}

@@ -41,9 +41,8 @@ interface ChatRes {
 
 const useChat = (shouldFetch = true): ChatRes => {
   const dispatch = useDispatch()
-  const { token, userInfo: { id = 0 } = { userInfo: undefined } } = useSelector(
-    (state: RootState) => state.user
-  )
+  const { token, userInfo: { id: user_id = 0 } = { userInfo: undefined } } =
+    useSelector((state: RootState) => state.user)
   const [channelSearch, setCurrentChannelSearch] = useState<ChannelSearchProps>(
     {
       channels: [],
@@ -116,7 +115,7 @@ const useChat = (shouldFetch = true): ChatRes => {
         dispatch(
           addMessage({
             author_avatar: "",
-            author_id: id,
+            author_id: user_id,
             content,
             is_author: true,
             message_id: 1,
@@ -141,7 +140,7 @@ const useChat = (shouldFetch = true): ChatRes => {
     try {
       const res: any = await chatApi.createChannel({
         channel_name,
-        partner_ids,
+        partner_ids: [...partner_ids, user_id],
         token,
         channel_image,
       })

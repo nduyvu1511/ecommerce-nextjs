@@ -10,6 +10,22 @@ const port = 3000
 const app = next({ dev, hostname, port })
 const handle = app.getRequestHandler()
 
+const serviceWorkers = [
+  {
+    filename: "service-worker.js",
+    path: "./.next/service-worker.js",
+  },
+  {
+    filename: "firebase-messaging-sw.js",
+    path: "./public/firebase-messaging-sw.js",
+  },
+]
+serviceWorkers.forEach(({ filename, path }) => {
+  server.get(`/${filename}`, (req, res) => {
+    app.serveStatic(req, res, path)
+  })
+})
+
 app.prepare().then(() => {
   createServer(async (req, res) => {
     try {

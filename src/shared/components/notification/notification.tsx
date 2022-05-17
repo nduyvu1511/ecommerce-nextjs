@@ -1,6 +1,5 @@
 import { cartEmptyIcon } from "@/assets"
 import { RootState } from "@/core/store"
-import { getMessaging, onMessage } from "firebase/messaging"
 import Image from "next/image"
 import Link from "next/link"
 import React from "react"
@@ -11,14 +10,6 @@ import { notifications } from "./data"
 export const Notification = () => {
   const { token } = useSelector((state: RootState) => state.user)
   const { data: notification } = useNotification()
-
-  console.log(notification)
-
-  const messaging = getMessaging()
-  onMessage(messaging, (payload) => {
-    console.log("receive message.........................................")
-    console.log(messaging, payload)
-  })
 
   return (
     <div className="notification">

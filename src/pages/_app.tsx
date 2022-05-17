@@ -9,6 +9,7 @@ import "../styles/index.scss"
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const Layout = Component.Layout ?? EmptyLayout
+ 
 
   return (
     <Provider store={store}>
