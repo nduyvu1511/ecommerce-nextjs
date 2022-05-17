@@ -91,9 +91,9 @@ export const RatingForm = ({
   // Functions
 
   const getRatingTags = async () => {
-    const res: any = await ratingApi.getRatingTags(
-      Number(router?.query?.productId) || 0
-    )
+    const res: any = await ratingApi.getRatingTags({
+      product_id: Number(router?.query?.productId) || 0,
+    })
     const tags = res?.result
     return tags?.length > 0 ? tags : undefined
   }
